@@ -12,6 +12,7 @@ public class EggshellApplication extends Application {
 	public void onCreate() {
 		hyrApplication = this;
         super.onCreate();
+        EggshellCrashHandler.getInstance().init(this);
     }
 
 	public static EggshellApplication getApplication() {
