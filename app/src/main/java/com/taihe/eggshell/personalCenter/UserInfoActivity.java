@@ -1,6 +1,5 @@
 package com.taihe.eggshell.personalCenter;
 
-import android.os.Bundle;
 import android.widget.Button;
 
 import com.taihe.eggshell.R;
@@ -19,7 +18,7 @@ public class UserInfoActivity extends BaseActivity{
 
     @Override
     public void initData() {
-        
+
     }
 
 

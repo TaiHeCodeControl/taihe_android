@@ -24,4 +24,6 @@ public class Urls {
 
     public static final String METHOD_REPEAT_PHONE = "/auth/local/existed";//手机号是否重复注册
 
+    public static final String METHOD_LOGIN = "";//登录
+
 }
