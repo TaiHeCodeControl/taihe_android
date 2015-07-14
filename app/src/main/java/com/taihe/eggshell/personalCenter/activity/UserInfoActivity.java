@@ -1,4 +1,4 @@
-package com.taihe.eggshell.personalCenter;
+package com.taihe.eggshell.personalCenter.activity;
 
 import android.widget.Button;
 

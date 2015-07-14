@@ -2,7 +2,6 @@ package com.taihe.eggshell;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,7 +10,7 @@ import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
-import com.taihe.eggshell.personalCenter.UserInfoActivity;
+import com.taihe.eggshell.personalCenter.activity.UserInfoActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
