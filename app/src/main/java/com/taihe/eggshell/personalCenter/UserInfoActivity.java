@@ -1,6 +1,7 @@
 package com.taihe.eggshell.personalCenter;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
@@ -10,22 +11,16 @@ import com.taihe.eggshell.base.BaseActivity;
  */
 public class UserInfoActivity extends BaseActivity{
 
+    private Button mButton;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    public void initView() {
         setContentView(R.layout.activity_user_info);
     }
 
     @Override
-    public void initView() {
-        super.initView();
-
-    }
-
-    @Override
     public void initData() {
-        super.initData();
-
+        
     }
+
+
 }

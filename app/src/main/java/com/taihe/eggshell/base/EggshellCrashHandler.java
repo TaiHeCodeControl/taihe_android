@@ -62,7 +62,7 @@ public class EggshellCrashHandler implements Thread.UncaughtExceptionHandler{
         }
         printWriter.close();
         String result = writer.toString();
-
+        try {
         String time = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new Date());
         String fileName = "crash-"+time+".log";
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
@@ -71,15 +71,13 @@ public class EggshellCrashHandler implements Thread.UncaughtExceptionHandler{
             if(!dir.exists()){
                 dir.mkdirs();
             }
-            try {
-                FileOutputStream fos = new FileOutputStream(path+fileName);
-                fos.write(result.getBytes());
-                fos.close();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            FileOutputStream fos = new FileOutputStream(path+fileName);
+            fos.write(result.getBytes());
+            fos.close();
         }
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
