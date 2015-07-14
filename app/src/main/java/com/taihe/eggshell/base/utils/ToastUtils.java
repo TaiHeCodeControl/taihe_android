@@ -1,4 +1,4 @@
-package com.taihe.eggshell.base;
+package com.taihe.eggshell.base.utils;
 
 import android.content.Context;
 import android.text.TextUtils;

@@ -3,6 +3,7 @@ package com.taihe.eggshell.base;
 import android.app.Application;
 
 import com.google.gson.Gson;
+import com.taihe.eggshell.base.utils.PrefUtils;
 
 public class EggshellApplication extends Application {
 	public static EggshellApplication hyrApplication;

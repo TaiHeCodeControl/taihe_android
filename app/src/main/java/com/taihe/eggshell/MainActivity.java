@@ -1,9 +1,11 @@
 package com.taihe.eggshell;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 
-public class MainActivity extends Activity {
+import com.taihe.eggshell.base.BaseActivity;
+
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -11,4 +13,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }

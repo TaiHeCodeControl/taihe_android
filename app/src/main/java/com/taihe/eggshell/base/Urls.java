@@ -1,5 +1,7 @@
 package com.taihe.eggshell.base;
 
+import com.taihe.eggshell.base.utils.PrefUtils;
+
 public class Urls {
 
     //测试
