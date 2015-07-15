@@ -11,6 +11,7 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.personalCenter.activity.UserInfoActivity;
 
 import org.json.JSONException;
@@ -23,6 +24,9 @@ public class MainActivity extends BaseActivity {
 
     private Context mContext;
     private Button toPersonalCenter;
+    private Button btn_login;
+
+    private Intent intent;
 
     @Override
     public void initView() {
@@ -30,12 +34,13 @@ public class MainActivity extends BaseActivity {
         mContext = this;
 
         toPersonalCenter = (Button)findViewById(R.id.id_personal_center);
+        btn_login = (Button)findViewById(R.id.btn_login);
     }
 
     @Override
     public void initData() {
         toPersonalCenter.setOnClickListener(this);
-
+        btn_login.setOnClickListener(this);
 //        getDataFromNet();
     }
 
@@ -43,7 +48,11 @@ public class MainActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.id_personal_center:
-                Intent intent = new Intent(mContext, UserInfoActivity.class);
+                intent = new Intent(mContext, UserInfoActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.btn_login:
+                intent = new Intent(mContext, LoginActivity.class);
                 startActivity(intent);
                 break;
         }

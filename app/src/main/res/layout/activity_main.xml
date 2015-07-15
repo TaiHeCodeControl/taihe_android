@@ -17,4 +17,14 @@
         android:layout_margin="50dp"
         android:text="个人中心"/>
 
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="登录"
+        android:layout_below="@+id/id_personal_center"
+        android:layout_alignLeft="@+id/id_personal_center"
+        android:layout_alignStart="@+id/id_personal_center"
+        android:layout_alignRight="@+id/id_personal_center"
+        android:layout_alignEnd="@+id/id_personal_center" />
 </RelativeLayout>
