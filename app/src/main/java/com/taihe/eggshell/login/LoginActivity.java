@@ -19,7 +19,7 @@ import com.taihe.eggshell.base.utils.ToastUtils;
 
 public class LoginActivity extends BaseActivity {
 
-    // 公用标题id
+    // titleid
     @ViewInject(R.id.btn_left)
     private Button btn_left;
     @ViewInject(R.id.btn_right)
