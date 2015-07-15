@@ -35,7 +35,7 @@ public class MainActivity extends BaseActivity {
     public void initData() {
         toPersonalCenter.setOnClickListener(this);
 
-        getDataFromNet();
+//        getDataFromNet();
     }
 
     @Override

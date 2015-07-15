@@ -1,26 +1,22 @@
 package com.taihe.eggshell.personalCenter.activity;
 
-import android.util.Log;
-
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 
 /**
- * Created by Thinkpad on 2015/7/14.
+ * Created by Thinkpad on 2015/7/15.
  */
-public class AboutActivity extends BaseActivity{
-
-    private static final String TAG = "AboutActivity";
+public class HelpActivity extends BaseActivity{
 
     @Override
     public void initView() {
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_help);
         super.initView();
     }
 
     @Override
     public void initData() {
         super.initData();
-        super.initTitle("关于我们");
+        super.initTitle("使用帮助");
     }
 }
