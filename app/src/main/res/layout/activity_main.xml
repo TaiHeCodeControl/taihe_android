@@ -27,4 +27,11 @@
         android:layout_alignStart="@+id/id_personal_center"
         android:layout_alignRight="@+id/id_personal_center"
         android:layout_alignEnd="@+id/id_personal_center" />
+    <Button
+        android:id="@+id/id_user_register"
+        android:layout_below="@id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="50dp"
+        android:text="注册"/>
 </RelativeLayout>
