@@ -83,8 +83,11 @@ public class LoginActivity extends BaseActivity {
         password = et_password.getText().toString().trim();
         if(TextUtils.isEmpty(userphone)||TextUtils.isEmpty(password)){
             ToastUtils.show(getApplicationContext(),R.string.login_login_toast);
-        }else if(MyUtils.isMobileNO(userphone)){
+            return;
+        }
+        if(!MyUtils.isMobileNO(userphone)){
             ToastUtils.show(getApplicationContext(),R.string.login_login_phone_toast);
+            return;
         }
 
 
