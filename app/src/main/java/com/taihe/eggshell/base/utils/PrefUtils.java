@@ -68,9 +68,6 @@ public class PrefUtils {
     public static final String KEY_USER_LOCATION = "user_location";
     public static final String KEY_USER_LOCATION_KEY = "userlocation";
     public static final String KEY_USER_LOCATION_DEFAULTVALUE = "1";
-    public static final String KEY_QINIU = "qiniu";
-    public static final String KEY_QINIU_KEY = "qiniu_key";
-    public static final String KEY_QINIU_DEFAULT = "7xikx2.com2.z0.glb.qiniucdn.com";
     public static final String KEY_USER_TOKEN = "token";
     public static final String USER_TOKEN = "user_token";
 

@@ -1,4 +1,4 @@
-package com.taihe.eggshell;
+package com.taihe.eggshell.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
