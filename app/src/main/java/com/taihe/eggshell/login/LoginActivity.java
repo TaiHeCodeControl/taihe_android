@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -43,6 +44,8 @@ public class LoginActivity extends BaseActivity {
     private EditText et_password;
     @ViewInject(R.id.btn_login_login)
     private Button btn_login;
+    @ViewInject(R.id.cb_login_remind)
+    private CheckBox cb_remind;
 
     private String userphone;
     private String password;
@@ -54,6 +57,7 @@ public class LoginActivity extends BaseActivity {
         initTitleBar();
 
         btn_login.setOnClickListener(this);
+
     }
 
     @Override
