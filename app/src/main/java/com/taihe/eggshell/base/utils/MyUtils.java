@@ -3,7 +3,7 @@ package com.taihe.eggshell.base.utils;
 import android.text.TextUtils;
 
 /**
- * Created by bei on 2015/7/15.
+ * Created by mh on 2015/7/15.
  */
 public class MyUtils {
 
@@ -12,11 +12,11 @@ public class MyUtils {
      */
     public static boolean isMobileNO(String mobiles) {
 		/*
-		 * £º134¡¢135¡¢136¡¢137¡¢138¡¢139¡¢150¡¢151¡¢157(TD)¡¢158¡¢159¡¢187¡¢188
-		 * £º130¡¢131¡¢132¡¢152¡¢155¡¢156¡¢185¡¢186
+		 * ï¼š134ã€135ã€136ã€137ã€138ã€139ã€150ã€151ã€157(TD)ã€158ã€159ã€187ã€188
+		 * ï¼š130ã€131ã€132ã€152ã€155ã€156ã€185ã€186
 		 *
 		 *
-		 * £º133¡¢153¡¢180¡¢189¡¢£¨1349£©
+		 * ï¼š133ã€153ã€180ã€189ã€ï¼ˆ1349ï¼‰
 		 *
 		 */
         String telRegex = "[1][3458]\\d{9}";
