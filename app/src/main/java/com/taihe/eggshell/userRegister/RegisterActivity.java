@@ -1,25 +1,15 @@
 package com.taihe.eggshell.userRegister;
-
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
+
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
 
-import org.apache.http.client.HttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.HashMap;
 
 
 public class RegisterActivity extends BaseActivity {
