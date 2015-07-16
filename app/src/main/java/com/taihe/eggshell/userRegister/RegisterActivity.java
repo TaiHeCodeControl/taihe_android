@@ -9,7 +9,7 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
 
-
+import static com.taihe.eggshell.base.utils.MyUtils.isMobileNO;
 
 
 public class RegisterActivity extends BaseActivity {
@@ -50,7 +50,7 @@ public class RegisterActivity extends BaseActivity {
                 con_pwd = confirm_password.getText().toString();
                 //map.put("username",num);
                 //map.put("password",pwd);
-              if(num.length()!= 11){
+              if(!isMobileNO(num)){
                     ToastUtils.show(RegisterActivity.this,"手机号格式不正确");
                 }else if(pwd.length()<6){
                     ToastUtils.show(RegisterActivity.this,"密码长度太短");
