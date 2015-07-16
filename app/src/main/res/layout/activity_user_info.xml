@@ -7,11 +7,17 @@
 
     <include layout="@layout/include_title_bar"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
+
     <RelativeLayout
         android:id="@+id/id_to_about"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@drawable/ucenter_selected_background">
 
         <ImageView
             android:id="@+id/id_img_about"
@@ -39,11 +45,17 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
+
     <RelativeLayout
         android:id="@+id/id_to_help"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@drawable/ucenter_selected_background">
 
         <ImageView
             android:id="@+id/id_img_help"
@@ -71,11 +83,17 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
+
     <RelativeLayout
         android:id="@+id/id_to_feedback"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@drawable/ucenter_selected_background">
 
         <ImageView
             android:id="@+id/id_img_feedback"
@@ -103,11 +121,17 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
+
     <RelativeLayout
         android:id="@+id/id_to_update"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@drawable/ucenter_selected_background">
 
         <ImageView
             android:id="@+id/id_img_update"
@@ -135,11 +159,17 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
+
     <RelativeLayout
         android:id="@+id/id_to_quite"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:background="@drawable/ucenter_selected_background">
 
         <ImageView
             android:id="@+id/id_img_quite"
@@ -167,5 +197,9 @@
 
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
 
 </LinearLayout>
