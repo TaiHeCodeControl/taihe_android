@@ -8,15 +8,13 @@ import android.text.TextUtils;
 public class MyUtils {
 
     /**
-     * phone
+     * Verify the phone
      */
     public static boolean isMobileNO(String mobiles) {
 		/*
-		 * ：134、135、136、137、138、139、150、151、157(TD)、158、159、187、188
-		 * ：130、131、132、152、155、156、185、186
-		 *
-		 *
-		 * ：133、153、180、189、（1349）
+		 * CMCC ：134、135、136、137、138、139、150、151、157(TD)、158、159、187、188
+		 * China Unicom：130、131、132、152、155、156、185、186
+		 * China Telecom：133、153、180、189、（1349）
 		 *
 		 */
         String telRegex = "[1][3458]\\d{9}";
@@ -27,7 +25,7 @@ public class MyUtils {
     }
 
     /**
-     * eamil
+     * Verify the zip code
      * @param post
      * @return
      */
@@ -40,7 +38,7 @@ public class MyUtils {
     }
 
     /**
-     *
+     * Verify the email
      * @param email
      * @return
      */
