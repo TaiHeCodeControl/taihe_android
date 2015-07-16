@@ -14,10 +14,8 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.personalCenter.activity.UserInfoActivity;
 import com.taihe.eggshell.userRegister.RegisterActivity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.Map;
 

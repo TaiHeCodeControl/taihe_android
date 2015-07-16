@@ -21,14 +21,6 @@ public class RegisterActivity extends BaseActivity {
     private String con_pwd=null;
     private Button btn_register;
     //private HashMap<String,String> map;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_register);
-        initView();
-        initData();
-
-    }
 
     @Override
     public void initView() {
