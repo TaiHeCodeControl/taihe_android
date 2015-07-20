@@ -4,32 +4,45 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
+    <com.taihe.eggshell.widget.CustomViewPager
+        android:id="@+id/main_ViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/main_tab_RadioGroup"/>
+
+    <RadioGroup
+        android:id="@+id/main_tab_RadioGroup"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"/>
+        android:layout_alignParentBottom="true"
+        android:background="@color/blue"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/id_personal_center"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="50dp"
-        android:text="个人中心"/>
-
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="50dp"
-        android:text="登录"
-        android:layout_below="@id/id_personal_center"
-        />
-    <Button
-        android:id="@+id/id_user_register"
-        android:layout_below="@id/btn_login"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="50dp"
-        android:text="注册"/>
+        <RadioButton
+            android:id="@+id/radio_chats"
+            style="@style/main_tab"
+            android:drawableTop="@drawable/tab_img_color_select"
+            android:text="首页"
+            android:checked="true"
+            />
+        <RadioButton
+            android:id="@+id/radio_contacts"
+            style="@style/main_tab"
+            android:drawableTop="@drawable/ic_launcher"
+            android:text="兼职"
+            />
+        <RadioButton
+            android:id="@+id/radio_discover"
+            style="@style/main_tab"
+            android:drawableTop="@drawable/ic_launcher"
+            android:text="实习"
+            />
+        <RadioButton
+            android:id="@+id/radio_me"
+            style="@style/main_tab"
+            android:drawableTop="@drawable/ic_launcher"
+            android:text="我"
+            />
+    </RadioGroup>
 </RelativeLayout>

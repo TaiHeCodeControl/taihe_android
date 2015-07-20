@@ -13,7 +13,7 @@ import com.taihe.eggshell.base.BaseActivity;
 /**
  * Created by Thinkpad on 2015/7/14.
  */
-public class UserInfoActivity extends BaseActivity{
+public class SetUpActivity extends BaseActivity{
 
     private static final String TAG = "UserInfoActivity";
 

@@ -41,7 +41,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".personalCenter.activity.UserInfoActivity"
+            android:name=".personalCenter.activity.SetUpActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".login.LoginActivity"
