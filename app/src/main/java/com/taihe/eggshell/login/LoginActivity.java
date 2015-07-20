@@ -18,9 +18,12 @@ import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.MyUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 
+/**
+ *
+ */
 public class LoginActivity extends BaseActivity {
 
-    // titleid
+    // Titleid
     @ViewInject(R.id.btn_left)
     private Button btn_left;
     @ViewInject(R.id.btn_right)
