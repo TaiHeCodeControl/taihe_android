@@ -1,4 +1,4 @@
-package com.taihe.eggshell.base;
+﻿package com.taihe.eggshell.base;
 
 import android.os.Environment;
 
@@ -6,6 +6,7 @@ import android.os.Environment;
  * Created by tiahe on 2015/7/20.
  */
 public class Constants {
+
     /**
      * 升级包缓存的名称
      */

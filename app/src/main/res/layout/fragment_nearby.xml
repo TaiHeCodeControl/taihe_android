@@ -9,5 +9,4 @@
         android:layout_gravity="center_horizontal"
 	   android:text="附近"
 	   android:textSize="20sp"/>
-
 </LinearLayout>

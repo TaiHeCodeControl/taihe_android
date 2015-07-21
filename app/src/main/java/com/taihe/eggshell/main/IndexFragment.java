@@ -28,7 +28,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
 
         mContext = getActivity();
-        rootView = inflater.inflate(R.layout.index_fragment, null);
+        rootView = inflater.inflate(R.layout.fragment_index, null);
 		return rootView;
 	}
 

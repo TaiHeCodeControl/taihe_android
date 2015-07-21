@@ -3,7 +3,6 @@ package com.taihe.eggshell.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +13,6 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.personalCenter.activity.SetUpActivity;
-
-import org.w3c.dom.Text;
 
 public class MeFragment extends Fragment implements View.OnClickListener{
 
@@ -30,7 +27,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
 
         mContext = getActivity();
-		rootView = inflater.inflate(R.layout.me_fragment, null) ;
+		rootView = inflater.inflate(R.layout.fragment_me, null) ;
 		return rootView ;
 	}
 
