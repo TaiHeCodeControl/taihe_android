@@ -43,25 +43,22 @@ public class UpdateService extends IntentService {
     private String updateUrl;
 
     public UpdateService() {
-        super("下载服务");
+        super("涓嬭浇鏈嶅姟");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.i("info", "已经启动服务");
         try {
             updateUrl = intent.getStringExtra("url");
             notification = new MyNotification(getApplicationContext());
             notification.createNotification();
             manager = notification.getManager();
-            // 开启下载任务
             new LoadThread().start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // 执行下载线程
     public class LoadThread extends Thread {
         private InputStream is;
         private FileOutputStream fos;
@@ -122,7 +119,6 @@ public class UpdateService extends IntentService {
         }
     }
 
-    // 自动安装APK
     public void execInstall() {
         String fileName = Environment.getExternalStorageDirectory()
                 + "/xiyibang.apk";

@@ -4,7 +4,7 @@ package com.taihe.eggshell.base;
  * Created by tiahe on 2015/7/20.
  */
 public class Constants {
-    // ¶¨Òå°æ±¾¸üĞÂµÄÈıÖÖ×´Ì¬
+    // å®šä¹‰ç‰ˆæœ¬æ›´æ–°çš„ä¸‰ç§çŠ¶æ€
     public static String CHECK_VER = "";
     public static int DOWNLOAD_OK = 1;
     public static int DOWNLOAD_ERROE = 2;
