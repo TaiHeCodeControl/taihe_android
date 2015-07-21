@@ -1,12 +1,22 @@
 package com.taihe.eggshell.base;
 
+import android.os.Environment;
+
 /**
  * Created by tiahe on 2015/7/20.
  */
 public class Constants {
-    // ¶¨Òå°æ±¾¸üĞÂµÄÈıÖÖ×´Ì¬
-    public static String CHECK_VER = "";
-    public static int DOWNLOAD_OK = 1;
-    public static int DOWNLOAD_ERROE = 2;
-    public static int DOWNLOAD_COMPLETE = 3;
+    /**
+     * å‡çº§åŒ…ç¼“å­˜çš„åç§°
+     */
+    public static final String UPDATE_PACKAGE_NAME = "eggshel_upgrade.apk";
+    public static final String APK_NAME = "xyb.apk";
+    public static final int PAY_TYPE_CASH_DISCOUNT = 1;
+
+    /**
+     * å‡çº§çš„ä¸‹è½½è·¯å¾„
+     */
+    public static final String UPGRADE_DOWNLOAD_PATH = Environment.getExternalStorageDirectory() + "/"
+            + "eggshell/download/";
+
 }

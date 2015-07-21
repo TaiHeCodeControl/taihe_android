@@ -8,6 +8,13 @@
         android:id="@+id/main_ViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/id_line_view"/>
+
+    <View
+        android:id="@+id/id_line_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
         android:layout_above="@+id/main_tab_RadioGroup"/>
 
     <RadioGroup
@@ -15,34 +22,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/blue"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/radio_chats"
+            android:id="@+id/id_radio_index"
             style="@style/main_tab"
-            android:drawableTop="@drawable/tab_img_color_select"
-            android:text="首页"
+            android:drawableTop="@drawable/tab_index_background"
             android:checked="true"
             />
         <RadioButton
-            android:id="@+id/radio_contacts"
+            android:id="@+id/id_radio_nearby"
             style="@style/main_tab"
-            android:drawableTop="@drawable/ic_launcher"
-            android:text="兼职"
+            android:drawableTop="@drawable/tab_nearby_background"
             />
         <RadioButton
-            android:id="@+id/radio_discover"
+            android:id="@+id/id_radio_internship"
             style="@style/main_tab"
-            android:drawableTop="@drawable/ic_launcher"
-            android:text="实习"
+            android:drawableTop="@drawable/tab_internship_background"
             />
         <RadioButton
-            android:id="@+id/radio_me"
+            android:id="@+id/id_radio_me"
             style="@style/main_tab"
-            android:drawableTop="@drawable/ic_launcher"
-            android:text="我"
+            android:drawableTop="@drawable/tab_me_background"
             />
     </RadioGroup>
 </RelativeLayout>

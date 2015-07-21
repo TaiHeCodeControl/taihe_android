@@ -9,7 +9,7 @@ public class APKUtils {
 	
 	
 	public static PackageInfo getPackageInfo(String fullFileName){
-		PackageManager packageManager = EggshellApplication.getContext().getPackageManager();
+		PackageManager packageManager = EggshellApplication.getApplication().getPackageManager();
 		return packageManager.getPackageArchiveInfo(fullFileName, PackageManager.GET_ACTIVITIES);
 	}
 	

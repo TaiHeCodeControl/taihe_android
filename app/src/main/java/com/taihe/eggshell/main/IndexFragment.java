@@ -3,6 +3,7 @@ package com.taihe.eggshell.main;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.taihe.eggshell.widget.ChoiceDialog;
 
 public class IndexFragment extends Fragment implements View.OnClickListener{
 
+    private static final String TAG = "IndexFragment";
     private Context mContext;
 
     private View rootView;
@@ -47,7 +49,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 ToastUtils.show(mContext,"hello");
             }
         });
-        dialog.show();
+//        dialog.show();
+        Log.v(TAG,"index");
     }
 
     @Override

@@ -87,27 +87,6 @@ public class PrefUtils {
 		return sharedPreferences.getString(key, defaultValue);
 	}
 
-    public static void setUserCityPreference(Context context,String prename,String key,String value){
-        SharedPreferences sp = context.getSharedPreferences(prename, Context.MODE_MULTI_PROCESS);
-        Editor editor = sp.edit();
-        editor.putString(key,value);
-        editor.commit();
-    }
-
-    public static String getUserCityPreference(Context context,String prename,String key,String defaultValue){
-        return context.getSharedPreferences(prename,Context.MODE_MULTI_PROCESS).getString(key,defaultValue);
-    }
-
-    public static void setQiNiuCDN(Context context,String prename,String key,String value){
-        SharedPreferences sp = context.getSharedPreferences(prename, Context.MODE_MULTI_PROCESS);
-        Editor editor = sp.edit();
-        editor.putString(key,value);
-        editor.commit();
-    }
-
-    public static String getQiNiuCDN(Context context,String prename,String key,String defaultValue){
-        return context.getSharedPreferences(prename,Context.MODE_MULTI_PROCESS).getString(key,defaultValue);
-    }
     public static void saveBooleanData(Context context,String key,boolean value){
         if(sharedPreferences==null){
             sharedPreferences=context.getSharedPreferences(CONFIG,Context.MODE_PRIVATE);

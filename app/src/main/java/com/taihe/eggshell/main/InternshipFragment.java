@@ -8,11 +8,9 @@ import android.view.ViewGroup;
 
 import com.taihe.eggshell.R;
 
-public class InternshipFragment extends Fragment
-{
+public class InternshipFragment extends Fragment{
 	@Override
-	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState)
-	{
+	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
 		View v = inflater.inflate(R.layout.discover_fragment, null) ;
 		return v ;
 	}

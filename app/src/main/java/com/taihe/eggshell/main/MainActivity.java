@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -28,19 +29,12 @@ import java.util.Map;
 
 public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener,View.OnClickListener {
 
+    private static final String TAG = "MainActivity";
     private Context mContext;
-    private Button toPersonalCenter;
-    private Button btn_login;
-    private Button btn_register;
-    private Intent intent;
 
-    //ViewPager控件
     private CustomViewPager main_viewPager ;
-    //RadioGroup控件
     private RadioGroup main_tab_RadioGroup ;
-    //RadioButton控件
-    private RadioButton radio_chats , radio_contacts , radio_discover , radio_me ;
-    //类型为Fragment的动态数组
+    private RadioButton radio_index , radio_nearby , radio_internship , radio_me ;
     private ArrayList<Fragment> fragmentList;
 
     @Override
@@ -57,12 +51,11 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     public void initView() {
 
-        main_tab_RadioGroup = (RadioGroup) findViewById(R.id.main_tab_RadioGroup) ;
-
-        radio_chats = (RadioButton) findViewById(R.id.radio_chats) ;
-        radio_contacts = (RadioButton) findViewById(R.id.radio_contacts) ;
-        radio_discover = (RadioButton) findViewById(R.id.radio_discover) ;
-        radio_me = (RadioButton) findViewById(R.id.radio_me) ;
+        main_tab_RadioGroup = (RadioGroup) findViewById(R.id.main_tab_RadioGroup);
+        radio_index = (RadioButton) findViewById(R.id.id_radio_index);
+        radio_nearby = (RadioButton) findViewById(R.id.id_radio_nearby);
+        radio_internship = (RadioButton) findViewById(R.id.id_radio_internship);
+        radio_me = (RadioButton) findViewById(R.id.id_radio_me);
 
         main_tab_RadioGroup.setOnCheckedChangeListener(this);
     }
@@ -77,43 +70,41 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         fragmentList = new ArrayList<Fragment>();
         Fragment indexFragment = new IndexFragment();
-        Fragment contactsFragment = new PartTimeFragment();
-        Fragment discoverFragment = new InternshipFragment();
+        Fragment partTimeFragment = new PartTimeFragment();
+        Fragment internshipFragment = new InternshipFragment();
         Fragment meFragment = new MeFragment();
 
-        //将各Fragment加入数组中
         fragmentList.add(indexFragment);
-        fragmentList.add(contactsFragment);
-        fragmentList.add(discoverFragment);
+        fragmentList.add(partTimeFragment);
+        fragmentList.add(internshipFragment);
         fragmentList.add(meFragment);
 
-        //设置ViewPager的设配器
         main_viewPager.setAdapter(new MyAdapter(getSupportFragmentManager() , fragmentList));
-        //当前为第一个页面
         main_viewPager.setCurrentItem(0);
         main_viewPager.setScanSroll(true);
+        main_viewPager.setOffscreenPageLimit(4);
         //ViewPager的页面改变监听器
 //		main_viewPager.setOnPageChangeListener(new MyListner());
     }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        //获取当前被选中的RadioButton的ID，用于改变ViewPager的当前页
         int current=0;
         switch(checkedId){
-            case R.id.radio_chats:
+            case R.id.id_radio_index:
                 current = 0 ;
                 break ;
-            case R.id.radio_contacts:
+            case R.id.id_radio_nearby:
                 current = 1 ;
                 break;
-            case R.id.radio_discover:
+            case R.id.id_radio_internship:
                 current = 2 ;
                 break;
-            case R.id.radio_me:
+            case R.id.id_radio_me:
                 current = 3 ;
                 break ;
         }
+
         if(main_viewPager.getCurrentItem() != current){
             main_viewPager.setCurrentItem(current);
         }
@@ -126,8 +117,21 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             this.list = list ;
         }
         @Override
-        public Fragment getItem(int arg0) {
-            return list.get(arg0);
+        public Fragment getItem(int position) {
+            if (position == 0) {
+//                return new IndexFragment();
+                return list.get(position);
+            } else if (position == 1) {
+//                return new PartTimeFragment();
+                return list.get(position);
+            } else if (position == 2) {
+//                return new InternshipFragment();
+                return list.get(position);
+            } else if (position == 3) {
+//                return new MeFragment();
+                return list.get(position);
+            }
+            return null;
         }
         @Override
         public int getCount() {

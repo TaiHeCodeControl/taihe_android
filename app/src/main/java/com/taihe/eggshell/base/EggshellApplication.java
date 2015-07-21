@@ -10,22 +10,14 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 
 public class EggshellApplication extends Application {
 	public static EggshellApplication hyrApplication;
-	private static Context context;
-	private static AsyncHttpClient asyncHttpClient; // 异步访问网络数据客户端
 	private User user;
-    public static boolean isCop = true;
 
 	public void onCreate() {
 		hyrApplication = this;
         super.onCreate();
 //        EggshellCrashHandler.getInstance().init(this);
     }
-	public static Context getContext(){
-		return context;
-	}
-	public static AsyncHttpClient getAsyncHttpClient() {
-		return asyncHttpClient;
-	}
+
 	/**
 	 * 获取版本的名称
 	 *
@@ -34,8 +26,8 @@ public class EggshellApplication extends Application {
 	 */
 	public static String getVersionName() {
 		try {
-			PackageInfo packageInfo = context.getPackageManager()
-					.getPackageInfo(context.getPackageName(),
+			PackageInfo packageInfo = hyrApplication.getPackageManager()
+					.getPackageInfo(hyrApplication.getPackageName(),
 							PackageManager.GET_CONFIGURATIONS);
 			return packageInfo.versionName;
 		} catch (PackageManager.NameNotFoundException e) {
@@ -51,7 +43,7 @@ public class EggshellApplication extends Application {
 	 */
 	public static int getVersionCode(){
 		try{
-			PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_CONFIGURATIONS);
+			PackageInfo packageInfo = hyrApplication.getPackageManager().getPackageInfo(hyrApplication.getPackageName(), PackageManager.GET_CONFIGURATIONS);
 			return  packageInfo.versionCode;
 		}catch (PackageManager.NameNotFoundException e){
 			e.printStackTrace();
