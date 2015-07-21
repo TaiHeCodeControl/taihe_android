@@ -76,13 +76,13 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         main_viewPager = (CustomViewPager) findViewById(R.id.main_ViewPager);
 
         fragmentList = new ArrayList<Fragment>();
-        Fragment chatsFragment = new IndexFragment();
+        Fragment indexFragment = new IndexFragment();
         Fragment contactsFragment = new PartTimeFragment();
         Fragment discoverFragment = new InternshipFragment();
         Fragment meFragment = new MeFragment();
 
         //将各Fragment加入数组中
-        fragmentList.add(chatsFragment);
+        fragmentList.add(indexFragment);
         fragmentList.add(contactsFragment);
         fragmentList.add(discoverFragment);
         fragmentList.add(meFragment);
@@ -121,8 +121,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     public class MyAdapter extends FragmentPagerAdapter {
         ArrayList<Fragment> list ;
-        public MyAdapter(FragmentManager fm , ArrayList<Fragment> list)
-        {
+        public MyAdapter(FragmentManager fm , ArrayList<Fragment> list){
             super(fm);
             this.list = list ;
         }
@@ -139,6 +138,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+
+
         }
     }
 
