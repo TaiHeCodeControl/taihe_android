@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.google.gson.Gson;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.main.entity.User;
@@ -18,6 +19,10 @@ public class EggshellApplication extends Application {
 		hyrApplication = this;
         super.onCreate();
 //        EggshellCrashHandler.getInstance().init(this);
+
+		//在使用SDK各组件之前初始化context信息，传入ApplicationContext
+		//注意该方法要再setContentView方法之前实现
+		SDKInitializer.initialize(getApplicationContext());
     }
 
 	public static EggshellApplication getApplication() {
