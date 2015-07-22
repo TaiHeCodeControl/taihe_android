@@ -1,23 +1,17 @@
 package com.taihe.eggshell.login;
 
-import android.app.Activity;
-import android.os.Bundle;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.MyUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.userRegister.RegisterActivity;
 
 /**
  *
@@ -27,9 +21,13 @@ public class LoginActivity extends BaseActivity {
     private EditText et_userphone;
     private EditText et_password;
     private Button btn_login;
+    private TextView tv_forgetPassword;
+    private TextView tv_regist;
 
     private String userphone;
     private String password;
+
+    private Intent intent;
 
     @Override
     public void initView() {
@@ -39,6 +37,12 @@ public class LoginActivity extends BaseActivity {
         et_userphone = (EditText)findViewById(R.id.et_login_userphone);
         et_password = (EditText)findViewById(R.id.et_login_password);
         btn_login = (Button)findViewById(R.id.btn_login_login);
+        tv_forgetPassword = (TextView) findViewById(R.id.tv_login_forgetpassword);
+        tv_regist = (TextView) findViewById(R.id.tv_login_regist);
+
+        btn_login.setOnClickListener(this);
+        tv_forgetPassword.setOnClickListener(this);
+        tv_regist.setOnClickListener(this);
     }
 
     @Override
@@ -46,7 +50,7 @@ public class LoginActivity extends BaseActivity {
         super.initData();
 
         initTitle("登录");
-        btn_login.setOnClickListener(this);
+
     }
 
     @Override
@@ -56,6 +60,15 @@ public class LoginActivity extends BaseActivity {
            case R.id.btn_login_login:
             login();
             break;
+            case R.id.tv_login_forgetpassword:
+                intent = new Intent(LoginActivity.this,ForgetPasswordActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tv_login_regist:
+                intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+//                this.finish();
+                break;
         }
     }
 
