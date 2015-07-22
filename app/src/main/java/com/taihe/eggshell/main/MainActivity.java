@@ -1,15 +1,12 @@
 package com.taihe.eggshell.main;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -70,7 +67,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         fragmentList = new ArrayList<Fragment>();
         Fragment indexFragment = new IndexFragment();
-        Fragment partTimeFragment = new PartTimeFragment();
+        Fragment partTimeFragment = new NearbyFragment();
         Fragment internshipFragment = new InternshipFragment();
         Fragment meFragment = new MeFragment();
 
@@ -122,7 +119,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                return new IndexFragment();
                 return list.get(position);
             } else if (position == 1) {
-//                return new PartTimeFragment();
                 return list.get(position);
             } else if (position == 2) {
 //                return new InternshipFragment();

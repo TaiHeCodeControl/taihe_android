@@ -8,5 +8,8 @@
     <string name="login_title">登录</string>
     <string name="login_login_toast">账户名或密码不能为空</string>
     <string name="login_login_phone_toast">请输入正确的手机号</string>
+    <string name="main_around_title">附近</string>
+    <string name="main_around_left">地图</string>
+
 
 </resources>
