@@ -1,5 +1,6 @@
 package com.taihe.eggshell.login;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -8,11 +9,17 @@ import android.widget.ImageView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
+import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.main.MainActivity;
+import com.taihe.eggshell.main.entity.User;
 
 import static com.taihe.eggshell.base.utils.MyUtils.isMobileNO;
 
-
+/**
+ * 注册成功直接登录
+ */
 public class RegisterActivity extends BaseActivity {
     private EditText phone_num;
     private EditText password;
@@ -30,6 +37,7 @@ public class RegisterActivity extends BaseActivity {
     public void initView() {
         setContentView(R.layout.activity_register);
         super.initView();
+//        overridePendingTransition(R.anim.activity_right_to_center, R.anim.activity_center_to_left);
 
         phone_num = (EditText) findViewById(R.id.et_regist_phone);
         phone_code = (EditText) findViewById(R.id.et_regist_code);
@@ -68,15 +76,26 @@ public class RegisterActivity extends BaseActivity {
         confirm_pwd = confirm_password.getText().toString();
         if (!isMobileNO(p_num)) {
             ToastUtils.show(RegisterActivity.this, "手机号格式不正确");
-        } else if(p_code.equals(p_num)){
+        } else if(!p_code.equals(p_num)){
             ToastUtils.show(RegisterActivity.this, "验证码不正确");
 
         }else if (pwd.length() < 6) {
             ToastUtils.show(RegisterActivity.this, "密码长度太短");
         } else if (!pwd.equals(confirm_pwd)) {
             ToastUtils.show(RegisterActivity.this, "密码不一致");
-        } else
-            ToastUtils.show(RegisterActivity.this, "正在登陆");
+        } else{
+
+            ToastUtils.show(RegisterActivity.this, "正在注册中...");
+            //TODO
+            //服务器注册
+            //注册成功自动登录转回首页
+            //保存用户登录信息
+//            PrefUtils.saveStringPreferences(getApplicationContext(),PrefUtils.CONFIG,PrefUtils.KEY_USER_JSON,"xx");
+            EggshellApplication.getApplication().setUser(new User());
+            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+            startActivity(intent);
+            RegisterActivity.this.finish();
+        }
     }
 
     //获取短信验证码

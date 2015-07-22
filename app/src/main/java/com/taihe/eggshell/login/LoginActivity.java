@@ -9,8 +9,12 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.utils.MyUtils;
+import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.main.MainActivity;
+import com.taihe.eggshell.main.entity.User;
 
 /**
  *
@@ -32,6 +36,7 @@ public class LoginActivity extends BaseActivity {
     public void initView() {
         setContentView(R.layout.activity_login);
         super.initView();
+        overridePendingTransition(R.anim.activity_right_to_center, R.anim.activity_center_to_left);
 
         et_userphone = (EditText)findViewById(R.id.et_login_userphone);
         et_password = (EditText)findViewById(R.id.et_login_password);
@@ -83,7 +88,12 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-
+        //保存用户登录信息
+        EggshellApplication.getApplication().setUser(new User());
+//        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "xx");
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        LoginActivity.this.finish();
 
     }
 }

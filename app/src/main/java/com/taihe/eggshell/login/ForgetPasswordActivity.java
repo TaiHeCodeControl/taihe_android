@@ -1,5 +1,6 @@
 package com.taihe.eggshell.login;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import static com.taihe.eggshell.base.utils.MyUtils.isMobileNO;
 
 /**
  * Created by huan on 2015/7/22.
+ * 忘记密码界面，密码修改成功转到登录界面
  */
 public class ForgetPasswordActivity extends BaseActivity {
 
@@ -33,6 +35,8 @@ public class ForgetPasswordActivity extends BaseActivity {
     public void initView() {
         setContentView(R.layout.activity_findpassword);
         super.initView();
+        overridePendingTransition(R.anim.activity_right_to_center, R.anim.activity_center_to_left);
+
         phone_num = (EditText) findViewById(R.id.et_findpass_phone);
         phone_code = (EditText) findViewById(R.id.et_findpass_code);
         password = (EditText) findViewById(R.id.et_findpass_pwd);
@@ -77,8 +81,15 @@ public class ForgetPasswordActivity extends BaseActivity {
             ToastUtils.show(ForgetPasswordActivity.this, "密码长度太短");
         } else if (!pwd.equals(confirm_pwd)) {
             ToastUtils.show(ForgetPasswordActivity.this, "密码不一致");
-        } else
-            ToastUtils.show(ForgetPasswordActivity.this, "正在登陆");
+        } else{
+            ToastUtils.show(ForgetPasswordActivity.this, "正在修改");
+            //TODO
+            //提交服务器
+            //提交成功转回登录界面
+            Intent intent = new Intent(ForgetPasswordActivity.this,LoginActivity.class);
+            startActivity(intent);
+            ForgetPasswordActivity.this.finish();
+        }
     }
 
     //获取短信验证码
