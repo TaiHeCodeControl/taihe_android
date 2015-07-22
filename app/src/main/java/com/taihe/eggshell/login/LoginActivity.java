@@ -1,22 +1,13 @@
 package com.taihe.eggshell.login;
 
-import android.app.Activity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
-import com.taihe.eggshell.base.utils.MyUtils;
+import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 
 /**
@@ -66,7 +57,7 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.show(getApplicationContext(),R.string.login_login_toast);
             return;
         }
-        if(!MyUtils.isMobileNO(userphone)){
+        if(!FormatUtils.isMobileNO(userphone)){
             ToastUtils.show(getApplicationContext(),R.string.login_login_phone_toast);
             return;
         }

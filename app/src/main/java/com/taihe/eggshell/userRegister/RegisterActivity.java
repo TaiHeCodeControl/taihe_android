@@ -9,7 +9,7 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
 
-import static com.taihe.eggshell.base.utils.MyUtils.isMobileNO;
+import static com.taihe.eggshell.base.utils.FormatUtils.isMobileNO;
 
 
 public class RegisterActivity extends BaseActivity {

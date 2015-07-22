@@ -48,7 +48,6 @@ public class GuidePageAdapter extends PagerAdapter{
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         ((ViewPager)container).addView(imgList.get(position),0);
-        ToastUtils.show(mContext,position+":"+imgList.size());
         if(position == imgList.size()-1){
             Button button = (Button)container.findViewById(R.id.id_go);
             button.setOnClickListener(new View.OnClickListener() {

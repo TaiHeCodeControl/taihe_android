@@ -8,7 +8,7 @@ import android.text.TextUtils;
 /**
  * Created by bei on 2015/7/15.
  */
-public class MyUtils {
+public class FormatUtils {
 
     /**
      * phone
@@ -54,21 +54,5 @@ public class MyUtils {
             return false;
         }
     }
-    /**
-     * 获取版本号
-     *
-     * @return 当前应用的版本号
-     */
-    public static String getVersion(Context context) {
-        try {
-            PackageManager manager = context.getPackageManager();
-            PackageInfo info = manager.getPackageInfo(context.getPackageName(),
-                    0);
-            String version = info.versionName;
-            return version;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 }
