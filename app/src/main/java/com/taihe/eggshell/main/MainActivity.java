@@ -72,9 +72,11 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         },new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                dialog.dismiss();
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 startActivity(intent);
-                dialog.dismiss();
+
             }
         });
 

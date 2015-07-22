@@ -11,7 +11,6 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.MyUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
-import com.taihe.eggshell.userRegister.RegisterActivity;
 
 /**
  *
