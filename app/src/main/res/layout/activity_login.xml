@@ -1,16 +1,12 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="com.taihe.eggshell.login.LoginActivity"
-    >
+    android:orientation="vertical"
+    android:background="@color/white">
 
-    <include
-        android:id="@+id/title_bars"
-        layout="@layout/layout_title_bar"/>
+    <include layout="@layout/include_title_bar"/>
 
     <LinearLayout
-        android:layout_below="@+id/title_bars"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -98,4 +94,4 @@
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>

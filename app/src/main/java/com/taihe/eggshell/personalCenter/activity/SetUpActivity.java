@@ -1,31 +1,13 @@
 package com.taihe.eggshell.personalCenter.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.http.RequestParams;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
-import com.taihe.eggshell.base.Constants;
-import com.taihe.eggshell.base.EggshellApplication;
-import com.taihe.eggshell.base.utils.MyUtils;
-import com.taihe.eggshell.base.utils.RequestUtils;
-
-import org.apache.http.client.HttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
 
 /**
  * Created by Thinkpad on 2015/7/14.
@@ -41,7 +23,7 @@ public class SetUpActivity extends BaseActivity{
     private RelativeLayout aboutLayout,helpLayout,feedBackLayout,updateLayout,quiteLayout;
     @Override
     public void initView() {
-        setContentView(R.layout.activity_user_info);
+        setContentView(R.layout.activity_system_setup);
         super.initView();
 
         mContext = this;

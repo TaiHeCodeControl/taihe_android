@@ -1,4 +1,4 @@
-package com.taihe.eggshell.base;
+package com.taihe.eggshell.main.entity;
 
 /**
  * Created by Thinkpad on 2015/7/1.

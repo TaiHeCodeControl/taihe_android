@@ -42,5 +42,27 @@ public class ChoiceDialog extends Dialog{
         rightButton.setOnClickListener(rightClickListener);
     }
 
+    public Button getLeftButton() {
+        return leftButton;
+    }
 
+    public void setLeftButton(Button leftButton) {
+        this.leftButton = leftButton;
+    }
+
+    public Button getRightButton() {
+        return rightButton;
+    }
+
+    public void setRightButton(Button rightButton) {
+        this.rightButton = rightButton;
+    }
+
+    public TextView getTitleText() {
+        return titleText;
+    }
+
+    public void setTitleText(TextView titleText) {
+        this.titleText = titleText;
+    }
 }

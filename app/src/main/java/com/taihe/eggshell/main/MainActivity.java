@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,8 +17,13 @@ import android.widget.RadioGroup;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.login.LoginActivity;
+import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.CustomViewPager;
 
 import org.json.JSONException;
@@ -36,6 +42,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     private RadioGroup main_tab_RadioGroup ;
     private RadioButton radio_index , radio_nearby , radio_internship , radio_me ;
     private ArrayList<Fragment> fragmentList;
+    private ChoiceDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,25 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         radio_me = (RadioButton) findViewById(R.id.id_radio_me);
 
         main_tab_RadioGroup.setOnCheckedChangeListener(this);
+
+        dialog = new ChoiceDialog(mContext,new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                ToastUtils.show(mContext, "取消");
+            }
+        },new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.getTitleText().setText("亲，您还没有登录呢~");
+        dialog.getLeftButton().setText("取消");
+        dialog.getRightButton().setText("登录");
     }
 
     public void initData() {
@@ -79,7 +105,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         fragmentList.add(internshipFragment);
         fragmentList.add(meFragment);
 
-        main_viewPager.setAdapter(new MyAdapter(getSupportFragmentManager() , fragmentList));
+        main_viewPager.setAdapter(new MyAdapter(getSupportFragmentManager(), fragmentList));
         main_viewPager.setCurrentItem(0);
         main_viewPager.setScanSroll(true);
         main_viewPager.setOffscreenPageLimit(4);
@@ -106,7 +132,16 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
 
         if(main_viewPager.getCurrentItem() != current){
-            main_viewPager.setCurrentItem(current);
+            if(current==3){
+                if(null!= EggshellApplication.getApplication().getUser()){
+                    main_viewPager.setCurrentItem(current);
+                }else{
+                    dialog.show();
+                }
+            }else{
+                main_viewPager.setCurrentItem(current);
+            }
+
         }
     }
 

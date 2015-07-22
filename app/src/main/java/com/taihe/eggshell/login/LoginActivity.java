@@ -24,28 +24,9 @@ import com.taihe.eggshell.base.utils.ToastUtils;
  */
 public class LoginActivity extends BaseActivity {
 
-    // Titleid
-    @ViewInject(R.id.btn_left)
-    private Button btn_left;
-    @ViewInject(R.id.btn_right)
-    private Button btn_right;
-    @ViewInject(R.id.txt_title)
-    private TextView txt_title;
-    @ViewInject(R.id.imgbtn_left)
-    private ImageButton imgbtn_left;
-    @ViewInject(R.id.imgbtn_text)
-    private ImageButton imgbtn_text;
-    @ViewInject(R.id.imgbtn_right)
-    private ImageButton imgbtn_right;
-
-    @ViewInject(R.id.et_login_userphone)
     private EditText et_userphone;
-    @ViewInject(R.id.et_login_password)
     private EditText et_password;
-    @ViewInject(R.id.btn_login_login)
     private Button btn_login;
-    @ViewInject(R.id.cb_login_remind)
-    private CheckBox cb_remind;
 
     private String userphone;
     private String password;
@@ -53,31 +34,24 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initView() {
         setContentView(R.layout.activity_login);
-        ViewUtils.inject(this);
-        initTitleBar();
+        super.initView();
 
-        btn_login.setOnClickListener(this);
-
+        et_userphone = (EditText)findViewById(R.id.et_login_userphone);
+        et_password = (EditText)findViewById(R.id.et_login_password);
+        btn_login = (Button)findViewById(R.id.btn_login_login);
     }
 
     @Override
     public void initData() {
+        super.initData();
 
-    }
-
-    public void initTitleBar(){
-
-        btn_left.setVisibility(View.GONE);
-        btn_right.setVisibility(View.GONE);
-        imgbtn_text.setVisibility(View.GONE);
-        imgbtn_right.setVisibility(View.INVISIBLE);
-        imgbtn_left.setVisibility(View.INVISIBLE);
-        txt_title.setText(R.string.login_title);
-
+        initTitle("登录");
+        btn_login.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        super.onClick(v);
         switch(v.getId()){
            case R.id.btn_login_login:
             login();
