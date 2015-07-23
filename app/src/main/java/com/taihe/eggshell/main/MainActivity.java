@@ -133,8 +133,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         if(main_viewPager.getCurrentItem() != current){
             if(current==3){
-                User user = EggshellApplication.getApplication().getUser();
-                System.out.println(user + "=====================");
                 if(null!= EggshellApplication.getApplication().getUser()){
                     main_viewPager.setCurrentItem(current);
                 }else{

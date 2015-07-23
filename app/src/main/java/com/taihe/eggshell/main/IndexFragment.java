@@ -1,9 +1,9 @@
 package com.taihe.eggshell.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.utils.ToastUtils;
-import com.taihe.eggshell.widget.ChoiceDialog;
 
 public class IndexFragment extends Fragment implements View.OnClickListener{
 
@@ -20,9 +18,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
 
     private View rootView;
-    private ImageView backImgView;
+    private ImageView toVideoImg;
     private TextView titleText;
-    private ChoiceDialog dialog;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
@@ -35,26 +32,21 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initView();
+    }
 
-        dialog = new ChoiceDialog(mContext,new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                ToastUtils.show(mContext,"进入");
-            }
-        },new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                ToastUtils.show(mContext,"hello");
-            }
-        });
-//        dialog.show();
-        Log.v(TAG,"index");
+    private void initView(){
+        toVideoImg = (ImageView)rootView.findViewById(R.id.id_to_videolist);
+        toVideoImg.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.id_to_videolist:
+                Intent intent = new Intent(mContext,VideoListActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

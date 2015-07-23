@@ -85,6 +85,11 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".main.VideoListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

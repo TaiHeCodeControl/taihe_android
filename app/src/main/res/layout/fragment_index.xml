@@ -14,5 +14,12 @@
 	   android:textSize="20sp"/>
 
 
+    <ImageView
+        android:id="@+id/id_to_videolist"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="100dp"
+        android:src="@drawable/bg_overlay"/>
+
 
 </LinearLayout>
