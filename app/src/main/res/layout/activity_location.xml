@@ -5,9 +5,85 @@
 
     <com.baidu.mapapi.map.MapView
         android:id="@+id/bmapView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:clickable="true" />
+
+    <include
+        android:id="@+id/id_map_title"
+        layout="@layout/include_title_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/id_map_title"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="区域  "
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:drawableRight="@drawable/down_icon"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="价格  "
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:drawableRight="@drawable/down_icon"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="时间  "
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:drawableRight="@drawable/down_icon"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="更多  "
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:drawableRight="@drawable/down_icon"/>
+        </LinearLayout>
+    </LinearLayout>
 
 
 </RelativeLayout>

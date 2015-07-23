@@ -2,11 +2,15 @@ package com.taihe.eggshell.map;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -25,6 +29,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.Stroke;
@@ -39,20 +44,17 @@ import java.util.ArrayList;
  * 用来展示如何结合定位SDK实现定位，并使用MyLocationOverlay绘制定位位置 同时展示如何使用自定义图标绘制并点击时弹出泡泡
  *
  */
-public class LocationMapActivity extends Activity {
+public class LocationMapActivity extends Activity implements View.OnClickListener{
 
-    // 定位相关
-    LocationClient mLocClient;
-    public MyLocationListenner myListener = new MyLocationListenner();
-
-    MapView mMapView;
-    BaiduMap mBaiduMap;
-
-    // UI相关
+    private LocationClient mLocClient;
+    private MyLocationListenner myListener = new MyLocationListenner();
+    private MapView mMapView;
+    private BaiduMap mBaiduMap;
+    private ImageView imgBack;
     boolean isFirstLoc = true;// 是否首次定位
     private Context mContext;
-    private ArrayList<Marker> markerlist = new ArrayList<Marker>();
-    private ArrayList<Marker> markerchildlist = new ArrayList<Marker>();
+    private ArrayList<Marker> rootMarklist = new ArrayList<Marker>();
+    private ArrayList<Marker> childMarkerList = new ArrayList<Marker>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,19 +63,21 @@ public class LocationMapActivity extends Activity {
 
         mContext = this;
 
-        // 地图初始化
         mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();
-        // 开启定位图层
+
+        mBaiduMap.getUiSettings().setCompassEnabled(false);//去掉指南针
+        mMapView.showZoomControls(false);//去掉放大缩小按钮
+        mMapView.showScaleControl(false);//比例尺控件
+
         mBaiduMap.setMyLocationEnabled(true);
-        // 定位初始化
         mLocClient = new LocationClient(this);
         mLocClient.registerLocationListener(myListener);
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
         option.setOpenGps(true);// 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(1000);
+        option.setScanSpan(5000);
         mLocClient.setLocOption(option);
         mLocClient.start();
 
@@ -82,24 +86,10 @@ public class LocationMapActivity extends Activity {
     }
 
     private void initView(){
-        markerlist.clear();
-        mBaiduMap.clear();
 
-        for(int i=0;i<10;i++){
-
-            TextView textView = new TextView(mContext);
-            textView.setText("你大爷:"+i+"\n二大爷1"+i);
-            textView.setTextSize(20);
-            textView.setGravity(Gravity.CENTER);
-            textView.setBackgroundResource(R.drawable.bg_overlay);
-
-            LatLng llA = new LatLng(39.963175+(i*0.01), 116.400244+(i*0.01));
-            BitmapDescriptor bdA = BitmapDescriptorFactory.fromView(textView);//fromResource(R.drawable.bg_overlay);
-            OverlayOptions ooA = new MarkerOptions().position(llA).icon(bdA).zIndex(10);
-            Marker marker = (Marker) (mBaiduMap.addOverlay(ooA));
-            markerlist.add(marker);
-        }
-
+        imgBack = (ImageView)findViewById(R.id.id_back);
+        imgBack.setOnClickListener(this);
+        showRootMark();
     }
 
     private void initData(){
@@ -108,11 +98,11 @@ public class LocationMapActivity extends Activity {
             @Override
             public boolean onMarkerClick(Marker marker) {
 
-                for(Marker m : markerlist){
+                for(Marker m : rootMarklist){
                     if(marker.getPosition() == m.getPosition()){
                         MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(marker.getPosition(), 16);
                         mBaiduMap.animateMapStatus(u);
-                        childMarker(marker.getPosition());
+                        showChildMarker(marker.getExtraInfo());
                     }
                 }
                 return false;
@@ -121,15 +111,9 @@ public class LocationMapActivity extends Activity {
 
         mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
             @Override
-            public void onMapStatusChangeStart(MapStatus mapStatus) {
-
-            }
-
+            public void onMapStatusChangeStart(MapStatus mapStatus) {}
             @Override
-            public void onMapStatusChange(MapStatus mapStatus) {
-
-            }
-
+            public void onMapStatusChange(MapStatus mapStatus) {}
             @Override
             public void onMapStatusChangeFinish(MapStatus mapStatus) {
                    float flag = mapStatus.zoom;
@@ -137,28 +121,64 @@ public class LocationMapActivity extends Activity {
                        initView();
                    }
                     if(flag>15){
-                        childMarker(new LatLng(16.11,12.00));
+                        showChildMarker(new Bundle());
                     }
             }
         });
     }
 
-    private void childMarker(LatLng latLng){
-        markerchildlist.clear();
+    private void showRootMark(){
+        rootMarklist.clear();
+        mBaiduMap.clear();
+
+        for(int i=0;i<10;i++){
+
+            LatLng llA = new LatLng(39.963175+(i*0.01), 116.400244+(i*0.01));
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("",new RootMarker());
+
+            BitmapDescriptor bdA = BitmapDescriptorFactory.fromView(getItemView("海淀区",i));//fromResource(R.drawable.bg_overlay);
+            OverlayOptions ooA = new MarkerOptions().position(llA).icon(bdA).zIndex(10).extraInfo(bundle);
+            Marker marker = (Marker) (mBaiduMap.addOverlay(ooA));
+            rootMarklist.add(marker);
+        }
+    }
+
+    private void showChildMarker(Bundle bundle){
+        childMarkerList.clear();
         mBaiduMap.clear();
         for(int i=0;i<10;i++){
 
-            TextView textView = new TextView(mContext);
-            textView.setText("你妹:"+i+"\n妹妹1"+i);
-            textView.setTextSize(20);
-            textView.setGravity(Gravity.CENTER);
-            textView.setBackgroundResource(R.drawable.bg_overlay);
-
             LatLng llA = new LatLng(39.963175+(i*0.001), 116.400244+(i*0.001));
-            BitmapDescriptor bdA = BitmapDescriptorFactory.fromView(textView);//fromResource(R.drawable.bg_overlay);
+
+            BitmapDescriptor bdA = BitmapDescriptorFactory.fromView(getItemView("文化路",i));//fromResource(R.drawable.bg_overlay);
             OverlayOptions ooA = new MarkerOptions().position(llA).icon(bdA).zIndex(10);
             Marker marker = (Marker) (mBaiduMap.addOverlay(ooA));
-            markerchildlist.add(marker);
+            childMarkerList.add(marker);
+        }
+    }
+
+    private View getItemView(String title,int number){
+
+        TextView textView = new TextView(mContext);
+        textView.setText(title+number+"\n"+number);
+        textView.setTextSize(18);
+        textView.setGravity(Gravity.CENTER);
+        textView.setBackgroundResource(R.drawable.bg_overlay);
+        LinearLayout linearLayout = new LinearLayout(mContext);
+        linearLayout.addView(textView,180,180);
+        linearLayout.setGravity(Gravity.CENTER);
+
+        return  linearLayout;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.id_back:
+                finish();
+                break;
         }
     }
 
@@ -169,7 +189,6 @@ public class LocationMapActivity extends Activity {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            // map view 销毁后不在处理新接收的位置
             if (location == null || mMapView == null)
                 return;
 
@@ -178,18 +197,18 @@ public class LocationMapActivity extends Activity {
                     .direction(100).latitude(location.getLatitude())
                     .longitude(location.getLongitude()).build();
             mBaiduMap.setMyLocationData(locData);
+//            mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(MyLocationConfiguration.LocationMode.FOLLOWING,true,BitmapDescriptorFactory.fromResource(R.drawable.location_marker)));
 
             if (isFirstLoc) {
                 isFirstLoc = false;
                 LatLng ll = new LatLng(location.getLatitude(),location.getLongitude());
 
-                MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, 12);
+                MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(ll, 12);//中心，级别
                 mBaiduMap.animateMapStatus(u);
             }
         }
 
-        public void onReceivePoi(BDLocation poiLocation) {
-        }
+        public void onReceivePoi(BDLocation poiLocation) {}
     }
 
     @Override
