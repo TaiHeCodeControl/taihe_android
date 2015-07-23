@@ -96,8 +96,7 @@
             android:id="@+id/rl_mine_evaluate"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/ucenter_selected_background"
-            >
+            android:background="@drawable/ucenter_selected_background">
 
             <ImageView
                 android:layout_width="wrap_content"
