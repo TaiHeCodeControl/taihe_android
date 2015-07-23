@@ -19,9 +19,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
 
     private View rootView;
-    private ImageView backImgView;
-    private TextView titleText;
-    private RelativeLayout toSetUpLayout;
+    private RelativeLayout rl_setting;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
@@ -35,19 +33,15 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        toSetUpLayout = (RelativeLayout)rootView.findViewById(R.id.id_to_setup);
-        backImgView = (ImageView)rootView.findViewById(R.id.id_back);
-        titleText = (TextView)rootView.findViewById(R.id.id_title);
+        rl_setting = (RelativeLayout)rootView.findViewById(R.id.rl_mine_setting);
 
-        backImgView.setVisibility(View.GONE);
-        toSetUpLayout.setOnClickListener(this);
-        titleText.setText("我的");
+        rl_setting.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.id_to_setup:
+            case R.id.rl_mine_setting:
                 Intent intent = new Intent(mContext, SetUpActivity.class);
                 startActivity(intent);
                 break;

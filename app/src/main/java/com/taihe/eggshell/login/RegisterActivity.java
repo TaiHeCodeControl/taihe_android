@@ -96,7 +96,7 @@ public class RegisterActivity extends BaseActivity {
             //注册成功自动登录跳转到信息完善界面
             //保存用户登录信息
 //            EggshellApplication.getApplication().setUser(new User(1,"hh","18810309233"));
-            PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{id,1,name,'xx',phoneNumber:'89898'}");
+            PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{'id':1,'name':'xx','phoneNumber':'89898'}");
             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(intent);
             RegisterActivity.this.finish();

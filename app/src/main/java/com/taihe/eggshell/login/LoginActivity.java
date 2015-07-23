@@ -103,7 +103,7 @@ public class LoginActivity extends BaseActivity {
 //        EggshellApplication.getApplication().setUser(new User(1,"hh","18810309233"));
 //        User user = EggshellApplication.getApplication().getUser();
 //        System.out.println(user + "save=====================");
-        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{id,1,name,'xx',phoneNumber:'89898'}");
+        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{'id':1,'name':'xx','phoneNumber':'89898'}");
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
         LoginActivity.this.finish();
