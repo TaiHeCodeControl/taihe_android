@@ -26,6 +26,7 @@ public class RegisterActivity extends BaseActivity {
     private EditText phone_code;
     private Button btn_register;
     private ImageView iv_getCode;
+    private ImageView iv_back;
 
     private String pwd;
     private String p_num;
@@ -44,7 +45,9 @@ public class RegisterActivity extends BaseActivity {
         confirm_password = (EditText) findViewById(R.id.et_regist_confirm_pwd);
         btn_register = (Button) findViewById(R.id.btn_regist_register);
         iv_getCode = (ImageView) findViewById(R.id.iv_regist_getcode);
+        iv_back = (ImageView) findViewById(R.id.id_back);
 
+        iv_back.setOnClickListener(this);
         btn_register.setOnClickListener(this);
         iv_getCode.setOnClickListener(this);
     }
@@ -58,6 +61,9 @@ public class RegisterActivity extends BaseActivity {
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()){
+            case R.id.id_back:
+                RegisterActivity.this.finish();
+                break;
             case R.id.iv_regist_getcode:
                 getCode();
                 break;
@@ -87,10 +93,10 @@ public class RegisterActivity extends BaseActivity {
             ToastUtils.show(RegisterActivity.this, "正在注册中...");
             //TODO
             //服务器注册
-            //注册成功自动登录转回首页
+            //注册成功自动登录跳转到信息完善界面
             //保存用户登录信息
-//            PrefUtils.saveStringPreferences(getApplicationContext(),PrefUtils.CONFIG,PrefUtils.KEY_USER_JSON,"xx");
-            EggshellApplication.getApplication().setUser(new User());
+//            EggshellApplication.getApplication().setUser(new User(1,"hh","18810309233"));
+            PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{'id':1,'name':'xx','phoneNumber':'89898'}");
             Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
             startActivity(intent);
             RegisterActivity.this.finish();

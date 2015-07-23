@@ -25,6 +25,7 @@ public class ForgetPasswordActivity extends BaseActivity {
     private EditText phone_code;
     private Button btn_comfirm;
     private ImageView iv_getCode;
+    private ImageView iv_back;
 
     private String pwd;
     private String p_num;
@@ -43,7 +44,9 @@ public class ForgetPasswordActivity extends BaseActivity {
         confirm_password = (EditText) findViewById(R.id.et_findpass_confirm_pwd);
         btn_comfirm = (Button) findViewById(R.id.btn_findpass_confirm);
         iv_getCode = (ImageView) findViewById(R.id.iv_findpass_getcode);
+        iv_back = (ImageView) findViewById(R.id.id_back);
 
+        iv_back.setOnClickListener(this);
         btn_comfirm.setOnClickListener(this);
         iv_getCode.setOnClickListener(this);
     }
@@ -57,6 +60,9 @@ public class ForgetPasswordActivity extends BaseActivity {
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
+            case R.id.id_back:
+                ForgetPasswordActivity.this.finish();
+                break;
             case R.id.iv_findpass_getcode:
                 getCode();
                 break;

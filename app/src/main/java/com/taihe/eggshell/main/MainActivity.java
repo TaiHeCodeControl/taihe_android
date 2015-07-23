@@ -20,6 +20,7 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.login.LoginActivity;
+import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.CustomViewPager;
 
@@ -132,6 +133,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         if(main_viewPager.getCurrentItem() != current){
             if(current==3){
+                User user = EggshellApplication.getApplication().getUser();
+                System.out.println(user + "=====================");
                 if(null!= EggshellApplication.getApplication().getUser()){
                     main_viewPager.setCurrentItem(current);
                 }else{
