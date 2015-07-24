@@ -7,11 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.personalCenter.activity.MyPostActivity;
+import com.taihe.eggshell.personalCenter.activity.MyResumeEditActivity;
 import com.taihe.eggshell.personalCenter.activity.SetUpActivity;
 
 public class MeFragment extends Fragment implements View.OnClickListener{
@@ -21,6 +23,8 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     private View rootView;
     private RelativeLayout rl_setting;
     private TextView tv_post, tv_intension,tv_collect;
+    private Button btn_resume;
+
     private Intent intent;
 
     @Override
@@ -39,7 +43,9 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         tv_intension = (TextView) rootView.findViewById(R.id.tv_mine_jobintension);
         tv_collect = (TextView) rootView.findViewById(R.id.tv_mine_mycollect);
         rl_setting = (RelativeLayout)rootView.findViewById(R.id.rl_mine_setting);
+        btn_resume = (Button) rootView.findViewById(R.id.btn_mine_resume);
 
+        btn_resume.setOnClickListener(this);
         tv_post.setOnClickListener(this);
         tv_intension.setOnClickListener(this);
         tv_collect.setOnClickListener(this);
@@ -49,6 +55,10 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.btn_mine_resume:
+                intent = new Intent(mContext,MyResumeEditActivity.class);
+                startActivity(intent);
+                break;
             case R.id.tv_mine_post:
                 intent = new Intent(mContext,MyPostActivity.class);
                 startActivity(intent);
