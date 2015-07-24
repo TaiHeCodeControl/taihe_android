@@ -9,7 +9,7 @@
 	   android:layout_width="wrap_content"
 	   android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-	   android:text="消息"
+	   android:text="我的投递"
 	   android:textSize="20sp"/>
 
 </LinearLayout>
