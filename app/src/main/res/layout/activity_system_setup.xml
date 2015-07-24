@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/background_gray">
 
     <include layout="@layout/include_title_bar"/>
 
@@ -13,34 +13,33 @@
         android:background="@color/gray"/>
 
     <RelativeLayout
-        android:id="@+id/id_to_about"
+        android:id="@+id/rl_set_cacheclear"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:background="@drawable/ucenter_selected_background">
 
         <ImageView
-            android:id="@+id/id_img_about"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_launcher"/>
-
-        <TextView
-            android:text="关于我们"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/id_img_about"
-            android:layout_marginLeft="10dp"
-            android:textSize="18sp"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/mine_set"/>
+
+        <TextView
+            android:text="缓存清理"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
             android:textColor="@color/black"/>
         
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             android:src="@drawable/icon_more"/>
 
     </RelativeLayout>
@@ -51,34 +50,68 @@
         android:background="@color/gray"/>
 
     <RelativeLayout
-        android:id="@+id/id_to_help"
+        android:id="@+id/rl_set_changepwd"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:background="@drawable/ucenter_selected_background">
 
         <ImageView
-            android:id="@+id/id_img_help"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_launcher"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/mine_set"/>
+
+        <TextView
+            android:text="更改密码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70dp"
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/icon_more"/>
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/rl_set_help"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/ucenter_selected_background">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mine_set"/>
 
         <TextView
             android:text="使用帮助"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/id_img_help"
-            android:layout_marginLeft="10dp"
-            android:textSize="18sp"
+            android:layout_marginLeft="70dp"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
             android:textColor="@color/black"/>
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             android:src="@drawable/icon_more"/>
 
     </RelativeLayout>
@@ -89,34 +122,33 @@
         android:background="@color/gray"/>
 
     <RelativeLayout
-        android:id="@+id/id_to_feedback"
+        android:id="@+id/rl_set_feedback"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:background="@drawable/ucenter_selected_background">
 
         <ImageView
-            android:id="@+id/id_img_feedback"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_launcher"/>
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mine_set"/>
 
         <TextView
             android:text="意见反馈"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/id_img_feedback"
-            android:layout_marginLeft="10dp"
-            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70dp"
+            android:textSize="16sp"
             android:textColor="@color/black"/>
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             android:src="@drawable/icon_more"/>
 
     </RelativeLayout>
@@ -127,34 +159,33 @@
         android:background="@color/gray"/>
 
     <RelativeLayout
-        android:id="@+id/id_to_update"
+        android:id="@+id/rl_set_update"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:background="@drawable/ucenter_selected_background">
 
         <ImageView
-            android:id="@+id/id_img_update"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_launcher"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/mine_set"/>
 
         <TextView
             android:text="系统升级"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/id_img_update"
-            android:layout_marginLeft="10dp"
-            android:textSize="18sp"
+            android:layout_marginLeft="70dp"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
             android:textColor="@color/black"/>
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             android:src="@drawable/icon_more"/>
 
     </RelativeLayout>
@@ -165,34 +196,33 @@
         android:background="@color/gray"/>
 
     <RelativeLayout
-        android:id="@+id/id_to_quite"
+        android:id="@+id/rl_set_about"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
         android:background="@drawable/ucenter_selected_background">
 
         <ImageView
-            android:id="@+id/id_img_quite"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_launcher"/>
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mine_set"/>
 
         <TextView
-            android:text="退出系统"
+            android:text="关于我们"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/id_img_quite"
-            android:layout_marginLeft="10dp"
-            android:textSize="18sp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="70dp"
+            android:textSize="16sp"
             android:textColor="@color/black"/>
 
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             android:src="@drawable/icon_more"/>
 
     </RelativeLayout>
@@ -201,5 +231,17 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray"/>
+
+
+    <Button
+        android:id="@+id/btn_set_logout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:background="@drawable/btn_login_selector"
+        android:text="退出系统"
+        android:textSize="16sp"
+        android:textColor="@color/white" />
 
 </LinearLayout>

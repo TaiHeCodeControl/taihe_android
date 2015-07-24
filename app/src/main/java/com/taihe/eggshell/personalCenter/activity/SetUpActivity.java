@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.taihe.eggshell.R;
@@ -27,7 +28,8 @@ public class SetUpActivity extends BaseActivity {
 
     private ChoiceDialog dialog;
 
-    private RelativeLayout aboutLayout, helpLayout, feedBackLayout, updateLayout, quiteLayout;
+    private RelativeLayout aboutLayout, helpLayout, feedBackLayout, updateLayout, changePwd;
+    private Button btn_logout;
 
     @Override
     public void initView() {
@@ -36,11 +38,13 @@ public class SetUpActivity extends BaseActivity {
         overridePendingTransition(R.anim.activity_right_to_center, R.anim.activity_center_to_left);
 
         mContext = this;
-        aboutLayout = (RelativeLayout) findViewById(R.id.id_to_about);
-        helpLayout = (RelativeLayout) findViewById(R.id.id_to_help);
-        feedBackLayout = (RelativeLayout) findViewById(R.id.id_to_feedback);
-        updateLayout = (RelativeLayout) findViewById(R.id.id_to_update);
-        quiteLayout = (RelativeLayout) findViewById(R.id.id_to_quite);
+        aboutLayout = (RelativeLayout) findViewById(R.id.rl_set_about);
+        helpLayout = (RelativeLayout) findViewById(R.id.rl_set_help);
+        feedBackLayout = (RelativeLayout) findViewById(R.id.rl_set_feedback);
+        updateLayout = (RelativeLayout) findViewById(R.id.rl_set_update);
+
+        changePwd = (RelativeLayout) findViewById(R.id.rl_set_changepwd);
+        btn_logout = (Button) findViewById(R.id.btn_set_logout);
 
         dialog = new ChoiceDialog(mContext, new View.OnClickListener() {
             @Override
@@ -75,7 +79,8 @@ public class SetUpActivity extends BaseActivity {
         helpLayout.setOnClickListener(this);
         feedBackLayout.setOnClickListener(this);
         updateLayout.setOnClickListener(this);
-        quiteLayout.setOnClickListener(this);
+        changePwd.setOnClickListener(this);
+        btn_logout.setOnClickListener(this);
 
     }
 
@@ -85,21 +90,24 @@ public class SetUpActivity extends BaseActivity {
         super.onClick(v);
 
         switch (v.getId()) {
-            case R.id.id_to_about:
+            case R.id.rl_set_about://关于我们
                 Intent aboutIntent = new Intent(mContext, AboutActivity.class);
                 startActivity(aboutIntent);
                 break;
-            case R.id.id_to_help:
+            case R.id.rl_set_help://使用帮助
                 Intent HelpIntent = new Intent(mContext, HelpActivity.class);
                 startActivity(HelpIntent);
                 break;
-            case R.id.id_to_feedback:
+            case R.id.rl_set_feedback://意见反馈
 
                 break;
-            case R.id.id_to_update:
+            case R.id.rl_set_update://检查更新
                 checkUpdate();
                 break;
-            case R.id.id_to_quite:
+            case R.id.rl_set_changepwd://更改密码
+
+                break;
+            case R.id.btn_set_logout:
                 dialog.show();
                 break;
         }
