@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -87,7 +88,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     }
 
     public void initData() {
-//        getDataFromNet();
+        getDataFromNet();
     }
 
     public void initViewPager() {
@@ -188,8 +189,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             public void onResponse(Object obj) {//返回值
                 try {
                     JSONObject jsonObject = new JSONObject((String)obj);
-                    //String data = jsonObject.getString("data");
-
+//                    String data = jsonObject.getString("data");
+                    Log.v(TAG,(String)obj);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -202,12 +203,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
             }
         };
-
-        //参数
-        Map<String,String> param = new HashMap<String, String>();
-        param.put("","");
-        //POST请求
-        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_LOGIN,false,param,true,listener,errorListener);
+        String method = "&c=res&username=shaoyelaile&password=123456&usertype=1&moblie=18911790395&source=7";
+        RequestUtils.createRequest_GET(mContext, Urls.getMopHostUrl(),method,false,"","",listener,errorListener);
     }
 
     private void getData(){

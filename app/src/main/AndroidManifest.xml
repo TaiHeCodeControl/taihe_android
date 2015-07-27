@@ -99,9 +99,14 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".main.VideoListActivity"
+            android:name=".videoplay.VideoListActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".videoplay.VideoPlayActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape"/>
 
 
         <meta-data

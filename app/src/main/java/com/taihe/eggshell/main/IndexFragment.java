@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.videoplay.VideoListActivity;
 
 public class IndexFragment extends Fragment implements View.OnClickListener{
 

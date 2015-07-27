@@ -1,4 +1,4 @@
-package com.taihe.eggshell.main.adapter;
+package com.taihe.eggshell.videoplay;
 
 import android.content.Context;
 import android.view.LayoutInflater;
