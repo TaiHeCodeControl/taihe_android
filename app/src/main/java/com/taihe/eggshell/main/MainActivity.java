@@ -88,7 +88,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     }
 
     public void initData() {
-        getDataFromNet();
     }
 
     public void initViewPager() {
@@ -182,32 +181,4 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
     }
 
-    private void getDataFromNet(){
-        //返回监听事件
-        Response.Listener listener = new Response.Listener() {
-            @Override
-            public void onResponse(Object obj) {//返回值
-                try {
-                    JSONObject jsonObject = new JSONObject((String)obj);
-//                    String data = jsonObject.getString("data");
-                    Log.v(TAG,(String)obj);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {//返回值
-
-            }
-        };
-        String method = "&c=res&username=shaoyelaile&password=123456&usertype=1&moblie=18911790395&source=7";
-        RequestUtils.createRequest_GET(mContext, Urls.getMopHostUrl(),method,false,"","",listener,errorListener);
-    }
-
-    private void getData(){
-
-    }
 }
