@@ -17,4 +17,17 @@
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@drawable/tab_color_select</item>
     </style>
+
+    <style name="CustomProgressDialog" parent="@style/CommonDialog">
+        <item name="android:windowBackground">@drawable/xiaoyao_dialog</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <!-- dialog -->
+    <style name="CommonDialog" parent="@android:style/Theme.Dialog">
+
+        <!-- <item name="android:windowBackground">@drawable/smssdk_dialog_bg</item> -->
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 </resources>
