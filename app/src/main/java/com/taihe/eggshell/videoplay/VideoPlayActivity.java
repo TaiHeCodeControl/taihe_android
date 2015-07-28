@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -54,64 +55,10 @@ public class VideoPlayActivity extends BaseActivity{
     private TextView cacheT;
     private UpdateSeekBarR updateSeekBarR;   //更新进度条用
 
-    private long mediaLength = 0 , readSize = 0 , contentLength=0;
-
-    //handler
-    Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case NETWORK_PARSE_ERROR://错误信息
-                    Toast.makeText(getApplicationContext(), "网络连接错误,不能完成播放!", Toast.LENGTH_LONG).show();
-                    loadingVideoV.setVisibility(View.GONE);
-                    break;
-                case VIDEO_FILE_ERROR://错误信息
-                    Toast.makeText(getApplicationContext(), "视频文件错误,不能完成播放!",Toast.LENGTH_LONG).show();
-                    loadingVideoV.setVisibility(View.GONE);
-                    break;
-                case VIDEO_STATE_BEGIN://开始播放视频
-                    playMediaMethod();
-                    playBtn.setEnabled(true);
-                    playBtn.setBackgroundResource(R.drawable.btn_pause);
-                    break;
-                case VIDEO_CACHE_FINISH://视频缓存完成,使用本地文件播放
-                    Toast.makeText(getApplicationContext(), "视频已经缓存完毕,为保证播放的流畅性,正在切换成本地文件播放!",Toast.LENGTH_LONG).show();
-                    postSize = mediaPlayer.getCurrentPosition();
-                    playMediaMethod();
-                    break;
-                case VIDEO_UPDATE_SEEKBAR:// 更新进度条
-                    if (mediaPlayer == null) {
-                        flag = false;
-                    }else{
-                        double cachepercent = readSize * 100.00 / mediaLength * 1.0;
-                        String s = String.format("已缓存:[%.2f%%]", cachepercent);
-
-                        if(mediaPlayer.isPlaying()) {
-                            flag = true;
-                            int position = mediaPlayer.getCurrentPosition();
-                            int mMax = mediaPlayer.getDuration();
-                            int sMax = seekbar.getMax();
-                            seekbar.setProgress(position * sMax / mMax);
-
-                            mMax = 0 == mMax ? 1 : mMax;
-                            double playpercent = position * 100.00 / mMax * 1.0;
-
-                            int i = position / 1000;
-                            int hour = i / (60 * 60);
-                            int minute = i / 60 % 60;
-                            int second = i % 60;
-
-                            s += String.format(" 当前播放:%02d:%02d:%02d [%.2f%%]", hour, minute, second, playpercent);
-                        }else{
-                            s += " 视频当前未播放!";
-                        }
-                        cacheT.setText(s);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        };
-    };
+    private long mediaLength = 0 , readSize = 0;
+    private HttpURLConnection httpConnection;
+    private FileOutputStream out = null;
+    private InputStream is = null;
 
     @Override
     public void initView() {
@@ -122,35 +69,105 @@ public class VideoPlayActivity extends BaseActivity{
 
         setContentView(R.layout.activity_video_play);
 
-        url = "http://zqgbzx.cn:6060/zwapi/videos/ZQ0005.mp4";   //视频播放地址
+        url = "http://zqgbzx.cn:6060/zwapi/videos/ZQ0005.mp4";//视频播放地址
 //		url =Environment.getExternalStorageDirectory().getAbsolutePath()+"/9533522808.f4v.mp4";
-        initVideoPlayer();//初始化数据
-        setPalyerListener();//绑定相关事件
-    }
 
-    @Override
-    public void initData() {
-
-    }
-
-    private void initVideoPlayer() {
-        mediaPlayer = new MediaPlayer();   //创建一个播放器对象
+        mediaPlayer = new MediaPlayer();
         updateSeekBarR = new UpdateSeekBarR();  //创建更新进度条对象
 
-        seekbar = (SeekBar) findViewById(R.id.seekBar);//进度条
+        seekbar = (SeekBar) findViewById(R.id.seekBar);
         opLy = (RelativeLayout) findViewById(R.id.opLy);
         loadingVideoV = (ProgressBar) findViewById(R.id.loadingVideo);
         cacheT = (TextView) findViewById(R.id.cacheT);
-
         backBtn = (Button) findViewById(R.id.backBtn);
         playBtn = (Button) findViewById(R.id.playBtn);
         playBtn.setEnabled(false); //刚进来，设置其不可点击
 
         videoSurfaceView = (SurfaceView) findViewById(R.id.surfaceView);
-
         videoSurfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);   //不缓冲
         videoSurfaceView.getHolder().setKeepScreenOn(true);   //保持屏幕高亮
         videoSurfaceView.getHolder().addCallback(new VideoSurfaceView());//设置监听事件,从这里监听surface创建完成开始播放视频
+    }
+
+    @Override
+    public void initData() {
+
+        mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {//缓冲去更新
+            @Override
+            public void onBufferingUpdate(MediaPlayer mp, int percent) {
+            }
+        });
+
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { //视频播放完成
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                flag = false;
+                playBtn.setBackgroundResource(R.drawable.btn_play);
+            }
+        });
+
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int value = seekbar.getProgress() * mediaPlayer.getDuration() / seekbar.getMax();  //计算进度条需要前进的位置数据大小
+                mediaPlayer.seekTo(value);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()){
+            case R.id.backBtn:
+                if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
+                mediaPlayer = null;
+                finish();
+                break;
+            case R.id.playBtn:
+                if (mediaPlayer.isPlaying()) {
+                    playBtn.setBackgroundResource(R.drawable.btn_play);
+                    mediaPlayer.pause();
+                    postSize = mediaPlayer.getCurrentPosition();
+                } else {
+                    if (flag == false) {
+                        flag = true;
+                        new Thread(updateSeekBarR).start();
+                    }
+                    mediaPlayer.start();
+                    playBtn.setBackgroundResource(R.drawable.btn_pause);
+                }
+                break;
+            case R.id.surfaceView:
+                if (display) {
+                    backBtn.setVisibility(View.GONE);
+                    opLy.setVisibility(View.GONE);
+                    display = false;
+                } else {
+                    backBtn.setVisibility(View.VISIBLE);
+                    opLy.setVisibility(View.VISIBLE);
+                    videoSurfaceView.setVisibility(View.VISIBLE);
+
+                    //设置播放为全屏
+					/*ViewGroup.LayoutParams lp = videoSurfaceView.getLayoutParams();
+					lp.height = LayoutParams.FILL_PARENT;
+					lp.width = LayoutParams.FILL_PARENT;
+					videoSurfaceView.setLayoutParams(lp);*/
+                    display = true;
+                }
+                break;
+        }
     }
 
     //视频播放视图回调事件//上面绑定的监听的事件
@@ -172,7 +189,6 @@ public class VideoPlayActivity extends BaseActivity{
                 File videoFile=new File(url);
                 if(videoFile.exists()){
                     readSize = mediaLength = videoFile.length();
-                    System.out.println("这是本地视频,直接播放!");
                     mHandler.sendEmptyMessage(VIDEO_STATE_BEGIN);
                 }
             }
@@ -185,6 +201,21 @@ public class VideoPlayActivity extends BaseActivity{
                 flag = false;
                 loadingVideoV.setVisibility(View.VISIBLE);
             }
+        }
+    }
+
+    //播放视频的方法
+    private void playMediaMethod(){
+        if (postSize > 0 && url!= null) {    //说明，停止过 activity调用过pause方法，跳到停止位置播放
+            new PlayMovieT(postSize).start();//从postSize位置开始放
+            flag = true;
+            int sMax = seekbar.getMax();
+            int mMax = mediaPlayer.getDuration();
+            seekbar.setProgress(postSize * sMax / mMax);
+
+            loadingVideoV.setVisibility(View.GONE);
+        }else {
+            new PlayMovieT(0).start();//表明是第一次开始播放
         }
     }
 
@@ -236,102 +267,6 @@ public class VideoPlayActivity extends BaseActivity{
         }
     }
 
-    //设置操作监听器
-    private void setPalyerListener() {
-        mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {//缓冲去更新
-            @Override
-            public void onBufferingUpdate(MediaPlayer mp, int percent) {
-            }
-        });
-
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { //视频播放完成
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                flag = false;
-                playBtn.setBackgroundResource(R.drawable.btn_play);
-            }
-        });
-        //如果视频在播放，则调用mediaPlayer.pause();，停止播放视频，反之，mediaPlayer.start()  ，同时换按钮背景
-        playBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    playBtn.setBackgroundResource(R.drawable.btn_play);
-                    mediaPlayer.pause();
-                    postSize = mediaPlayer.getCurrentPosition();
-                } else {
-                    if (flag == false) {
-                        flag = true;
-                        new Thread(updateSeekBarR).start();
-                    }
-                    mediaPlayer.start();
-                    playBtn.setBackgroundResource(R.drawable.btn_pause);
-                }
-            }
-        });
-        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                int value = seekbar.getProgress() * mediaPlayer.getDuration() / seekbar.getMax();  //计算进度条需要前进的位置数据大小
-                mediaPlayer.seekTo(value);
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {}
-        });
-        //点击屏幕，切换控件的显示，显示则应藏，隐藏，则显示
-        videoSurfaceView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (display) {
-                    backBtn.setVisibility(View.GONE);
-                    opLy.setVisibility(View.GONE);
-                    display = false;
-                } else {
-                    backBtn.setVisibility(View.VISIBLE);
-                    opLy.setVisibility(View.VISIBLE);
-                    videoSurfaceView.setVisibility(View.VISIBLE);
-
-                    //设置播放为全屏
-					/*ViewGroup.LayoutParams lp = videoSurfaceView.getLayoutParams();
-					lp.height = LayoutParams.FILL_PARENT;
-					lp.width = LayoutParams.FILL_PARENT;
-					videoSurfaceView.setLayoutParams(lp);*/
-                    display = true;
-                }
-
-            }
-        });
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer.isPlaying()) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                }
-                mediaPlayer = null;
-                finish();
-            }
-        });
-    }
-
-
-    //播放视频的方法
-    private void playMediaMethod(){
-        if (postSize > 0 && url!= null) {    //说明，停止过 activity调用过pause方法，跳到停止位置播放
-            new PlayMovieT(postSize).start();//从postSize位置开始放
-            flag = true;
-            int sMax = seekbar.getMax();
-            int mMax = mediaPlayer.getDuration();
-            seekbar.setProgress(postSize * sMax / mMax);
-
-            loadingVideoV.setVisibility(View.GONE);
-        }else {
-            new PlayMovieT(0).start();//表明是第一次开始播放
-        }
-    }
-
     //每隔1秒更新一下进度条线程
     class UpdateSeekBarR implements Runnable {
         @Override
@@ -351,6 +286,26 @@ public class VideoPlayActivity extends BaseActivity{
             mediaPlayer.release();
             mediaPlayer = null;
         }
+
+        if(out != null) {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (is != null) {
+            try {
+                is.close();
+            } catch (IOException e){
+            }
+        }
+
+        if(null!=httpConnection){
+            httpConnection.disconnect();
+        }
+
         System.gc();
     }
 
@@ -358,26 +313,27 @@ public class VideoPlayActivity extends BaseActivity{
     class CacheNetFileR implements Runnable{
         @Override
         public void run() {
-            FileOutputStream out = null;
-            InputStream is = null;
+
             try {
-                HttpURLConnection httpConnection = (HttpURLConnection)new URL(url).openConnection();
+                HttpURLConnection httpConnectionLength = (HttpURLConnection)new URL(url).openConnection();
+                long contentLength = httpConnectionLength.getContentLength();
+                httpConnectionLength.disconnect();
+
+                httpConnection = (HttpURLConnection)new URL(url).openConnection();
+
                 String cacheUrl = Environment.getExternalStorageDirectory().getAbsolutePath()+"/Cache/"+url.substring(url.lastIndexOf("/")+1);
                 File cacheFile = new File(cacheUrl);
                 boolean isNeedCache=false;
                 if (cacheFile.exists()) {
                     readSize = mediaLength = cacheFile.length();
-                    contentLength = httpConnection.getContentLength();
                     Log.v(TAG,"SDC长度："+readSize+";"+contentLength);
                     if(contentLength == readSize){//视频已经成功缓存完成
                         url=cacheUrl;
-                        Log.v(TAG,"本地");
                         isNeedCache=false;
                     }else{
-                        Log.v(TAG,"网络");
                         //先讲属性设置好,不然getContentLength之后已经打开连接了,不能再设置了
                         httpConnection.setRequestProperty("User-Agent", "NetFox");
-                        httpConnection.setRequestProperty("Range", "bytes=" + readSize + "-"+contentLength);//从断点处请求读取文件
+                        httpConnection.setRequestProperty("Range", "bytes=" + readSize + "-");//从断点处请求读取文件
                         isNeedCache=true;
                     }
                 }else{
@@ -385,7 +341,9 @@ public class VideoPlayActivity extends BaseActivity{
                     cacheFile.createNewFile();
                     isNeedCache=true;
                 }
+
                 mHandler.sendEmptyMessage(VIDEO_STATE_BEGIN);//开始播放视频
+
                 if(isNeedCache){//需要缓存视频
                     out = new FileOutputStream(cacheFile, true);
 
@@ -431,5 +389,61 @@ public class VideoPlayActivity extends BaseActivity{
             }
         }
     }
+
+    Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case NETWORK_PARSE_ERROR://错误信息
+                    Toast.makeText(getApplicationContext(), "网络连接错误,不能完成播放!", Toast.LENGTH_LONG).show();
+                    loadingVideoV.setVisibility(View.GONE);
+                    break;
+                case VIDEO_FILE_ERROR://错误信息
+                    Toast.makeText(getApplicationContext(), "视频文件错误,不能完成播放!",Toast.LENGTH_LONG).show();
+                    loadingVideoV.setVisibility(View.GONE);
+                    break;
+                case VIDEO_STATE_BEGIN://开始播放视频
+                    playMediaMethod();
+                    playBtn.setEnabled(true);
+                    playBtn.setBackgroundResource(R.drawable.btn_pause);
+                    break;
+                case VIDEO_CACHE_FINISH://视频缓存完成,使用本地文件播放
+                    Toast.makeText(getApplicationContext(), "视频已经缓存完毕,正在切换成本地文件播放!",Toast.LENGTH_LONG).show();
+                    postSize = mediaPlayer.getCurrentPosition();
+                    playMediaMethod();
+                    break;
+                case VIDEO_UPDATE_SEEKBAR:// 更新进度条
+                    if (mediaPlayer == null) {
+                        flag = false;
+                    }else{
+                        double cachepercent = readSize * 100.00 / mediaLength * 1.0;
+                        String s = String.format("已缓存:[%.2f%%]", cachepercent);
+
+                        if(mediaPlayer.isPlaying()) {
+                            flag = true;
+                            int position = mediaPlayer.getCurrentPosition();
+                            int mMax = mediaPlayer.getDuration();
+                            int sMax = seekbar.getMax();
+                            seekbar.setProgress(position * sMax / mMax);
+
+                            mMax = 0 == mMax ? 1 : mMax;
+                            double playpercent = position * 100.00 / mMax * 1.0;
+
+                            int i = position / 1000;
+                            int hour = i / (60 * 60);
+                            int minute = i / 60 % 60;
+                            int second = i % 60;
+
+                            s += String.format(" 当前播放:%02d:%02d:%02d [%.2f%%]", hour, minute, second, playpercent);
+                        }else{
+                            s += " 视频当前未播放!";
+                        }
+                        cacheT.setText(s);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        };
+    };
 
 }
