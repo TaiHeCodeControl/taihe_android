@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -31,6 +32,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener,View.OnClickListener {
 
@@ -176,9 +179,26 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
-
         }
     }
 
+    private boolean isExit = false;
+    @Override
+    public void onBackPressed() {
+        if(isExit){
+            finish();
+        }else{
+            isExit = true;
+            ToastUtils.show(mContext,"再按一次退出应用");
+
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false;
+                }
+            },2000);
+
+        }
+    }
 }
