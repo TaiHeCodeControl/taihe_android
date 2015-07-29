@@ -1,6 +1,7 @@
 package com.taihe.eggshell.personalCenter.activity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +31,7 @@ import com.taihe.eggshell.base.utils.UpdateUtils;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.CustomProgressDialog;
+import com.taihe.eggshell.widget.HorizontalProgressBarWithNumber;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -275,6 +278,7 @@ public class SetUpActivity extends BaseActivity {
                 null);
 
         final TextView tv_msg = (TextView) view.findViewById(R.id.tv_msg);
+        final HorizontalProgressBarWithNumber pb_update = (HorizontalProgressBarWithNumber) view.findViewById(R.id.pb_dialog_update);
         final TextView tv_qx = (TextView) view.findViewById(R.id.tv_cancel);
         final TextView tv_qd = (TextView) view.findViewById(R.id.tv_ok);
 
@@ -294,7 +298,17 @@ public class SetUpActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 // 下载新版本
-                downloadAPK(downloadUrl, tv_msg, tv_qd, version_new);
+//                downloadAPK(downloadUrl, pb_update,tv_msg, tv_qd, version_new);
+
+                //显示进度条
+
+                pb_update.setVisibility(View.VISIBLE);
+                int pross = pb_update.getProgress();
+
+                    pb_update.setProgress(pross++);
+                    tv_msg.setText("当前下载进度："
+                            + pross);
+
             }
         });
 
@@ -307,12 +321,11 @@ public class SetUpActivity extends BaseActivity {
     /**
      * 下载更新包
      * @param
-     *
      * @param tv_msg
      * @param tv_qd
      * @param nVersion 服务器返回的新版本的版本号
      */
-    private void downloadAPK(final String url, final TextView tv_msg,
+    private void downloadAPK(final String url,final ProgressBar pb_update, final TextView tv_msg,
                              final TextView tv_qd, final String nVersion) {
 
         new Thread() {
@@ -330,6 +343,12 @@ public class SetUpActivity extends BaseActivity {
 
                     public void onLoading(long total, long current,
                                           boolean isUploading) {
+                        //显示进度条
+                        pb_update.setVisibility(View.VISIBLE);
+                        Long progress = current * 100 / total;
+                        String prs = progress.toString();
+                        int pross = Integer.parseInt(prs);
+                        pb_update.setProgress(pross);
                         // 下载进度：current/total
                         tv_msg.setText("当前下载进度："
                                 + DataCleanManager
