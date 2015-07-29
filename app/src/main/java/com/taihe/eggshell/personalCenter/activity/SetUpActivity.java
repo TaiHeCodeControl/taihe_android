@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -49,7 +50,7 @@ public class SetUpActivity extends BaseActivity {
 
     private ChoiceDialog dialog;
 
-    private RelativeLayout aboutLayout, helpLayout, feedBackLayout, updateLayout, changePwd;
+    private RelativeLayout cacheclear,aboutLayout, helpLayout, feedBackLayout, updateLayout, changePwd;
     private Button btn_logout;
 
     @Override
@@ -59,6 +60,7 @@ public class SetUpActivity extends BaseActivity {
         overridePendingTransition(R.anim.activity_right_to_center, R.anim.activity_center_to_left);
 
         mContext = this;
+        cacheclear = (RelativeLayout) findViewById(R.id.rl_set_cacheclear);
         aboutLayout = (RelativeLayout) findViewById(R.id.rl_set_about);
         helpLayout = (RelativeLayout) findViewById(R.id.rl_set_help);
         feedBackLayout = (RelativeLayout) findViewById(R.id.rl_set_feedback);
@@ -96,6 +98,7 @@ public class SetUpActivity extends BaseActivity {
         super.initData();
         super.initTitle("个人中心");
 
+        cacheclear.setOnClickListener(this);
         aboutLayout.setOnClickListener(this);
         helpLayout.setOnClickListener(this);
         feedBackLayout.setOnClickListener(this);
@@ -111,6 +114,15 @@ public class SetUpActivity extends BaseActivity {
         super.onClick(v);
 
         switch (v.getId()) {
+            case R.id.rl_set_cacheclear://清除缓存
+                cleanCache();
+                //调用系统方法清除缓存
+//                Intent intent = new Intent();
+//                intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+//                intent.addCategory(Intent.CATEGORY_DEFAULT);// 有无没影响
+//                intent.setData(Uri.parse("package:" + getPackageName()));
+//                startActivity(intent);
+                break;
             case R.id.rl_set_about://关于我们
                 Intent aboutIntent = new Intent(mContext, AboutActivity.class);
                 startActivity(aboutIntent);
@@ -131,6 +143,36 @@ public class SetUpActivity extends BaseActivity {
             case R.id.btn_set_logout:
                 dialog.show();
                 break;
+        }
+    }
+
+    private String mCacheSize;
+
+    /**
+     * 获取缓存大小
+     */
+    private void getCacheSize() {
+
+        try {
+           mCacheSize = DataCleanManager.getCacheSize(SetUpActivity.this
+                   .getCacheDir());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * 清理缓存
+     */
+    private void cleanCache() {
+        getCacheSize();
+        if(mCacheSize.equals("0.0Byte")){
+            ToastUtils.show(SetUpActivity.this,"当前缓存为0，无需清理");
+        }else{
+
+            DataCleanManager.deleteFilesByDirectory(SetUpActivity.this.getCacheDir());
+            ToastUtils.show(SetUpActivity.this,"缓存清理成功");
         }
     }
 
@@ -194,6 +236,9 @@ public class SetUpActivity extends BaseActivity {
                         if ("0".equals(status)) {
                             version_new = obj.optString("version");
                             String url = obj.optString("url");
+                            Log.i(TAG,url);
+                            Log.i(TAG,status);
+                            Log.i(TAG,result);
                             Message msg = Message.obtain();
                             msg.what = 0;
                             msg.obj = url;
