@@ -3,12 +3,33 @@
 
     <item
         android:id="@android:id/background"
-        android:drawable="@drawable/seek_bg"/>
-    <item android:id="@android:id/secondaryProgress">
-        <clip android:drawable="@drawable/seek_bg" />
+        android:drawable="@drawable/seek_bg">
+            <shape>
+                <corners android:radius="10dp"/>
+                <solid android:color="@color/white"/>
+                <stroke android:color="@color/white"/>
+            </shape>
+        </item>
+
+    <item
+        android:id="@android:id/secondaryProgress">
+        <clip android:drawable="@color/gray" >
+            <shape>
+                <corners android:radius="10dp"/>
+                <solid android:color="@color/gray"/>
+                <stroke android:color="@color/gray"/>
+            </shape>
+        </clip>
     </item>
+
     <item android:id="@android:id/progress">
-        <clip android:drawable="@drawable/seek_progress" />
+        <clip android:drawable="@drawable/seek_progress">
+            <shape>
+                <corners android:radius="10dp"/>
+                <solid android:drawable="@drawable/seek_progress"/>
+                <stroke android:drawable="@drawable/seek_progress"/>
+            </shape>
+        </clip>
     </item>
 
 </layer-list>

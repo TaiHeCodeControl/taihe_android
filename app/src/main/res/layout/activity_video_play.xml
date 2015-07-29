@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@color/white">
 
     <SurfaceView
         android:id="@+id/surfaceView"
@@ -16,12 +17,10 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="top"
-        android:layout_margin="8dip"
-        android:background="#00000000"
-        android:focusable="true"
-        android:gravity="center_vertical">
+        android:background="#00B3B4B5"
+        android:focusable="true">
 
         <Button
             android:id="@+id/backBtn"
@@ -29,31 +28,29 @@
             android:layout_height="35dip"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:gravity="center"
-            android:textColor="#ffffff"
-            android:text="返 回"
             android:background="@drawable/video_back_btn_seletor" />
 
-        <TextView
-            android:id="@+id/cacheT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+        <Button
+            android:id="@+id/id_change_direction"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:layout_toRightOf="@+id/backBtn"
+            android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
-            android:textColor="#0000ff"
-            android:textSize="15sp"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:text="竖屏"
+            android:textSize="18sp"
+            android:textColor="@color/blue"
+            android:background="@null"/>
+
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/opLy"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_gravity="bottom"
-        android:layout_margin="8dip"
-        android:background="#00000000"
-        android:focusable="true"
-        android:gravity="center_vertical">
+        android:background="#00B3B4B5"
+        android:focusable="true">
 
         <Button
             android:id="@+id/playBtn"
@@ -69,14 +66,29 @@
             android:id="@+id/seekBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="4dip"
-            android:minHeight="4dip"
             android:paddingLeft="15dip"
             android:paddingRight="15dip"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/playBtn"
+            android:maxHeight="6dip"
+            android:minHeight="6dip"
             android:progressDrawable="@drawable/seek_drawable"
+            android:secondaryProgress="0"
+            android:progress="0"
             android:thumb="@drawable/seek_thumb"/>
+
+        <TextView
+            android:id="@+id/cacheT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:text="haha"
+            android:textColor="@color/blue"
+            android:textSize="15sp"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </RelativeLayout>
 
 </FrameLayout>

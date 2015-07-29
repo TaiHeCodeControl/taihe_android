@@ -1,6 +1,9 @@
 package com.taihe.eggshell.videoplay;
 
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -42,7 +45,7 @@ public class VideoPlayActivity extends BaseActivity{
     private final static int VIDEO_CACHE_FINISH = 3;
     private final static int VIDEO_UPDATE_SEEKBAR = 5;
 
-    private Button playBtn,backBtn;  //用于开始和暂停的按钮
+    private Button playBtn,backBtn,changeDirection;  //用于开始和暂停的按钮
     private SurfaceView videoSurfaceView;   //绘图容器对象，用于把视频显示在屏幕上
     private String url;   //视频播放地址
     private MediaPlayer mediaPlayer;    //播放器控件
@@ -68,18 +71,18 @@ public class VideoPlayActivity extends BaseActivity{
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); // 应用运行时，保持屏幕高亮，不锁屏
 
         setContentView(R.layout.activity_video_play);
-
         url = "http://zqgbzx.cn:6060/zwapi/videos/ZQ0005.mp4";//视频播放地址
 //		url =Environment.getExternalStorageDirectory().getAbsolutePath()+"/9533522808.f4v.mp4";
 
         mediaPlayer = new MediaPlayer();
-        updateSeekBarR = new UpdateSeekBarR();  //创建更新进度条对象
+        updateSeekBarR = new UpdateSeekBarR();//创建更新进度条对象
 
         seekbar = (SeekBar) findViewById(R.id.seekBar);
         opLy = (RelativeLayout) findViewById(R.id.opLy);
         loadingVideoV = (ProgressBar) findViewById(R.id.loadingVideo);
         cacheT = (TextView) findViewById(R.id.cacheT);
         backBtn = (Button) findViewById(R.id.backBtn);
+        changeDirection = (Button)findViewById(R.id.id_change_direction);
         playBtn = (Button) findViewById(R.id.playBtn);
         playBtn.setEnabled(false); //刚进来，设置其不可点击
 
@@ -87,10 +90,16 @@ public class VideoPlayActivity extends BaseActivity{
         videoSurfaceView.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);   //不缓冲
         videoSurfaceView.getHolder().setKeepScreenOn(true);   //保持屏幕高亮
         videoSurfaceView.getHolder().addCallback(new VideoSurfaceView());//设置监听事件,从这里监听surface创建完成开始播放视频
+
     }
 
     @Override
     public void initData() {
+
+        videoSurfaceView.setOnClickListener(this);
+        playBtn.setOnClickListener(this);
+        backBtn.setOnClickListener(this);
+        changeDirection.setOnClickListener(this);
 
         mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener() {//缓冲去更新
             @Override
@@ -152,10 +161,12 @@ public class VideoPlayActivity extends BaseActivity{
             case R.id.surfaceView:
                 if (display) {
                     backBtn.setVisibility(View.GONE);
+                    changeDirection.setVisibility(View.GONE);
                     opLy.setVisibility(View.GONE);
                     display = false;
                 } else {
                     backBtn.setVisibility(View.VISIBLE);
+                    changeDirection.setVisibility(View.VISIBLE);
                     opLy.setVisibility(View.VISIBLE);
                     videoSurfaceView.setVisibility(View.VISIBLE);
 
@@ -165,6 +176,13 @@ public class VideoPlayActivity extends BaseActivity{
 					lp.width = LayoutParams.FILL_PARENT;
 					videoSurfaceView.setLayoutParams(lp);*/
                     display = true;
+                }
+                break;
+            case R.id.id_change_direction:
+                if(this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                }else{
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 }
                 break;
         }
@@ -180,7 +198,8 @@ public class VideoPlayActivity extends BaseActivity{
             //不是网络视频,直接播放
             if(URLUtil.isNetworkUrl(url)) {
                 try {
-                    new Thread(new CacheNetFileR()).start();
+//                    new Thread(new CacheNetFileR()).start();
+                    new CacheVideoFile().execute();
                 }catch (Exception e) {
                     mHandler.sendEmptyMessage(NETWORK_PARSE_ERROR);
                     e.printStackTrace();
@@ -252,6 +271,7 @@ public class VideoPlayActivity extends BaseActivity{
         public void onPrepared(MediaPlayer mp) {//准备完成
             loadingVideoV.setVisibility(View.GONE);  //准备完成后，隐藏控件
             backBtn.setVisibility(View.GONE);
+            changeDirection.setVisibility(View.GONE);
             opLy.setVisibility(View.GONE);
 
             display = false;
@@ -287,17 +307,11 @@ public class VideoPlayActivity extends BaseActivity{
             mediaPlayer = null;
         }
 
-        if(out != null) {
-            try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (is != null) {
+        if (out != null && is != null) {
             try {
                 is.close();
+                out.flush();
+                out.close();
             } catch (IOException e){
             }
         }
@@ -306,11 +320,91 @@ public class VideoPlayActivity extends BaseActivity{
             httpConnection.disconnect();
         }
 
-        System.gc();
+//        System.gc();
+    }
+
+    private class CacheVideoFile extends AsyncTask<String,Double,String>{
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                HttpURLConnection httpConnectionLength = (HttpURLConnection)new URL(url).openConnection();
+                long contentLength = httpConnectionLength.getContentLength();
+                httpConnectionLength.disconnect();
+
+                httpConnection = (HttpURLConnection)new URL(url).openConnection();
+
+                String cacheUrl = Environment.getExternalStorageDirectory().getAbsolutePath()+"/Cache/"+url.substring(url.lastIndexOf("/")+1);
+                File cacheFile = new File(cacheUrl);
+                boolean isNeedCache=false;
+                if (cacheFile.exists()) {
+                    readSize = mediaLength = cacheFile.length();
+                    Log.v(TAG,"SDC长度："+readSize+";"+contentLength);
+                    if(contentLength == readSize){//视频已经成功缓存完成
+                        url=cacheUrl;
+                        isNeedCache=false;
+                    }else{
+                        //先讲属性设置好,不然getContentLength之后已经打开连接了,不能再设置了
+                        httpConnection.setRequestProperty("User-Agent", "NetFox");
+                        httpConnection.setRequestProperty("Range", "bytes=" + readSize + "-");//从断点处请求读取文件
+                        isNeedCache=true;
+                    }
+                }else{
+                    cacheFile.getParentFile().mkdirs();
+                    cacheFile.createNewFile();
+                    isNeedCache=true;
+                }
+
+                mHandler.sendEmptyMessage(VIDEO_STATE_BEGIN);//开始播放视频
+
+                if(isNeedCache){//需要缓存视频
+                    out = new FileOutputStream(cacheFile, true);
+
+                    is = httpConnection.getInputStream();
+                    mediaLength = httpConnection.getContentLength();
+
+                    if(-1 == mediaLength) {
+//                        System.out.println("-------------视频文件缓存失败,不能成功获取文件大小!");
+                        return null;
+                    }
+                    mediaLength += readSize;
+
+                    byte buf[] = new byte[4 * 1024];
+                    int size = 0;
+
+                    while(is!=null && (size = is.read(buf)) != -1){//缓存文件
+//                        System.out.println("--------------缓存文件部分:"+size);
+                        try {
+                            out.write(buf, 0, size);
+                            readSize += size;
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    url=cacheUrl;//将url替换成本地
+                    mHandler.sendEmptyMessage(VIDEO_CACHE_FINISH);//视频缓存结束,将当前视频切换成播放本地的文件
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+
+                if (out != null && is != null) {
+                    try {
+                        is.close();
+                        out.flush();
+                        out.close();
+
+                    } catch (IOException e){
+                    }
+                }
+            }
+            return null;
+        }
     }
 
     //在线播放时后台缓存文件,方便下次直接播放
-    class CacheNetFileR implements Runnable{
+    private class CacheNetFileR implements Runnable{
         @Override
         public void run() {
 
@@ -374,15 +468,11 @@ public class VideoPlayActivity extends BaseActivity{
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                if (out != null) {
-                    try {
-                        out.close();
-                    } catch (IOException e){
-                    }
-                }
-                if (is != null) {
+                if (is != null && out != null) {
                     try {
                         is.close();
+                        out.flush();
+                        out.close();
                     } catch (IOException e){
                     }
                 }
@@ -416,8 +506,8 @@ public class VideoPlayActivity extends BaseActivity{
                         flag = false;
                     }else{
                         double cachepercent = readSize * 100.00 / mediaLength * 1.0;
-                        String s = String.format("已缓存:[%.2f%%]", cachepercent);
-
+                        String s = String.format("缓存:[%.2f%%]", cachepercent);
+                        seekbar.setSecondaryProgress((int)cachepercent);
                         if(mediaPlayer.isPlaying()) {
                             flag = true;
                             int position = mediaPlayer.getCurrentPosition();
@@ -433,9 +523,9 @@ public class VideoPlayActivity extends BaseActivity{
                             int minute = i / 60 % 60;
                             int second = i % 60;
 
-                            s += String.format(" 当前播放:%02d:%02d:%02d [%.2f%%]", hour, minute, second, playpercent);
+                            s += String.format(" 当前:%02d:%02d:%02d [%.2f%%]", hour, minute, second, playpercent);
                         }else{
-                            s += " 视频当前未播放!";
+                            s += "";
                         }
                         cacheT.setText(s);
                     }
