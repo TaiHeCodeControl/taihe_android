@@ -13,12 +13,33 @@
 	   android:text="首页"
 	   android:textSize="20sp"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.taihe.eggshell.widget.ImagesGallery
+            android:id="@+id/gallery"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+        <LinearLayout
+            android:id="@+id/id_linear_fos"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_below="@+id/gallery"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@color/gray">
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/id_to_videolist"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_margin="100dp"
+        android:layout_margin="20dp"
         android:src="@drawable/bg_overlay"/>
 
 
