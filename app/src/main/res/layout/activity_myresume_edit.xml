@@ -94,14 +94,16 @@
                 android:layout_height="40dp"
                 android:background="@color/gray" />
 
-            <EditText
-                android:id="@+id/et_resumeedit_time"
+            <TextView
+                android:id="@+id/tv_resume_birthdate"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="2"
                 android:background="@null"
                 android:text="请选择出生年月"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -222,7 +224,7 @@
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="20dp"
-            android:background="@drawable/btn_login_selector"
+            android:background="@drawable/btn_round_selector"
             android:onClick="login"
             android:text="保存"
             android:textColor="@color/white"

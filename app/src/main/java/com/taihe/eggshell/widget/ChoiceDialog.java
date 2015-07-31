@@ -19,6 +19,7 @@ public class ChoiceDialog extends Dialog{
     private Button leftButton,rightButton;
     private TextView titleText;
     private View.OnClickListener leftClickListener,rightClickListener;
+    private View view;
 
     public ChoiceDialog(Context context, View.OnClickListener leftListener, View.OnClickListener rightListener) {
         super(context);

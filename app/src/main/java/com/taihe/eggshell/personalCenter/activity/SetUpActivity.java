@@ -170,6 +170,7 @@ public class SetUpActivity extends BaseActivity {
      */
     private void cleanCache() {
         getCacheSize();
+        Log.i(TAG,mCacheSize);
         if(mCacheSize.equals("0.0Byte")){
             ToastUtils.show(SetUpActivity.this,"当前缓存为0，无需清理");
         }else{
@@ -331,7 +332,7 @@ public class SetUpActivity extends BaseActivity {
         new Thread() {
             public void run() {
                 com.lidroid.xutils.HttpUtils downutils = new com.lidroid.xutils.HttpUtils();
-                String apkname = "zhikubao_" + nVersion;
+                String apkname = "eggker_" + nVersion;
                 final String apkpath = Environment
                         .getExternalStorageDirectory() + "/" + apkname;
                 downutils.download(url, apkpath, new RequestCallBack<File>() {

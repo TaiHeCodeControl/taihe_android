@@ -8,19 +8,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.videoplay.VideoListActivity;
 
 public class IndexFragment extends Fragment implements View.OnClickListener{
 
+
+
+    /**
+     * banner图的viewpager
+     */
+
+
     private static final String TAG = "IndexFragment";
     private Context mContext;
 
     private View rootView;
     private ImageView toVideoImg;
-    private TextView titleText;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
@@ -40,6 +45,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         toVideoImg = (ImageView)rootView.findViewById(R.id.id_to_videolist);
         toVideoImg.setOnClickListener(this);
     }
+
 
     @Override
     public void onClick(View v) {

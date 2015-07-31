@@ -15,8 +15,11 @@ import com.taihe.eggshell.R;
 public class HorizontalProgressBarWithNumber extends ProgressBar
 {
 
+	//默认字体大小
 	private static final int DEFAULT_TEXT_SIZE = 10;
+	//默认字体颜色
 	private static final int DEFAULT_TEXT_COLOR = 0XFFFC00D1;
+
 	private static final int DEFAULT_COLOR_UNREACHED_COLOR = 0xFFd3d6da;
 	private static final int DEFAULT_HEIGHT_REACHED_PROGRESS_BAR = 2;
 	private static final int DEFAULT_HEIGHT_UNREACHED_PROGRESS_BAR = 2;
