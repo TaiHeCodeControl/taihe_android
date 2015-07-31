@@ -106,7 +106,7 @@ public class VideoPlayActivity extends BaseActivity{
             public void onBufferingUpdate(MediaPlayer mp, int percent) {
             }
         });
-
+        //播放完毕监听
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() { //视频播放完成
             @Override
             public void onCompletion(MediaPlayer mp) {
