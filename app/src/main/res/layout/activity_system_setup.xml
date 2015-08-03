@@ -16,13 +16,13 @@
         android:id="@+id/rl_set_cacheclear"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical"
         android:background="@drawable/ucenter_selected_background">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/mine_set"/>
 
         <TextView
@@ -53,13 +53,13 @@
         android:id="@+id/rl_set_changepwd"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical"
         android:background="@drawable/ucenter_selected_background">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/mine_set"/>
 
         <TextView
@@ -88,12 +88,12 @@
         android:id="@+id/rl_set_help"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical"
         android:background="@drawable/ucenter_selected_background">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
             android:src="@drawable/mine_set"/>
 
@@ -125,12 +125,12 @@
         android:id="@+id/rl_set_feedback"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical"
         android:background="@drawable/ucenter_selected_background">
 
         <ImageView
             android:layout_marginLeft="15dp"
             android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
             android:src="@drawable/mine_set"/>
 
@@ -162,13 +162,13 @@
         android:id="@+id/rl_set_update"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical"
         android:background="@drawable/ucenter_selected_background">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/mine_set"/>
 
         <TextView
@@ -199,12 +199,12 @@
         android:id="@+id/rl_set_about"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical"
         android:background="@drawable/ucenter_selected_background">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
             android:layout_height="wrap_content"
             android:src="@drawable/mine_set"/>
 

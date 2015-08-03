@@ -18,6 +18,7 @@ import java.util.Calendar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -25,9 +26,12 @@ import android.widget.TextView;
  */
 public class MyResumeEditActivity extends BaseActivity{
 
+    private ImageView iv_back;
+
     private TextView tv_birthdate;
 
     private String verTime;
+
 
     WheelMain wheelMain;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -45,6 +49,8 @@ public class MyResumeEditActivity extends BaseActivity{
         tv_birthdate.setText(CurrentTime);
         verTime = CurrentTime;
 
+        iv_back = (ImageView)findViewById(R.id.id_back);
+        iv_back.setOnClickListener(this);
         tv_birthdate.setOnClickListener(this);
     }
 
@@ -110,6 +116,9 @@ public class MyResumeEditActivity extends BaseActivity{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.id_back:
+                MyResumeEditActivity.this.finish();
+                break;
             case R.id.tv_resume_birthdate:
                 // 选择日期
                 selectDate();

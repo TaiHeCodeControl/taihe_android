@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class SetUpActivity extends BaseActivity {
     private String url;
     private int updateCode;
 
+    private ImageView iv_back;
     private ChoiceDialog dialog;
 
     private RelativeLayout cacheclear,aboutLayout, helpLayout, feedBackLayout, updateLayout, changePwd;
@@ -63,6 +65,7 @@ public class SetUpActivity extends BaseActivity {
         overridePendingTransition(R.anim.activity_right_to_center, R.anim.activity_center_to_left);
 
         mContext = this;
+        iv_back = (ImageView)findViewById(R.id.id_back);
         cacheclear = (RelativeLayout) findViewById(R.id.rl_set_cacheclear);
         aboutLayout = (RelativeLayout) findViewById(R.id.rl_set_about);
         helpLayout = (RelativeLayout) findViewById(R.id.rl_set_help);
@@ -99,8 +102,9 @@ public class SetUpActivity extends BaseActivity {
     @Override
     public void initData() {
         super.initData();
-        super.initTitle("个人中心");
+        super.initTitle("设置");
 
+        iv_back.setOnClickListener(this);
         cacheclear.setOnClickListener(this);
         aboutLayout.setOnClickListener(this);
         helpLayout.setOnClickListener(this);
@@ -115,8 +119,10 @@ public class SetUpActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         super.onClick(v);
-
         switch (v.getId()) {
+            case R.id.id_back:
+                SetUpActivity.this.finish();
+                break;
             case R.id.rl_set_cacheclear://清除缓存
                 cleanCache();
                 //调用系统方法清除缓存
