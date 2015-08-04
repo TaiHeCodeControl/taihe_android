@@ -34,10 +34,10 @@ public class DbHelper {
 			break;
 		case DB_TYPE_USER:
 			String phone = "";
-			if (EggshellApplication.hyrApplication.getUser() == null) {
+			if (EggshellApplication.eggApplication.getUser() == null) {
 				phone = "error";
 			} else {
-				phone = EggshellApplication.hyrApplication.getUser().getPhoneNumber();
+				phone = EggshellApplication.eggApplication.getUser().getPhoneNumber();
 			}
 			dbName = "egg1.0_" + "user";
 			dbVersion = DB_VERSION_USER;
@@ -45,7 +45,7 @@ public class DbHelper {
 		default:
 			break;
 		}
-		DbUtils dbUtils = DbUtils.create(EggshellApplication.hyrApplication, dbName,
+		DbUtils dbUtils = DbUtils.create(EggshellApplication.eggApplication, dbName,
                 dbVersion, new DbUtils.DbUpgradeListener() {
 
                     @Override

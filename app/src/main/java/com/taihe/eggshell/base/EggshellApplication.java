@@ -12,11 +12,11 @@ import com.taihe.eggshell.main.entity.User;
 
 public class EggshellApplication extends Application {
 
-	public static EggshellApplication hyrApplication;
+	public static EggshellApplication eggApplication;
 	private User user;
 
 	public void onCreate() {
-		hyrApplication = this;
+		eggApplication = this;
         super.onCreate();
 //        EggshellCrashHandler.getInstance().init(this);
 
@@ -26,7 +26,7 @@ public class EggshellApplication extends Application {
     }
 
 	public static EggshellApplication getApplication() {
-		return hyrApplication;
+		return eggApplication;
 	}
 
 	public void setUser(User user) {
@@ -65,8 +65,8 @@ public class EggshellApplication extends Application {
      */
     public String getVersionName() {
         try {
-            PackageInfo packageInfo = hyrApplication.getPackageManager()
-                    .getPackageInfo(hyrApplication.getPackageName(),
+            PackageInfo packageInfo = eggApplication.getPackageManager()
+                    .getPackageInfo(eggApplication.getPackageName(),
                             PackageManager.GET_CONFIGURATIONS);
             return packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
@@ -82,11 +82,12 @@ public class EggshellApplication extends Application {
      */
     public int getVersionCode(){
         try{
-            PackageInfo packageInfo = hyrApplication.getPackageManager().getPackageInfo(hyrApplication.getPackageName(), PackageManager.GET_CONFIGURATIONS);
+            PackageInfo packageInfo = eggApplication.getPackageManager().getPackageInfo(eggApplication.getPackageName(), PackageManager.GET_CONFIGURATIONS);
             return  packageInfo.versionCode;
         }catch (PackageManager.NameNotFoundException e){
             e.printStackTrace();
         }
         return 1;
     }
+
 }

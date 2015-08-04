@@ -1,9 +1,16 @@
 package com.taihe.eggshell.base.utils;
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.taihe.eggshell.base.EggshellApplication;
+
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class APKUtils {
 	
@@ -24,4 +31,5 @@ public class APKUtils {
 	public static String getUID(String fullFileName){
 		return getPackageInfo(fullFileName).sharedUserId;
 	}
+
 }

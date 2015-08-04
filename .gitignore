@@ -24,6 +24,7 @@ out/
 /app/build
 
 .DS_Store
+.svn
 
 library_pullToRefresh/build
 library_pullToRefresh/.classpath
