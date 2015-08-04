@@ -2,6 +2,7 @@ package com.taihe.eggshell.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
+import com.taihe.eggshell.base.utils.HttpsUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
@@ -119,6 +121,15 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.show(getApplicationContext(), R.string.login_login_phone_toast);
             return;
         }
+       final String url = "http://195.198.1.195/index.php?m=api&username=18810309239&pw=111111";
+
+//        new Thread(){
+//            public void run(){
+//                String str = HttpsUtils.doGet(url);
+//                System.out.println(str + "=============------------------");
+//
+//            };
+//        }.start();
 
 //        HttpLogin();
 //        loginFromNet();
@@ -176,19 +187,18 @@ public class LoginActivity extends BaseActivity {
     private void HttpLogin() {
 
         RequestParams params = new RequestParams();
-        params.addQueryStringParameter("username", userphone);
-        params.addQueryStringParameter("pw", password);
-//        params.addBodyParameter("username", userphone);
-//        params.addBodyParameter("pw", password);
+//        params.addQueryStringParameter("username", userphone);
+//        params.addQueryStringParameter("pw", password);
+        params.addBodyParameter("username", userphone);
+        params.addBodyParameter("pw", password);
 
-//        String url = "http://195.198.1.195/index.php?m=api";
         final String str = "&username=" + userphone + "&pw=" + password;
+        String url = "http://195.198.1.195/index.php?m=api&username=18810309239&pw=111111";
         HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.GET, Urls.getMopHostUrl(), params, new RequestCallBack<String>() {
+        http.send(HttpRequest.HttpMethod.GET, url, new RequestCallBack<String>() {
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                System.out.println(Urls.getMopHostUrl() + str);
                 String result = responseInfo.result;
                 System.out.println("LoginResult========= " + result);
             }
