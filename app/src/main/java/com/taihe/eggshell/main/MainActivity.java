@@ -73,6 +73,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             public void onClick(View v) {
                 dialog.dismiss();
                 ToastUtils.show(mContext, "取消");
+                //虚拟点击事件
+                radio_index.performClick();
             }
         },new View.OnClickListener() {
             @Override

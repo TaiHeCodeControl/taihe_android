@@ -42,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Thinkpad on 2015/7/14.
+ * Created by huan on 2015/8/5.
  */
 public class SetUpActivity extends BaseActivity {
 
