@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
+import com.taihe.eggshell.place.SelectCityActivity;
 import com.taihe.eggshell.videoplay.VideoListActivity;
 import com.taihe.eggshell.widget.ImagesGallery;
 
@@ -30,6 +31,9 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private static final String TAG = "IndexFragment";
     private Context mContext;
 
+    private Intent intent;
+
+    private TextView tv_place;
     private View rootView;
     private ImageView toVideoImg;
     private LinearLayout linearLayoutFos;
@@ -39,6 +43,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private int current = 0;
     private ImagesGallery gallery;
     private int preSelImgIndex = 0;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
@@ -58,8 +63,10 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private void initView(){
         toVideoImg = (ImageView)rootView.findViewById(R.id.id_to_videolist);
         linearLayoutFos = (LinearLayout)rootView.findViewById(R.id.id_linear_fos);
+        tv_place = (TextView) rootView.findViewById(R.id.tv_place);
 
         toVideoImg.setOnClickListener(this);
+        tv_place.setOnClickListener(this);
     }
 
     private void initData(){
@@ -117,7 +124,12 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.id_to_videolist:
-                Intent intent = new Intent(mContext,VideoListActivity.class);
+                intent = new Intent(mContext,VideoListActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.tv_place:
+                intent = new Intent(mContext,SelectCityActivity.class);
                 startActivity(intent);
                 break;
         }
