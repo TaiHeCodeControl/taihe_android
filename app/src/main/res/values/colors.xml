@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <resources>
-        <color name="white">#ffffffff</color>
-        <color name="black">#ff000000</color>
-        <color name="red">#ff0000</color>
-        <color name="transparent">#00000000</color>
-        <color name="blue">#87CEFA</color>
-        <color name="gray">#B3B4B5</color>
-        <color name="background_gray">#F1EFF4</color>
-        <color name="green">#00EE76</color>
-        <color name="dark_gray">#787B7B</color>
-    </resources>
+<resources>
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+
+    <color name="red">#ff0000</color>
+    <color name="transparent">#00000000</color>
+    <color name="blue">#87CEFA</color>
+    <color name="gray">#B3B4B5</color>
+    <color name="background_gray">#F1EFF4</color>
+    <color name="green">#00EE76</color>
+    <color name="dark_gray">#787B7B</color>
+
+
+    <!--字体颜色-->
+    <color name="font_color_black">#ff000000</color>
+    <color name="font_color_gray">#B3B4B5</color>
+</resources>

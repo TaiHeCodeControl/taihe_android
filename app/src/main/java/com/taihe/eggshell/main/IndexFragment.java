@@ -3,24 +3,21 @@ package com.taihe.eggshell.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
-import com.taihe.eggshell.place.SelectCityActivity;
+import com.taihe.eggshell.widget.cityselect.CitySelectActivity;
 import com.taihe.eggshell.videoplay.VideoListActivity;
 import com.taihe.eggshell.widget.ImagesGallery;
 
@@ -44,6 +41,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private ImagesGallery gallery;
     private int preSelImgIndex = 0;
 
+    private Button btn_job;
 
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
@@ -64,7 +62,9 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         toVideoImg = (ImageView)rootView.findViewById(R.id.id_to_videolist);
         linearLayoutFos = (LinearLayout)rootView.findViewById(R.id.id_linear_fos);
         tv_place = (TextView) rootView.findViewById(R.id.tv_place);
+        btn_job = (Button)rootView.findViewById(R.id.btn_index_job);
 
+        btn_job.setOnClickListener(this);
         toVideoImg.setOnClickListener(this);
         tv_place.setOnClickListener(this);
     }
@@ -129,7 +129,12 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.tv_place:
-                intent = new Intent(mContext,SelectCityActivity.class);
+                intent = new Intent(mContext,CitySelectActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.btn_index_job:
+                intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
         }

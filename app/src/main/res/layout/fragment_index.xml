@@ -48,6 +48,15 @@
 
     </RelativeLayout>
 
+    <Button
+        android:id="@+id/btn_index_job"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="找工作"
+        android:textSize="16sp"
+        android:background="@null"
+        />
     <ImageView
         android:id="@+id/id_to_videolist"
         android:layout_width="100dp"

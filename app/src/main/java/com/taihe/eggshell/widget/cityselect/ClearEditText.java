@@ -1,4 +1,4 @@
-package com.taihe.eggshell.place;
+package com.taihe.eggshell.widget.cityselect;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

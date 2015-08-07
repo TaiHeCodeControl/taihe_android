@@ -1,8 +1,7 @@
-package com.taihe.eggshell.place;
+package com.taihe.eggshell.widget.cityselect;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
