@@ -233,7 +233,7 @@ ADDED from AndroidManifest.xml:107:9
 		ADDED from AndroidManifest.xml:111:13
 	android:name
 		ADDED from AndroidManifest.xml:108:13
-activity#com.taihe.eggshell.widget.place.CitySelectActivity
+activity#com.taihe.eggshell.widget.cityselect.CitySelectActivity
 ADDED from AndroidManifest.xml:114:9
 	android:windowSoftInputMode
 		ADDED from AndroidManifest.xml:117:13
@@ -241,27 +241,33 @@ ADDED from AndroidManifest.xml:114:9
 		ADDED from AndroidManifest.xml:118:13
 	android:label
 		ADDED from AndroidManifest.xml:116:13
-	android:configChanges
-		ADDED from AndroidManifest.xml:119:13
 	android:name
 		ADDED from AndroidManifest.xml:115:13
-meta-data#com.baidu.lbsapi.API_KEY
-ADDED from AndroidManifest.xml:121:9
+activity#com.taihe.eggshell.job.activity.FindJobActivity
+ADDED from AndroidManifest.xml:122:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:125:13
+	android:label
+		ADDED from AndroidManifest.xml:124:13
 	android:name
-		ADDED from AndroidManifest.xml:122:13
-	android:value
 		ADDED from AndroidManifest.xml:123:13
+meta-data#com.baidu.lbsapi.API_KEY
+ADDED from AndroidManifest.xml:128:9
+	android:name
+		ADDED from AndroidManifest.xml:129:13
+	android:value
+		ADDED from AndroidManifest.xml:130:13
 service#com.baidu.location.f
-ADDED from AndroidManifest.xml:125:9
+ADDED from AndroidManifest.xml:132:9
 	android:process
-		ADDED from AndroidManifest.xml:128:13
+		ADDED from AndroidManifest.xml:135:13
 	android:enabled
-		ADDED from AndroidManifest.xml:127:13
+		ADDED from AndroidManifest.xml:134:13
 	android:name
-		ADDED from AndroidManifest.xml:126:13
+		ADDED from AndroidManifest.xml:133:13
 intent-filter#com.baidu.location.service_v2.2
-ADDED from AndroidManifest.xml:129:13
+ADDED from AndroidManifest.xml:136:13
 action#com.baidu.location.service_v2.2
-ADDED from AndroidManifest.xml:130:17
+ADDED from AndroidManifest.xml:137:17
 	android:name
-		ADDED from AndroidManifest.xml:130:25
+		ADDED from AndroidManifest.xml:137:25
