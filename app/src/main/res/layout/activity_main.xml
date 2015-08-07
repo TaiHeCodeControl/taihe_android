@@ -33,14 +33,14 @@
             android:checked="true"
             />
         <RadioButton
-            android:id="@+id/id_radio_nearby"
+            android:id="@+id/id_radio_social"
             style="@style/main_tab"
-            android:drawableTop="@drawable/tab_nearby_background"
+            android:drawableTop="@drawable/tab_social_background"
             />
         <RadioButton
-            android:id="@+id/id_radio_internship"
+            android:id="@+id/id_radio_openclass"
             style="@style/main_tab"
-            android:drawableTop="@drawable/tab_internship_background"
+            android:drawableTop="@drawable/tab_openclass_background"
             />
         <RadioButton
             android:id="@+id/id_radio_me"

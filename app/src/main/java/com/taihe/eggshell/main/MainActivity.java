@@ -42,7 +42,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     private CustomViewPager main_viewPager ;
     private RadioGroup main_tab_RadioGroup ;
-    private RadioButton radio_index , radio_nearby , radio_internship , radio_me ;
+    private RadioButton radio_index , radio_social , radio_openclass , radio_me ;
     private ArrayList<Fragment> fragmentList;
     private ChoiceDialog dialog;
 
@@ -62,8 +62,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         main_tab_RadioGroup = (RadioGroup) findViewById(R.id.main_tab_RadioGroup);
         radio_index = (RadioButton) findViewById(R.id.id_radio_index);
-        radio_nearby = (RadioButton) findViewById(R.id.id_radio_nearby);
-        radio_internship = (RadioButton) findViewById(R.id.id_radio_internship);
+        radio_social = (RadioButton) findViewById(R.id.id_radio_social);
+        radio_openclass = (RadioButton) findViewById(R.id.id_radio_openclass);
         radio_me = (RadioButton) findViewById(R.id.id_radio_me);
 
         main_tab_RadioGroup.setOnCheckedChangeListener(this);
@@ -125,10 +125,10 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             case R.id.id_radio_index:
                 current = 0 ;
                 break ;
-            case R.id.id_radio_nearby:
+            case R.id.id_radio_social:
                 current = 1 ;
                 break;
-            case R.id.id_radio_internship:
+            case R.id.id_radio_openclass:
                 current = 2 ;
                 break;
             case R.id.id_radio_me:

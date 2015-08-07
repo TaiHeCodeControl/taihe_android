@@ -49,7 +49,6 @@ public class MyPostActivity extends FragmentActivity implements View.OnClickList
 
     private void initWidth() {
         WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-
         int width = wm.getDefaultDisplay().getWidth();
 
         position_one = (int) (width / 3.0);
