@@ -1,4 +1,4 @@
-package com.taihe.eggshell.place;
+package com.taihe.eggshell.widget.cityselect;
 
 public class SortModel {
 

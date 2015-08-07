@@ -1,4 +1,4 @@
-package com.taihe.eggshell.place;
+package com.taihe.eggshell.widget.cityselect;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +23,7 @@ import com.taihe.eggshell.R;
  * Created by huan on 2015/8/5.
  */
 
-public class SelectCityActivity extends Activity {
+public class CitySelectActivity extends Activity {
     private ListView sortListView;
     private SideBar sideBar;
     private TextView dialog;
