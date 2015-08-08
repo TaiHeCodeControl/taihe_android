@@ -146,7 +146,7 @@
                 android:scrollbars="none"
                 android:divider="@color/line_gray"
                 android:dividerHeight="10dp"
-                android:background="@null">
+                android:background="@color/white">
             </com.taihe.eggshell.widget.MyListView>
 
         </LinearLayout>
