@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/id_industry"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="金融银行"
+            android:textSize="16sp"
+            android:textColor="@color/index_tab_color"
+            android:drawableTop="@drawable/hulianwang"
+            android:drawablePadding="8dp"
+            android:background="@color/white"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/line_gray"/>
+
+        <GridView
+            android:id="@+id/id_gridview_profession"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="3"
+            android:stretchMode="columnWidth"
+            android:listSelector="@color/white"
+            android:scrollbars="none"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="1dp"
+            android:background="@color/line_gray">
+        </GridView>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -7,11 +7,13 @@
     <color name="transparent">#00000000</color>
     <color name="blue">#87CEFA</color>
     <color name="gray">#B3B4B5</color>
-    <color name="background_gray">#F1EFF4</color>
+    <color name="background_gray">#F3F3F1</color>
     <color name="green">#00EE76</color>
     <color name="dark_gray">#787B7B</color>
-
-
+    <color name="index_tab_color">#646464</color>
+    <color name="line_gray">#E6E6E6</color>
+    <color name="main_tab">#35383F</color>
+    <color name="main_tab_text">#C5C7CB</color>
     <!--字体颜色-->
     <color name="font_color_black">#ff000000</color>
     <color name="font_color_gray">#B3B4B5</color>
