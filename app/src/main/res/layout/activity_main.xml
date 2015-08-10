@@ -30,7 +30,6 @@
             android:id="@+id/id_radio_index"
             style="@style/main_tab"
             android:drawableTop="@drawable/tab_index_background"
-            android:drawableBottom="@color/white"
             android:checked="true"
             android:text="首页"/>
         <RadioButton

@@ -40,7 +40,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private ImagesGallery gallery;
     private GridView companyGridView;
     private MyListView positionListView;
-    private TextView btn_job;
+    private TextView lookJob,jianZhi,shiXi,newInfos,writeResume,playMode,weChat,publicClass;
 
     private ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
     private ArrayList<ImageView> portImg = new ArrayList<ImageView>();
@@ -69,11 +69,18 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private void initView(){
         gallery = (ImagesGallery) rootView.findViewById(R.id.gallery);
         linearLayoutFos = (LinearLayout)rootView.findViewById(R.id.id_linear_fos);
-        btn_job = (TextView)rootView.findViewById(R.id.btn_index_job);
+        lookJob = (TextView)rootView.findViewById(R.id.id_look_job);
+        jianZhi = (TextView)rootView.findViewById(R.id.id_look_jianzhi);
+        shiXi = (TextView)rootView.findViewById(R.id.id_look_shixi);
+        newInfos = (TextView)rootView.findViewById(R.id.id_information);
+        writeResume = (TextView)rootView.findViewById(R.id.id_write_resume);
+        playMode = (TextView)rootView.findViewById(R.id.id_play_mode);
+        weChat = (TextView)rootView.findViewById(R.id.id_we_chat);
+        publicClass = (TextView)rootView.findViewById(R.id.id_public_class);
 
         companyGridView = (GridView)rootView.findViewById(R.id.id_company_list);
         positionListView = (MyListView)rootView.findViewById(R.id.id_position_listview);
-        btn_job.setOnClickListener(this);
+        lookJob.setOnClickListener(this);
     }
 
     private void initData(){
@@ -108,26 +115,51 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         RecommendAdapter recommendAdapter = new RecommendAdapter(mContext,companylogolist);
         companyGridView.setAdapter(recommendAdapter);
         recommendAdapter.notifyDataSetChanged();
+        companyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
 
         getPostions();
         IndustryAdapter industryAdapter = new IndustryAdapter(mContext,industryList);
         positionListView.setAdapter(industryAdapter);
+        industryAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            /*case R.id.id_to_videolist:
-                intent = new Intent(mContext,VideoListActivity.class);
+            case R.id.id_look_job:
+                intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
-                break;*/
-
-            /*case R.id.tv_place:
-                intent = new Intent(mContext,CitySelectActivity.class);
+                break;
+            case R.id.id_look_jianzhi:
+                intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
-                break;*/
-
-            case R.id.btn_index_job:
+                break;
+            case R.id.id_look_shixi:
+                intent = new Intent(mContext,FindJobActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.id_information:
+                intent = new Intent(mContext,FindJobActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.id_write_resume:
+                intent = new Intent(mContext,FindJobActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.id_play_mode:
+                intent = new Intent(mContext,FindJobActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.id_we_chat:
+                intent = new Intent(mContext,FindJobActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.id_public_class:
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;

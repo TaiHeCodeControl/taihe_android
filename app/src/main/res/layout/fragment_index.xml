@@ -54,19 +54,22 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/btn_index_job"
+                        android:id="@+id/id_look_job"
                         style="@style/index_tab"
                         android:text="找工作"
                         android:drawableTop="@drawable/lookjob"/>
                     <TextView
+                        android:id="@+id/id_look_jianzhi"
                         style="@style/index_tab"
                         android:text="找兼职"
                         android:drawableTop="@drawable/jianzhi"/>
                     <TextView
+                        android:id="@+id/id_look_shixi"
                         style="@style/index_tab"
                         android:text="找实习"
                         android:drawableTop="@drawable/shixi"/>
                     <TextView
+                        android:id="@+id/id_information"
                         style="@style/index_tab"
                         android:text="信息台"
                         android:drawableTop="@drawable/xinxitai"/>
@@ -80,18 +83,22 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/id_write_resume"
                         style="@style/index_tab"
                         android:text="写简历"
                         android:drawableTop="@drawable/xiejianli"/>
                     <TextView
+                        android:id="@+id/id_play_mode"
                         style="@style/index_tab"
                         android:text="玩出范"
                         android:drawableTop="@drawable/wanchufan"/>
                     <TextView
+                        android:id="@+id/id_we_chat"
                         style="@style/index_tab"
                         android:text="微社交"
                         android:drawableTop="@drawable/weishejiao"/>
                     <TextView
+                        android:id="@+id/id_public_class"
                         style="@style/index_tab"
                         android:text="公开课"
                         android:drawableTop="@drawable/gongkaike"/>
@@ -144,8 +151,8 @@
                 android:layout_marginBottom="15dp"
                 android:listSelector="@color/white"
                 android:scrollbars="none"
-                android:divider="@color/line_gray"
-                android:dividerHeight="10dp"
+                android:divider="#F3F3F1"
+                android:dividerHeight="15dp"
                 android:background="@color/white">
             </com.taihe.eggshell.widget.MyListView>
 
