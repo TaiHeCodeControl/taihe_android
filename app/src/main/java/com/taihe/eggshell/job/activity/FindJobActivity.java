@@ -22,7 +22,7 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
     private CustomViewPager vp_pager;
 
     private TextView tv_allJob, tv_fujin;
-    private ImageView iv_quancheng, iv_fujin;
+    private ImageView iv_quancheng, iv_fujin ,iv_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +41,12 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
         tv_allJob = (TextView) findViewById(R.id.tv_findjob_all);
         tv_fujin = (TextView) findViewById(R.id.tv_findjob_fujin);
 
+        iv_back = (ImageView) findViewById(R.id.iv_findjob_back);
+
         iv_fujin = (ImageView) findViewById(R.id.iv_findjob_fj);
         iv_quancheng = (ImageView) findViewById(R.id.iv_findjob_qc);
 
+        iv_back.setOnClickListener(this);
         tv_allJob.setOnClickListener(this);
         tv_fujin.setOnClickListener(this);
 
@@ -61,6 +64,9 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.iv_findjob_back:
+                FindJobActivity.this.finish();
+                break;
             case R.id.tv_findjob_all:
                 vp_pager.setCurrentItem(0);
                 iv_quancheng.setImageResource(R.drawable.quancheng01);

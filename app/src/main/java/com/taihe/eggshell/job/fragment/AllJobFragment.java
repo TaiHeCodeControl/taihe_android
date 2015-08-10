@@ -2,6 +2,7 @@ package com.taihe.eggshell.job.fragment;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.widget.MyListView;
@@ -67,6 +69,9 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //listviewItem点击事件
+
+                Intent intent = new Intent(mContext, JobDetailActivity.class);
+                startActivity(intent);
             }
         });
 
