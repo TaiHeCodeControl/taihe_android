@@ -100,15 +100,9 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".videoplay.VideoListActivity"
+            android:name=".job.activity.JobDetailActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".videoplay.VideoPlayActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"/>
 
         <!--选择城市-->
         <activity

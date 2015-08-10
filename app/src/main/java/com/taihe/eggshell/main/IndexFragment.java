@@ -3,19 +3,25 @@ package com.taihe.eggshell.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.job.activity.FindJobActivity;
+import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
 import com.taihe.eggshell.main.adapter.IndustryAdapter;
 import com.taihe.eggshell.main.adapter.RecommendAdapter;
@@ -24,6 +30,7 @@ import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
 import com.taihe.eggshell.widget.ImagesGallery;
 import com.taihe.eggshell.widget.MyListView;
+import com.taihe.eggshell.widget.MyScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +43,11 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private Intent intent;
 
     private View rootView;
-    private LinearLayout linearLayoutFos;
+    private LinearLayout linearLayoutFos,indexTitleView;
     private ImagesGallery gallery;
     private GridView companyGridView;
     private MyListView positionListView;
+    private MyScrollView scrollView;
     private TextView lookJob,jianZhi,shiXi,newInfos,writeResume,playMode,weChat,publicClass;
 
     private ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
@@ -50,6 +58,24 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private int[] imageResId; // 图片ID
     private int current = 0;
     private int preSelImgIndex = 0;
+
+
+    private Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case ALPHA_MESSAGE:
+                    Log.v(TAG,((Integer)msg.obj)+":"+scrollView.getMaxScrollAmount());
+                    if(null!=msg.obj){
+                        indexTitleView.getBackground().setAlpha((Integer)msg.obj);
+                    }
+                    break;
+            }
+
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
@@ -67,6 +93,9 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initView(){
+
+        scrollView = (MyScrollView)rootView.findViewById(R.id.id_index_scroll);
+        indexTitleView = (LinearLayout)rootView.findViewById(R.id.id_index_title);
         gallery = (ImagesGallery) rootView.findViewById(R.id.gallery);
         linearLayoutFos = (LinearLayout)rootView.findViewById(R.id.id_linear_fos);
         lookJob = (TextView)rootView.findViewById(R.id.id_look_job);
@@ -81,9 +110,17 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         companyGridView = (GridView)rootView.findViewById(R.id.id_company_list);
         positionListView = (MyListView)rootView.findViewById(R.id.id_position_listview);
         lookJob.setOnClickListener(this);
+        jianZhi.setOnClickListener(this);
+        shiXi.setOnClickListener(this);
+        newInfos.setOnClickListener(this);
+        writeResume.setOnClickListener(this);
+        playMode.setOnClickListener(this);
+        weChat.setOnClickListener(this);
+        publicClass.setOnClickListener(this);
     }
 
     private void initData(){
+        indexTitleView.getBackground().setAlpha(0);
 
         getGalleryImg();
         gallery.setAdapter(new ImgAdapter(mContext, imageViews));
@@ -122,11 +159,28 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        getPostions();
+        getIndustrys();
         IndustryAdapter industryAdapter = new IndustryAdapter(mContext,industryList);
         positionListView.setAdapter(industryAdapter);
         industryAdapter.notifyDataSetChanged();
+
+        scrollView.setOnScrollChangeListener(new MyScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(int x, int y, int oldxX, int oldY) {
+                Message message = Message.obtain();
+                message.what = ALPHA_MESSAGE;
+                if(oldY!=0){
+                    message.obj = oldY*(ALPHA_END-ALPHA_START)/scrollView.getMaxScrollAmount()+ALPHA_START;
+                }
+                handler.sendMessage(message);
+            }
+        });
+
     }
+    private int oldY;
+    public static final int ALPHA_START=0;
+    public static final int ALPHA_END=180;
+    private static final int ALPHA_MESSAGE = 1;
 
     @Override
     public void onClick(View v) {
@@ -136,7 +190,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_look_jianzhi:
-                intent = new Intent(mContext,FindJobActivity.class);
+                intent = new Intent(mContext,JobDetailActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_look_shixi:
@@ -202,7 +256,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    private void getPostions(){
+    private void getIndustrys(){
         String[] type = new String[]{"互联网","金融行业","广告媒体"};
         String[] internet = new String[]{"网站策划","网站编辑","运营专员","SEO专员","UI设计","美工",};
         String[] bank = new String[]{"银行柜员","业务专员","清算员","操盘手","会计","出纳员",};

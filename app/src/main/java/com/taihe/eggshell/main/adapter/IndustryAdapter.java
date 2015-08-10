@@ -5,11 +5,13 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 
@@ -46,7 +48,7 @@ public class IndustryAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Industry industry = industryList.get(position);
+        final Industry industry = industryList.get(position);
         IndustryViewHolder viewHolder;
         if(null==convertView){
             viewHolder = new IndustryViewHolder();
@@ -63,9 +65,20 @@ public class IndustryAdapter extends BaseAdapter {
         viewHolder.textView.setText(industry.getName());
         Drawable imgDrawable = context.getResources().getDrawable(industry.getImgsrc());
         imgDrawable.setBounds(0,0,imgDrawable.getMinimumWidth(),imgDrawable.getMinimumHeight());
-        viewHolder.textView.setCompoundDrawables(null,imgDrawable,null,null);
-
+        viewHolder.textView.setCompoundDrawables(null, imgDrawable, null, null);
+        viewHolder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.show(context,industry.getName());
+            }
+        });
         viewHolder.gridView.setAdapter(new ProfessionalAdapter(context,industry.getProfessionalList()));
+        viewHolder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ToastUtils.show(context,industry.getProfessionalList().get(position).getName());
+            }
+        });
 
         return convertView;
     }
