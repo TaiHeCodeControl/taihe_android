@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shenqing">
+
+    <TextView
+        android:id="@+id/tv_isapplyjob_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="申请职位"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_size_26" />
+
+
+    <ImageView
+        android:id="@+id/iv_isapplyjob_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/cha"
+        android:layout_alignTop="@+id/tv_isapplyjob_title"
+        android:layout_alignParentRight="true" />
+
+
+    <CheckBox
+        android:id="@+id/cb_isapplyjob_xuanze"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/CustomCheckboxBlue"
+        android:layout_below="@+id/tv_isapplyjob_title"
+        android:checked="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp" />
+
+    <TextView
+        android:id="@+id/tv_isapplyjob_resumename"
+        android:layout_toRightOf="@+id/cb_isapplyjob_xuanze"
+        android:layout_below="@+id/tv_isapplyjob_title"
+        android:layout_marginTop="23dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="个人简历20150730"
+        android:textColor="@color/font_color_black"
+        android:textSize="@dimen/font_size_26"/>
+
+
+    <Button
+        android:id="@+id/btn_isapplyjob_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/lanniu2"
+        android:text="确定"
+        android:textSize="@dimen/font_size_26"
+        android:textColor="@color/white"
+        android:layout_below="@+id/cb_isapplyjob_xuanze"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
