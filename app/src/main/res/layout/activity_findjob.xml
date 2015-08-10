@@ -5,10 +5,10 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/blue">
+        android:layout_height="47dp"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/id_back"
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:src="@drawable/icon_return"/>
+            android:src="@drawable/fanhui"/>
 
         <TextView
             android:id="@+id/id_title"
@@ -25,15 +25,15 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            android:textSize="18dp"
+            android:textColor="@color/font_color_black"/>
 
         <ImageView
             android:id="@+id/iv_findjob_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@drawable/icon_return"
+            android:src="@drawable/sousuo001"
             android:layout_toLeftOf="@+id/iv_findjob_filter"
             android:layout_marginRight="20dp"
             />
@@ -44,43 +44,80 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:src="@drawable/icon_return"
+            android:src="@drawable/liebiao"
             android:layout_alignParentRight="true"
             />
     </RelativeLayout>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="40dp">
 
-        <TextView
-            android:id="@+id/tv_findjob_all"
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:text="全城"/>
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_findjob_qc"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="70dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/quancheng01"/>
+            <TextView
+                android:layout_toRightOf="@+id/iv_findjob_qc"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/tv_findjob_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:textColor="@color/font_color_red"
+                android:text="全城"/>
+
+        </RelativeLayout>
+
 
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="@color/gray"/>
-        <TextView
-            android:id="@+id/tv_findjob_fujin"
+            android:background="@color/line_gray"/>
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:text="附近"/>
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_findjob_fj"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="70dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/fujin01"/>
+            <TextView
+                android:layout_toRightOf="@+id/iv_findjob_fj"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/tv_findjob_fujin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:textColor="@color/black"
+                android:text="附近"/>
+
+        </RelativeLayout>
+
+
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/gray"/>
+        android:background="@color/line_gray"/>
 
     <com.taihe.eggshell.widget.CustomViewPager
         android:id="@+id/vp_findjob_pager"

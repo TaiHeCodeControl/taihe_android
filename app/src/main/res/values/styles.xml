@@ -51,4 +51,12 @@
         <item name="android:windowNoTitle">true</item>
     </style>
 
+
+    <style name="CustomCheckboxRed" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_red</item>
+    </style>
+
+    <style name="CustomCheckboxBlue" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_blue</item>
+    </style>
 </resources>

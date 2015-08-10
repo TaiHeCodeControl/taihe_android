@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#ffffffff</color>
+    <color name="white">#FFFFFF</color>
     <color name="black">#ff000000</color>
 
     <color name="red">#ff0000</color>
@@ -11,13 +11,14 @@
     <color name="green">#00EE76</color>
     <color name="dark_gray">#787B7B</color>
     <color name="index_tab_color">#646464</color>
-    <color name="line_gray">#E6E6E6</color>
     <color name="main_tab">#35383F</color>
     <color name="main_tab_text">#C5C7CB</color>
     <color name="include_title_color">#FDFDFD</color>
-    <color name="detail_line">#DDDDDD</color>
+    <color name="line_gray">#DDDDDD</color>
 
     <!--字体颜色-->
-    <color name="font_color_black">#ff000000</color>
-    <color name="font_color_gray">#B3B4B5</color>
+    <color name="font_color_black">#000000</color>
+    <color name="font_color_red">#f44336</color>
+    <color name="font_color_gray">#646464</color>
+
 </resources>
