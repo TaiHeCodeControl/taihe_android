@@ -20,5 +20,6 @@
     <color name="font_color_black">#000000</color>
     <color name="font_color_red">#f44336</color>
     <color name="font_color_gray">#646464</color>
+    <color name="font_color_gray_jobsearch">#969696</color>
 
 </resources>
