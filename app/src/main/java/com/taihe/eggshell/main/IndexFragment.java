@@ -15,13 +15,16 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobDetailActivity;
+import com.taihe.eggshell.job.activity.JobSearchActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
 import com.taihe.eggshell.main.adapter.IndustryAdapter;
 import com.taihe.eggshell.main.adapter.RecommendAdapter;
@@ -43,11 +46,12 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private Intent intent;
     private View rootView;
     private LinearLayout linearLayoutFos,indexTitleView;
+    private RelativeLayout searchRelativeLayout;
     private ImagesGallery gallery;
     private GridView companyGridView;
     private MyListView positionListView;
     private MyScrollView scrollView;
-    private TextView lookJob,jianZhi,shiXi,newInfos,writeResume,playMode,weChat,publicClass;
+    private TextView lookJob,jianZhi,shiXi,newInfos,writeResume,playMode,weChat,publicClass,jobPlace;
 
     private ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
     private ArrayList<ImageView> portImg = new ArrayList<ImageView>();
@@ -62,25 +66,21 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private static final int ALPHA_MESSAGE = 1;
 
     private Handler handler = new Handler() {
-
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
                 case ALPHA_MESSAGE:
-                    Log.v(TAG,((Integer)msg.obj)+":"+scrollView.getMaxScrollAmount());
                     if(null!=msg.obj){
                         indexTitleView.getBackground().setAlpha((Integer)msg.obj);
                     }
                     break;
             }
-
         }
     };
 
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
-
         mContext = getActivity();
         rootView = inflater.inflate(R.layout.fragment_index, null);
         return rootView;
@@ -94,9 +94,10 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initView(){
-
+        jobPlace = (TextView)rootView.findViewById(R.id.id_job_place);
         scrollView = (MyScrollView)rootView.findViewById(R.id.id_index_scroll);
         indexTitleView = (LinearLayout)rootView.findViewById(R.id.id_index_title);
+        searchRelativeLayout = (RelativeLayout)rootView.findViewById(R.id.id_search_job);
         gallery = (ImagesGallery) rootView.findViewById(R.id.gallery);
         linearLayoutFos = (LinearLayout)rootView.findViewById(R.id.id_linear_fos);
         lookJob = (TextView)rootView.findViewById(R.id.id_look_job);
@@ -118,6 +119,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         playMode.setOnClickListener(this);
         weChat.setOnClickListener(this);
         publicClass.setOnClickListener(this);
+        searchRelativeLayout.setOnClickListener(this);
+        jobPlace.setOnClickListener(this);
     }
 
     private void initData(){
@@ -156,7 +159,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         companyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                        ToastUtils.show(mContext,position+"");
             }
         });
 
@@ -170,8 +173,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             public void onScrollChange(int x, int y, int oldxX, int oldY) {
                 Message message = Message.obtain();
                 message.what = ALPHA_MESSAGE;
-                if(oldY!=0){
-                    message.obj = oldY*(ALPHA_END-ALPHA_START)/scrollView.getMaxScrollAmount()+ALPHA_START;
+                if (oldY != 0) {
+                    message.obj = oldY * (ALPHA_END - ALPHA_START) / scrollView.getMaxScrollAmount() + ALPHA_START;
                 }
                 handler.sendMessage(message);
             }
@@ -182,6 +185,13 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.id_job_place:
+                ToastUtils.show(mContext,"北京");
+                break;
+            case R.id.id_search_job:
+                intent = new Intent(mContext, JobSearchActivity.class);
+                startActivity(intent);
+                break;
             case R.id.id_look_job:
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);

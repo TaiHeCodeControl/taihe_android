@@ -170,16 +170,19 @@
         android:background="#35383e">
 
         <TextView
+            android:id="@+id/id_job_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:padding="5dp"
             android:text="北京"
             android:textSize="18sp"
             android:textColor="@color/white"
-            android:drawablePadding="10dp"
+            android:drawablePadding="5dp"
             android:drawableRight="@drawable/down_icon"/>
 
         <RelativeLayout
+            android:id="@+id/id_search_job"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginRight="20dp"
