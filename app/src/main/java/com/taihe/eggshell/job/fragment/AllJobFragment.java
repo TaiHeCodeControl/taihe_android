@@ -1,6 +1,5 @@
 package com.taihe.eggshell.job.fragment;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,21 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.base.utils.JobApplyDialogUtil;
 import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
-import com.taihe.eggshell.widget.MyListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +28,7 @@ import java.util.List;
  */
 public class AllJobFragment extends Fragment implements View.OnClickListener{
 
-    private AlertDialog isApplyDialog = null;
+
     private AllJobAdapter adapter;
     private CheckBox cb_selectAll;
 
@@ -82,7 +76,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
 
 
     private void initDate() {
-        adapter = new AllJobAdapter(mContext,jobInfos);
+        adapter = new AllJobAdapter(mContext,jobInfos,true);
         View footerView = View.inflate(mContext,R.layout.list_job_all_footer,null);
 
 
@@ -106,40 +100,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    public void isApplyJob(){
 
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-
-        View view = View.inflate(mContext, R.layout.dialog_isapplyjob,
-                null);
-
-        final ImageView iv_cancel = (ImageView) view.findViewById(R.id.iv_isapplyjob_cancel);
-        final Button btn_ok = (Button) view.findViewById(R.id.btn_isapplyjob_ok);
-
-
-        iv_cancel.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                isApplyDialog.dismiss();
-            }
-        });
-        btn_ok.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                postJob();
-
-                ToastUtils.show(mContext, "职位投递成功");
-            }
-        });
-
-        builder.setView(view);
-        isApplyDialog = builder.create();
-        isApplyDialog.show();
-    }
 
 
 
@@ -147,7 +108,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_alljob_shenqing:
-                isApplyJob();
+                JobApplyDialogUtil.isApplyJob(mContext);
                 break;
         }
     }

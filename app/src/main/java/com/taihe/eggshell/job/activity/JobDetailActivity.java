@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.utils.JobApplyDialogUtil;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.adapter.JobDescAdapter;
@@ -76,7 +77,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             jobInfos.add(jobInfo);
         }
 
-        AllJobAdapter jobAdapter = new AllJobAdapter(mContext,jobInfos);
+        AllJobAdapter jobAdapter = new AllJobAdapter(mContext,jobInfos,false);
         moreJobListView.setAdapter(jobAdapter);
 
         List<String> desc = new ArrayList<String>();
@@ -106,14 +107,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         super.onClick(v);
         switch (v.getId()){
             case R.id.id_apply_button:
-                ApplyJobDialog dialog = new ApplyJobDialog(mContext,new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                           ToastUtils.show(mContext,"申请");
-                    }
-                });
-                dialog.show();
-
+                JobApplyDialogUtil.isApplyJob(mContext);
                 break;
             case R.id.id_see_all:
                 jobbrief.setMaxLines(Integer.MAX_VALUE);

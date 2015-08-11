@@ -28,13 +28,15 @@ public class AllJobAdapter extends BaseAdapter {
     // 用来导入布局
     private LayoutInflater inflater = null;
 
+    private boolean isHaveCheckBox;
 
 
     // 构造器
-    public AllJobAdapter(Context context,List<JobInfo> jobInfos) {
+    public AllJobAdapter(Context context,List<JobInfo> jobInfos,boolean isHaveCheckBox) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.list = jobInfos;
+        this.isHaveCheckBox = isHaveCheckBox;
     }
 
 
@@ -74,6 +76,9 @@ public class AllJobAdapter extends BaseAdapter {
             holder.tv_pubTiem = (TextView) view.findViewById(R.id.tv_listjob_pubtime);
             holder.tv_salaryRange = (TextView) view.findViewById(R.id.tv_listjob_salaryrange);
 
+            if(!isHaveCheckBox){
+                holder.cb_select.setVisibility(View.GONE);
+            }
             view.setTag(holder);
         }
         holder.tv_businessName.setText("太和天下");
