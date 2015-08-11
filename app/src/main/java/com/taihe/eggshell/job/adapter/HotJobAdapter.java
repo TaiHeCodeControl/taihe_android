@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.main.entity.Professional;
 
 import java.util.List;
 
@@ -17,40 +19,48 @@ public class HotJobAdapter extends BaseAdapter {
 
     private Context context;
     private TextView tv_hotjob;
+    private List<Professional> professionalList;
 
-    public HotJobAdapter(Context context) {
+    public HotJobAdapter(Context context,List<Professional> list) {
         this.context = context;
+        this.professionalList = list;
     }
 
     @Override
     public int getCount() {
-        return 8;
+        return professionalList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return professionalList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
-        View view;
+        final Professional professional = professionalList.get(i);
+        HotViewHolder viewHolder;
         if (convertView == null) {
-            view = View.inflate(context,
-                    R.layout.gridview_hotjob, null);
-            tv_hotjob = (TextView) view.findViewById(R.id.tv_gridview_hotjob);
-//            tv_hotjob.setText();
+            viewHolder = new HotViewHolder();
+            convertView = View.inflate(context,R.layout.gridview_hotjob, null);
+            viewHolder.textView = (TextView) convertView.findViewById(R.id.tv_gridview_hotjob);
+            convertView.setTag(viewHolder);
         } else {
-            view = convertView;
+            viewHolder = (HotViewHolder)convertView.getTag();
         }
 
-        return view;
+        viewHolder.textView.setText(professional.getName());
 
+        return convertView;
+    }
+
+    class HotViewHolder{
+        TextView textView;
     }
 
 }

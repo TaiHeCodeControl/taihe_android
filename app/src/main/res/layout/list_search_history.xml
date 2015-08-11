@@ -13,7 +13,7 @@
         android:layout_marginTop="15dp"
         android:text="数据分析经理"
         android:textColor="#323232"
-        android:textSize="12dp" />
+        android:textSize="16dp" />
 
     <View
         android:layout_below="@+id/tv_list_search_history"
