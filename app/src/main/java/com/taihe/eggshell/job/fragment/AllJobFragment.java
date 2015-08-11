@@ -154,7 +154,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
 
     public void postJob() {
         for(JobInfo jobInfo : jobInfos){
-           
+
 
         }
     }

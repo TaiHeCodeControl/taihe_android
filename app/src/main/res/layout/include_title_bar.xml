@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="@dimen/title_height"
     android:background="@color/include_title_color">
 
     <ImageView
@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/icon_return"/>
+        android:src="@drawable/fanhui"/>
 
     <TextView
         android:id="@+id/id_title"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
-        android:textSize="18sp"
+        android:textSize="@dimen/font_size_title"
         android:textColor="@color/black"/>
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.taihe.eggshell.job.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -20,10 +21,11 @@ import com.taihe.eggshell.widget.CustomViewPager;
  */
 public class FindJobActivity extends FragmentActivity implements View.OnClickListener {
 
+    private Intent intent;
     private CustomViewPager vp_pager;
 
     private TextView tv_allJob, tv_fujin;
-    private ImageView iv_quancheng, iv_fujin ,iv_back;
+    private ImageView iv_quancheng, iv_fujin, iv_back, iv_filter, iv_search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +45,15 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
         tv_allJob = (TextView) findViewById(R.id.tv_findjob_all);
         tv_fujin = (TextView) findViewById(R.id.tv_findjob_fujin);
 
+        iv_search = (ImageView) findViewById(R.id.iv_findjob_search);
+        iv_filter = (ImageView) findViewById(R.id.iv_findjob_filter);
         iv_back = (ImageView) findViewById(R.id.iv_findjob_back);
 
         iv_fujin = (ImageView) findViewById(R.id.iv_findjob_fj);
         iv_quancheng = (ImageView) findViewById(R.id.iv_findjob_qc);
 
+        iv_search.setOnClickListener(this);
+        iv_filter.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         tv_allJob.setOnClickListener(this);
         tv_fujin.setOnClickListener(this);
@@ -56,7 +62,7 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
                 getSupportFragmentManager());
         vp_pager.setAdapter(adapter);
         //Viewpager中每次显示出来一个页面Fragment时，都会把旁边的一个页面也预加载了，
-        vp_pager.setOffscreenPageLimit(0);//控制预加载的页面数量（默认情况下参数为1）
+//        vp_pager.setOffscreenPageLimit(0);//控制预加载的页面数量（默认情况下参数为1）
     }
 
     private void initData() {
@@ -65,7 +71,7 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.iv_findjob_back:
                 FindJobActivity.this.finish();
                 break;
@@ -84,6 +90,15 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
 
                 tv_allJob.setTextColor(getResources().getColor(R.color.font_color_black));
                 tv_fujin.setTextColor(getResources().getColor(R.color.font_color_red));
+                break;
+            case R.id.iv_findjob_search:
+                intent = new Intent(FindJobActivity.this,JobSearchActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.iv_findjob_filter:
+                intent = new Intent(FindJobActivity.this, JobFilterActivity.class);
+                startActivity(intent);
                 break;
         }
     }
