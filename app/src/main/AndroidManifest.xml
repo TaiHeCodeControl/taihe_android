@@ -67,7 +67,7 @@
             android:screenOrientation="portrait" />
         <!--编辑个人简历-->
         <activity
-            android:name=".personalCenter.activity.MyResumeEditActivity"
+            android:name=".personalCenter.activity.MyBasicActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />

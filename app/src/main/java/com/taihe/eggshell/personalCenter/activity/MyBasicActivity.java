@@ -2,7 +2,6 @@ package com.taihe.eggshell.personalCenter.activity;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
@@ -16,7 +15,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +22,7 @@ import android.widget.TextView;
 /**
  * Created by huan on 2015/7/24.
  */
-public class MyResumeEditActivity extends BaseActivity{
+public class MyBasicActivity extends BaseActivity{
 
     private ImageView iv_back;
 
@@ -38,7 +36,7 @@ public class MyResumeEditActivity extends BaseActivity{
     
     @Override
     public void initView() {
-        setContentView(R.layout.activity_myresume_edit);
+        setContentView(R.layout.activity_mybasic_edit);
 
         tv_birthdate = (TextView) findViewById(R.id.tv_resume_birthdate);
         super.initView();
@@ -61,9 +59,9 @@ public class MyResumeEditActivity extends BaseActivity{
      * 选择日期
      */
     private void selectDate() {
-        LayoutInflater inflater = LayoutInflater.from(MyResumeEditActivity.this);
+        LayoutInflater inflater = LayoutInflater.from(MyBasicActivity.this);
         final View timepickerview = inflater.inflate(R.layout.timepicker, null);
-        ScreenInfo screenInfo = new ScreenInfo(MyResumeEditActivity.this);
+        ScreenInfo screenInfo = new ScreenInfo(MyBasicActivity.this);
         wheelMain = new WheelMain(timepickerview);
         wheelMain.screenheight = screenInfo.getHeight();
         String time = tv_birthdate.getText().toString();
@@ -83,7 +81,7 @@ public class MyResumeEditActivity extends BaseActivity{
         Button btn_ok = (Button) timepickerview.findViewById(R.id.btn_timepicker_ok);
         Button btn_cancel = (Button) timepickerview.findViewById(R.id.btn_timepicker_cancel);
 
-        timeDialog =  new AlertDialog.Builder(MyResumeEditActivity.this)
+        timeDialog =  new AlertDialog.Builder(MyBasicActivity.this)
                 .setView(timepickerview).show();
 
         btn_ok.setOnClickListener(new View.OnClickListener() {
@@ -110,14 +108,14 @@ public class MyResumeEditActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-        initTitle("编辑个人简历");
+        initTitle("编辑资料");
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.id_back:
-                MyResumeEditActivity.this.finish();
+                MyBasicActivity.this.finish();
                 break;
             case R.id.tv_resume_birthdate:
                 // 选择日期

@@ -5,9 +5,50 @@
     android:background="@color/background_gray"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/include_title_color">
+
+        <ImageButton
+            android:id="@+id/id_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:src="@drawable/icon_return"/>
+
+        <TextView
+            android:id="@+id/id_title"
+            android:text="编辑资料"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/font_size_title"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_mybasic_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/font_size_32"
+            android:textColor="@color/font_color_black"
+            android:text="编辑"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,214 +58,188 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/title_height"
-                android:background="@color/white">
+                android:layout_height="42dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="我的"
-                    android:textColor="@color/font_color_black"
-                    android:textSize="@dimen/font_size_title" />
+                    android:layout_marginLeft="15dp"
+                    android:layout_centerVertical="true"
+                    android:text="登录账号"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_26" />
+
+
+                <TextView
+                    android:id="@+id/tv_mybasic_userno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    android:text="18810309229"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+
+
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:background="@color/line_gray" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:background="@drawable/wodebeijing">
-
-                <com.taihe.eggshell.widget.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/circleiv_mine_icon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    app:border_color="#FFFFFF"
-                    app:border_width="3dp"
-                    android:background="@drawable/touxiang" />
+                android:layout_height="42dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_mine_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_toRightOf="@+id/circleiv_mine_icon"
+                    android:layout_marginLeft="15dp"
+                    android:layout_centerVertical="true"
+                    android:text="昵称"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_26" />
+
+
+                <TextView
+                    android:id="@+id/tv_mybasic_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
                     android:text="王昕"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_size_32" />
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:background="@color/line_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_mine_qianming"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_mine_username"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_toRightOf="@+id/circleiv_mine_icon"
+                    android:layout_marginLeft="15dp"
+                    android:layout_centerVertical="true"
+                    android:text="性别"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_26" />
+
+
+                <TextView
+                    android:id="@+id/tv_mybasic_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    android:text="男"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+
+                <ImageButton
+                    android:id="@+id/ib_mybasic_sexselect"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xiala"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:background="@color/line_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_centerVertical="true"
+                    android:text="所在地"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_26" />
+
+
+                <TextView
+                    android:id="@+id/tv_mybasic_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    android:text="2010-10-5"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+
+                <ImageButton
+                    android:id="@+id/ib_mybasic_cityselect"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xiayiye"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:background="@color/line_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_centerVertical="true"
+                    android:text="简介"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_26" />
+
+
+                <TextView
+                    android:id="@+id/tv_mybasic_jianjie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
                     android:text="学习是一种信仰"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_size_26" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_mine_editziliao"
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:background="@drawable/ucenter_selected_background">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:text="编辑资料"
-                    android:textColor="@color/font_color_black"
-                    android:textSize="@dimen/font_size_26" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/chakanquanbu" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="15dp"
-                android:background="@color/line_gray" />
-
-            <RelativeLayout
-                android:id="@+id/rl_mine_postposition"
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:background="@drawable/ucenter_selected_background">
-
-
-                <TextView
-                    android:id="@+id/tv_mine_post"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:text="投递职位"
-                    android:textColor="@color/font_color_black"
-                    android:textSize="@dimen/font_size_26" />
-
-                <TextView
-                    android:id="@+id/tv_mine_postnum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="25dp"
-                    android:layout_toRightOf="@+id/tv_mine_post"
-                    android:text="(10)"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:src="@drawable/chakanquanbu" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="15dp"
-                android:background="@color/line_gray" />
-
-            <RelativeLayout
-                android:id="@+id/rl_mine_collectpostion"
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:background="@drawable/ucenter_selected_background">
-
-
-                <TextView
-                    android:id="@+id/tv_mine_collect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:text="收藏职位"
-                    android:textColor="@color/font_color_black"
-                    android:textSize="@dimen/font_size_26" />
-
-                <TextView
-                    android:id="@+id/tv_mine_collectnum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="25dp"
-                    android:layout_toRightOf="@+id/tv_mine_collect"
-                    android:text="(10)"
-                    android:textColor="@color/font_color_gray"
-                    android:textSize="@dimen/font_size_26" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/chakanquanbu" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="15dp"
-                android:background="@color/line_gray" />
-
-            <RelativeLayout
-                android:id="@+id/rl_mine_jianliguanli"
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:background="@drawable/ucenter_selected_background">
-
-
-                <TextView
-                    android:id="@+id/tv_mine_jianli"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:text="简历管理"
-                    android:textColor="@color/font_color_black"
-                    android:textSize="@dimen/font_size_26" />
-
-                <TextView
-                    android:id="@+id/tv_mine_jianlinum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="25dp"
-                    android:layout_toRightOf="@+id/tv_mine_jianli"
-                    android:text="(10)"
-                    android:textColor="@color/font_color_gray"
-                    android:textSize="@dimen/font_size_26" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/chakanquanbu" />
-
+                    android:text="(15个字以内)"
+                    android:textSize="11dp"
+                    android:textColor="#C8C8C8"/>
             </RelativeLayout>
 
             <View
@@ -243,28 +258,72 @@
                 android:background="@color/line_gray" />
 
             <RelativeLayout
-                android:id="@+id/rl_mine_about"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
-                android:background="@drawable/ucenter_selected_background">
-
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="关于蛋壳儿"
-                    android:textColor="@color/font_color_black"
+                    android:layout_centerVertical="true"
+                    android:text="生日"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
 
-                <ImageView
+
+                <TextView
+                    android:id="@+id/tv_resume_birthdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    android:text="2010-10-5"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+
+                <ImageButton
+                    android:id="@+id/ib_mybasic_date"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:src="@drawable/chakanquanbu" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/xiala"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:background="@color/line_gray" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_centerVertical="true"
+                    android:text="邮箱"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_26" />
+
+
+                <EditText
+                    android:id="@+id/et_mybasic_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    android:text="huanhuan@tiahel.com"
+                    android:background="@null"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
 
             </RelativeLayout>
 
@@ -275,28 +334,31 @@
                 android:background="@color/line_gray" />
 
             <RelativeLayout
-                android:id="@+id/rl_mine_hezuoqudao"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
-                android:background="@drawable/ucenter_selected_background">
-
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="合作渠道"
-                    android:textColor="@color/font_color_black"
+                    android:layout_centerVertical="true"
+                    android:text="QQ"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
 
-                <ImageView
+
+
+                <EditText
+                    android:id="@+id/et_mybasic_qq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="90dp"
+                    android:text="488128882"
+                    android:background="@null"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/chakanquanbu" />
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
 
             </RelativeLayout>
 
@@ -315,20 +377,60 @@
                 android:layout_height="0.5dp"
                 android:background="@color/line_gray" />
 
+
             <RelativeLayout
-                android:id="@+id/rl_mine_logout"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
-                android:background="@drawable/ucenter_selected_background">
-
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
                     android:layout_marginLeft="15dp"
-                    android:text="退出登录"
-                    android:textColor="@color/font_color_black"
+                    android:layout_centerVertical="true"
+                    android:text="等级"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_26" />
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/v1" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="15dp"
+                android:background="@color/line_gray" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_centerVertical="true"
+                    android:text="注册时间"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_26" />
+
+
+                <TextView
+                    android:id="@+id/tv_mybasic_registime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="90dp"
+                    android:text="2010-10-5"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
             </RelativeLayout>
@@ -337,39 +439,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/line_gray" />
-
-
-            <RelativeLayout
-                android:id="@+id/rl_mine_setting"
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:background="@drawable/ucenter_selected_background"
-                android:visibility="gone">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:text="设置"
-                    android:textColor="@color/font_color_black"
-                    android:textSize="@dimen/font_size_26" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/chakanquanbu" />
-
-            </RelativeLayout>
-
-
         </LinearLayout>
-
     </ScrollView>
-
-
 </LinearLayout>

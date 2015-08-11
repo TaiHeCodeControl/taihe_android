@@ -7,15 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.personalCenter.activity.AboutActivity;
 import com.taihe.eggshell.personalCenter.activity.MyPostActivity;
-import com.taihe.eggshell.personalCenter.activity.MyResumeEditActivity;
-import com.taihe.eggshell.personalCenter.activity.SetUpActivity;
+import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 
 public class MeFragment extends Fragment implements View.OnClickListener{
 
@@ -62,7 +60,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.rl_mine_editziliao:
-                intent = new Intent(mContext,MyResumeEditActivity.class);
+                intent = new Intent(mContext,MyBasicActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rl_mine_postposition:
