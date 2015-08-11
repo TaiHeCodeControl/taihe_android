@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
@@ -21,6 +22,7 @@ public class AllJobAdapter extends BaseAdapter {
 
     // 填充数据的list
     private List<JobInfo> list;
+    private boolean allChecked = false;
     // 上下文
     private Context context;
     // 用来导入布局
@@ -53,7 +55,7 @@ public class AllJobAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
+    public View getView(final int position, View convertView, ViewGroup viewGroup) {
         View view;
         ViewHolder holder;
         if(convertView != null){
@@ -73,15 +75,26 @@ public class AllJobAdapter extends BaseAdapter {
             holder.tv_salaryRange = (TextView) view.findViewById(R.id.tv_listjob_salaryrange);
 
             view.setTag(holder);
-
-            holder.tv_businessName.setText("太和天下");
-
-            holder.cb_select.setChecked(list.get(position).isChecked());
-
         }
+        holder.tv_businessName.setText("太和天下");
+
+        holder.cb_select.setChecked(allChecked);
+        holder.cb_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                list.get(position).setIsChecked(b);
+            }
+        });
+
+
         return view;
     }
 
+    public void notifyDataChanged(boolean allChecked){
+        this.allChecked = allChecked;
+        notifyDataSetChanged();
+    }
 
 
 
