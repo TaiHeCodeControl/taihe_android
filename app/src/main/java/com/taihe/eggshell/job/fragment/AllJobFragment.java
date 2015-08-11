@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
@@ -40,7 +42,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
     private List<JobInfo> jobInfos = null;
     private JobInfo jobInfo;
 
-    private MyListView list_job_all;
+    private ListView list_job_all;
     private View rootView;
     private Context mContext;
 
@@ -60,10 +62,10 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
         jobInfos = new ArrayList<JobInfo>();
 
         for(int i = 0; i < 10;i++){
-            jobInfo = new JobInfo(true,i);
+            jobInfo = new JobInfo(false,i);
             jobInfos.add(jobInfo);
         }
-        list_job_all = (MyListView) rootView.findViewById(R.id.list_job_all);
+        list_job_all = (ListView) rootView.findViewById(R.id.list_job_all);
 
         list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -82,6 +84,8 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
     private void initDate() {
         adapter = new AllJobAdapter(mContext,jobInfos);
         View footerView = View.inflate(mContext,R.layout.list_job_all_footer,null);
+
+
         list_job_all.addFooterView(footerView);
 
         list_job_all.setAdapter(adapter);
@@ -93,20 +97,8 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
         cb_selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if (isChecked) {
 
-                    for (JobInfo jobInfo : jobInfos) {
-                        jobInfo.setIsChecked(true);
-                    }
-                    // 刷新view
-                    adapter.notifyDataSetChanged();
-                } else {
-                    for (JobInfo jobInfo : jobInfos) {
-                        jobInfo.setIsChecked(false);
-                    }
-                    // 刷新view
-                    adapter.notifyDataSetChanged();
-                }
+                adapter.notifyDataChanged(isChecked);
             }
         });
 
@@ -138,6 +130,8 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View v) {
 
+                postJob();
+
                 ToastUtils.show(mContext, "职位投递成功");
             }
         });
@@ -147,12 +141,21 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
         isApplyDialog.show();
     }
 
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_alljob_shenqing:
                 isApplyJob();
                 break;
+        }
+    }
+
+    public void postJob() {
+        for(JobInfo jobInfo : jobInfos){
+           
+
         }
     }
 }
