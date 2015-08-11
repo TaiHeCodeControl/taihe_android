@@ -52,7 +52,7 @@ public class CompanyDetailActivity extends BaseActivity{
 
         int companyId = getIntent().getIntExtra("companyId",0);
         ToastUtils.show(mContext,companyId+"哈哈");
-        AllJobAdapter jobAdapter = new AllJobAdapter(mContext,jobInfos);
+        AllJobAdapter jobAdapter = new AllJobAdapter(mContext,jobInfos,false);
         jobsListView.setAdapter(jobAdapter);
 
         jobsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
