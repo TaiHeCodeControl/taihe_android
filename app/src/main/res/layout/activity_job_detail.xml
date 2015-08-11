@@ -10,11 +10,12 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/detail_line"/>
+        android:background="@color/line_gray"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -269,12 +270,14 @@
                     android:drawableLeft="@drawable/left_icon"
                     android:drawablePadding="8dp"/>
 
-                <ListView
+                <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_job_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="15dp"
                     android:listSelector="@color/white"
-                    android:scrollbars="none"/>
+                    android:scrollbars="none"
+                    android:divider="@null"/>
             </LinearLayout>
 
             <LinearLayout
@@ -300,9 +303,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:ellipsize="end"
+                    android:lineSpacingExtra="5dp"
+                    android:lineSpacingMultiplier="1.0"
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:text="深刻的历史的李开复快递费的路口附近道路"/>
+                    android:text="深刻的历史的"/>
 
                 <TextView
                     android:id="@+id/id_see_all"
@@ -339,13 +345,14 @@
                     android:drawableLeft="@drawable/left_icon"
                     android:drawablePadding="8dp"/>
 
-                <ListView
+                <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_other_position"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none"
                     android:background="@color/white"
-                    android:listSelector="@color/white"/>
+                    android:listSelector="@color/white"
+                    android:divider="@null"/>
 
             </LinearLayout>
 

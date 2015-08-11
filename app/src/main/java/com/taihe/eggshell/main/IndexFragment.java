@@ -41,7 +41,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
 
     private Intent intent;
-
     private View rootView;
     private LinearLayout linearLayoutFos,indexTitleView;
     private ImagesGallery gallery;
@@ -58,7 +57,9 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private int[] imageResId; // 图片ID
     private int current = 0;
     private int preSelImgIndex = 0;
-
+    private static final int ALPHA_START=0;
+    private static final int ALPHA_END=180;
+    private static final int ALPHA_MESSAGE = 1;
 
     private Handler handler = new Handler() {
 
@@ -177,10 +178,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         });
 
     }
-    private int oldY;
-    public static final int ALPHA_START=0;
-    public static final int ALPHA_END=180;
-    private static final int ALPHA_MESSAGE = 1;
 
     @Override
     public void onClick(View v) {
