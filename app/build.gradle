@@ -23,7 +23,7 @@ android {
         }
 
         release{
-            storeFile file("D://AndroidStudioProjectseggshellandroidkeystory.jks")
+            storeFile file("D://AndroidStudioProjects/eggshellandroidkeystory.jks")
             storePassword "beijingtaihetianxiatouzikonggu"
             keyAlias "eggshellandroidkeystory"
             keyPassword "beijingtaihetianxiatouzikonggu"

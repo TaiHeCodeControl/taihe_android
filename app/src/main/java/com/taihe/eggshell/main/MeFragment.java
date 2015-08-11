@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.personalCenter.activity.AboutActivity;
 import com.taihe.eggshell.personalCenter.activity.MyPostActivity;
 import com.taihe.eggshell.personalCenter.activity.MyResumeEditActivity;
 import com.taihe.eggshell.personalCenter.activity.SetUpActivity;
@@ -21,9 +22,8 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
 
     private View rootView;
-    private RelativeLayout rl_setting;
-    private TextView tv_post, tv_intension,tv_collect;
-    private Button btn_resume;
+    private RelativeLayout rl_setting,rl_editZiliao ,rl_post,rl_collect,rl_jianli,rl_about,rl_hezuo,rl_logout;
+    private TextView tv_username, tv_qianming , tv_postNum, tv_collectNum , jianliNum;
 
     private Intent intent;
 
@@ -38,43 +38,59 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        tv_post = (TextView) rootView.findViewById(R.id.tv_mine_post);
-        tv_intension = (TextView) rootView.findViewById(R.id.tv_mine_jobintension);
-        tv_collect = (TextView) rootView.findViewById(R.id.tv_mine_mycollect);
         rl_setting = (RelativeLayout)rootView.findViewById(R.id.rl_mine_setting);
-        btn_resume = (Button) rootView.findViewById(R.id.btn_mine_resume);
+        rl_editZiliao = (RelativeLayout)rootView.findViewById(R.id.rl_mine_editziliao);
+        rl_post = (RelativeLayout)rootView.findViewById(R.id.rl_mine_postposition);
+        rl_collect = (RelativeLayout)rootView.findViewById(R.id.rl_mine_collectpostion);
+        rl_jianli = (RelativeLayout)rootView.findViewById(R.id.rl_mine_jianliguanli);
+        rl_about = (RelativeLayout)rootView.findViewById(R.id.rl_mine_about);
+        rl_hezuo = (RelativeLayout)rootView.findViewById(R.id.rl_mine_hezuoqudao);
+        rl_logout = (RelativeLayout)rootView.findViewById(R.id.rl_mine_logout);
 
-        btn_resume.setOnClickListener(this);
-        tv_post.setOnClickListener(this);
-        tv_intension.setOnClickListener(this);
-        tv_collect.setOnClickListener(this);
+
         rl_setting.setOnClickListener(this);
+        rl_editZiliao.setOnClickListener(this);
+        rl_post.setOnClickListener(this);
+        rl_collect.setOnClickListener(this);
+        rl_jianli.setOnClickListener(this);
+        rl_about.setOnClickListener(this);
+        rl_hezuo.setOnClickListener(this);
+        rl_logout.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_mine_resume:
+            case R.id.rl_mine_editziliao:
                 intent = new Intent(mContext,MyResumeEditActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.tv_mine_post:
+            case R.id.rl_mine_postposition:
                 intent = new Intent(mContext,MyPostActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.tv_mine_jobintension:
+
+            case R.id.rl_mine_collectpostion:
                 intent = new Intent(mContext,MyPostActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.tv_mine_mycollect:
-                intent = new Intent(mContext,MyPostActivity.class);
+
+            case R.id.rl_mine_jianliguanli:
+                break;
+            case R.id.rl_mine_about:
+                intent = new Intent(mContext,AboutActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.rl_mine_setting:
-                intent = new Intent(mContext, SetUpActivity.class);
+            case R.id.rl_mine_hezuoqudao:
+                intent = new Intent(mContext,AboutActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.rl_mine_logout://退出登录
+                break;
+//            case R.id.rl_mine_setting:
+//                intent = new Intent(mContext, SetUpActivity.class);
+//                startActivity(intent);
+//                break;
         }
     }
 }
