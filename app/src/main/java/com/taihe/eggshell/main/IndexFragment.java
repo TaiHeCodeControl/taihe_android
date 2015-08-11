@@ -160,6 +160,9 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         ToastUtils.show(mContext,position+"");
+                        Intent intent = new Intent(mContext,CompanyDetailActivity.class);
+                        intent.putExtra("companyId",position);
+                        startActivity(intent);
             }
         });
 

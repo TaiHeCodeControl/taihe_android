@@ -124,7 +124,10 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
-
+        <activity
+            android:name=".main.CompanyDetailActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
 
         <!--选择城市-->
         <activity
