@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+﻿<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="85dp"
     android:background="@drawable/list_item_bg"
@@ -12,8 +12,8 @@
             android:focusable="false"
             android:id="@+id/cb_listjob_select"
             style="@style/CustomCheckboxRed"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"/>
@@ -88,7 +88,6 @@
             android:text="8-2"
             android:textColor="@color/font_color_black"
             android:textSize="@dimen/font_size_26" />
-
 
         <TextView
             android:id="@+id/tv_listjob_salaryrange"

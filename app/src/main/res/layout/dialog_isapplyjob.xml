@@ -19,9 +19,8 @@
 
     <ImageView
         android:id="@+id/iv_isapplyjob_cancel"
-        android:layout_width="wrap_content"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
         android:src="@drawable/cha"
         android:layout_alignTop="@+id/tv_isapplyjob_title"
         android:layout_alignParentRight="true" />
@@ -29,12 +28,11 @@
 
     <CheckBox
         android:id="@+id/cb_isapplyjob_xuanze"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="60dp"
         style="@style/CustomCheckboxBlue"
         android:layout_below="@+id/tv_isapplyjob_title"
         android:checked="true"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp" />
 
     <TextView
@@ -42,7 +40,6 @@
         android:layout_toRightOf="@+id/cb_isapplyjob_xuanze"
         android:layout_below="@+id/tv_isapplyjob_title"
         android:layout_marginTop="23dp"
-        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="个人简历20150730"

@@ -2,10 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <include layout="@layout/include_title_bar"/>
+    <include layout="@layout/include_title_bar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -14,90 +19,50 @@
         android:fadingEdge="none"
         android:requiresFadingEdge="none"
         android:scrollbarStyle="insideOverlay"
-        android:scrollbars="vertical" >
+        android:scrollbars="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
             android:layout_marginBottom="30dp"
-            android:background="@color/white"
+            android:paddingBottom="20dp"
             android:gravity="center_horizontal"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@color/white"
-                android:gravity="center_horizontal" >
+                android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/show_abouts_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="15dip"
-                    android:padding="5dip"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="15dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/eggker" />
+                    android:src="@drawable/logo" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dip"
-                    android:layout_toRightOf="@id/show_abouts_logo"
-                    android:gravity="center"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/about_eggker" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="8dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/about_eggkertwo" />
-                </LinearLayout>
             </RelativeLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dip"
-                android:layout_marginLeft="30dip"
-                android:layout_marginRight="30dip"
-                android:layout_marginTop="20dip"
+                android:layout_marginLeft="15dip"
+                android:layout_marginRight="15dip"
+                android:lineSpacingExtra="5dp"
                 android:text="@string/set_aboutus"
-                android:textColor="@color/gray"
-                android:textSize="15.0sp" />
+                android:textColor="@color/font_color_black"
+                android:textSize="12dp" />
+
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dip"
-                android:layout_marginTop="20dip"
-                android:text="最终用户协议"
-                android:textColor="@color/red"
-                android:textSize="15.0sp" />
-
-            <ImageView
-                android:layout_width="200dip"
-                android:layout_height="200dip"
-                android:background="@drawable/photo_frame_bg"
-                android:padding="5dip"
-                android:scaleType="fitXY"
-                android:src="@drawable/qrcode" />
-
-            <View
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"/>
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:textColor="@color/font_color_gray_jobsearch"
+                android:text="太和天下投资控股有限公司  版权所有"/>
         </LinearLayout>
 
     </ScrollView>

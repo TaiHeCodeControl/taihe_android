@@ -1,121 +1,156 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background_gray"
     android:orientation="vertical">
 
     <include
         android:id="@+id/login_title"
         layout="@layout/include_title_bar" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray" />
+
     <ImageView
         android:id="@+id/iv_login_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/login_title"
+        android:layout_width="match_parent"
+        android:scaleType="center"
+        android:layout_height="110dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/eggker" />
+        android:src="@drawable/logo" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_login_icon"
-        android:layout_margin="20dp"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/border_roundedcorners_gray"
-            android:gravity="center_vertical">
+            android:layout_height="45dp">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/login_user" />
+                android:layout_marginLeft="15dp"
+                android:text="手机号"
+                android:textColor="@color/font_color_black"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/et_login_userphone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="75dp"
                 android:background="@null"
                 android:focusable="true"
                 android:hint="请输入手机号"
                 android:inputType="phone"
                 android:maxLength="11"
-                android:textSize="16sp" />
+                android:textColor="@color/font_color_black"
+                android:textColorHint="#C8C8C8"
+                android:textSize="@dimen/font_size_26" />
 
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/line_gray" />
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/border_roundedcorners_gray"
-            android:gravity="center">
+            android:layout_height="45dp">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/login_pass" />
+                android:layout_marginLeft="15dp"
+                android:text="密码"
+                android:textColor="@color/font_color_black"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/et_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="75dp"
                 android:background="@null"
                 android:hint="请输入密码"
                 android:inputType="textPassword"
-                android:textSize="16sp" />
+                android:textColor="@color/font_color_black"
+                android:textColorHint="#C8C8C8"
+                android:textSize="@dimen/font_size_26" />
 
 
         </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_gray" />
+
+</LinearLayout>
 
         <Button
             android:id="@+id/btn_login_login"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_round_selector"
+            android:layout_margin="15dp"
+            android:background="@drawable/hongniu"
             android:onClick="login"
             android:text="登录"
+            android:textSize="15dp"
             android:textColor="@color/white" />
 
         <RelativeLayout
-            android:layout_marginTop="20dp"
-            android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             >
 
             <TextView
                 android:id="@+id/tv_login_forgetpassword"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:text="忘记密码？"
+                android:textSize="12dp"
+                android:textColor="@color/font_color_red"/>
+
+            <TextView
+                android:id="@+id/tv_login_re"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:text="忘记密码" />
+                android:text="还没有账号？"
+                android:textSize="12dp"
+                android:textColor="@color/font_color_black"/>
 
             <TextView
                 android:id="@+id/tv_login_regist"
+                android:layout_toRightOf="@+id/tv_login_re"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_alignParentRight="true"
-                android:text="注册" />
+                android:layout_height="match_parent"
+                android:text="立即注册!"
+                android:textSize="12dp"
+                android:textColor="@color/font_color_red"/>
         </RelativeLayout>
 
     </LinearLayout>
 
 
-</RelativeLayout>
