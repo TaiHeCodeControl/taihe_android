@@ -1,21 +1,18 @@
 package com.taihe.eggshell.job.activity;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
-import com.taihe.eggshell.base.utils.JobApplyDialogUtil;
+import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.adapter.JobDescAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
-import com.taihe.eggshell.widget.ApplyJobDialog;
 import com.taihe.eggshell.widget.MyListView;
 
 import java.util.ArrayList;

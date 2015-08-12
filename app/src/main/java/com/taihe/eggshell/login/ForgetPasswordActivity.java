@@ -1,6 +1,7 @@
 package com.taihe.eggshell.login;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,9 +92,29 @@ public class ForgetPasswordActivity extends BaseActivity {
 
     private void getCodeFromNet(){
 
+        getCode.setEnabled(false);
+        TimerCount timerCount = new TimerCount(1000*60,1000);
+        timerCount.start();
+        getCode.setBackgroundResource(R.drawable.msg_count_start);
     }
 
+    private class TimerCount extends CountDownTimer{
 
+        public TimerCount(long millisInFuture,long countDownInterval){
+            super(millisInFuture,countDownInterval);
+        }
+        @Override
+        public void onTick(long l) {
+            getCode.setText(l/1000+"秒后重发");
+        }
+
+        @Override
+        public void onFinish() {
+                getCode.setText("获取验证码");
+                getCode.setEnabled(true);
+                getCode.setBackgroundResource(R.drawable.msg_vercode_background);
+        }
+    }
 
 
 }

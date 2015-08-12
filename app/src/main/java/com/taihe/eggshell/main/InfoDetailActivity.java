@@ -27,8 +27,8 @@ public class InfoDetailActivity extends BaseActivity{
         telPhone = (TextView)findViewById(R.id.id_info_phone);
         callPerson = (TextView)findViewById(R.id.id_person);
         comeWay = (TextView)findViewById(R.id.id_info_way);
-
         jobBrief = (TextView)findViewById(R.id.id_company_brief);
+
     }
 
     @Override

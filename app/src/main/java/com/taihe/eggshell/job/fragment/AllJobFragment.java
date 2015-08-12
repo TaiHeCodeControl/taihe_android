@@ -14,7 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.utils.JobApplyDialogUtil;
+import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;

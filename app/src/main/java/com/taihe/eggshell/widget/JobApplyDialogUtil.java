@@ -1,4 +1,4 @@
-package com.taihe.eggshell.base.utils;
+package com.taihe.eggshell.widget;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.ToastUtils;
 
 /**
  * Created by huan on 2015/8/11.
