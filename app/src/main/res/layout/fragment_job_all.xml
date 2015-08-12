@@ -5,11 +5,16 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/list_job_all"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/list_item_bg" />
+
+
+        <ListView
+            android:id="@+id/list_job_all"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/line_gray"
+            android:footerDividersEnabled="false" />
+
+
 
 
 </LinearLayout>

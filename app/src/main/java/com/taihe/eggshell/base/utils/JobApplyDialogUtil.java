@@ -1,0 +1,52 @@
+package com.taihe.eggshell.base.utils;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+
+import com.taihe.eggshell.R;
+
+/**
+ * Created by huan on 2015/8/11.
+ */
+public class JobApplyDialogUtil {
+    private static AlertDialog isApplyDialog = null;
+
+    public static void isApplyJob(final Context mContext){
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+        View view = View.inflate(mContext, R.layout.dialog_isapplyjob,
+                null);
+
+        final ImageView iv_cancel = (ImageView) view.findViewById(R.id.iv_isapplyjob_cancel);
+        final Button btn_ok = (Button) view.findViewById(R.id.btn_isapplyjob_ok);
+
+
+        iv_cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                isApplyDialog.dismiss();
+            }
+        });
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+//                postJob();
+
+                ToastUtils.show(mContext, "职位投递成功");
+                isApplyDialog.dismiss();
+            }
+        });
+
+        builder.setView(view);
+        isApplyDialog = builder.create();
+        isApplyDialog.show();
+    }
+}

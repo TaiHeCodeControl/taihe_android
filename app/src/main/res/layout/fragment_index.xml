@@ -1,68 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/white">
 
-    <RelativeLayout
+    <com.taihe.eggshell.widget.MyScrollView
+        android:id="@+id/id_index_scroll"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/tv_place"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="北京"
-            android:layout_marginLeft="15dp"
-            android:textSize="20sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="首页"
-            android:textSize="20sp" />
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.taihe.eggshell.widget.ImagesGallery
-            android:id="@+id/gallery"
-            android:layout_width="match_parent"
-            android:layout_height="200dp" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/id_linear_fos"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_below="@+id/gallery"
-            android:background="@color/gray"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/background_gray">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@color/white">
+
+                <com.taihe.eggshell.widget.ImagesGallery
+                    android:id="@+id/gallery"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"/>
+
+                <LinearLayout
+                    android:id="@+id/id_linear_fos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:background="#00ffffff">
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="vertical"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/id_look_job"
+                        style="@style/index_tab"
+                        android:text="找工作"
+                        android:drawableTop="@drawable/lookjob"/>
+                    <TextView
+                        android:id="@+id/id_look_jianzhi"
+                        style="@style/index_tab"
+                        android:text="找兼职"
+                        android:drawableTop="@drawable/jianzhi"/>
+                    <TextView
+                        android:id="@+id/id_look_shixi"
+                        style="@style/index_tab"
+                        android:text="找实习"
+                        android:drawableTop="@drawable/shixi"/>
+                    <TextView
+                        android:id="@+id/id_information"
+                        style="@style/index_tab"
+                        android:text="信息台"
+                        android:drawableTop="@drawable/xinxitai"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/id_write_resume"
+                        style="@style/index_tab"
+                        android:text="写简历"
+                        android:drawableTop="@drawable/xiejianli"/>
+                    <TextView
+                        android:id="@+id/id_play_mode"
+                        style="@style/index_tab"
+                        android:text="玩出范"
+                        android:drawableTop="@drawable/wanchufan"/>
+                    <TextView
+                        android:id="@+id/id_we_chat"
+                        style="@style/index_tab"
+                        android:text="微社交"
+                        android:drawableTop="@drawable/weishejiao"/>
+                    <TextView
+                        android:id="@+id/id_public_class"
+                        style="@style/index_tab"
+                        android:text="公开课"
+                        android:drawableTop="@drawable/gongkaike"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:text="名企推荐"
+                    android:textSize="16sp"
+                    android:textColor="#323232"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/line_gray"/>
+
+                <GridView
+                    android:id="@+id/id_company_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:gravity="center_vertical"
+                    android:listSelector="@color/white"
+                    android:stretchMode="columnWidth"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:horizontalSpacing="1dp"
+                    android:verticalSpacing="1dp"
+                    android:background="@color/white">
+                </GridView>
+
+            </LinearLayout>
+
+            <com.taihe.eggshell.widget.MyListView
+                android:id="@+id/id_position_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:listSelector="@color/white"
+                android:scrollbars="none"
+                android:divider="#F3F3F1"
+                android:dividerHeight="15dp"
+                android:background="@color/white">
+            </com.taihe.eggshell.widget.MyListView>
 
         </LinearLayout>
+    </com.taihe.eggshell.widget.MyScrollView>
 
-    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/id_index_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:background="#35383e">
 
-    <Button
-        android:id="@+id/btn_index_job"
-        android:padding="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="找工作"
-        android:textSize="16sp"
-        android:background="@null"
-        />
-    <ImageView
-        android:id="@+id/id_to_videolist"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_margin="20dp"
-        android:src="@drawable/bg_overlay" />
+        <TextView
+            android:id="@+id/id_job_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:text="北京"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/down_icon"/>
 
+        <RelativeLayout
+            android:id="@+id/id_search_job"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/search_background">
 
-</LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text="搜索职位"
+                android:textSize="15sp"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/search_icon"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

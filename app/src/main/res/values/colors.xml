@@ -1,21 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#ffffffff</color>
+    <color name="white">#FFFFFF</color>
     <color name="black">#ff000000</color>
 
     <color name="red">#ff0000</color>
     <color name="transparent">#00000000</color>
-    <color name="blue">#87CEFA</color>
+    <color name="blue">#37ABF4</color>
     <color name="gray">#B3B4B5</color>
-    <color name="background_gray">#F1EFF4</color>
+    <color name="background_gray">#F3F3F1</color>
     <color name="green">#00EE76</color>
     <color name="dark_gray">#787B7B</color>
     <!-- 浅灰色 -->
     <color name="black_gray">#F2F2F2</color>
     <!-- 分隔符颜色灰色 -->
+    <color name="index_tab_color">#646464</color>
+    <color name="main_tab">#35383F</color>
+    <color name="main_tab_text">#C5C7CB</color>
+    <color name="include_title_color">#FDFDFD</color>
     <color name="line_gray">#DDDDDD</color>
 
     <!--字体颜色-->
-    <color name="font_color_black">#ff000000</color>
-    <color name="font_color_gray">#B3B4B5</color>
+    <color name="font_color_black">#000000</color>
+    <color name="font_color_red">#f44336</color>
+    <color name="font_color_gray">#646464</color>
+    <color name="font_color_gray_jobsearch">#969696</color>
+
 </resources>

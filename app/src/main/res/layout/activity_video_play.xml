@@ -14,7 +14,7 @@
 
         <include android:id="@+id/id_include"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="47dp"
             layout="@layout/include_title_bar"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -49,6 +49,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:background="@drawable/xiangxi" />
 
             <TextView
@@ -63,6 +64,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:background="@drawable/bofang" />
         </LinearLayout>
     </RelativeLayout>

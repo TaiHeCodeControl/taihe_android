@@ -1,92 +1,112 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:padding="10dp">
+    android:layout_height="75dp"
+    android:background="@drawable/list_item_bg"
+    android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <CheckBox
-        android:id="@+id/cb_listjob_select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@+id/cb_listjob_select"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_listjob_jobname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="职位名称"
-            android:textColor="@color/font_color_black"
-            android:textSize="@dimen/font_size_l" />
-
-        <TextView
-            android:id="@+id/tv_listjob_businessname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="公司名称"
-            android:textColor="@color/font_color_black"
-            android:textSize="@dimen/font_size_m" />
+        <CheckBox
+            android:focusable="false"
+            android:id="@+id/cb_listjob_select"
+            style="@style/CustomCheckboxRed"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/cb_listjob_select"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_listjob_city"
+                android:id="@+id/tv_listjob_jobname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="北京"
+                android:layout_marginBottom="8dp"
+                android:text="职位名称"
                 android:textColor="@color/font_color_black"
-                android:textSize="@dimen/font_size_m" />
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:background="@color/gray" />
+                android:textSize="@dimen/font_size_32" />
 
             <TextView
-                android:id="@+id/tv_listjob_edu"
+                android:id="@+id/tv_listjob_businessname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="本科"
-                android:textColor="@color/font_color_black"
-                android:textSize="@dimen/font_size_m" />
+                android:layout_marginBottom="8dp"
+                android:text="公司名称"
+                android:textColor="@color/font_color_gray"
+                android:textSize="@dimen/font_size_26" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_listjob_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="北京"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="12dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_marginTop="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/line_gray" />
+
+                <TextView
+                    android:id="@+id/tv_listjob_edu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本科"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/tv_listjob_pubtime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="10dp"
-        android:text="8-2"
-        android:textColor="@color/font_color_black"
-        android:textSize="@dimen/font_size_m" />
+        <TextView
+            android:id="@+id/tv_listjob_pubtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:text="8-2"
+            android:textColor="@color/font_color_black"
+            android:textSize="@dimen/font_size_26" />
 
 
-    <TextView
-        android:id="@+id/tv_listjob_salaryrange"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:text="5K-7K"
-        android:textColor="@color/font_color_black"
-        android:textSize="@dimen/font_size_m" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_listjob_salaryrange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_listjob_pubtime"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="30dp"
+            android:text="5K-7K"
+            android:textColor="@color/font_color_red"
+            android:textSize="@dimen/font_size_26" />
+    </RelativeLayout>
+
+    <View
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/line_gray" />
+</LinearLayout>

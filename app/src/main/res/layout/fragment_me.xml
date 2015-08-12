@@ -5,250 +5,371 @@
     android:background="@color/background_gray"
     android:orientation="vertical">
 
-    <RelativeLayout
-
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="match_parent">
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/blue" />
-
-        <ImageView
-            android:id="@+id/iv_mine_logo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerInParent="true"
-            android:src="@drawable/eggker" />
-
-        <Button
-            android:id="@+id/btn_mine_resume"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_mine_logo"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/border_rightcorners_gray"
-            android:padding="8dp"
-            android:text="完善个人简历" />
-    </RelativeLayout>
+            android:background="@color/white"
+            android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/title_height"
+                android:background="@color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="我的"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_title" />
+            </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_mine_post"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="我的投递"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@drawable/wodebeijing">
 
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="45dp"
-            android:background="@color/gray" />
+                <com.taihe.eggshell.widget.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/circleiv_mine_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    app:border_color="#FFFFFF"
+                    app:border_width="3dp"
+                    android:background="@drawable/touxiang" />
 
-        <TextView
-            android:id="@+id/tv_mine_jobintension"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="求职意向"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tv_mine_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_toRightOf="@+id/circleiv_mine_icon"
+                    android:text="王昕"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_32" />
 
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="45dp"
-            android:background="@color/gray" />
+                <TextView
+                    android:id="@+id/tv_mine_qianming"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_mine_username"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_toRightOf="@+id/circleiv_mine_icon"
+                    android:text="学习是一种信仰"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_26" />
 
-        <TextView
-            android:id="@+id/tv_mine_mycollect"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="我的收藏"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_mine_editziliao"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/ucenter_selected_background">
 
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="编辑资料"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_26" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="vertical"
-        android:background="@color/white">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/chakanquanbu" />
 
-        <RelativeLayout
-            android:id="@+id/rl_mine_evaluate"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/ucenter_selected_background">
+            </RelativeLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="15dp"
-                android:src="@drawable/mine_set"
-                android:layout_centerVertical="true"/>
+                android:background="@color/line_gray" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:text="评价管理"
-                android:layout_centerVertical="true"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+            <RelativeLayout
+                android:id="@+id/rl_mine_postposition"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/ucenter_selected_background">
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/icon_more"
-                android:layout_centerVertical="true"/>
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_mine_post"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="投递职位"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_26" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray" />
+                <TextView
+                    android:id="@+id/tv_mine_postnum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/tv_mine_post"
+                    android:text="(10)"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
 
-        <RelativeLayout
-            android:id="@+id/rl_mine_complain"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/ucenter_selected_background"
-            >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/chakanquanbu" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="15dp"
-                android:src="@drawable/mine_set"
-                android:layout_centerVertical="true"/>
+                android:background="@color/line_gray" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:text="投诉管理"
-                android:layout_centerVertical="true"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+            <RelativeLayout
+                android:id="@+id/rl_mine_collectpostion"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/ucenter_selected_background">
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/icon_more"
-                android:layout_centerVertical="true"/>
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_mine_collect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="收藏职位"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_26" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray" />
+                <TextView
+                    android:id="@+id/tv_mine_collectnum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/tv_mine_collect"
+                    android:text="(10)"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
 
-        <RelativeLayout
-            android:id="@+id/rl_mine_evluate"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/ucenter_selected_background"
-            >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/chakanquanbu" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="15dp"
-                android:src="@drawable/mine_set"
-                android:layout_centerVertical="true"/>
+                android:background="@color/line_gray" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:text="设置"
-                android:layout_centerVertical="true"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+            <RelativeLayout
+                android:id="@+id/rl_mine_jianliguanli"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/ucenter_selected_background">
 
-            <ImageView
-                android:layout_width="20dp"
+
+                <TextView
+                    android:id="@+id/tv_mine_jianli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="简历管理"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_26" />
+
+                <TextView
+                    android:id="@+id/tv_mine_jianlinum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/tv_mine_jianli"
+                    android:text="(10)"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/chakanquanbu" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_gray" />
+
+            <View
+                android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/icon_more"
-                android:layout_centerVertical="true"/>
+                android:background="@color/background_gray" />
 
-        </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_gray" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray" />
+            <RelativeLayout
+                android:id="@+id/rl_mine_about"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/ucenter_selected_background">
 
-        <RelativeLayout
-            android:id="@+id/rl_mine_setting"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/ucenter_selected_background"
-            >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="关于蛋壳儿"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_26" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/chakanquanbu" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
                 android:layout_marginLeft="15dp"
-                android:src="@drawable/mine_setting"
-                android:layout_centerVertical="true"/>
+                android:background="@color/line_gray" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:text="设置"
-                android:layout_centerVertical="true"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+            <RelativeLayout
+                android:id="@+id/rl_mine_hezuoqudao"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/ucenter_selected_background">
 
-            <ImageView
-                android:layout_width="20dp"
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="合作渠道"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_26" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/chakanquanbu" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_gray" />
+
+            <View
+                android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/icon_more"
-                android:layout_centerVertical="true"/>
+                android:background="@color/background_gray" />
 
-        </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_gray" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/gray" />
+            <RelativeLayout
+                android:id="@+id/rl_mine_logout"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/ucenter_selected_background">
 
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="退出登录"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_26" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_gray" />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_mine_setting"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/ucenter_selected_background"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="设置"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_26" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/chakanquanbu" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>

@@ -28,7 +28,7 @@ import com.taihe.eggshell.lsw.MSCJSONObject;
  * **/
 public class MSCUrlManager implements Serializable {
 	public static String httpmain = "http://www.gmtxw06.com";
-	public static String http = "http://195.198.1.122:8066/eggker/phpv/API.php/video/getListImage";
+	public static String http = "http://195.198.1.122:8066/eggker/phpv/API.php";
 	// public static String http = "http://192.168.1.109/gzxd/index.php?";
 
 	// private String http = "http://test.api.ziyuanjia.com/";
@@ -48,8 +48,8 @@ public class MSCUrlManager implements Serializable {
         listMscUrlStrings = new HashMap<String, MSCUrlParam>();
     }
 	public MSCUrlManager(String apitype, String urlapi) {
-		this.apitype = "&m=" + apitype;
-		this.urlapi = "&a=" + urlapi;
+		this.apitype = "/m=" + apitype;
+		this.urlapi = "/a=" + urlapi;
 
 		listMscUrlStrings = new HashMap<String, MSCUrlParam>();
 	}

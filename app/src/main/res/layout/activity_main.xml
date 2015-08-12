@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
+        android:background="@color/main_tab"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -31,21 +31,22 @@
             style="@style/main_tab"
             android:drawableTop="@drawable/tab_index_background"
             android:checked="true"
-            />
+            android:text="首页"/>
         <RadioButton
             android:id="@+id/id_radio_social"
             style="@style/main_tab"
             android:drawableTop="@drawable/tab_social_background"
-            />
+            android:text="玩出范"/>
         <RadioButton
             android:id="@+id/id_radio_openclass"
             style="@style/main_tab"
             android:drawableTop="@drawable/tab_openclass_background"
-            android:checked="false" />
+            android:text="公开课"/>
+
         <RadioButton
             android:id="@+id/id_radio_me"
             style="@style/main_tab"
             android:drawableTop="@drawable/tab_me_background"
-            />
+            android:text="我的"/>
     </RadioGroup>
 </RelativeLayout>

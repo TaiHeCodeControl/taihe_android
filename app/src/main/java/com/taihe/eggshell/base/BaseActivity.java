@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
@@ -23,6 +24,7 @@ public class BaseActivity extends Activity implements View.OnClickListener{
     private Context mContext;
     private ImageView backImage;
     private TextView titleTextView;
+    private LinearLayout lin_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +39,12 @@ public class BaseActivity extends Activity implements View.OnClickListener{
     public void initView(){
         backImage = (ImageView)findViewById(R.id.id_back);
         titleTextView = (TextView)findViewById(R.id.id_title);
+        lin_back = (LinearLayout)findViewById(R.id.lin_back);
     }
 
     public void initData(){
-        backImage.setOnClickListener(this);
+//        backImage.setOnClickListener(this);
+        lin_back.setOnClickListener(this);
     }
 
     public void initTitle(String titleName){
@@ -50,7 +54,7 @@ public class BaseActivity extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.id_back:
+            case R.id.lin_back:
                 finish();
                 break;
         }

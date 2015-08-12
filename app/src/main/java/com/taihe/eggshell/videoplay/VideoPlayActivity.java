@@ -43,12 +43,13 @@ public class VideoPlayActivity extends BaseActivity {
     public void initView() {
         setContentView(R.layout.activity_video_play);
         playTitle = (TextView) findViewById(R.id.txt_video_play_title);
-        //initTitle("课程播放");
+        super.initView();
+        super.initData();
     }
 
     @Override
     public void initData() {
-
+        initTitle("课程播放");
         Bundle e = getIntent().getExtras();
         String title="";
         if (e != null) {
@@ -148,7 +149,7 @@ public class VideoPlayActivity extends BaseActivity {
 
     // 切换到横屏
     public void changeToLandscape() {
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(w, w);
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(h, w);
         rl.setLayoutParams(p);
         stopPosition = videoview.getCurrentPosition();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -157,7 +158,7 @@ public class VideoPlayActivity extends BaseActivity {
 
     // 切换到竖屏
     public void changeToPortrait() {
-        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(w,h);
+        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(w,w);
         rl.setLayoutParams(p);
         stopPosition = videoview.getCurrentPosition();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
