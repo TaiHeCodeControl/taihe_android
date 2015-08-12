@@ -3,6 +3,7 @@ package com.taihe.eggshell.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,7 @@ import android.widget.RadioGroup;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.easefun.polyvsdk.PolyvSDKClient;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
@@ -24,6 +26,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.entity.User;
+import com.taihe.eggshell.videoplay.PolyvDemoService;
 import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.CustomViewPager;
 
@@ -95,6 +98,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     }
 
     public void initData() {
+
     }
 
     public void initViewPager() {
