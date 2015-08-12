@@ -21,6 +21,6 @@ public class AboutActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-        super.initTitle("关于我们");
+        super.initTitle("关于蛋壳儿");
     }
 }
