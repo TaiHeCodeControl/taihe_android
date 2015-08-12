@@ -11,18 +11,29 @@ android {
         versionCode 1
         versionName "1.0"
     }
-
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+    }
     signingConfigs{
 
         debug{
-            storeFile file("D://AndroidStudioProjects/eggshellandroidkeystory.jks")
+            storeFile file("D://androidtool/eggshellandroidkeystory.jks")
             storePassword "beijingtaihetianxiatouzikonggu"
             keyAlias "eggshellandroidkeystory"
             keyPassword "beijingtaihetianxiatouzikonggu"
         }
 
         release{
-            storeFile file("D://AndroidStudioProjects/eggshellandroidkeystory.jks")
+            storeFile file("D://androidtool/eggshellandroidkeystory.jks")
             storePassword "beijingtaihetianxiatouzikonggu"
             keyAlias "eggshellandroidkeystory"
             keyPassword "beijingtaihetianxiatouzikonggu"
@@ -62,6 +73,15 @@ dependencies {
     compile files('libs/xUtils-2.6.14.jar')
     compile files('libs/baidumapapi_v3_5_0.jar')
     compile files('libs/locSDK_5.2.jar')
+    compile files('libs/afinal_0.5.1_bin.jar')
+    compile files('libs/commons-codec-1.5.jar')
+    compile files('libs/commons-io-2.4.jar')
+    compile files('libs/httpclient-android-4.3.3.jar')
+    compile files('libs/httpmime-4.3.5.jar')
+    compile files('libs/jikmediaplayer.jar')
+    compile files('libs/jikmediawidget.jar')
+    compile files('libs/polyvSDK.jar')
+    compile files('libs/universal-image-loader-1.9.3-SNAPSHOT.jar')
 }
 
 

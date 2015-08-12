@@ -10,7 +10,10 @@
     <color name="background_gray">#F1EFF4</color>
     <color name="green">#00EE76</color>
     <color name="dark_gray">#787B7B</color>
-
+    <!-- 浅灰色 -->
+    <color name="black_gray">#F2F2F2</color>
+    <!-- 分隔符颜色灰色 -->
+    <color name="line_gray">#DDDDDD</color>
 
     <!--字体颜色-->
     <color name="font_color_black">#ff000000</color>

@@ -41,7 +41,7 @@
             android:id="@+id/id_radio_openclass"
             style="@style/main_tab"
             android:drawableTop="@drawable/tab_openclass_background"
-            />
+            android:checked="false" />
         <RadioButton
             android:id="@+id/id_radio_me"
             style="@style/main_tab"

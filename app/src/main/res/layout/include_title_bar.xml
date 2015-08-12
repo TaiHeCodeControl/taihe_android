@@ -4,13 +4,21 @@
     android:layout_height="60dp"
     android:background="@color/blue">
 
-    <ImageView
-        android:id="@+id/id_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/lin_back"
+        android:orientation="horizontal"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:src="@drawable/icon_return"/>
+        android:gravity="center"
+        android:layout_marginLeft="10dp">
+        <ImageView
+            android:id="@+id/id_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_return"/>
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/id_title"
@@ -21,5 +29,7 @@
         android:layout_marginTop="10dp"
         android:textSize="18sp"
         android:textColor="@color/black"/>
+
+
 
 </RelativeLayout>
