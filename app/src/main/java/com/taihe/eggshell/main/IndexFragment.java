@@ -31,6 +31,7 @@ import com.taihe.eggshell.main.adapter.RecommendAdapter;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
+import com.taihe.eggshell.meetinginfo.Act_MeetingInfo;
 import com.taihe.eggshell.widget.ImagesGallery;
 import com.taihe.eggshell.widget.MyListView;
 import com.taihe.eggshell.widget.MyScrollView;
@@ -208,7 +209,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_information:
-                intent = new Intent(mContext,FindJobActivity.class);
+                intent = new Intent(mContext,Act_MeetingInfo.class);
                 startActivity(intent);
                 break;
             case R.id.id_write_resume:

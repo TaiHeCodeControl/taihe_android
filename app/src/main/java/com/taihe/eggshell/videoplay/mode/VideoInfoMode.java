@@ -1,4 +1,4 @@
-package com.taihe.eggshell.mode;
+package com.taihe.eggshell.videoplay.mode;
 
 /**
  * Created by Administrator on 2015/8/10.

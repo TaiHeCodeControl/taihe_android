@@ -2,9 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/line_gray">
-    <include layout="@layout/include_title_bar" />
+    android:background="@color/background_gray"
+    android:orientation="vertical">
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        layout="@layout/include_title_bar" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -30,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="壳粉high翻天"
+                android:text="招聘会"
                 android:textColor="@color/red" />
         </LinearLayout>
         <View
@@ -54,9 +58,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="蛋壳儿送福利"
+                android:text="双选会"
                 android:textColor="@color/black" />
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

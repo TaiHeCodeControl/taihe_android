@@ -1,8 +1,6 @@
 package com.taihe.eggshell.main;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +9,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 
@@ -21,7 +19,7 @@ import com.taihe.eggshell.lsw.MSCOpenUrlRunnable;
 import com.taihe.eggshell.lsw.MSCPostUrlParam;
 import com.taihe.eggshell.lsw.MSCUrlManager;
 import com.taihe.eggshell.main.adapter.VideoAdapterHead;
-import com.taihe.eggshell.mode.VideoInfoMode;
+import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.taihe.eggshell.main.adapter.VideoAdapterGride;
 
 import org.json.JSONArray;

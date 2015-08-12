@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.mode.VideoInfoMode;
+import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 
 import net.tsz.afinal.FinalBitmap;
 
