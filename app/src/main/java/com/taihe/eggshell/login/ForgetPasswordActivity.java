@@ -83,7 +83,7 @@ public class ForgetPasswordActivity extends BaseActivity {
             ToastUtils.show(ForgetPasswordActivity.this, "验证码不正确");
         } else{
             ToastUtils.show(ForgetPasswordActivity.this, "正在修改");
-            Intent intent = new Intent(ForgetPasswordActivity.this,LoginActivity.class);
+            Intent intent = new Intent(ForgetPasswordActivity.this,RestPwdActivity.class);
             startActivity(intent);
             ForgetPasswordActivity.this.finish();
         }
