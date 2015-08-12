@@ -92,7 +92,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.rl_mine_editziliao:
+            case R.id.rl_mine_editziliao://基本资料
                 intent = new Intent(mContext,MyBasicActivity.class);
                 startActivity(intent);
                 break;

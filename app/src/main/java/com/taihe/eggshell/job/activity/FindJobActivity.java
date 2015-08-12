@@ -16,6 +16,7 @@ import com.taihe.eggshell.job.fragment.AllJobFragment;
 import com.taihe.eggshell.job.fragment.FujinFragment;
 import com.taihe.eggshell.widget.CustomViewPager;
 
+
 /**
  * Created by huan on 2015/8/6.
  */
@@ -131,5 +132,7 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
             return null;
         }
     }
+
+
 
 }

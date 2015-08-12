@@ -416,14 +416,14 @@ public class WheelView extends View {
 			itemsPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG
 					| Paint.FAKE_BOLD_TEXT_FLAG);
 			// itemsPaint.density = getResources().getDisplayMetrics().density;
-			itemsPaint.setTextSize(TEXT_SIZE);
+			itemsPaint.setTextSize(40);
 		}
 
 		if (valuePaint == null) {
 			valuePaint = new TextPaint(Paint.ANTI_ALIAS_FLAG
 					| Paint.FAKE_BOLD_TEXT_FLAG | Paint.DITHER_FLAG);
 			// valuePaint.density = getResources().getDisplayMetrics().density;
-			valuePaint.setTextSize(TEXT_SIZE);
+			valuePaint.setTextSize(40);
 			valuePaint.setShadowLayer(0.1f, 0, 0.1f, 0xFFC0C0C0);
 		}
 

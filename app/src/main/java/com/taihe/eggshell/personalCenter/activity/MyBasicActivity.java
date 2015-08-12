@@ -3,6 +3,7 @@ package com.taihe.eggshell.personalCenter.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -172,6 +173,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
      * 选择日期
      */
     private void selectDate() {
+
         LayoutInflater inflater = LayoutInflater.from(MyBasicActivity.this);
         final View timepickerview = inflater.inflate(R.layout.timepicker, null);
         ScreenInfo screenInfo = new ScreenInfo(MyBasicActivity.this);
