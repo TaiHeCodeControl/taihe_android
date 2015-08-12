@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="数据分析负责人"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textColor="@color/black"/>
 
                 <TextView
@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="苏宁消费金融公司"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:textColor="@color/index_tab_color"/>
 
                 <LinearLayout
@@ -56,7 +56,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="发布:"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textColor="@color/index_tab_color"/>
                     <TextView
                         android:id="@+id/id_start_time"
@@ -64,14 +64,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="2015-07-29"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textColor="@color/index_tab_color"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="有效:"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textColor="@color/index_tab_color"/>
                     <TextView
                         android:id="@+id/id_end_time"
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="2015-07-29"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textColor="@color/index_tab_color"/>
                 </LinearLayout>
 
@@ -110,7 +110,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="工作性质:"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/index_tab_color"/>
                         <TextView
                             android:id="@+id/id_job_type"
@@ -118,7 +118,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="全职"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
 
@@ -134,7 +134,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="学历要求:"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/index_tab_color"/>
                         <TextView
                             android:id="@+id/id_school_leve"
@@ -142,7 +142,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="本科"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
 
@@ -158,7 +158,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="工作经验:"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/index_tab_color"/>
                         <TextView
                             android:id="@+id/id_work_time"
@@ -166,7 +166,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="3年"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
 
@@ -189,7 +189,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="工作地点:"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/index_tab_color"/>
                         <TextView
                             android:id="@+id/id_job_addres"
@@ -197,7 +197,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="北京"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
 
@@ -213,7 +213,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="月薪:"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/index_tab_color"/>
                         <TextView
                             android:id="@+id/id_money"
@@ -221,7 +221,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="3000-4000"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/red"/>
                     </LinearLayout>
 
@@ -237,7 +237,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="招聘人数:"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/index_tab_color"/>
                         <TextView
                             android:id="@+id/id_pepple_num"
@@ -245,7 +245,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="若干"
-                            android:textSize="14sp"
+                            android:textSize="18sp"
                             android:textColor="@color/black"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -266,7 +266,7 @@
                     android:gravity="center"
                     android:text="职位描述"
                     android:textColor="@color/index_tab_color"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:drawableLeft="@drawable/left_icon"
                     android:drawablePadding="8dp"/>
 
@@ -294,7 +294,7 @@
                     android:gravity="center"
                     android:text="公司介绍"
                     android:textColor="@color/index_tab_color"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:drawableLeft="@drawable/left_icon"
                     android:drawablePadding="8dp"/>
 
@@ -307,7 +307,7 @@
                     android:lineSpacingExtra="5dp"
                     android:lineSpacingMultiplier="1.0"
                     android:textColor="@color/black"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:text="深刻的历史的"/>
 
                 <TextView
@@ -320,7 +320,7 @@
                     android:paddingRight="20dp"
                     android:gravity="center"
                     android:text="查看全部"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:textColor="@color/red"
                     android:drawableRight="@drawable/down_detail_icon"
                     android:drawablePadding="8dp"
@@ -341,7 +341,7 @@
                     android:gravity="center"
                     android:text="该公司更多职位"
                     android:textColor="@color/index_tab_color"
-                    android:textSize="14sp"
+                    android:textSize="18sp"
                     android:drawableLeft="@drawable/left_icon"
                     android:drawablePadding="8dp"/>
 
@@ -352,7 +352,8 @@
                     android:scrollbars="none"
                     android:background="@color/white"
                     android:listSelector="@color/white"
-                    android:divider="@null"/>
+                    android:divider="@color/white"
+                    android:dividerHeight="0dp"/>
 
             </LinearLayout>
 
@@ -364,7 +365,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:text="申请职位"
                 android:background="@drawable/apply_job"/>
             </LinearLayout>

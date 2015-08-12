@@ -1,12 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
+    android:layout_height="85dp"
     android:background="@drawable/list_item_bg"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="80dp">
 
         <CheckBox
             android:focusable="false"
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/cb_listjob_select"
             android:orientation="vertical">
 
@@ -30,7 +30,7 @@
                 android:id="@+id/tv_listjob_jobname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="5dp"
                 android:text="职位名称"
                 android:textColor="@color/font_color_black"
                 android:textSize="@dimen/font_size_32" />
@@ -39,7 +39,7 @@
                 android:id="@+id/tv_listjob_businessname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="5dp"
                 android:text="公司名称"
                 android:textColor="@color/font_color_gray"
                 android:textSize="@dimen/font_size_26" />
@@ -104,7 +104,7 @@
     </RelativeLayout>
 
     <View
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="10dp"
