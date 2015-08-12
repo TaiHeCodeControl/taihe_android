@@ -11,13 +11,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.EggshellApplication;
+import com.taihe.eggshell.base.utils.PrefUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.personalCenter.activity.AboutActivity;
 import com.taihe.eggshell.personalCenter.activity.MyPostActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
+import com.taihe.eggshell.widget.ChoiceDialog;
 
 public class MeFragment extends Fragment implements View.OnClickListener{
 
     private Context mContext;
+
+    private ChoiceDialog dialog;
 
     private View rootView;
     private RelativeLayout rl_setting,rl_editZiliao ,rl_post,rl_collect,rl_jianli,rl_about,rl_hezuo,rl_logout;
@@ -54,6 +61,32 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         rl_about.setOnClickListener(this);
         rl_hezuo.setOnClickListener(this);
         rl_logout.setOnClickListener(this);
+        initView();
+    }
+
+    private void initView() {
+        dialog = new ChoiceDialog(mContext, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                ToastUtils.show(mContext, "取消");
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+                EggshellApplication.getApplication().setUser(null);
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
+
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        dialog.getTitleText().setText("确定退出当前账号吗？");
+        dialog.getLeftButton().setText("以后再说");
+        dialog.getRightButton().setText("确认退出");
     }
 
     @Override
@@ -84,6 +117,8 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.rl_mine_logout://退出登录
+                dialog.show();
+
                 break;
 //            case R.id.rl_mine_setting:
 //                intent = new Intent(mContext, SetUpActivity.class);

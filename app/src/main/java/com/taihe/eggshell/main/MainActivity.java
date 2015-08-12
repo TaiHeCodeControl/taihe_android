@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -53,6 +54,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         mContext = this;
 

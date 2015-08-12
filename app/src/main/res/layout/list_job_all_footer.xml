@@ -8,16 +8,14 @@
 
     <CheckBox
         android:id="@+id/cb_findjob_selectall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="48dp"
         style="@style/CustomCheckboxRed"
-        android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
         android:layout_marginTop="18dp"
         android:textSize="@dimen/font_size_26"
         android:textColor="@color/font_color_gray"

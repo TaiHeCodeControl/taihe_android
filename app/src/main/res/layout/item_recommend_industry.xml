@@ -24,7 +24,7 @@
             android:background="@color/white"/>
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:background="@color/line_gray"/>
 
@@ -36,8 +36,8 @@
             android:stretchMode="columnWidth"
             android:listSelector="@color/white"
             android:scrollbars="none"
-            android:horizontalSpacing="1dp"
-            android:verticalSpacing="1dp"
+            android:horizontalSpacing="0.5dp"
+            android:verticalSpacing="0.5dp"
             android:background="@color/line_gray">
         </GridView>
 
