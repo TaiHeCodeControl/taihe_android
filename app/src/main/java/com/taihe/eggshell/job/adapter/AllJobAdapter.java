@@ -76,11 +76,12 @@ public class AllJobAdapter extends BaseAdapter {
             holder.tv_pubTiem = (TextView) view.findViewById(R.id.tv_listjob_pubtime);
             holder.tv_salaryRange = (TextView) view.findViewById(R.id.tv_listjob_salaryrange);
 
-            if(!isHaveCheckBox){
-                holder.cb_select.setVisibility(View.GONE);
-            }
             view.setTag(holder);
         }
+        if(!isHaveCheckBox){
+            holder.cb_select.setVisibility(View.GONE);
+        }
+
         holder.tv_businessName.setText("太和天下");
 
         holder.cb_select.setChecked(allChecked);

@@ -10,34 +10,39 @@
         android:layout_height="@dimen/title_height"
         android:background="@color/include_title_color">
 
-        <ImageButton
-            android:id="@+id/id_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:background="@null"
-            android:src="@drawable/icon_return"/>
+        <RelativeLayout
+            android:id="@+id/rl_mybasic_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:src="@drawable/icon_return" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/id_title"
-            android:text="编辑资料"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textSize="@dimen/font_size_title"
-            android:textColor="@color/black"/>
+            android:text="编辑资料"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_size_title" />
 
         <TextView
             android:id="@+id/tv_mybasic_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
-            android:textSize="@dimen/font_size_32"
+            android:layout_marginRight="10dp"
+            android:text="编辑"
             android:textColor="@color/font_color_black"
-            android:text="编辑"/>
+            android:textSize="@dimen/font_size_32" />
 
     </RelativeLayout>
 
@@ -64,8 +69,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
                     android:text="登录账号"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
@@ -75,9 +80,9 @@
                     android:id="@+id/tv_mybasic_userno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
                     android:text="18810309229"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -98,8 +103,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
                     android:text="昵称"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
@@ -109,9 +114,9 @@
                     android:id="@+id/tv_mybasic_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
                     android:text="王昕"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -132,8 +137,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
                     android:text="性别"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
@@ -143,20 +148,27 @@
                     android:id="@+id/tv_mybasic_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
                     android:text="男"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
-                <ImageButton
-                    android:id="@+id/ib_mybasic_sexselect"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/xiala"/>
+                <RelativeLayout
+                    android:id="@+id/rl_mybasic_sexselect"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/xiala" />
+
+                </RelativeLayout>
             </RelativeLayout>
 
             <View
@@ -173,8 +185,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
                     android:text="所在地"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
@@ -184,20 +196,27 @@
                     android:id="@+id/tv_mybasic_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
                     android:text="2010-10-5"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
-                <ImageButton
-                    android:id="@+id/ib_mybasic_cityselect"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/xiayiye"/>
+                <RelativeLayout
+                    android:id="@+id/rl_mybasic_cityselect"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/xiayiye" />
+
+                </RelativeLayout>
             </RelativeLayout>
 
             <View
@@ -214,8 +233,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
                     android:text="简介"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
@@ -225,21 +244,21 @@
                     android:id="@+id/tv_mybasic_jianjie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
                     android:text="学习是一种信仰"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="(15个字以内)"
-                    android:textSize="11dp"
-                    android:textColor="#C8C8C8"/>
+                    android:textColor="#C8C8C8"
+                    android:textSize="11dp" />
             </RelativeLayout>
 
             <View
@@ -265,31 +284,38 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
                     android:text="生日"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
 
 
                 <TextView
-                    android:id="@+id/tv_resume_birthdate"
+                    android:id="@+id/tv_mybasic_birthdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
                     android:text="2010-10-5"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
-                <ImageButton
-                    android:id="@+id/ib_mybasic_date"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/xiala"/>
+                <RelativeLayout
+                    android:id="@+id/rl_mybasic_date"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/xiala" />
+                </RelativeLayout>
+
             </RelativeLayout>
 
             <View
@@ -307,8 +333,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
                     android:text="邮箱"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
@@ -318,10 +344,10 @@
                     android:id="@+id/et_mybasic_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="90dp"
-                    android:text="huanhuan@tiahel.com"
-                    android:background="@null"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="90dp"
+                    android:background="@null"
+                    android:text="huanhuan@tiahel.com"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -341,22 +367,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
                     android:text="QQ"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
-
 
 
                 <EditText
                     android:id="@+id/et_mybasic_qq"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="90dp"
-                    android:text="488128882"
-                    android:background="@null"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="90dp"
+                    android:background="@null"
+                    android:text="488128882"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -386,8 +411,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
                     android:text="等级"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
@@ -396,8 +421,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="90dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="90dp"
                     android:src="@drawable/v1" />
 
             </RelativeLayout>
@@ -416,8 +441,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
                     android:text="注册时间"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_26" />
@@ -427,9 +452,9 @@
                     android:id="@+id/tv_mybasic_registime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
                     android:text="2010-10-5"
-                    android:layout_centerVertical="true"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 

@@ -12,8 +12,8 @@
             android:focusable="false"
             android:id="@+id/cb_listjob_select"
             style="@style/CustomCheckboxRed"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"/>
@@ -21,7 +21,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/cb_listjob_select"
             android:orientation="vertical">
