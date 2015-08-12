@@ -44,7 +44,7 @@
                 android:layout_marginLeft="15dp"
                 android:text="手机号"
                 android:textColor="@color/font_color_black"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/et_login_userphone"
@@ -80,7 +80,7 @@
                 android:layout_marginLeft="15dp"
                 android:text="密码"
                 android:textColor="@color/font_color_black"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <EditText
                 android:id="@+id/et_login_password"
@@ -113,7 +113,7 @@
             android:background="@drawable/hongniu"
             android:onClick="login"
             android:text="登录"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:textColor="@color/white" />
 
         <RelativeLayout
@@ -129,7 +129,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:text="忘记密码？"
-                android:textSize="12dp"
+                android:textSize="13sp"
                 android:textColor="@color/font_color_red"/>
 
             <TextView
@@ -138,7 +138,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:text="还没有账号？"
-                android:textSize="12dp"
+                android:textSize="13sp"
                 android:textColor="@color/font_color_black"/>
 
             <TextView
@@ -147,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="立即注册!"
-                android:textSize="12dp"
+                android:textSize="13sp"
                 android:textColor="@color/font_color_red"/>
         </RelativeLayout>
 

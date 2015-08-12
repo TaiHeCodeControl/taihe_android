@@ -67,13 +67,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--职位列表中CheckBox的样式-->
     <style name="CustomCheckboxRed" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox_red</item>
     </style>
 
+    <!--申请职位对话框中CheckBox的样式-->
     <style name="CustomCheckboxBlue" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/checkbox_blue</item>
-
     </style>
 
 

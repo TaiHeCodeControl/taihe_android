@@ -20,6 +20,9 @@ import com.taihe.eggshell.personalCenter.activity.MyPostActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.widget.ChoiceDialog;
 
+/**
+ * 我的界面
+ */
 public class MeFragment extends Fragment implements View.OnClickListener{
 
     private Context mContext;
