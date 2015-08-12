@@ -88,9 +88,9 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
        headAdapter.setVideoData(listHead);
        grid_head_video.setAdapter(headAdapter);
 
-       MSCUrlManager url = new MSCUrlManager("http://195.198.1.122:8066/eggker/phpv/API.php/video/getListImage");
+       MSCUrlManager url = new MSCUrlManager("video","getListImage");
        List<MSCPostUrlParam> list = new ArrayList<MSCPostUrlParam>();
-       list.add(new MSCPostUrlParam("token", "111"));
+       list.add(new MSCPostUrlParam("token", "pagenum"));
        new Thread(new MSCOpenUrlRunnable(url, list) {
            @Override
            public void onControl(MSCJSONObject jsonObject) throws JSONException {
