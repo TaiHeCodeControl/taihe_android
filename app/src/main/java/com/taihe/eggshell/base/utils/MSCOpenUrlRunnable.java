@@ -1,7 +1,6 @@
-package com.taihe.eggshell.lsw;
+package com.taihe.eggshell.base.utils;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
@@ -11,8 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
-
-import com.taihe.eggshell.lsw.MSCJSONObject;
 
 /**
  * 三合一的网络链接类7月14删除不必要的代码

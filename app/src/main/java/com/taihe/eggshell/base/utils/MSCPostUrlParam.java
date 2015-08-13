@@ -1,4 +1,4 @@
-package com.taihe.eggshell.lsw;
+package com.taihe.eggshell.base.utils;
 
 import java.io.Serializable;
 

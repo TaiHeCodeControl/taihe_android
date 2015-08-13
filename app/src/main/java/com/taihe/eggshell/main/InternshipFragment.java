@@ -14,10 +14,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.lsw.MSCJSONObject;
-import com.taihe.eggshell.lsw.MSCOpenUrlRunnable;
-import com.taihe.eggshell.lsw.MSCPostUrlParam;
-import com.taihe.eggshell.lsw.MSCUrlManager;
+import com.taihe.eggshell.base.utils.MSCJSONObject;
+import com.taihe.eggshell.base.utils.MSCOpenUrlRunnable;
+import com.taihe.eggshell.base.utils.MSCPostUrlParam;
+import com.taihe.eggshell.base.utils.MSCUrlManager;
 import com.taihe.eggshell.main.adapter.VideoAdapterHead;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.taihe.eggshell.main.adapter.VideoAdapterGride;
@@ -62,6 +62,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
 //                videoAdapter.setVideoData(vList);
+                initData();
                 videoGrideView.onRefreshComplete();
             }
 

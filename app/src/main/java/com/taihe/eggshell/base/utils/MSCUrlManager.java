@@ -1,4 +1,4 @@
-package com.taihe.eggshell.lsw;
+package com.taihe.eggshell.base.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,9 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
-
-import com.taihe.eggshell.lsw.MSCJSONArray;
-import com.taihe.eggshell.lsw.MSCJSONObject;
 
 /**
  * 2014/7/16 更新日志,从写initUrl使得更新链接成为了可能！ 2014/4/26
@@ -91,7 +88,6 @@ public class MSCUrlManager implements Serializable {
 
 	private String geturlstr() {
 		String url = http + state + apitype + urlapi;
-        Log.e("httpurl:", url);
 		if (listMscUrlStrings != null) {
 
 			Set<String> strings = listMscUrlStrings.keySet();

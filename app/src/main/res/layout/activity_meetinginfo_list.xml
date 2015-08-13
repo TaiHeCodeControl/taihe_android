@@ -5,16 +5,16 @@
     android:background="@color/background_gray"
     android:orientation="vertical">
 
-    <include
+    <include layout="@layout/include_title_bar" />
+    <View
         android:layout_width="match_parent"
-        android:layout_height="47dp"
-        layout="@layout/include_title_bar" />
-
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/white"
-        android:layout_marginTop="1dp"
+        android:gravity="left|center"
         android:layout_height="40dp">
 
         <LinearLayout
@@ -28,7 +28,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shipin"/>
+                android:background="@drawable/zhaopinhui"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
                 android:textColor="@color/red" />
         </LinearLayout>
         <View
-            android:layout_width="1dp"
+            android:layout_width="0.5dp"
             android:layout_height="match_parent"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="3dp"
@@ -53,7 +53,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/yuyinck"/>
+                android:background="@drawable/shuangxuanhuick"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,4 +62,9 @@
                 android:textColor="@color/black" />
         </LinearLayout>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"/>
+    <include layout="@layout/meeting_list_mb"  />
 </LinearLayout>
