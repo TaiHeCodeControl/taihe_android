@@ -2,7 +2,9 @@ package com.taihe.eggshell.personalCenter.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.Window;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.widget.addressselect.AddressSelectActivity;
 import com.taihe.eggshell.widget.datepicker.JudgeDate;
 import com.taihe.eggshell.widget.datepicker.ScreenInfo;
 import com.taihe.eggshell.widget.datepicker.WheelMain;
@@ -35,11 +38,12 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
 
 
     private Context mContext;
-    private TextView tv_birthdate, tv_mybasic_sex;
+    private TextView tv_birthdate, tv_mybasic_sex, tv_address;
 
     private String verTime;
 
-    private RelativeLayout rl_back, rl_birthdate, rl_sexSelect, rl_citySelect;
+    private Intent intent;
+    private ImageView iv_back, iv_birthdate, iv_sexSelect, iv_citySelect;
 
     WheelMain wheelMain;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -55,13 +59,22 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
 
     public void initView() {
 
-        rl_back = (RelativeLayout) findViewById(R.id.rl_mybasic_back);
-        rl_birthdate = (RelativeLayout) findViewById(R.id.rl_mybasic_date);
-        rl_sexSelect = (RelativeLayout) findViewById(R.id.rl_mybasic_sexselect);
-        rl_citySelect = (RelativeLayout) findViewById(R.id.rl_mybasic_cityselect);
+
+        iv_back = (ImageView) findViewById(R.id.iv_mybasic_back);
+        iv_birthdate = (ImageView) findViewById(R.id.iv_mybasic_date);
+        iv_sexSelect = (ImageView) findViewById(R.id.iv_mybasic_sexselect);
+        iv_citySelect = (ImageView) findViewById(R.id.iv_mybasic_cityselect);
         tv_birthdate = (TextView) findViewById(R.id.tv_mybasic_birthdate);
+        tv_address = (TextView) findViewById(R.id.tv_mybasic_city);
         tv_mybasic_sex = (TextView) findViewById(R.id.tv_mybasic_sex);
 
+
+        intent = getIntent();
+        String address = intent.getStringExtra("Address");
+        if (!TextUtils.isEmpty(address)){
+
+            tv_address.setText(address);
+        }
 
         //初始化当前时间
         Calendar calendar = Calendar.getInstance();
@@ -72,10 +85,10 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
         tv_birthdate.setText(CurrentTime);
         verTime = CurrentTime;
 
-        rl_birthdate.setOnClickListener(this);
-        rl_sexSelect.setOnClickListener(this);
-        rl_citySelect.setOnClickListener(this);
-        rl_back.setOnClickListener(this);
+        iv_birthdate.setOnClickListener(this);
+        iv_sexSelect.setOnClickListener(this);
+        iv_citySelect.setOnClickListener(this);
+        iv_back.setOnClickListener(this);
         tv_birthdate.setOnClickListener(this);
     }
 
@@ -83,17 +96,21 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.rl_mybasic_back://退出当前页面
+            case R.id.iv_mybasic_back://退出当前页面
                 MyBasicActivity.this.finish();
                 break;
 
-            case R.id.rl_mybasic_cityselect://选择城市
+            case R.id.iv_mybasic_cityselect://选择城市
+
+                intent = new Intent(MyBasicActivity.this, AddressSelectActivity.class);
+                startActivity(intent);
+
                 break;
 
-            case R.id.rl_mybasic_sexselect://选择性别
+            case R.id.iv_mybasic_sexselect://选择性别
                 selectSex(b);
                 break;
-            case R.id.rl_mybasic_date://选择生日日期
+            case R.id.iv_mybasic_date://选择生日日期
                 // 选择日期
                 selectDate();
                 break;

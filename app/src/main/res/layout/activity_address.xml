@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include
+        layout="@layout/include_title_bar"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"/>
+
+    <LinearLayout
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Spinner
+            android:id="@+id/spinner1"
+            android:background="@drawable/xuanze"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <Spinner
+            android:layout_marginLeft="12dp"
+            android:id="@+id/spinner2"
+            android:background="@drawable/xuanze"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_address_jiedao"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/jiedao"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:hint="街道"
+        android:textColorHint="#C8C8C8"
+        android:textSize="15dp"
+        android:textColor="#C8C8C8"/>
+
+
+    <LinearLayout
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="75dp"
+        android:layout_marginRight="75dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_address_comfirm"
+            android:background="@drawable/lanniu2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="确定"
+            android:textSize="15dp"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_marginLeft="30dp"
+            android:id="@+id/btn_address_reset"
+            android:background="@drawable/chongzhi"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="重置"
+            android:textSize="15dp"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+  <!--  
+   <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+ -->
+</LinearLayout>
