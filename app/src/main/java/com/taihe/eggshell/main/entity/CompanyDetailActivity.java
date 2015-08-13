@@ -1,4 +1,4 @@
-package com.taihe.eggshell.main;
+package com.taihe.eggshell.main.entity;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

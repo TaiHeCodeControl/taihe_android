@@ -2,11 +2,9 @@ package com.taihe.eggshell.login;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -26,23 +24,15 @@ import com.taihe.eggshell.base.utils.FormatUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.BaseActivity;
-import com.taihe.eggshell.base.EggshellApplication;
-import com.taihe.eggshell.base.utils.HttpsUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
-import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
-import com.taihe.eggshell.personalCenter.activity.MyPostActivity;
+import com.taihe.eggshell.job.activity.MyPostActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by huan on 2015/8/5.

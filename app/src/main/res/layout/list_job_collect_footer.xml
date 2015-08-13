@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingBottom="20dp"
+    >
+
+    <CheckBox
+        android:id="@+id/cb_findjob_selectall"
+        android:layout_width="30dp"
+        android:layout_height="48dp"
+        style="@style/CustomCheckboxRed"
+        android:layout_marginLeft="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:textSize="@dimen/font_size_26"
+        android:textColor="@color/font_color_gray"
+        android:layout_toRightOf="@+id/cb_findjob_selectall"
+        android:text="全选" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:textSize="@dimen/font_size_26"
+        android:textColor="#C8C8C8"
+        android:text="加载更多" />
+
+    <LinearLayout
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_alljob_shenqing"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="申请职位"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_26"
+            android:background="@drawable/lanniux"/>
+
+        <Button
+
+            android:id="@+id/btn_collectjob_delete"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="删除职位"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_26"
+            android:background="@drawable/hongniux"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

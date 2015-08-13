@@ -113,6 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
+                    android:imeOptions="actionNext"
                     android:text="王昕"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
@@ -236,8 +237,11 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
-                    android:text="学习是一种信仰!学习是一种信仰!"
+                    android:text="学习是一种信仰学习是一种信仰"
+                    android:ellipsize="end"
+                    android:maxEms="11"
                     android:singleLine="true"
+                    android:imeOptions="actionNext"
                     android:maxLength="15"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
@@ -335,6 +339,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
                     android:background="@null"
+                    android:imeOptions="actionNext"
                     android:text="huanhuan@tiahel.com"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
@@ -370,6 +375,7 @@
                     android:layout_marginLeft="90dp"
                     android:background="@null"
                     android:text="488128882"
+                    android:imeOptions="actionDone"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 

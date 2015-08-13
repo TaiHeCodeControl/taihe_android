@@ -17,6 +17,7 @@ public class ResumManagerActivity extends BaseActivity{
 
     private static final String TAG = "ResumeManagerActivity";
     private Context mContext;
+    private Intent intent;
 
     private TextView createResume,scanResume,edtResume,useResume,delResume;
     private CheckBox checkBox;
@@ -57,11 +58,13 @@ public class ResumManagerActivity extends BaseActivity{
         super.onClick(v);
         switch (v.getId()){
             case R.id.id_create_resume:
+                intent = new Intent(mContext,ResumWriteActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_scan_resume:
                 break;
             case R.id.id_edt:
-                Intent intent = new Intent(mContext,ResumeMultiActivity.class);
+                intent = new Intent(mContext,ResumeMultiActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_use:
