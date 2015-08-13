@@ -92,7 +92,11 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        changeViewPagerListener = (ChangeViewPagerListener)activity;
+        try{
+            changeViewPagerListener = (ChangeViewPagerListener)activity;
+        }catch(ClassCastException e){
+            throw new ClassCastException(activity.toString()+"must implement OnArticleSelectedListener");
+        }
     }
 
     @Override

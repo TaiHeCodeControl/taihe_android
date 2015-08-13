@@ -1,6 +1,7 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -60,6 +61,8 @@ public class ResumManagerActivity extends BaseActivity{
             case R.id.id_scan_resume:
                 break;
             case R.id.id_edt:
+                Intent intent = new Intent(mContext,ResumeMultiActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_use:
                 break;
