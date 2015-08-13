@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/findpass_title"
+        layout="@layout/include_title_bar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:padding="8dp"
+            android:gravity="center"
+            android:text="我的简历"
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/id_create_resume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="创建新简历"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:background="@drawable/msg_vercode_background"
+            android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:orientation="vertical"
+        android:background="@drawable/find_paassword_background">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp">
+
+            <CheckBox
+                android:id="@+id/id_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:checked="true"
+                android:text="个人简历"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:padding="10dp"
+                style="@style/CustomCheckboxBlue"/>
+
+            <TextView
+                android:id="@+id/id_scan_resume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="预览"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:background="@drawable/next_step_background"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:background="@color/line_gray"/>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/background_gray">
+
+        <TextView
+            android:id="@+id/id_edt"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_toLeftOf="@+id/id_use"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:text="编辑"
+            android:background="@drawable/next_step_background"/>
+
+        <TextView
+            android:id="@+id/id_use"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:text="使用简历"
+            android:background="@drawable/next_step_background"/>
+
+        <TextView
+            android:id="@+id/id_del"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/id_use"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:text="删除"
+            android:background="@drawable/delet_background"/>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -29,9 +29,11 @@ import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
 import com.taihe.eggshell.meetinginfo.Act_MeetingInfo;
 import com.taihe.eggshell.main.entity.CompanyDetailActivity;
+import com.taihe.eggshell.resume.ResumManagerActivity;
 import com.taihe.eggshell.widget.ImagesGallery;
 import com.taihe.eggshell.widget.MyListView;
 import com.taihe.eggshell.widget.MyScrollView;
+import com.taihe.eggshell.widget.cityselect.CitySelectActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,7 +189,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.id_job_place:
-                ToastUtils.show(mContext,"北京");
+                intent = new Intent(mContext, CitySelectActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_search_job:
                 intent = new Intent(mContext, JobSearchActivity.class);
@@ -210,7 +213,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_write_resume:
-                intent = new Intent(mContext,FindJobActivity.class);
+                intent = new Intent(mContext,ResumManagerActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_play_mode:
