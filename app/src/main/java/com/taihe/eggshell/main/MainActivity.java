@@ -49,6 +49,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     private RadioButton radio_index , radio_social , radio_openclass , radio_me ;
     private ArrayList<Fragment> fragmentList;
 
+    private int current = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         mContext = this;
+
 
         initView();
         initViewPager();
@@ -96,7 +98,17 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         fragmentList.add(meFragment);
 
         main_viewPager.setAdapter(new MyAdapter(getSupportFragmentManager(), fragmentList));
-        main_viewPager.setCurrentItem(0);
+
+        Intent intent = getIntent();
+        String tags = intent.getStringExtra("MeFragment");
+        if(tags.equals("MeFragment")){
+            main_viewPager.setCurrentItem(3,false);
+        }else{
+
+            //viewpager默认显示第一页
+            main_viewPager.setCurrentItem(0,false);
+        }
+
         main_viewPager.setScanSroll(true);
         main_viewPager.setOffscreenPageLimit(4);
         //ViewPager的页面改变监听器
@@ -105,7 +117,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        int current=0;
         switch(checkedId){
             case R.id.id_radio_index:
                 current = 0 ;
@@ -122,7 +133,11 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
 
         if(main_viewPager.getCurrentItem() != current){
-            main_viewPager.setCurrentItem(current);
+
+            // viewpager直接从第一页切换到第五页，会从中间的几页过度过去，怎么取消这个效果
+            // viewpagar.setCurrentItem(,);第二个参数设置为false
+            main_viewPager.setCurrentItem(current,false);
+            //设置没有登录状态下MeFragment不可见
 //            if(current==3){
 //                if(null!= EggshellApplication.getApplication().getUser()){
 //                    main_viewPager.setCurrentItem(current);
@@ -169,6 +184,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         switch (v.getId()){
         }
     }
+
 
     private boolean isExit = false;
     @Override

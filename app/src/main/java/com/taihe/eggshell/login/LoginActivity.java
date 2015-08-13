@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -34,6 +35,8 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.main.entity.User;
+import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
+import com.taihe.eggshell.personalCenter.activity.MyPostActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,6 +63,7 @@ public class LoginActivity extends BaseActivity {
     private String password;
 
     private Intent intent;
+    private String loginTag;
 
     @Override
     public void initView() {
@@ -67,6 +71,8 @@ public class LoginActivity extends BaseActivity {
         super.initView();
         overridePendingTransition(R.anim.activity_right_to_center, R.anim.activity_center_to_left);
         mContext = this;
+
+
         et_userphone = (EditText) findViewById(R.id.et_login_userphone);
         et_password = (EditText) findViewById(R.id.et_login_password);
         btn_login = (Button) findViewById(R.id.btn_login_login);
@@ -93,8 +99,14 @@ public class LoginActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.id_back:
-//                intent = new Intent(LoginActivity.this,MainActivity.class);
-//                startActivity(intent);
+
+                Intent intents = getIntent();
+                loginTag = intents.getStringExtra("LoginTag");
+                if(loginTag.equals("logout")){
+                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("MeFragment","MeFragment");
+                    startActivity(intent);
+                }
                 LoginActivity.this.finish();
                 break;
             case R.id.btn_login_login:
@@ -138,8 +150,23 @@ public class LoginActivity extends BaseActivity {
         //保存用户登录信息
 
         PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{'id':1,'name':'xx','phoneNumber':'89898'}");
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
+
+        //登录成功后显示界面的判断
+        Intent intents = getIntent();
+        loginTag = intents.getStringExtra("LoginTag");
+        if(loginTag.equals("meFragment")){
+            intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("MeFragment","MeFragment");
+            startActivity(intent);
+        }else if(loginTag.equals("myBasic")){
+            intent = new Intent(LoginActivity.this, MyBasicActivity.class);
+            startActivity(intent);
+        }else if(loginTag.equals("myPost")){
+            intent = new Intent(LoginActivity.this, MyPostActivity.class);
+            startActivity(intent);
+        }
+
+
         LoginActivity.this.finish();
 
     }

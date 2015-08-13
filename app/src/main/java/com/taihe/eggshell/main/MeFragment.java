@@ -97,6 +97,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
 
                 Intent intent = new Intent(mContext, LoginActivity.class);
+                intent.putExtra("LoginTag","logout");
                 startActivity(intent);
             }
         });
@@ -112,6 +113,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
             case R.id.tv_mine_logintxt://登录
 
                 intent = new Intent(mContext,LoginActivity.class);
+                intent.putExtra("LoginTag","meFragment");
                 startActivity(intent);
                 break;
             case R.id.rl_mine_editziliao://基本资料
@@ -121,6 +123,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);
+                    intent.putExtra("LoginTag","myBasic");
                     startActivity(intent);
                 }
 
@@ -131,6 +134,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);
+                    intent.putExtra("LoginTag","myPost");
                     startActivity(intent);
                 }
 
@@ -142,6 +146,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);
+                    intent.putExtra("LoginTag","myPost");
                     startActivity(intent);
                 }
 
@@ -153,6 +158,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);
+                    intent.putExtra("LoginTag","myPost");
                     startActivity(intent);
                 }
                 break;

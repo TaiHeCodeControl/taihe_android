@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
@@ -24,6 +25,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         mContext = this;
         View view = View.inflate(mContext, R.layout.activity_splash,null);
         setContentView(view);
@@ -49,6 +51,7 @@ public class SplashActivity extends Activity {
                     finish();
                 }else{
                     Intent intent = new Intent(mContext,MainActivity.class);
+                    intent.putExtra("MeFragment","");
                     startActivity(intent);
                     finish();
                 }
