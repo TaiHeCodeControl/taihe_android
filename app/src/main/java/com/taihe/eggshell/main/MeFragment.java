@@ -16,9 +16,8 @@ import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.login.LoginActivity;
-import com.taihe.eggshell.login.LoginConfirmDialog;
 import com.taihe.eggshell.personalCenter.activity.AboutActivity;
-import com.taihe.eggshell.personalCenter.activity.MyPostActivity;
+import com.taihe.eggshell.job.activity.MyPostActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.widget.ChoiceDialog;
 

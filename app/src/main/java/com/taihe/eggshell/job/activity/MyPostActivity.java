@@ -1,32 +1,40 @@
-package com.taihe.eggshell.job.fragment;
+package com.taihe.eggshell.job.activity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.widget.JobApplyDialogUtil;
+import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
+import com.taihe.eggshell.personalCenter.adapter.MyPostFragmentPagerAdapter;
+import com.taihe.eggshell.widget.JobApplyDialogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * 全部职位列表
- * Created by huan on 2015/8/6.
+ * Created by huan on 2015/7/23.
  */
-public class AllJobFragment extends Fragment implements View.OnClickListener{
+public class MyPostActivity extends BaseActivity{
 
 
     private AllJobAdapter adapter;
@@ -37,29 +45,34 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
     private JobInfo jobInfo;
 
     private ListView list_job_all;
-    private View rootView;
     private Context mContext;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
-        rootView = inflater.inflate(R.layout.fragment_job_all, null) ;
+    private static final String TAG = "AboutActivity";
 
-        mContext = getActivity();
-        initView();
-        initDate();
-        return rootView ;
+    @Override
+    public void initView() {
+        setContentView(R.layout.activity_job_list);
+        super.initView();
+        mContext = this;
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+        super.initTitle("收藏职位");
+        initListView();
+        initListData();
     }
 
 
-
-    private void initView() {
+    public void initListView() {
         jobInfos = new ArrayList<JobInfo>();
 
         for(int i = 0; i < 10;i++){
             jobInfo = new JobInfo(false,i);
             jobInfos.add(jobInfo);
         }
-        list_job_all = (ListView) rootView.findViewById(R.id.list_job_all);
+        list_job_all = (ListView)findViewById(R.id.list_job_all);
 
         list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -75,7 +88,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    private void initDate() {
+    private void initListData() {
         adapter = new AllJobAdapter(mContext,jobInfos,true);
         View footerView = View.inflate(mContext,R.layout.list_job_all_footer,null);
 
