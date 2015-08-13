@@ -143,6 +143,11 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".resume.ResumManagerActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
         <!--选择城市-->
         <activity
             android:name=".widget.cityselect.CitySelectActivity"

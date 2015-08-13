@@ -17,41 +17,41 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.BaseActivity;
 
 
 /**
  * Created by huan on 2015/8/5.
  */
 
-public class CitySelectActivity extends Activity {
+public class CitySelectActivity extends BaseActivity {
     private ListView sortListView;
     private SideBar sideBar;
     private TextView dialog;
     private SortAdapter adapter;
     private ClearEditText mClearEditText;
-
-    /**
-     * 汉字转换成拼音的类
-     */
-    private CharacterParser characterParser;
+    private CharacterParser characterParser;//汉字转换成拼音的类
     private List<SortModel> SourceDateList;
-
-    /**
-     * 根据拼音来排列ListView里面的数据类
-     */
-    private PinyinComparator pinyinComparator;
+    private PinyinComparator pinyinComparator;//根据拼音来排列ListView里面的数据类
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initView() {
         setContentView(R.layout.activity_place);
+        super.initView();
+
         initViews();
+    }
+
+    @Override
+    public void initData() {
+        super.initData();
+
+        initTitle("选择城市");
     }
 
     private void initViews() {
         //实例化汉字转拼音类
         characterParser = CharacterParser.getInstance();
-
         pinyinComparator = new PinyinComparator();
 
         sideBar = (SideBar) findViewById(R.id.sidrbar);
@@ -91,27 +91,18 @@ public class CitySelectActivity extends Activity {
         adapter = new SortAdapter(this, SourceDateList);
         sortListView.setAdapter(adapter);
 
-
         mClearEditText = (ClearEditText) findViewById(R.id.filter_edit);
-
         //根据输入框输入值的改变来过滤搜索
         mClearEditText.addTextChangedListener(new TextWatcher() {
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //当输入框里面的值为空，更新为原来的列表，否则为过滤数据列表
                 filterData(s.toString());
             }
-
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
-            }
-
+            public void beforeTextChanged(CharSequence s, int start, int count,int after) {}
             @Override
-            public void afterTextChanged(Editable s) {
-            }
+            public void afterTextChanged(Editable s) {}
         });
     }
 
