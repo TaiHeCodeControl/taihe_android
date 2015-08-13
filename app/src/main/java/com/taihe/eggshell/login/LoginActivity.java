@@ -93,8 +93,8 @@ public class LoginActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.id_back:
-                intent = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
+//                intent = new Intent(LoginActivity.this,MainActivity.class);
+//                startActivity(intent);
                 LoginActivity.this.finish();
                 break;
             case R.id.btn_login_login:

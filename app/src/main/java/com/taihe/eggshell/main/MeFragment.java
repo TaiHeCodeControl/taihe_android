@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.login.LoginActivity;
+import com.taihe.eggshell.login.LoginConfirmDialog;
 import com.taihe.eggshell.personalCenter.activity.AboutActivity;
 import com.taihe.eggshell.personalCenter.activity.MyPostActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
@@ -31,7 +33,8 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 
     private View rootView;
     private RelativeLayout rl_setting,rl_editZiliao ,rl_post,rl_collect,rl_jianli,rl_about,rl_hezuo,rl_logout;
-    private TextView tv_username, tv_qianming , tv_postNum, tv_collectNum , jianliNum;
+    private TextView tv_logintxt,tv_username, tv_qianming , tv_postNum, tv_collectNum , jianliNum;
+    private LinearLayout ll_userinfo;
 
     private Intent intent;
 
@@ -55,7 +58,10 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         rl_hezuo = (RelativeLayout)rootView.findViewById(R.id.rl_mine_hezuoqudao);
         rl_logout = (RelativeLayout)rootView.findViewById(R.id.rl_mine_logout);
 
+        ll_userinfo = (LinearLayout) rootView.findViewById(R.id.ll_mine_userinfo);
+        tv_logintxt = (TextView) rootView.findViewById(R.id.tv_mine_logintxt);
 
+        tv_logintxt.setOnClickListener(this);
         rl_setting.setOnClickListener(this);
         rl_editZiliao.setOnClickListener(this);
         rl_post.setOnClickListener(this);
@@ -68,6 +74,14 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initView() {
+        if(null == EggshellApplication.getApplication().getUser()){
+
+            tv_logintxt.setVisibility(View.VISIBLE);
+            ll_userinfo.setVisibility(View.GONE);
+
+            rl_logout.setVisibility(View.GONE);
+        }
+
         dialog = new ChoiceDialog(mContext, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,27 +109,58 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            case R.id.tv_mine_logintxt://登录
+
+                intent = new Intent(mContext,LoginActivity.class);
+                startActivity(intent);
+                break;
             case R.id.rl_mine_editziliao://基本资料
-                intent = new Intent(mContext,MyBasicActivity.class);
-                startActivity(intent);
+//                LoginConfirmDialog.dialogShow(mContext);
+                if(null != EggshellApplication.getApplication().getUser()){
+                    intent = new Intent(mContext,MyBasicActivity.class);
+                    startActivity(intent);
+                }else{
+                    intent = new Intent(mContext,LoginActivity.class);
+                    startActivity(intent);
+                }
+
                 break;
-            case R.id.rl_mine_postposition:
-                intent = new Intent(mContext,MyPostActivity.class);
-                startActivity(intent);
+            case R.id.rl_mine_postposition://我的投递
+                if(null != EggshellApplication.getApplication().getUser()){
+                    intent = new Intent(mContext,MyPostActivity.class);
+                    startActivity(intent);
+                }else{
+                    intent = new Intent(mContext,LoginActivity.class);
+                    startActivity(intent);
+                }
+
                 break;
 
-            case R.id.rl_mine_collectpostion:
-                intent = new Intent(mContext,MyPostActivity.class);
-                startActivity(intent);
+            case R.id.rl_mine_collectpostion://我的收藏
+                if(null != EggshellApplication.getApplication().getUser()){
+                    intent = new Intent(mContext,MyPostActivity.class);
+                    startActivity(intent);
+                }else{
+                    intent = new Intent(mContext,LoginActivity.class);
+                    startActivity(intent);
+                }
+
                 break;
 
-            case R.id.rl_mine_jianliguanli:
+            case R.id.rl_mine_jianliguanli://简历管理
+                if(null != EggshellApplication.getApplication().getUser()){
+                    intent = new Intent(mContext,MyPostActivity.class);
+                    startActivity(intent);
+                }else{
+                    intent = new Intent(mContext,LoginActivity.class);
+                    startActivity(intent);
+                }
                 break;
-            case R.id.rl_mine_about:
+            case R.id.rl_mine_about://关于蛋壳儿
                 intent = new Intent(mContext,AboutActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.rl_mine_hezuoqudao:
+            case R.id.rl_mine_hezuoqudao://合作渠道
                 intent = new Intent(mContext,AboutActivity.class);
                 startActivity(intent);
                 break;

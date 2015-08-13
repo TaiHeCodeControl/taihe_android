@@ -48,7 +48,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     private RadioGroup main_tab_RadioGroup ;
     private RadioButton radio_index , radio_social , radio_openclass , radio_me ;
     private ArrayList<Fragment> fragmentList;
-    private ChoiceDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,28 +73,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         main_tab_RadioGroup.setOnCheckedChangeListener(this);
 
-        dialog = new ChoiceDialog(mContext,new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                ToastUtils.show(mContext, "取消");
-                //虚拟点击事件
-                radio_index.performClick();
-            }
-        },new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                dialog.dismiss();
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
-        dialog.getTitleText().setText("亲，您还没有登录呢~");
-        dialog.getLeftButton().setText("取消");
-        dialog.getRightButton().setText("登录");
     }
 
     public void initData() {
@@ -143,15 +122,16 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
 
         if(main_viewPager.getCurrentItem() != current){
-            if(current==3){
-                if(null!= EggshellApplication.getApplication().getUser()){
-                    main_viewPager.setCurrentItem(current);
-                }else{
-                    dialog.show();
-                }
-            }else{
-                main_viewPager.setCurrentItem(current);
-            }
+            main_viewPager.setCurrentItem(current);
+//            if(current==3){
+//                if(null!= EggshellApplication.getApplication().getUser()){
+//                    main_viewPager.setCurrentItem(current);
+//                }else{
+//                    dialog.show();
+//                }
+//            }else{
+//                main_viewPager.setCurrentItem(current);
+//            }
 
         }
     }
