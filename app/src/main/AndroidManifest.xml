@@ -139,7 +139,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".main.InfoDetailActivity"
+            android:name=".meetinginfo.InfoDetailActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 

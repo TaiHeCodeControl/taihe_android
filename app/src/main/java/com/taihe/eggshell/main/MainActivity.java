@@ -39,12 +39,12 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener,View.OnClickListener {
+public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener,View.OnClickListener,IndexFragment.ChangeViewPagerListener{
 
     private static final String TAG = "MainActivity";
     private Context mContext;
 
-    private CustomViewPager main_viewPager ;
+    private CustomViewPager main_viewPager;
     private RadioGroup main_tab_RadioGroup ;
     private RadioButton radio_index , radio_social , radio_openclass , radio_me ;
     private ArrayList<Fragment> fragmentList;
@@ -58,7 +58,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         mContext = this;
-
 
         initView();
         initViewPager();
@@ -74,13 +73,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         radio_me = (RadioButton) findViewById(R.id.id_radio_me);
 
         main_tab_RadioGroup.setOnCheckedChangeListener(this);
-
-
     }
 
-    public void initData() {
-
-    }
+    public void initData() {}
 
     public void initViewPager() {
 
@@ -104,7 +99,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         if(tags.equals("MeFragment")){
             main_viewPager.setCurrentItem(3,false);
         }else{
-
             //viewpager默认显示第一页
             main_viewPager.setCurrentItem(0,false);
         }
@@ -185,6 +179,21 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
     }
 
+    @Override
+    public void changeViewPager(int position) {
+        main_viewPager.setCurrentItem(position, false);
+        if(position==1){
+            radio_index.setChecked(false);
+            radio_social.setChecked(true);
+            radio_openclass.setChecked(false);
+            radio_me.setChecked(false);
+        }else if(position==2){
+            radio_index.setChecked(false);
+            radio_social.setChecked(false);
+            radio_openclass.setChecked(true);
+            radio_me.setChecked(false);
+        }
+    }
 
     private boolean isExit = false;
     @Override

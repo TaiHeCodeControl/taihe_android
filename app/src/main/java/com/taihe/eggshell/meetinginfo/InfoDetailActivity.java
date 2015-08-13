@@ -1,4 +1,4 @@
-package com.taihe.eggshell.main;
+package com.taihe.eggshell.meetinginfo;
 
 import android.content.Context;
 import android.widget.TextView;

@@ -1,4 +1,4 @@
-package com.taihe.eggshell.base.utils;
+package com.taihe.eggshell.base.utils.httprequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;

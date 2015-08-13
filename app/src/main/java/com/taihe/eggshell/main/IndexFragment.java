@@ -1,5 +1,6 @@
 package com.taihe.eggshell.main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,6 +69,12 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private static final int ALPHA_END=180;
     private static final int ALPHA_MESSAGE = 1;
 
+    private ChangeViewPagerListener changeViewPagerListener;
+
+    public interface ChangeViewPagerListener{
+        void changeViewPager(int position);
+    }
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -81,6 +88,12 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             }
         }
     };
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        changeViewPagerListener = (ChangeViewPagerListener)activity;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
@@ -220,16 +233,14 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_play_mode:
-                intent = new Intent(mContext,FindJobActivity.class);
-                startActivity(intent);
+                changeViewPagerListener.changeViewPager(1);
                 break;
             case R.id.id_we_chat:
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_public_class:
-                intent = new Intent(mContext,FindJobActivity.class);
-                startActivity(intent);
+                changeViewPagerListener.changeViewPager(2);
                 break;
         }
     }
