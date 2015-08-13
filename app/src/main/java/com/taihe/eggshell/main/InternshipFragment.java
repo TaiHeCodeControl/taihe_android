@@ -14,10 +14,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.utils.MSCJSONObject;
-import com.taihe.eggshell.base.utils.MSCOpenUrlRunnable;
-import com.taihe.eggshell.base.utils.MSCPostUrlParam;
-import com.taihe.eggshell.base.utils.MSCUrlManager;
+import com.taihe.eggshell.base.utils.httprequest.MSCJSONObject;
+import com.taihe.eggshell.base.utils.httprequest.MSCOpenUrlRunnable;
+import com.taihe.eggshell.base.utils.httprequest.MSCPostUrlParam;
+import com.taihe.eggshell.base.utils.httprequest.MSCUrlManager;
 import com.taihe.eggshell.main.adapter.VideoAdapterHead;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.taihe.eggshell.main.adapter.VideoAdapterGride;
