@@ -8,6 +8,7 @@ public class User {
     private int id;
     private String name;
     private String phoneNumber;
+    private String token;
 
     public User(int id, String name, String phoneNumber) {
         this.id = id;
@@ -37,5 +38,13 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
