@@ -126,6 +126,12 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
+        <!--行业类别-->
+        <activity
+            android:name=".job.activity.IndustryActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
         <!--我的投递-->
         <activity
             android:name=".job.activity.MyPostActivity"
