@@ -97,7 +97,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         Intent intent = getIntent();
         String tags = intent.getStringExtra("MeFragment");
         if(tags.equals("MeFragment")){
-            main_viewPager.setCurrentItem(3,false);
+//            main_viewPager.setCurrentItem(3,false);
+            radio_me.performClick();
         }else{
             //viewpager默认显示第一页
             main_viewPager.setCurrentItem(0,false);
