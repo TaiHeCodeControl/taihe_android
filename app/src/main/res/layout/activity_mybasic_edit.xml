@@ -14,9 +14,9 @@
 
             <ImageView
                 android:id="@+id/iv_mybasic_back"
-                android:layout_width="60dp"
-                android:scaleType="center"
-                android:layout_height="match_parent"
+                android:layout_width="90dp"
+                android:scaleType="fitStart"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/icon_return" />
@@ -36,7 +36,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:text="编辑"
+            android:text="完成"
             android:textColor="@color/font_color_black"
             android:textSize="@dimen/font_size_32" />
 
@@ -230,7 +230,7 @@
                     android:textSize="@dimen/font_size_26" />
 
 
-                <EditText
+                <TextView
                     android:background="@null"
                     android:id="@+id/et_mybasic_jianjie"
                     android:layout_width="160dp"
@@ -239,10 +239,10 @@
                     android:layout_marginLeft="90dp"
                     android:text="学习是一种信仰学习是一种信仰"
                     android:ellipsize="end"
-                    android:maxEms="11"
                     android:singleLine="true"
                     android:imeOptions="actionNext"
                     android:maxLength="15"
+                    android:maxLines="1"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 

@@ -142,11 +142,11 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 
             case R.id.rl_mine_collectpostion://我的收藏
                 if(null != EggshellApplication.getApplication().getUser()){
-                    intent = new Intent(mContext,MyPostActivity.class);
+                    intent = new Intent(mContext,MyCollectActivity.class);
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);
-                    intent.putExtra("LoginTag","myPost");
+                    intent.putExtra("LoginTag","myCollect");
                     startActivity(intent);
                 }
 
@@ -158,7 +158,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);
-                    intent.putExtra("LoginTag","myPost");
+                    intent.putExtra("LoginTag","myResume");
                     startActivity(intent);
                 }
                 break;

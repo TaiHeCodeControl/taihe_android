@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.widget.addressselect.AddressSelectActivity;
 import com.taihe.eggshell.widget.datepicker.JudgeDate;
 import com.taihe.eggshell.widget.datepicker.ScreenInfo;
@@ -71,7 +72,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
 
         intent = getIntent();
         String address = intent.getStringExtra("Address");
-        if (!TextUtils.isEmpty(address)){
+        if (!TextUtils.isEmpty(address)) {
 
             tv_address.setText(address);
         }
@@ -97,7 +98,9 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_mybasic_back://退出当前页面
-                MyBasicActivity.this.finish();
+
+                goBack();
+
                 break;
 
             case R.id.iv_mybasic_cityselect://选择城市
@@ -115,6 +118,14 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
                 selectDate();
                 break;
         }
+    }
+
+    private void goBack() {
+        Intent intent = new Intent(MyBasicActivity.this, MainActivity.class);
+        intent.putExtra("MeFragment", "MeFragment");
+        startActivity(intent);
+
+        MyBasicActivity.this.finish();
     }
 
 
@@ -235,4 +246,10 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
     }
 
     //--------------------------------------------------------------
+
+    //监听返回按钮
+    @Override
+    public void onBackPressed() {
+        goBack();
+    }
 }

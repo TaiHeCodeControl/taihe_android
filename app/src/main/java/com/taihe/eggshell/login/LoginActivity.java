@@ -28,11 +28,16 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
+import com.taihe.eggshell.main.MyCollectActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
+import com.taihe.eggshell.resume.ResumManagerActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by huan on 2015/8/5.
@@ -89,15 +94,8 @@ public class LoginActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.id_back:
+                goBack();
 
-                Intent intents = getIntent();
-                loginTag = intents.getStringExtra("LoginTag");
-                if(loginTag.equals("logout")){
-                    intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("MeFragment","MeFragment");
-                    startActivity(intent);
-                }
-                LoginActivity.this.finish();
                 break;
             case R.id.btn_login_login:
                 login();
@@ -114,6 +112,18 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    private void goBack() {
+
+        Intent intents = getIntent();
+        loginTag = intents.getStringExtra("LoginTag");
+        if (loginTag.equals("logout")) {
+            intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("MeFragment", "MeFragment");
+            startActivity(intent);
+        }
+        LoginActivity.this.finish();
+    }
+
     public void login() {
         userphone = et_userphone.getText().toString().trim();
         password = et_password.getText().toString().trim();
@@ -125,8 +135,7 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.show(getApplicationContext(), R.string.login_login_phone_toast);
             return;
         }
-       final String url = "http://195.198.1.195/index.php?m=api&username=18810309239&pw=111111";
-
+//       final String url = "http://195.198.1.195/index.php?m=api&username=18810309239&pw=111111";
 //        new Thread(){
 //            public void run(){
 //                String str = HttpsUtils.doGet(url);
@@ -135,29 +144,9 @@ public class LoginActivity extends BaseActivity {
 //            };
 //        }.start();
 
-//        HttpLogin();
+        loginSuccess();
 //        loginFromNet();
-        //保存用户登录信息
 
-        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{'id':1,'name':'xx','phoneNumber':'89898'}");
-
-        //登录成功后显示界面的判断
-        Intent intents = getIntent();
-        loginTag = intents.getStringExtra("LoginTag");
-        if(loginTag.equals("meFragment")){
-            intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("MeFragment","MeFragment");
-            startActivity(intent);
-        }else if(loginTag.equals("myBasic")){
-            intent = new Intent(LoginActivity.this, MyBasicActivity.class);
-            startActivity(intent);
-        }else if(loginTag.equals("myPost")){
-            intent = new Intent(LoginActivity.this, MyPostActivity.class);
-            startActivity(intent);
-        }
-
-
-        LoginActivity.this.finish();
 
     }
 
@@ -176,10 +165,10 @@ public class LoginActivity extends BaseActivity {
                         ToastUtils.show(mContext, "登录成功");
                         String data = jsonObject.getString("data");
 
-                        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{'id':1,'name':'xx','phoneNumber':'89898'}");
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        LoginActivity.this.finish();
+                        //登录成功保存用户登录信息
+                        loginSuccess();
+
+
                     } else {
                         String msg = jsonObject.getString("msg");
                         ToastUtils.show(mContext, msg);
@@ -202,30 +191,37 @@ public class LoginActivity extends BaseActivity {
         RequestUtils.createRequest_GET(mContext, Urls.getMopHostUrl(), method, false, "", "", listener, errorListener);
     }
 
+    //登录成功保存用户登录信息
+    private void loginSuccess() {
+        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{'id':1,'name':'xx','phoneNumber':'89898'}");
 
-    private void HttpLogin() {
-
-        RequestParams params = new RequestParams();
-//        params.addQueryStringParameter("username", userphone);
-//        params.addQueryStringParameter("pw", password);
-        params.addBodyParameter("username", userphone);
-        params.addBodyParameter("pw", password);
-
-        final String str = "&username=" + userphone + "&pw=" + password;
-        String url = "http://195.198.1.195/index.php?m=api&username=18810309239&pw=111111";
-        HttpUtils http = new HttpUtils();
-        http.send(HttpRequest.HttpMethod.GET, url, new RequestCallBack<String>() {
-
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                String result = responseInfo.result;
-                System.out.println("LoginResult========= " + result);
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                System.out.println("请求服务器失败");
-            }
-        });
+        //登录成功后显示界面的判断
+        Intent intents = getIntent();
+        loginTag = intents.getStringExtra("LoginTag");
+        if (loginTag.equals("meFragment")) {
+            intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("MeFragment", "MeFragment");
+            startActivity(intent);
+        } else if (loginTag.equals("myBasic")) {
+            intent = new Intent(LoginActivity.this, MyBasicActivity.class);
+            startActivity(intent);
+        } else if (loginTag.equals("myPost")) {
+            intent = new Intent(LoginActivity.this, MyPostActivity.class);
+            startActivity(intent);
+        }else if (loginTag.equals("myCollect")) {
+            intent = new Intent(LoginActivity.this, MyCollectActivity.class);
+            startActivity(intent);
+        }else if (loginTag.equals("myResume")) {
+            intent = new Intent(LoginActivity.this, ResumManagerActivity.class);
+            startActivity(intent);
+        }
+        LoginActivity.this.finish();
     }
+
+    //监听返回按钮
+    @Override
+    public void onBackPressed() {
+       goBack();
+    }
+
 }

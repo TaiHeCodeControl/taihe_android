@@ -1,4 +1,4 @@
-package com.taihe.eggshell.job.activity;
+package com.taihe.eggshell.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,20 +12,18 @@ import android.widget.ListView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
-import com.taihe.eggshell.login.LoginActivity;
-import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * Created by huan on 2015/7/23.
+ * Created by huan on 2015/8/14.
  */
-public class MyPostActivity extends BaseActivity{
+public class MyCollectActivity extends BaseActivity {
 
 
     private AllJobAdapter adapter;
@@ -39,8 +37,7 @@ public class MyPostActivity extends BaseActivity{
     private Context mContext;
 
     private LinearLayout lin_back;
-
-    private static final String TAG = "MyPostActivity";
+    private static final String TAG = "MyCollectActivity";
 
     @Override
     public void initView() {
@@ -52,16 +49,16 @@ public class MyPostActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-        super.initTitle("投递职位");
+        super.initTitle("收藏职位");
         initListView();
         initListData();
     }
 
 
     public void initListView() {
-
         lin_back = (LinearLayout) findViewById(R.id.lin_back);
         lin_back.setOnClickListener(this);
+
         jobInfos = new ArrayList<JobInfo>();
 
         for(int i = 0; i < 10;i++){
@@ -119,7 +116,6 @@ public class MyPostActivity extends BaseActivity{
 
 
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -135,10 +131,9 @@ public class MyPostActivity extends BaseActivity{
     }
 
     private void goBack() {
-        Intent intent = new Intent(MyPostActivity.this, MainActivity.class);
+        Intent intent = new Intent(MyCollectActivity.this, MainActivity.class);
         intent.putExtra("MeFragment", "MeFragment");
         startActivity(intent);
-        this.finish();
     }
 
     public void postJob() {
@@ -147,6 +142,7 @@ public class MyPostActivity extends BaseActivity{
 
         }
     }
+
 
     //监听返回按钮
     @Override
