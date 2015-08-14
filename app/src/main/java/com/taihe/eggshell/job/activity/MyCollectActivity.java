@@ -1,4 +1,4 @@
-package com.taihe.eggshell.main;
+package com.taihe.eggshell.job.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +12,9 @@ import android.widget.ListView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
-import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
+import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 
 import java.util.ArrayList;

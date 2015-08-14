@@ -10,12 +10,6 @@ import android.widget.EditText;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
@@ -28,16 +22,13 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
-import com.taihe.eggshell.main.MyCollectActivity;
+import com.taihe.eggshell.job.activity.MyCollectActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
 import com.taihe.eggshell.resume.ResumManagerActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by huan on 2015/8/5.
