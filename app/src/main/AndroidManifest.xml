@@ -114,9 +114,11 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
+        <!--职位筛选-->
         <activity
             android:name=".job.activity.JobFilterActivity"
             android:label="@string/app_name"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:screenOrientation="portrait" />
 
         <activity
