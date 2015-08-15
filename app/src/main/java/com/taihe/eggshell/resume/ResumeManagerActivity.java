@@ -15,7 +15,7 @@ import com.taihe.eggshell.main.MainActivity;
 /**
  * Created by wang on 2015/8/13.
  */
-public class ResumManagerActivity extends BaseActivity{
+public class ResumeManagerActivity extends BaseActivity{
 
     private static final String TAG = "ResumeManagerActivity";
     private Context mContext;
@@ -58,6 +58,8 @@ public class ResumManagerActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
+
+        initTitle("简历管理");
     }
 
     @Override
@@ -68,13 +70,15 @@ public class ResumManagerActivity extends BaseActivity{
 
                 break;
             case R.id.id_create_resume:
-                intent = new Intent(mContext,ResumWriteActivity.class);
+                intent = new Intent(mContext,ResumeWriteActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_scan_resume:
+                intent = new Intent(mContext,ResumeScanActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_edt:
-                intent = new Intent(mContext,ResumeMultiActivity.class);
+                intent = new Intent(mContext,ResumeWriteActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_use:

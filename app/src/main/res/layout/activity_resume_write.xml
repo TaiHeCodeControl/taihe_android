@@ -24,11 +24,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="好的简历能帮助你更快找到好工作!"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:textColor="@color/black"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/id_create_resume"
-            android:layout_toStartOf="@+id/id_create_resume" />
+            android:layout_centerVertical="true"/>
 
         <TextView
             android:id="@+id/id_create_resume"
@@ -65,10 +63,8 @@
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
-                        android:text="简历名称" />
+                        style="@style/ResumeTextStyle"
+                        android:text="简历名称"/>
                     <View
                         android:layout_width="0.5dp"
                         android:layout_height="match_parent"
@@ -78,11 +74,13 @@
                         android:layout_marginLeft="10dp" />
 
                     <EditText
+                        android:id="@+id/id_resume_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:hint="请填写简历名称"
                         android:layout_marginRight="13dp"
+                        android:hint="请填写简历名称"
+                        android:textSize="15sp"
                         android:textColor="@color/font_color_black"
                         android:textColorHint="@color/hint_color"
                         android:layout_weight="1"
@@ -99,9 +97,7 @@
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="从事行业" />
                     <View
                         android:layout_width="0.5dp"
@@ -111,31 +107,23 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="10dp" />
 
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                    <TextView
+                        android:id="@+id/id_industry_for"
+                        style="@style/WriteResumeTextStyle"
                         android:hint="请选择您的从事行业"
-                        android:textColor="@color/font_color_black"
-                        android:textColorHint="@color/hint_color"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:background="@null" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:background="@drawable/xiala"/>
+                        />
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_gray"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="期望职位" />
                     <View
                         android:layout_width="0.5dp"
@@ -145,31 +133,22 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="10dp" />
 
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="请选择您的期望职位"
-                        android:textColor="@color/font_color_black"
-                        android:textColorHint="@color/hint_color"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:background="@null" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:background="@drawable/xiala"/>
+                    <TextView
+                        android:id="@+id/id_position_for"
+                        style="@style/WriteResumeTextStyle"
+                        android:hint="请选择您的期望职位"/>
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_gray"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="期望薪资" />
                     <View
                         android:layout_width="0.5dp"
@@ -179,31 +158,22 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="10dp" />
 
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="请选择您的期望薪资"
-                        android:textColor="@color/font_color_black"
-                        android:textColorHint="@color/hint_color"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:background="@null" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:background="@drawable/xiala"/>
+                    <TextView
+                        android:id="@+id/id_money_for"
+                        style="@style/WriteResumeTextStyle"
+                        android:hint="请选择您的期望薪资"/>
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_gray"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="期望城市" />
                     <View
                         android:layout_width="0.5dp"
@@ -213,31 +183,22 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="10dp" />
 
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="请选择您的从事行业"
-                        android:textColor="@color/font_color_black"
-                        android:textColorHint="@color/hint_color"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:background="@null" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:background="@drawable/xiala"/>
+                    <TextView
+                        android:id="@+id/id_city_for"
+                        style="@style/WriteResumeTextStyle"
+                        android:hint="请选择您的从事行业"/>
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_gray"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="工作性质" />
                     <View
                         android:layout_width="0.5dp"
@@ -247,31 +208,22 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="10dp" />
 
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="请选择您的工作性质"
-                        android:textColor="@color/font_color_black"
-                        android:textColorHint="@color/hint_color"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:background="@null" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:background="@drawable/xiala"/>
+                    <TextView
+                        android:id="@+id/id_type_for"
+                        style="@style/WriteResumeTextStyle"
+                        android:hint="请选择您的工作性质"/>
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_gray"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="到岗时间" />
                     <View
                         android:layout_width="0.5dp"
@@ -281,31 +233,22 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="10dp" />
 
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="请选择您的到岗时间"
-                        android:textColor="@color/font_color_black"
-                        android:textColorHint="@color/hint_color"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:background="@null" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:background="@drawable/xiala"/>
+                    <TextView
+                        android:id="@+id/id_time_for"
+                        style="@style/WriteResumeTextStyle"
+                        android:hint="请选择您的到岗时间" />
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_gray"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="求职状态" />
                     <View
                         android:layout_width="0.5dp"
@@ -315,27 +258,21 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="10dp" />
 
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="请选择您的求职状态"
-                        android:textColor="@color/font_color_black"
-                        android:textColorHint="@color/hint_color"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:background="@null" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:background="@drawable/xiala"/>
+                    <TextView
+                        android:id="@+id/id_status_for"
+                        style="@style/WriteResumeTextStyle"
+                        android:hint="请选择您的求职状态"/>
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:background="@color/line_gray"/>
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_gray"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -350,10 +287,8 @@
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
-                        android:text="姓　　名" />
+                        style="@style/ResumeTextStyle"
+                        android:text="姓\u3000\u3000名" />
                     <View
                         android:layout_width="0.5dp"
                         android:layout_height="match_parent"
@@ -363,46 +298,39 @@
                         android:layout_marginLeft="10dp" />
 
                     <EditText
+                        android:id="@+id/id_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:hint="请填写您的真实姓名"
+                        android:textSize="15sp"
                         android:textColor="@color/font_color_black"
                         android:textColorHint="@color/hint_color"
                         android:layout_weight="1"
                         android:background="@null" />
-                    <LinearLayout
+
+                    <RadioGroup
+                        android:id="@+id/id_gender_radio"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
                         android:orientation="horizontal">
-                        <ImageView
+
+                        <RadioButton
+                            android:id="@+id/id_gender_boy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/xuanzhong"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
+                            android:checked="true"
+                            style="@style/CustomRadioButton"
                             android:text="男"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp">
-                        <ImageView
+                        <RadioButton
+                            android:id="@+id/id_gender_girl"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/weixuanzhongck"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="8dp"
+                            style="@style/CustomRadioButton"
                             android:text="女"/>
-                    </LinearLayout>
+                        </RadioGroup>
+
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
@@ -414,9 +342,7 @@
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="出生年月" />
                     <View
                         android:layout_width="0.5dp"
@@ -426,21 +352,10 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="10dp" />
 
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="请选择您的出生年月"
-                        android:textColor="@color/font_color_black"
-                        android:textColorHint="@color/hint_color"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:background="@null" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:background="@drawable/xiala"/>
+                    <TextView
+                        android:id="@+id/id_birthday"
+                        style="@style/WriteResumeTextStyle"
+                        android:hint="请选择您的出生年月" />
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
@@ -452,9 +367,7 @@
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="最高学历" />
                     <View
                         android:layout_width="0.5dp"
@@ -464,21 +377,10 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="10dp" />
 
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="请选择您的最高学历"
-                        android:textColor="@color/font_color_black"
-                        android:textColorHint="@color/hint_color"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:background="@null" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:background="@drawable/xiala"/>
+                    <TextView
+                        android:id="@+id/id_top_school"
+                        style="@style/WriteResumeTextStyle"
+                        android:hint="请选择您的最高学历"/>
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
@@ -490,9 +392,7 @@
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="工作经验" />
                     <View
                         android:layout_width="0.5dp"
@@ -502,21 +402,10 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="10dp" />
 
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:hint="请选择您的工作经验"
-                        android:textColor="@color/font_color_black"
-                        android:textColorHint="@color/hint_color"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:background="@null" />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="13dp"
-                        android:background="@drawable/xiala"/>
+                    <TextView
+                        android:id="@+id/id_work_exper"
+                        style="@style/WriteResumeTextStyle"
+                        android:hint="请选择您的工作经验"/>
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
@@ -528,9 +417,7 @@
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="手机号码" />
                     <View
                         android:layout_width="0.5dp"
@@ -541,10 +428,12 @@
                         android:layout_marginLeft="10dp" />
 
                     <EditText
+                        android:id="@+id/id_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:hint="请输入您的手机号码"
+                        android:textSize="15sp"
                         android:textColor="@color/font_color_black"
                         android:textColorHint="@color/hint_color"
                         android:layout_weight="1"
@@ -561,9 +450,7 @@
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="联系邮箱" />
                     <View
                         android:layout_width="0.5dp"
@@ -574,10 +461,12 @@
                         android:layout_marginLeft="10dp" />
 
                     <EditText
+                        android:id="@+id/id_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:hint="请输入您的联系邮箱"
+                        android:textSize="15sp"
                         android:textColor="@color/font_color_black"
                         android:textColorHint="@color/hint_color"
                         android:layout_weight="1"
@@ -594,9 +483,7 @@
                     android:gravity="left|center"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/font_color_black"
+                        style="@style/ResumeTextStyle"
                         android:text="现居地址" />
                     <View
                         android:layout_width="0.5dp"
@@ -607,10 +494,12 @@
                         android:layout_marginLeft="10dp" />
 
                     <EditText
+                        android:id="@+id/id_addres_now"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:hint="请输入您的现居地址"
+                        android:textSize="15sp"
                         android:textColor="@color/font_color_black"
                         android:textColorHint="@color/hint_color"
                         android:layout_weight="1"
@@ -622,22 +511,18 @@
                     android:layout_height="0.5dp"
                     android:background="@color/line_gray"/>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:gravity="center">
                 <TextView
+                    android:id="@+id/id_commit"
                     android:layout_width="150dp"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:text="申请职位"
+                    android:text="保存"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:background="@drawable/txt_background" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

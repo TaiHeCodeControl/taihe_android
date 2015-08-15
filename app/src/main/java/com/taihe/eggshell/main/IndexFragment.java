@@ -29,8 +29,7 @@ import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
 import com.taihe.eggshell.meetinginfo.Act_MeetingInfo;
-import com.taihe.eggshell.main.entity.CompanyDetailActivity;
-import com.taihe.eggshell.resume.ResumManagerActivity;
+import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.widget.ImagesGallery;
 import com.taihe.eggshell.widget.MyListView;
 import com.taihe.eggshell.widget.MyScrollView;
@@ -230,7 +229,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_write_resume:
-                intent = new Intent(mContext,ResumManagerActivity.class);
+                intent = new Intent(mContext,ResumeManagerActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_play_mode:

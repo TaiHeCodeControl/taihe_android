@@ -147,7 +147,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".main.entity.CompanyDetailActivity"
+            android:name=".main.CompanyDetailActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
@@ -162,17 +162,67 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".resume.ResumManagerActivity"
+            android:name=".resume.ResumeManagerActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".resume.ResumWriteActivity"
+            android:name=".resume.ResumeWriteActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
-	<activity
-            android:name=".resume.ResumeMultiActivity"
+        <activity
+                android:name=".resume.ResumeMultiActivity"
+                android:label="@string/app_name"
+                android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeWorkActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeEduActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeTrainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeTechActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeProjectActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeBookActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeSelfActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeWorkScanActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeEduScanActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeScanActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 

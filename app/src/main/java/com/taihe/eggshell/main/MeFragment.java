@@ -20,7 +20,7 @@ import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.personalCenter.activity.AboutActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
-import com.taihe.eggshell.resume.ResumManagerActivity;
+import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.widget.ChoiceDialog;
 
 /**
@@ -155,7 +155,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 
             case R.id.rl_mine_jianliguanli://简历管理
                 if(null != EggshellApplication.getApplication().getUser()){
-                    intent = new Intent(mContext,ResumManagerActivity.class);
+                    intent = new Intent(mContext,ResumeManagerActivity.class);
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);

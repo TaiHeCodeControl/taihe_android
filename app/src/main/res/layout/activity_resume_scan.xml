@@ -1,0 +1,814 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/findpass_title"
+        layout="@layout/include_title_bar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="个人简历"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"/>
+
+
+        <TextView
+            android:id="@+id/id_create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:text="创建于2015-09-09"
+            android:textSize="16sp"
+            android:textColor="@color/font_color_gray"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/id_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="王某某"
+                        android:textSize="15sp"/>
+
+                    <TextView
+                        android:id="@+id/id_c"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="("
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:background="@null" />
+
+                    <TextView
+                        android:id="@+id/id_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:text="男"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:background="@null" />
+                    <TextView
+                        android:id="@+id/id_d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:text=","
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:background="@null" />
+
+                    <TextView
+                        android:id="@+id/id_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:text="25岁"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:background="@null" />
+
+                    <TextView
+                        android:id="@+id/id_e"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:text=")"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:background="@null" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="学历:\u3000\u3000"/>
+
+                    <TextView
+                        android:id="@+id/id_level"
+                        style="@style/ResumeTextStyle"
+                        android:text="本科"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="经验:\u3000\u3000"/>
+
+                    <TextView
+                        android:id="@+id/id_start_time"
+                        style="@style/ResumeTextStyle"
+                        android:text="1-3年"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="所在地:\u3000"/>
+
+                    <TextView
+                        android:id="@+id/id_industy"
+                        style="@style/ResumeTextStyle"
+                        android:text="请填写所学专业" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="联系手机:" />
+
+                    <TextView
+                        android:id="@+id/id_telphone"
+                        style="@style/ResumeTextStyle"
+                        android:text="请填写社团职位" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="电子邮件:" />
+
+                    <TextView
+                        android:id="@+id/id_email"
+                        style="@style/ResumeTextStyle"
+                        android:text="请填写社团职位" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="求职意向"
+                    android:textSize="17sp"
+                    android:textColor="@color/red"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/line_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="期望职位:" />
+
+                    <TextView
+                        android:id="@+id/id_hope_position"
+                        style="@style/ResumeTextStyle"
+                        android:text="请填写社团职位" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="期望行业:" />
+
+                    <TextView
+                        android:id="@+id/id_hope_industy"
+                        style="@style/ResumeTextStyle"
+                        android:text="请填写社团职位" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="待遇要求:" />
+
+                    <TextView
+                        android:id="@+id/id_want"
+                        style="@style/ResumeTextStyle"
+                        android:text="请填写社团职位" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="工作地区:" />
+
+                    <TextView
+                        android:id="@+id/id_work_ear"
+                        style="@style/ResumeTextStyle"
+                        android:text="请填写社团职位" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="到职时间:" />
+
+                    <TextView
+                        android:id="@+id/id_come_time"
+                        style="@style/ResumeTextStyle"
+                        android:text="请填写社团职位" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="求职状态:" />
+
+                    <TextView
+                        android:id="@+id/id_status"
+                        style="@style/ResumeTextStyle"
+                        android:text="请填写社团职位" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="职位性质:" />
+
+                    <TextView
+                        android:id="@+id/id_position_type"
+                        style="@style/ResumeTextStyle"
+                        android:text="请填写社团职位" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="工作经历"
+                    android:textSize="17sp"
+                    android:textColor="@color/red"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/line_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/id_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="时间段"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/id_position"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="运营专员"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/id_company_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="运营专员"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="工作内容:"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/id_work_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="运营专员运营专员"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="教育经历"
+                    android:textSize="17sp"
+                    android:textColor="@color/red"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/line_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/id_time_edu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="时间段"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/id_professional"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="专业"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/id_school_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="清华大学"
+                        android:textColor="@color/black"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:text="担任职位:"
+                            android:textColor="@color/black"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="10dp"
+                            android:text="华丽的看见了"
+                            android:textColor="@color/black"/>
+                        </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="专业描述:"
+                        android:textColor="@color/font_color_gray"/>
+
+                    <TextView
+                        android:id="@+id/id_prof_brief"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="运营专员运营专员"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/id_tech_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/red"
+                        android:text="专业技能"
+                        android:textSize="15sp"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/line_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="掌握时间:"/>
+
+                    <TextView
+                        android:id="@+id/id_contron_time"
+                        style="@style/ResumeTextStyle"
+                        android:text="12年"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="熟练程度:"/>
+
+                    <TextView
+                        android:id="@+id/id_hot_level"
+                        style="@style/ResumeTextStyle"
+                        android:text="一般"/>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:gravity="left|center"
+                    android:orientation="horizontal">
+                    <TextView
+                        style="@style/ResumeTextStyle_left"
+                        android:text="技能名称:"/>
+
+                    <TextView
+                        android:id="@+id/id_tech"
+                        style="@style/ResumeTextStyle"
+                        android:text="英明" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="项目经验"
+                    android:textSize="17sp"
+                    android:textColor="@color/red"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/line_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/id_time_project"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="时间段"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/id_own_posion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="担任职位"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/id_project_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="项目名称"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="项目内容:"
+                        android:textColor="@color/font_color_gray"/>
+
+                    <TextView
+                        android:id="@+id/id_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="运营专员运营专员"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="证书"
+                    android:textSize="17sp"
+                    android:textColor="@color/red"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/line_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/id_time_book"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="时间段"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/id_book_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="证书全称"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/id_book_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="颁发单位"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="证书描述:"
+                        android:textColor="@color/font_color_gray"/>
+
+                    <TextView
+                        android:id="@+id/id_book_brief"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="运营专员运营专员"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="培训经历"
+                    android:textSize="17sp"
+                    android:textColor="@color/red"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/line_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/id_time_train"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="时间段"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/id_train_direction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="培训方向"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/id_train_company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="培训机构"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="培训描述:"
+                        android:textColor="@color/font_color_gray"/>
+
+                    <TextView
+                        android:id="@+id/id_train_brief"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="运营专员运营专员"
+                        android:textColor="@color/black"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="培训经历"
+                    android:textSize="17sp"
+                    android:textColor="@color/red"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/line_gray"/>
+
+                <TextView
+                    android:id="@+id/id_self_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="速度来看你的上了飞机数量是几点了开始的福利时间法律"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>

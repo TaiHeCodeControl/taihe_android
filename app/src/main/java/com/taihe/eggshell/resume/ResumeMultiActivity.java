@@ -1,6 +1,7 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ public class ResumeMultiActivity extends BaseActivity{
     private Context mContext;
     private TextView resumeName;
     private RelativeLayout workExper,educationExper,trainExper,industryTech,projectExper,certBook,selfEvaluation;
+    private Intent intent;
 
     @Override
     public void initView() {
@@ -45,6 +47,8 @@ public class ResumeMultiActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
+
+        initTitle("写简历");
     }
 
     @Override
@@ -52,25 +56,32 @@ public class ResumeMultiActivity extends BaseActivity{
         super.onClick(v);
         switch (v.getId()){
             case R.id.id_work_exper:
-                ToastUtils.show(mContext,"你");
+                intent = new Intent(mContext,ResumeWorkActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_edu_exper:
-                ToastUtils.show(mContext,"你");
+                intent = new Intent(mContext,ResumeEduActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_train_exper:
-                ToastUtils.show(mContext,"你");
+                intent = new Intent(mContext,ResumeTrainActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_industy_tech:
-                ToastUtils.show(mContext,"你");
+                intent = new Intent(mContext,ResumeTechActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_project_exper:
-                ToastUtils.show(mContext,"你");
+                intent = new Intent(mContext,ResumeProjectActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_conver_book:
-                ToastUtils.show(mContext,"你");
+                intent = new Intent(mContext,ResumeBookActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_self_evalu:
-                ToastUtils.show(mContext,"你");
+                intent = new Intent(mContext,ResumeSelfActivity.class);
+                startActivity(intent);
                 break;
         }
     }
