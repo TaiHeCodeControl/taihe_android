@@ -64,11 +64,12 @@ public class ResumeManagerActivity extends BaseActivity{
 
     @Override
     public void onClick(View v) {
+        super.onClick(v);
         switch (v.getId()){
-            case R.id.lin_back:
+            /*case R.id.lin_back:
                 goBack();
 
-                break;
+                break;*/
             case R.id.id_create_resume:
                 intent = new Intent(mContext,ResumeWriteActivity.class);
                 startActivity(intent);
@@ -89,15 +90,15 @@ public class ResumeManagerActivity extends BaseActivity{
     }
 
     private void goBack() {
-        Intent intent = new Intent(ResumManagerActivity.this, MainActivity.class);
+        Intent intent = new Intent(ResumeManagerActivity.this, MainActivity.class);
         intent.putExtra("MeFragment", "MeFragment");
         startActivity(intent);
         this.finish();
     }
 
     //监听返回按钮
-    @Override
-    public void onBackPressed() {
-        goBack();
-    }
+//    @Override
+//    public void onBackPressed() {
+////        goBack();
+//    }
 }

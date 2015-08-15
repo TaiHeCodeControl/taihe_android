@@ -25,7 +25,7 @@ import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
-import com.taihe.eggshell.resume.ResumManagerActivity;
+import com.taihe.eggshell.resume.ResumeManagerActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -203,7 +203,7 @@ public class LoginActivity extends BaseActivity {
             intent = new Intent(LoginActivity.this, MyCollectActivity.class);
             startActivity(intent);
         }else if (loginTag.equals("myResume")) {
-            intent = new Intent(LoginActivity.this, ResumManagerActivity.class);
+            intent = new Intent(LoginActivity.this, ResumeManagerActivity.class);
             startActivity(intent);
         }
         LoginActivity.this.finish();
