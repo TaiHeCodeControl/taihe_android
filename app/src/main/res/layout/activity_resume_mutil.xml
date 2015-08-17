@@ -50,21 +50,6 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"/>
 
-                <View
-                    android:layout_width="20dp"
-                    android:layout_height="1dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:text="必填项"
-                    android:textSize="15sp"
-                    android:background="@drawable/delet_background"/>
                 </LinearLayout>
 
                 <ImageView
@@ -103,21 +88,6 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
 
-            <View
-                android:layout_width="20dp"
-                android:layout_height="1dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="必填项"
-                android:textSize="15sp"
-                android:background="@drawable/delet_background"/>
         </LinearLayout>
 
         <ImageView
@@ -155,21 +125,6 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
 
-            <View
-                android:layout_width="20dp"
-                android:layout_height="1dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="可选项"
-                android:textSize="15sp"
-                android:background="@drawable/next_step_background"/>
         </LinearLayout>
 
         <ImageView
@@ -207,21 +162,6 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
 
-            <View
-                android:layout_width="20dp"
-                android:layout_height="1dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="可选项"
-                android:textSize="15sp"
-                android:background="@drawable/next_step_background"/>
         </LinearLayout>
 
         <ImageView
@@ -259,21 +199,6 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
 
-            <View
-                android:layout_width="20dp"
-                android:layout_height="1dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="可选项"
-                android:textSize="15sp"
-                android:background="@drawable/next_step_background"/>
         </LinearLayout>
 
         <ImageView
@@ -311,21 +236,6 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
 
-            <View
-                android:layout_width="20dp"
-                android:layout_height="1dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="可选项"
-                android:textSize="15sp"
-                android:background="@drawable/next_step_background"/>
         </LinearLayout>
 
         <ImageView
@@ -363,21 +273,6 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
 
-            <View
-                android:layout_width="20dp"
-                android:layout_height="1dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="选填项"
-                android:textSize="15sp"
-                android:background="@drawable/next_step_background"/>
         </LinearLayout>
 
         <ImageView

@@ -13,23 +13,39 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class APKUtils {
-	
-	
-	public static PackageInfo getPackageInfo(String fullFileName){
-		PackageManager packageManager = EggshellApplication.getApplication().getPackageManager();
-		return packageManager.getPackageArchiveInfo(fullFileName, PackageManager.GET_ACTIVITIES);
-	}
-	
-	public static int getVersionCode(String fullFileName){
-		return getPackageInfo(fullFileName).versionCode;
-	}
-	
-	public static String getVerisonName(String fullFileName){
-		return getPackageInfo(fullFileName).versionName;
-	}
-	
-	public static String getUID(String fullFileName){
-		return getPackageInfo(fullFileName).sharedUserId;
-	}
+
+
+    /**
+     * 获取版本的名称
+     *
+     * @param
+     * @return
+     */
+    public static String getVersionName() {
+        try {
+            PackageInfo packageInfo = EggshellApplication.getApplication().getPackageManager()
+                    .getPackageInfo(EggshellApplication.getApplication().getPackageName(),
+                            PackageManager.GET_CONFIGURATIONS);
+            return packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+        }
+        return "";
+    }
+
+    /**
+     * 获取应用的版本号
+     *
+     * @param
+     * @return
+     */
+    public static int getVersionCode(){
+        try{
+            PackageInfo packageInfo = EggshellApplication.getApplication().getPackageManager().getPackageInfo(EggshellApplication.getApplication().getPackageName(), PackageManager.GET_CONFIGURATIONS);
+            return  packageInfo.versionCode;
+        }catch (PackageManager.NameNotFoundException e){
+            e.printStackTrace();
+        }
+        return 1;
+    }
 
 }

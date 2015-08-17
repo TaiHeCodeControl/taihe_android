@@ -23,8 +23,10 @@ import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.APKUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobSearchActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
@@ -35,9 +37,11 @@ import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
 import com.taihe.eggshell.meetinginfo.Act_MeetingInfo;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
+import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.ImagesGallery;
 import com.taihe.eggshell.widget.MyListView;
 import com.taihe.eggshell.widget.MyScrollView;
+import com.taihe.eggshell.widget.ProgressDialog;
 import com.taihe.eggshell.widget.cityselect.CitySelectActivity;
 
 import java.util.ArrayList;
@@ -59,6 +63,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private MyListView positionListView;
     private MyScrollView scrollView;
     private TextView lookJob,jianZhi,shiXi,newInfos,writeResume,playMode,weChat,publicClass,jobPlace;
+    private ChoiceDialog dialog;
 
     private ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
     private ArrayList<ImageView> portImg = new ArrayList<ImageView>();
@@ -207,8 +212,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-
-        getVersionCode();
+//        getVersionCode();
     }
 
     @Override
@@ -326,6 +330,23 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Object o) {
 
+
+                    dialog = new ChoiceDialog(mContext,new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                           ToastUtils.show(mContext,"更新");
+                           updateAPK();
+                    }
+                },new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                           dialog.dismiss();
+                    }
+                });
+
+                dialog.getTitleText().setText("发现新版本，是否更新？");
+                dialog.getLeftButton().setText("更新");
+                dialog.getRightButton().setText("取消");
             }
         };
 
@@ -337,7 +358,31 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         };
 
         Map<String,String> params = new HashMap<String, String>();
+        params.put("vercode", APKUtils.getVersionCode() + "");
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),"method",true,params,true,listener,errorListener);
+    }
+
+    private void updateAPK(){
+
+        final ProgressDialog progressDialog = new ProgressDialog(mContext);
+        progressDialog.show();
+
+        new UpdateHelper(mContext,new UpdateHelper.DownloadProgress() {
+            @Override
+            public void progress(int percent) {
+                    progressDialog.getProgressBar().setProgress(percent);
+            }
+
+            @Override
+            public void complete() {
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void error() {
+                ToastUtils.show(mContext,"错误");
+            }
+        }).downloadInBackground("");
     }
 }

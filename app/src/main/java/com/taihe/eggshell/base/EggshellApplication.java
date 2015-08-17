@@ -112,37 +112,4 @@ public class EggshellApplication extends Application {
         }
 	}
 
-    /**
-     * 获取版本的名称
-     *
-     * @param
-     * @return
-     */
-    public String getVersionName() {
-        try {
-            PackageInfo packageInfo = eggApplication.getPackageManager()
-                    .getPackageInfo(eggApplication.getPackageName(),
-                            PackageManager.GET_CONFIGURATIONS);
-            return packageInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-        }
-        return "";
-    }
-
-    /**
-     * 获取应用的版本号
-     *
-     * @param
-     * @return
-     */
-    public int getVersionCode(){
-        try{
-            PackageInfo packageInfo = eggApplication.getPackageManager().getPackageInfo(eggApplication.getPackageName(), PackageManager.GET_CONFIGURATIONS);
-            return  packageInfo.versionCode;
-        }catch (PackageManager.NameNotFoundException e){
-            e.printStackTrace();
-        }
-        return 1;
-    }
-
 }
