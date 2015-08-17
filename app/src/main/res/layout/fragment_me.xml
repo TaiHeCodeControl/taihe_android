@@ -291,10 +291,7 @@
             </RelativeLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginLeft="15dp"
-                android:background="@color/line_gray" />
+                style="@style/line_marginLeft"/>
 
             <RelativeLayout
                 android:id="@+id/rl_mine_hezuoqudao"
@@ -309,6 +306,35 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:text="合作渠道"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_26" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/chakanquanbu" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/line_marginLeft"/>
+
+            <RelativeLayout
+                android:id="@+id/rl_mine_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/ucenter_selected_background">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="意见反馈"
                     android:textColor="@color/font_color_black"
                     android:textSize="@dimen/font_size_26" />
 

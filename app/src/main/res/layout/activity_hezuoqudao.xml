@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/title_qudao"
+        layout="@layout/include_title_bar" />
+
+    <View
+        android:id="@+id/view_qudao_line"
+        style="@style/line_fill"
+        android:layout_below="@+id/title_qudao" />
+
+    <ImageView
+        android:scaleType="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view_qudao_line"
+        android:src="@drawable/logotu" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:text="太和天下投资控股有限公司  版权所有"
+        android:textColor="#646464"
+        android:textSize="12sp" />
+</RelativeLayout>

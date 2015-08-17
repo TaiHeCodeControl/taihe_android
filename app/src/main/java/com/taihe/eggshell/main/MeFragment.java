@@ -17,8 +17,10 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
 import com.taihe.eggshell.login.LoginActivity;
+import com.taihe.eggshell.personalCenter.activity.TeamActivity;
 import com.taihe.eggshell.personalCenter.activity.AboutActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
+import com.taihe.eggshell.personalCenter.activity.FeedbackActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.widget.ChoiceDialog;
@@ -33,7 +35,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     private ChoiceDialog dialog;
 
     private View rootView;
-    private RelativeLayout rl_setting,rl_editZiliao ,rl_post,rl_collect,rl_jianli,rl_about,rl_hezuo,rl_logout;
+    private RelativeLayout rl_mine_feedback, rl_setting,rl_editZiliao ,rl_post,rl_collect,rl_jianli,rl_about,rl_hezuo,rl_logout;
     private TextView tv_logintxt,tv_username, tv_qianming , tv_postNum, tv_collectNum , jianliNum;
     private LinearLayout ll_userinfo;
 
@@ -58,10 +60,12 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         rl_about = (RelativeLayout)rootView.findViewById(R.id.rl_mine_about);
         rl_hezuo = (RelativeLayout)rootView.findViewById(R.id.rl_mine_hezuoqudao);
         rl_logout = (RelativeLayout)rootView.findViewById(R.id.rl_mine_logout);
+        rl_mine_feedback = (RelativeLayout)rootView.findViewById(R.id.rl_mine_feedback);
 
         ll_userinfo = (LinearLayout) rootView.findViewById(R.id.ll_mine_userinfo);
         tv_logintxt = (TextView) rootView.findViewById(R.id.tv_mine_logintxt);
 
+        rl_mine_feedback.setOnClickListener(this);
         tv_logintxt.setOnClickListener(this);
         rl_setting.setOnClickListener(this);
         rl_editZiliao.setOnClickListener(this);
@@ -167,7 +171,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.rl_mine_hezuoqudao://合作渠道
-                intent = new Intent(mContext,AboutActivity.class);
+                intent = new Intent(mContext,TeamActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rl_mine_logout://退出登录
@@ -178,6 +182,11 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 //                intent = new Intent(mContext, SetUpActivity.class);
 //                startActivity(intent);
 //                break;
+
+            case R.id.rl_mine_feedback:
+                intent = new Intent(mContext, FeedbackActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 }
