@@ -128,6 +128,7 @@
                 android:background="@color/line_gray" />
 
             <RelativeLayout
+                android:id="@+id/rl_mybasic_sex"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:orientation="horizontal">
@@ -154,7 +155,6 @@
 
 
                     <ImageView
-                        android:id="@+id/iv_mybasic_sexselect"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:scaleType="center"
@@ -172,6 +172,7 @@
                 android:background="@color/line_gray" />
 
             <RelativeLayout
+                android:id="@+id/rl_mybasic_city"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:orientation="horizontal">
@@ -198,7 +199,6 @@
 
 
                     <ImageView
-                        android:id="@+id/iv_mybasic_cityselect"
                         android:layout_width="60dp"
                         android:scaleType="center"
                         android:layout_height="match_parent"
@@ -216,6 +216,7 @@
                 android:background="@color/line_gray" />
 
             <RelativeLayout
+                android:id="@+id/rl_mybasic_jianjie"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:orientation="horizontal">
@@ -232,7 +233,7 @@
 
                 <TextView
                     android:background="@null"
-                    android:id="@+id/et_mybasic_jianjie"
+                    android:id="@+id/tv_mybasic_jianjie"
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -273,6 +274,7 @@
                 android:background="@color/line_gray" />
 
             <RelativeLayout
+                android:id="@+id/rl_mybasic_date"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:orientation="horizontal">
@@ -299,7 +301,6 @@
 
 
                     <ImageView
-                        android:id="@+id/iv_mybasic_date"
                         android:layout_width="60dp"
                         android:layout_height="match_parent"
                         android:scaleType="center"
