@@ -8,15 +8,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/ic_launcher"/>
-    
-    <Button
-        android:id="@+id/id_go"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="100dp"
-        android:text="进入"/>
+        android:src="@drawable/guide_one"
+        android:scaleType="centerCrop"/>
 
 </RelativeLayout>

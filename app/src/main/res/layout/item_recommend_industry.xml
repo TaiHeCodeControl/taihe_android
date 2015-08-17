@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:gravity="center"
         android:orientation="horizontal"
         android:background="@color/white">
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="金融银行"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/index_tab_color"
             android:drawableTop="@drawable/hulianwang"
             android:drawablePadding="8dp"

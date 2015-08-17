@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobSearchActivity;
@@ -36,7 +41,9 @@ import com.taihe.eggshell.widget.MyScrollView;
 import com.taihe.eggshell.widget.cityselect.CitySelectActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class IndexFragment extends Fragment implements View.OnClickListener{
 
@@ -192,13 +199,16 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             public void onScrollChange(int x, int y, int oldxX, int oldY) {
                 Message message = Message.obtain();
                 message.what = ALPHA_MESSAGE;
-                if (oldY > 0) {
+                Log.v(TAG,oldY+"");
+                if (oldY >= 0) {
                     message.obj = oldY * (ALPHA_END - ALPHA_START) / scrollView.getMaxScrollAmount() + ALPHA_START;
                 }
                 handler.sendMessage(message);
             }
         });
 
+
+        getVersionCode();
     }
 
     @Override
@@ -309,5 +319,25 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             industry.setProfessionalList(prolist);
             industryList.add(industry);
         }
+    }
+
+    private void getVersionCode(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        };
+
+        Map<String,String> params = new HashMap<String, String>();
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),"method",true,params,true,listener,errorListener);
     }
 }
