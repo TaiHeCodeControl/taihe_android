@@ -5,11 +5,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.base.utils.UpdateUtils;
+
 
 /**
  * Created by Thinkpad on 2015/7/15.
@@ -22,12 +23,16 @@ public class FeedbackActivity extends BaseActivity{
     private EditText et_feedcontext,et_qq,et_email;
     private Button btn_submit;
     private String content,qq,email;
+    private int uid;
+    private String version;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_feedback);
         super.initView();
         mContext = this;
+
+
         et_email = (EditText) findViewById(R.id.et_feedback_feedemail);
         et_feedcontext = (EditText) findViewById(R.id.et_feedback_feedcontent);
         et_qq = (EditText) findViewById(R.id.et_feedback_feedqq);
@@ -59,9 +64,10 @@ public class FeedbackActivity extends BaseActivity{
         content = et_feedcontext.getText().toString().trim();
         qq = et_qq.getText().toString().trim();
         email = et_email.toString().trim();
+        version = UpdateUtils.getVersion(getApplicationContext());
 
-        if(TextUtils.isEmpty(content)){
-            ToastUtils.show(mContext,"请输入反馈内容");
+        if (TextUtils.isEmpty(content)) {
+            ToastUtils.show(mContext, "请输入反馈内容");
             return;
 
         }

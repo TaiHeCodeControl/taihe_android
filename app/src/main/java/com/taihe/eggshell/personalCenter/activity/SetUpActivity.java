@@ -228,6 +228,7 @@ public class SetUpActivity extends BaseActivity {
                 map.put("version", version_old);
                 map.put("system", system);
 
+
 //                Gson gson = new Gson();
 //                // 将对象转换为JSON数据
 //                String params = gson.toJson(map);
