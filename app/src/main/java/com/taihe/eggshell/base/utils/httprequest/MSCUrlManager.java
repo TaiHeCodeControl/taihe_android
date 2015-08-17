@@ -38,10 +38,10 @@ public class MSCUrlManager implements Serializable {
     public MSCUrlManager( String urlapi) {
         listMscUrlStrings = new HashMap<String, MSCUrlParam>();
     }
-	public MSCUrlManager(String apitype, String urlapi) {
+	public MSCUrlManager(String apitype, String urlapi,int pagesize,int page) {
 		this.apitype = "/" + apitype;
 		this.urlapi = "/" + urlapi;
-
+        this.state = "?pagesize="+pagesize+"&page="+page;
 		listMscUrlStrings = new HashMap<String, MSCUrlParam>();
 	}
 
@@ -87,7 +87,7 @@ public class MSCUrlManager implements Serializable {
 	}
 
 	private String geturlstr() {
-		String url = http + state + apitype + urlapi;
+		String url = http + apitype + urlapi + state;
 		if (listMscUrlStrings != null) {
 
 			Set<String> strings = listMscUrlStrings.keySet();
