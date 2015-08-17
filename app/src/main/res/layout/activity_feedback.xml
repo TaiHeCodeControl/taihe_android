@@ -2,9 +2,90 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <include layout="@layout/include_title_bar"/>
+    <include layout="@layout/include_title_bar" />
 
+    <View style="@style/line_fill" />
+
+    <EditText
+        android:id="@+id/et_feedback_feedcontent"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/feedtext"
+        android:gravity="top"
+        android:hint="请留下您的宝贵意见，我们会尽快处理..."
+        android:padding="10dp"
+        android:textColor="#C8C8C8"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="留下您的联络方式，方便我们与您取得联系"
+            android:textColor="#323232"
+            android:textSize="13sp" />
+
+        <Button
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/feed_select_bg"
+            android:text="可选项"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_feedback_feedqq"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/feed_text_bg"
+        android:gravity="top"
+        android:hint="QQ号码"
+        android:padding="10dp"
+        android:textColor="#C8C8C8"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/et_feedback_feedemail"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/feed_text_bg"
+        android:gravity="top"
+        android:hint="邮箱地址"
+        android:padding="10dp"
+        android:textColor="#C8C8C8"
+        android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/btn_feedback_submit"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/lanniu"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="13sp" />
 </LinearLayout>

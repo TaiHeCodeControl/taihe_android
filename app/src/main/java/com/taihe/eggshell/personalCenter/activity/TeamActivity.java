@@ -18,5 +18,6 @@ public class TeamActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
+        initTitle("合作渠道");
     }
 }
