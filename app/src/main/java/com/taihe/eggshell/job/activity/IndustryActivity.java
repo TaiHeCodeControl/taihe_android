@@ -21,15 +21,13 @@ import java.util.List;
 public class IndustryActivity extends BaseActivity {
 
     private String Tag = "IndustryActivity";
-
     private ListView list_industry;
     private List<String> industLists = null;
-
     private TextView tv_select;
-
     private Intent intent;
     private String filterString , title,selectString;
-
+    public static final int RESULT_CODE_INDUSTRYTYPE = 10;
+    public static final int RESULT_CODE_JOBYEAR = 11;
     @Override
     public void initView() {
         setContentView(R.layout.activity_industry_list);
@@ -46,14 +44,14 @@ public class IndustryActivity extends BaseActivity {
             selectString = "请选择行业类别";
 
             for (int i = 0; i < 10; i++) {
-                industLists.add("计算机/互联网");
+                industLists.add("计算机/互联网"+i);
             }
         }else   if(filterString.equals("jobyears")){
             title = "工作经验";
             selectString = "请选择工作经验";
 
             for (int i = 0; i < 10; i++) {
-                industLists.add("1年");
+                industLists.add(i+"年");
             }
         }
 
@@ -65,11 +63,16 @@ public class IndustryActivity extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                String filter = industLists.get(position);
-                Log.i(Tag, filter);
+                Intent intent = new Intent();
+                intent.putExtra("data", industLists.get(position));
+                if(filterString.equals("industry")){
+                    setResult(RESULT_CODE_INDUSTRYTYPE,intent);
+                }
+                if(filterString.equals("jobyears")){
+                    setResult(RESULT_CODE_JOBYEAR,intent);
+                }
+                finish();
 
-                intent = new Intent(IndustryActivity.this, JobFilterActivity.class);
-                startActivity(intent);
             }
         });
         list_industry.setAdapter(new IndustryAdapter());

@@ -3,6 +3,7 @@ package com.taihe.eggshell.job.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,15 +20,12 @@ public class JobFilterActivity extends BaseActivity {
 
     private Intent intent;
     private Context mContext;
-
     private RelativeLayout rl_industry,rl_position,rl_jobcity,rl_salary,rl_edu,rl_jobyears,rl_jobtype,rl_pubtime;
-
     private ImageView iv_clear;
-
     private EditText et_keyWord;
-
     private TextView tv_industry,tv_position,tv_jobcity,tv_salary,tv_edu,tv_jobyears,tv_jobtype,tv_pubtime;
-
+    public static final int REQUEST_CODE_INDUSTRYTYPE = 100;
+    public static final int REQUEST_CODE_JOBYEAR = 101;
     @Override
     public void initView() {
         setContentView(R.layout.activity_job_filtert);
@@ -92,9 +90,8 @@ public class JobFilterActivity extends BaseActivity {
                 break;
             case R.id.rl_jobfilter_industry://行业类别
                 intent = new Intent(mContext,IndustryActivity.class);
-                intent.putExtra("Filter","industry");
-                startActivity(intent);
-
+                intent.putExtra("Filter", "industry");
+                startActivityForResult(intent,REQUEST_CODE_INDUSTRYTYPE);
                 break;
             case R.id.rl_jobfilter_jobcity://工作城市
 
@@ -106,7 +103,7 @@ public class JobFilterActivity extends BaseActivity {
 
                 intent = new Intent(mContext,IndustryActivity.class);
                 intent.putExtra("Filter","jobyears");
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_CODE_JOBYEAR);
                 break;
 
             case R.id.rl_jobfilter_position://职位类别
@@ -118,6 +115,18 @@ public class JobFilterActivity extends BaseActivity {
             case R.id.rl_jobfilter_salary://薪资要求
 
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String str = data.getStringExtra("data");
+        if(REQUEST_CODE_INDUSTRYTYPE == requestCode && IndustryActivity.RESULT_CODE_INDUSTRYTYPE == resultCode){
+            tv_industry.setText(str);
+        }
+
+        if(REQUEST_CODE_JOBYEAR == requestCode && IndustryActivity.RESULT_CODE_JOBYEAR == resultCode){
+            tv_jobyears.setText(str);
         }
     }
 }

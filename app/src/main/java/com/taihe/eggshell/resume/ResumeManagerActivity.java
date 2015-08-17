@@ -96,9 +96,9 @@ public class ResumeManagerActivity extends BaseActivity{
         this.finish();
     }
 
-    //监听返回按钮
-//    @Override
-//    public void onBackPressed() {
-////        goBack();
-//    }
+//    监听返回按钮
+    @Override
+    public void onBackPressed() {
+        goBack();
+    }
 }

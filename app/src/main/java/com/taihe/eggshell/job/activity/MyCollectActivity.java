@@ -134,6 +134,7 @@ public class MyCollectActivity extends BaseActivity {
         Intent intent = new Intent(MyCollectActivity.this, MainActivity.class);
         intent.putExtra("MeFragment", "MeFragment");
         startActivity(intent);
+        MyCollectActivity.this.finish();
     }
 
     public void postJob() {

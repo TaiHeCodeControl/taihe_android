@@ -94,7 +94,6 @@ public class MeFragment extends Fragment implements View.OnClickListener{
             public void onClick(View v) {
 
                 dialog.dismiss();
-                EggshellApplication.getApplication().setUser(null);
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
 
                 Intent intent = new Intent(mContext, LoginActivity.class);
