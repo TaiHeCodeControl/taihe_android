@@ -25,7 +25,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
     private static final String TAG = "JobDetailActivity";
     private Context mContext;
-    private TextView titleView,jobtitle,jobcompany,jobstart,jobend,jobtype,joblevel,jobyears,jobaddress,jobmoney,jobnum,updown,jobbrief;
+    private TextView titleView,jobtitle,jobcompany,jobstart,jobend,jobtype,joblevel,jobyears,jobaddress,jobmoney,jobnum,updown,shouqi,company_jieshao;
     private Button applyButton;
     private MyListView jobDescListView,moreJobListView;
     private ImageView collectionImg;
@@ -50,7 +50,8 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         jobmoney = (TextView)findViewById(R.id.id_money);
         jobnum = (TextView)findViewById(R.id.id_pepple_num);
         updown = (TextView)findViewById(R.id.id_see_all);
-        jobbrief = (TextView)findViewById(R.id.id_company_brief);
+        shouqi = (TextView)findViewById(R.id.id_see_shouqi);
+        company_jieshao = (TextView)findViewById(R.id.id_company_jieshao);
 
         jobDescListView = (MyListView)findViewById(R.id.id_job_desc);
         moreJobListView = (MyListView)findViewById(R.id.id_other_position);
@@ -59,6 +60,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         applyButton.setOnClickListener(this);
         collectionImg.setOnClickListener(this);
         updown.setOnClickListener(this);
+        shouqi.setOnClickListener(this);
     }
 
     @Override
@@ -84,15 +86,17 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         JobDescAdapter jobDescAdapter = new JobDescAdapter(mContext,desc);
         jobDescListView.setAdapter(jobDescAdapter);
 
-        jobbrief.setText("\u3000\u3000" + "深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路");
-        jobbrief.post(new Runnable() {
+        company_jieshao.setText("\u3000\u3000" + "深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路");
+        company_jieshao.post(new Runnable() {
             @Override
             public void run() {
-                if(jobbrief.getLineCount()>2){
-                    jobbrief.setMaxLines(2);
+                if(company_jieshao.getLineCount()>2){
+                    company_jieshao.setMaxLines(2);
                     updown.setVisibility(View.VISIBLE);
+                    shouqi.setVisibility(View.GONE);
                 }else{
                     updown.setVisibility(View.GONE);
+                    shouqi.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -107,8 +111,14 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 JobApplyDialogUtil.isApplyJob(mContext);
                 break;
             case R.id.id_see_all:
-                jobbrief.setMaxLines(Integer.MAX_VALUE);
+                company_jieshao.setMaxLines(Integer.MAX_VALUE);
                 updown.setVisibility(View.GONE);
+                shouqi.setVisibility(View.VISIBLE);
+                break;
+            case R.id.id_see_shouqi:
+                company_jieshao.setMaxLines(2);
+                updown.setVisibility(View.VISIBLE);
+                shouqi.setVisibility(View.GONE);
                 break;
             case R.id.id_other:
                 ToastUtils.show(mContext,"收藏");

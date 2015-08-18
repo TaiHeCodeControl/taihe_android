@@ -5,12 +5,9 @@
     android:background="@color/background_gray"
     android:orientation="vertical">
 
-    <include layout="@layout/include_title_bar"/>
+    <include layout="@layout/include_title_bar" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_gray"/>
+    <View style="@style/line_fill" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -25,17 +22,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
+                android:background="@color/white"
                 android:orientation="vertical"
-                android:background="@color/white">
+                android:padding="15dp">
 
                 <TextView
                     android:id="@+id/id_job_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="数据分析负责人"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_32" />
 
                 <TextView
                     android:id="@+id/id_job_company"
@@ -43,8 +40,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="苏宁消费金融公司"
-                    android:textSize="18sp"
-                    android:textColor="@color/index_tab_color"/>
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -56,31 +53,34 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="发布:"
-                        android:textSize="18sp"
-                        android:textColor="@color/index_tab_color"/>
+                        android:textColor="@color/font_color_gray"
+                        android:textSize="@dimen/font_size_22" />
+
                     <TextView
                         android:id="@+id/id_start_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="2015-07-29"
-                        android:textSize="18sp"
-                        android:textColor="@color/index_tab_color"/>
+                        android:textColor="@color/font_color_gray"
+                        android:textSize="@dimen/font_size_22" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="有效:"
-                        android:textSize="18sp"
-                        android:textColor="@color/index_tab_color"/>
+                        android:textColor="@color/font_color_gray"
+                        android:textSize="@dimen/font_size_22" />
+
                     <TextView
                         android:id="@+id/id_end_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="2015-07-29"
-                        android:textSize="18sp"
-                        android:textColor="@color/index_tab_color"/>
+                        android:textColor="@color/font_color_gray"
+                        android:textSize="@dimen/font_size_22" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -88,10 +88,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:padding="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
                 android:orientation="horizontal"
-                android:background="@color/white">
+                android:padding="15dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -102,72 +102,75 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@color/white">
+                        android:background="@color/white"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="工作性质:"
-                            android:textSize="18sp"
-                            android:textColor="@color/index_tab_color"/>
+                            android:textColor="@color/font_color_gray"
+                            android:textSize="@dimen/font_size_26" />
+
                         <TextView
                             android:id="@+id/id_job_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="全职"
-                            android:textSize="18sp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/font_color_black"
+                            android:textSize="@dimen/font_size_26" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal"
-                        android:background="@color/white">
+                        android:background="@color/white"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="学历要求:"
-                            android:textSize="18sp"
-                            android:textColor="@color/index_tab_color"/>
+                            android:textColor="@color/font_color_gray"
+                            android:textSize="@dimen/font_size_26" />
+
                         <TextView
                             android:id="@+id/id_school_leve"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="本科"
-                            android:textSize="18sp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/font_color_black"
+                            android:textSize="@dimen/font_size_26" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal"
-                        android:background="@color/white">
+                        android:background="@color/white"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="工作经验:"
-                            android:textSize="18sp"
-                            android:textColor="@color/index_tab_color"/>
+                            android:textColor="@color/font_color_gray"
+                            android:textSize="@dimen/font_size_26" />
+
                         <TextView
                             android:id="@+id/id_work_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="3年"
-                            android:textSize="18sp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/font_color_black"
+                            android:textSize="@dimen/font_size_26" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -181,72 +184,75 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@color/white">
+                        android:background="@color/white"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="工作地点:"
-                            android:textSize="18sp"
-                            android:textColor="@color/index_tab_color"/>
+                            android:textColor="@color/font_color_gray"
+                            android:textSize="@dimen/font_size_26" />
+
                         <TextView
                             android:id="@+id/id_job_addres"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="北京"
-                            android:textSize="18sp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/font_color_black"
+                            android:textSize="@dimen/font_size_26" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal"
-                        android:background="@color/white">
+                        android:background="@color/white"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="月薪:"
-                            android:textSize="18sp"
-                            android:textColor="@color/index_tab_color"/>
+                            android:textColor="@color/font_color_gray"
+                            android:textSize="@dimen/font_size_26" />
+
                         <TextView
                             android:id="@+id/id_money"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="3000-4000"
-                            android:textSize="18sp"
-                            android:textColor="@color/red"/>
+                            android:textColor="@color/font_color_red"
+                            android:textSize="@dimen/font_size_26" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:orientation="horizontal"
-                        android:background="@color/white">
+                        android:background="@color/white"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="招聘人数:"
-                            android:textSize="18sp"
-                            android:textColor="@color/index_tab_color"/>
+                            android:textColor="@color/font_color_gray"
+                            android:textSize="@dimen/font_size_26" />
+
                         <TextView
                             android:id="@+id/id_pepple_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="若干"
-                            android:textSize="18sp"
-                            android:textColor="@color/black"/>
+                            android:textColor="@color/font_color_black"
+                            android:textSize="@dimen/font_size_26" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -255,60 +261,60 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:padding="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
                 android:orientation="vertical"
-                android:background="@color/white">
+                android:padding="15dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:drawableLeft="@drawable/left_icon"
+                    android:drawablePadding="8dp"
                     android:gravity="center"
                     android:text="职位描述"
-                    android:textColor="@color/index_tab_color"
-                    android:textSize="18sp"
-                    android:drawableLeft="@drawable/left_icon"
-                    android:drawablePadding="8dp"/>
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
 
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_job_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
+                    android:layout_marginTop="15dp"
+                    android:divider="@null"
                     android:listSelector="@color/white"
-                    android:scrollbars="none"
-                    android:divider="@null"/>
+                    android:scrollbars="none" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:padding="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="15dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:drawableLeft="@drawable/left_icon"
+                    android:drawablePadding="8dp"
                     android:gravity="center"
                     android:text="公司介绍"
-                    android:textColor="@color/index_tab_color"
-                    android:textSize="18sp"
-                    android:drawableLeft="@drawable/left_icon"
-                    android:drawablePadding="8dp"/>
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
 
                 <TextView
-                    android:id="@+id/id_company_brief"
+                    android:id="@+id/id_company_jieshao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:ellipsize="end"
                     android:lineSpacingExtra="5dp"
                     android:lineSpacingMultiplier="1.0"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="深刻的历史的"/>
+                    android:text="深刻的历史的"
+                    android:textColor="@color/font_color_black"
+                    android:textSize="@dimen/font_size_26" />
 
                 <TextView
                     android:id="@+id/id_see_all"
@@ -316,44 +322,63 @@
                     android:layout_height="35dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="15dp"
+                    android:background="@drawable/see_all_updown"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@drawable/down_detail_icon"
+                    android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:gravity="center"
                     android:text="查看全部"
-                    android:textSize="16sp"
-                    android:textColor="@color/red"
-                    android:drawableRight="@drawable/down_detail_icon"
+                    android:textColor="@color/font_color_red"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/id_see_shouqi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/see_all_updown"
                     android:drawablePadding="8dp"
-                    android:background="@drawable/see_all_updown"/>
+                    android:drawableRight="@drawable/down_detail_icon"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="点击收起"
+                    android:textColor="@color/font_color_red"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:padding="15dp"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="15dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:drawableLeft="@drawable/left_icon"
+                    android:drawablePadding="8dp"
                     android:gravity="center"
                     android:text="该公司更多职位"
-                    android:textColor="@color/index_tab_color"
-                    android:textSize="18sp"
-                    android:drawableLeft="@drawable/left_icon"
-                    android:drawablePadding="8dp"/>
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+
+                <View style="@style/line_marginLeft" />
 
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_other_position"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none"
                     android:background="@color/white"
-                    android:listSelector="@color/white"
                     android:divider="@color/white"
-                    android:dividerHeight="0dp"/>
+                    android:dividerHeight="0dp"
+                    android:listSelector="@color/white"
+                    android:scrollbars="none" />
 
             </LinearLayout>
 
@@ -361,15 +386,15 @@
                 android:id="@+id/id_apply_button"
                 android:layout_width="120dp"
                 android:layout_height="36dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="20dp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:textSize="18sp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/apply_job"
                 android:text="申请职位"
-                android:background="@drawable/apply_job"/>
-            </LinearLayout>
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
 
-        </ScrollView>
+    </ScrollView>
 
 </LinearLayout>

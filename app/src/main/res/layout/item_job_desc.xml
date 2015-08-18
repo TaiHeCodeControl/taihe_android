@@ -8,9 +8,10 @@
         android:id="@+id/id_job_desc_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="3dp"
         android:gravity="center"
         android:text="1、银行柜员任职要求"
-        android:textSize="16sp"
-        android:textColor="@color/index_tab_color"/>
+        android:textSize="@dimen/font_size_26"
+        android:textColor="@color/font_color_black"/>
 
 </RelativeLayout>
