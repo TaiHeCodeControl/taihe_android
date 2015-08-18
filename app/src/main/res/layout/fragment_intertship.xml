@@ -65,123 +65,86 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/line_gray"/>
-
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/scroll_hotnotes" >
+    <LinearLayout
+        android:id="@+id/lin_head_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:id="@+id/lin_head_video"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="34dp"
-                    android:background="@color/white"
-                    android:gravity="left|center"
-                    android:paddingLeft="15dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="名师风采"
-                        android:textSize="15sp"
-                        android:textColor="@color/black" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:background="@color/white">
-                    <GridView
-                        android:id="@+id/grid_head_video"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:numColumns="3" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="34dp"
-                    android:gravity="left|center"
-                    android:background="@color/white"
-                    android:paddingLeft="15dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="热门课程"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:textColor="@color/black" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:layout_marginTop="1dp">
-                    <com.taihe.eggshell.widget.MyGridView
-                        android:id="@+id/id_video_grideview"
-                        android:layout_width="fill_parent"
-                        android:layout_height="match_parent"
-                        android:background="@color/white"
-                        android:divider="@color/gray"
-                        android:numColumns="2"
-                        android:fadingEdge="none"
-                        android:fastScrollEnabled="false"
-                        android:footerDividersEnabled="false"
-                        android:headerDividersEnabled="true"
-                        android:listSelector="@color/white"
-                        android:smoothScrollbar="true">
-
-                    </com.taihe.eggshell.widget.MyGridView>
-                    <LinearLayout
-                        android:id="@+id/id_lin_more"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:padding="10dp"
-                        android:gravity="center"
-                        android:background="@color/white">
-
-                        <ProgressBar
-                            android:id="@+id/loadingmore"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerInParent="true"
-                            android:indeterminateDrawable="@drawable/default_ptr_rotate"
-                            android:visibility="gone" />
-                        <TextView
-                            android:id="@+id/id_txt_more"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/font_color_black"
-                            android:text="上拉加载更多"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:background="@color/white"
+            android:gravity="left|center"
+            android:paddingLeft="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="名师风采"
+                android:textSize="15sp"
+                android:textColor="@color/black" />
         </LinearLayout>
-    </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@color/white">
+            <GridView
+                android:id="@+id/grid_head_video"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numColumns="3" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:gravity="left|center"
+            android:background="@color/white"
+            android:paddingLeft="15dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="热门课程"
+                android:gravity="center"
+                android:textSize="15sp"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_marginTop="1dp">
+            <com.handmark.pulltorefresh.library.PullToRefreshGridView
+                xmlns:ptr="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/id_video_grideview"
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:divider="@color/gray"
+                android:numColumns="2"
+                android:fadingEdge="none"
+                android:fastScrollEnabled="false"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="true"
+                android:listSelector="@color/white"
+                android:smoothScrollbar="true"
+                ptr:ptrAnimationStyle="flip" >
+            </com.handmark.pulltorefresh.library.PullToRefreshGridView>
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </LinearLayout>
