@@ -40,14 +40,14 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener,View.OnClickListener,IndexFragment.ChangeViewPagerListener{
+public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, IndexFragment.ChangeViewPagerListener {
 
     private static final String TAG = "MainActivity";
     private Context mContext;
 
     private CustomViewPager main_viewPager;
-    private RadioGroup main_tab_RadioGroup ;
-    private RadioButton radio_index , radio_social , radio_openclass , radio_me ;
+    private RadioGroup main_tab_RadioGroup;
+    private RadioButton radio_index, radio_social, radio_openclass, radio_me;
     private ArrayList<Fragment> fragmentList;
 
     private int current = 0;
@@ -76,7 +76,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         main_tab_RadioGroup.setOnCheckedChangeListener(this);
     }
 
-    public void initData() {}
+    public void initData() {
+    }
 
     public void initViewPager() {
 
@@ -94,15 +95,16 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         fragmentList.add(meFragment);
 
         main_viewPager.setAdapter(new MyAdapter(getSupportFragmentManager(), fragmentList));
+        main_viewPager.setOffscreenPageLimit(0);// 控制预加载的页面数量（默认情况下参数为1）
 
         Intent intent = getIntent();
         String tags = intent.getStringExtra("MeFragment");
-        if(!TextUtils.isEmpty(tags) && tags.equals("MeFragment")){
+        if (!TextUtils.isEmpty(tags) && tags.equals("MeFragment")) {
 //            main_viewPager.setCurrentItem(3,false);
             radio_me.performClick();
-        }else{
+        } else {
             //viewpager默认显示第一页
-            main_viewPager.setCurrentItem(0,false);
+            main_viewPager.setCurrentItem(0, false);
         }
 
         main_viewPager.setScanSroll(true);
@@ -113,26 +115,26 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        switch(checkedId){
+        switch (checkedId) {
             case R.id.id_radio_index:
-                current = 0 ;
-                break ;
+                current = 0;
+                break;
             case R.id.id_radio_social:
-                current = 1 ;
+                current = 1;
                 break;
             case R.id.id_radio_openclass:
-                current = 2 ;
+                current = 2;
                 break;
             case R.id.id_radio_me:
-                current = 3 ;
-                break ;
+                current = 3;
+                break;
         }
 
-        if(main_viewPager.getCurrentItem() != current){
+        if (main_viewPager.getCurrentItem() != current) {
 
             // viewpager直接从第一页切换到第五页，会从中间的几页过度过去，怎么取消这个效果
             // viewpagar.setCurrentItem(,);第二个参数设置为false
-            main_viewPager.setCurrentItem(current,false);
+            main_viewPager.setCurrentItem(current, false);
             //设置没有登录状态下MeFragment不可见
 //            if(current==3){
 //                if(null!= EggshellApplication.getApplication().getUser()){
@@ -148,11 +150,13 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     }
 
     public class MyAdapter extends FragmentPagerAdapter {
-        ArrayList<Fragment> list ;
-        public MyAdapter(FragmentManager fm , ArrayList<Fragment> list){
+        ArrayList<Fragment> list;
+
+        public MyAdapter(FragmentManager fm, ArrayList<Fragment> list) {
             super(fm);
-            this.list = list ;
+            this.list = list;
         }
+
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
@@ -169,6 +173,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             }
             return null;
         }
+
         @Override
         public int getCount() {
             return list.size();
@@ -177,19 +182,19 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
         }
     }
 
     @Override
     public void changeViewPager(int position) {
         main_viewPager.setCurrentItem(position, false);
-        if(position==1){
+        if (position == 1) {
             radio_index.setChecked(false);
             radio_social.setChecked(true);
             radio_openclass.setChecked(false);
             radio_me.setChecked(false);
-        }else if(position==2){
+        } else if (position == 2) {
             radio_index.setChecked(false);
             radio_social.setChecked(false);
             radio_openclass.setChecked(true);
@@ -198,13 +203,14 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     }
 
     private boolean isExit = false;
+
     @Override
     public void onBackPressed() {
-        if(isExit){
+        if (isExit) {
             finish();
-        }else{
+        } else {
             isExit = true;
-            ToastUtils.show(mContext,"再按一次退出应用");
+            ToastUtils.show(mContext, "再按一次退出应用");
 
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -212,7 +218,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                 public void run() {
                     isExit = false;
                 }
-            },2000);
+            }, 2000);
 
         }
     }

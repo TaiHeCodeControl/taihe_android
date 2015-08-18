@@ -4,6 +4,7 @@ package com.taihe.eggshell.job.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -161,7 +162,14 @@ public class JobFilterActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String str = data.getStringExtra("data");
+
+        String str="";
+        if(data != null){
+            str = data.getStringExtra("data");
+        }
+        if(str == null || TextUtils.isEmpty(str)){
+            return;
+        }
         if (REQUEST_CODE_INDUSTRYTYPE == requestCode && IndustryActivity.RESULT_CODE_INDUSTRYTYPE == resultCode) {
             tv_industry.setText(str); //行业类型
         }

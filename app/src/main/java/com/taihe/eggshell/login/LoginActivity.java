@@ -113,6 +113,9 @@ public class LoginActivity extends BaseActivity {
         startActivity(intent);
 
         LoginActivity.this.finish();
+
+        //overridePendingTransition(int enterAnim, int exitAnim)
+        overridePendingTransition(R.anim.activity_left_to_center, R.anim.activity_center_to_right);
     }
 
     public void login() {

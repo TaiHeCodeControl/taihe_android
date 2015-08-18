@@ -311,7 +311,13 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String address = data.getStringExtra("Address");
+        String address="";
+        if(data != null){
+            address = data.getStringExtra("Address");
+        }
+        if(address == null || TextUtils.isEmpty(address)){
+            return;
+        }
         if(requestCode == REQUEST_CODE_CITY && resultCode == AddressSelectActivity.RESULT_CODE_ADDRESS){
 
             tv_address.setText(address);
