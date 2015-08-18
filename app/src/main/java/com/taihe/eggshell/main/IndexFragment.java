@@ -42,6 +42,7 @@ import com.taihe.eggshell.widget.ImagesGallery;
 import com.taihe.eggshell.widget.MyListView;
 import com.taihe.eggshell.widget.MyScrollView;
 import com.taihe.eggshell.widget.ProgressDialog;
+import com.taihe.eggshell.widget.UpdateDialog;
 import com.taihe.eggshell.widget.cityselect.CitySelectActivity;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private MyListView positionListView;
     private MyScrollView scrollView;
     private TextView lookJob,jianZhi,shiXi,newInfos,writeResume,playMode,weChat,publicClass,jobPlace;
-    private ChoiceDialog dialog;
+    private UpdateDialog dialog;
 
     private ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
     private ArrayList<ImageView> portImg = new ArrayList<ImageView>();
@@ -73,6 +74,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private int[] imageResId; // 图片ID
     private int current = 0;
     private int preSelImgIndex = 0;
+    private String versionNmae = "V1.1";
     private static final int ALPHA_START=0;
     private static final int ALPHA_END=180;
     private static final int ALPHA_MESSAGE = 1;
@@ -212,14 +214,30 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         });
 
 //        getVersionCode();
+
+        dialog = new UpdateDialog(mContext,new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        },new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.show(mContext,"更新");
+                updateAPK();
+            }
+        });
+
+        dialog.getTitleText().setText("发现新版本"+versionNmae);
+        dialog.show();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.id_job_place:
-                intent = new Intent(mContext, CitySelectActivity.class);
-                startActivity(intent);
+//                intent = new Intent(mContext, CitySelectActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.id_search_job:
                 intent = new Intent(mContext, JobSearchActivity.class);
@@ -249,8 +267,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 changeViewPagerListener.changeViewPager(1);
                 break;
             case R.id.id_we_chat:
-                intent = new Intent(mContext,FindJobActivity.class);
-                startActivity(intent);
+                ToastUtils.show(mContext,"敬请期待...");
                 break;
             case R.id.id_public_class:
                 changeViewPagerListener.changeViewPager(2);
@@ -329,23 +346,22 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Object o) {
 
-
-                    dialog = new ChoiceDialog(mContext,new View.OnClickListener() {
+                dialog = new UpdateDialog(mContext,new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                           ToastUtils.show(mContext,"更新");
-                           updateAPK();
+                        dialog.dismiss();
                     }
                 },new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                           dialog.dismiss();
+                        ToastUtils.show(mContext,"更新");
+                        dialog.dismiss();
+//                        updateAPK();
                     }
                 });
 
-                dialog.getTitleText().setText("发现新版本，是否更新？");
-                dialog.getLeftButton().setText("更新");
-                dialog.getRightButton().setText("取消");
+                dialog.getTitleText().setText("发现新版本"+versionNmae);
+                dialog.show();
             }
         };
 

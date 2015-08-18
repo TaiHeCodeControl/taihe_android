@@ -10,9 +10,9 @@ import android.widget.TextView;
 import com.taihe.eggshell.R;
 
 /**
- * Created by Thinkpad on 2015/7/20.
+ * Created by wang on 2015/8/18.
  */
-public class ChoiceDialog extends Dialog{
+public class UpdateDialog extends Dialog{
 
     private Context mContext;
 
@@ -20,7 +20,7 @@ public class ChoiceDialog extends Dialog{
     private TextView titleText;
     private View.OnClickListener leftClickListener,rightClickListener;
 
-    public ChoiceDialog(Context context, View.OnClickListener leftListener, View.OnClickListener rightListener) {
+    public UpdateDialog(Context context, View.OnClickListener leftListener, View.OnClickListener rightListener){
         super(context);
 
         this.mContext = context;
@@ -32,7 +32,7 @@ public class ChoiceDialog extends Dialog{
     private void initView(){
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_choose);
+        setContentView(R.layout.update_dialog);
 
         titleText = (TextView)findViewById(R.id.id_dialog_title);
         leftButton = (Button)findViewById(R.id.id_dialog_left);

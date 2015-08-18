@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/find_paassword_background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/id_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="来者何人"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/id_dialog_brief"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="1.1来了，赶快升级啦！"
+        android:textSize="15sp"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/id_biref_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="1、哈哈哈哈"
+        android:textSize="15sp"
+        android:textColor="@color/font_color_gray"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:id="@+id/id_brief_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="2、年后收到"
+        android:textSize="15sp"
+        android:textColor="@color/font_color_gray"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:id="@+id/id_brief_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="3、了深刻的肌肤"
+        android:textSize="15sp"
+        android:textColor="@color/font_color_gray"
+        android:layout_gravity="center_horizontal"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/red"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/id_dialog_left"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="稍后再说"
+            android:textSize="16sp"
+            android:textColor="@color/red"
+            android:background="@null"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/red"/>
+
+        <Button
+            android:id="@+id/id_dialog_right"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:text="立即更新"
+            android:textColor="@color/red"
+            android:background="@null"/>
+    </LinearLayout>
+
+</LinearLayout>
