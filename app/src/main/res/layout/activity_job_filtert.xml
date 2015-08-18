@@ -2,15 +2,299 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background_gray"
     android:orientation="vertical">
 
     <include layout="@layout/include_title_bar" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_gray" />
+    <View style="@style/line_fill" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_jobfilter_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp">
+
+                    <TextView
+                        style="@style/font_job_filter_black"
+                        android:text="关键字" />
+
+
+                    <EditText
+                        android:layout_width="160dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:textSize="14sp"
+                        android:textColor="@color/font_color_black"
+                        android:id="@+id/et_jobfilter_keyword"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="50dp"
+                        android:background="@null"
+                        android:text="数据分析经理" />
+
+                    <ImageView
+                        android:id="@+id/iv_jobfilter_clear"
+                        android:layout_width="40dp"
+                        android:scaleType="fitEnd"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/cha2" />
+
+                </RelativeLayout>
+
+                <View style="@style/line_marginLeft" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_jobfilter_industry"
+                    style="@style/rl_job_filter">
+
+                    <TextView
+                        style="@style/font_job_filter_black"
+                        android:text="行业类别" />
+
+
+                    <TextView
+                        android:id="@+id/tv_jobfilter_industry"
+                        style="@style/font_job_filter_black"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="50dp"
+                        android:text="计算机/互联网" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/chakanquanbu" />
+
+                </RelativeLayout>
+
+                <View style="@style/line_marginLeft" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_jobfilter_position"
+                    style="@style/rl_job_filter">
+
+                    <TextView
+                        style="@style/font_job_filter_black"
+                        android:text="职位类别" />
+
+
+                    <TextView
+                        android:id="@+id/tv_jobfilter_position"
+                        style="@style/font_job_filter_black"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="50dp"
+                        android:text="技术人员/助理" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/chakanquanbu" />
+
+                </RelativeLayout>
+
+                <View style="@style/line_marginLeft" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rl_jobfilter_jobcity"
+                    style="@style/rl_job_filter">
+
+                    <TextView
+                        style="@style/font_job_filter_black"
+                        android:text="工作城市" />
+
+
+                    <TextView
+                        android:id="@+id/tv_jobfilter_jobcity"
+                        style="@style/font_job_filter_black"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="50dp"
+                        android:text="北京" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/chakanquanbu"
+                        android:visibility="invisible"/>
+
+                </RelativeLayout>
+
+                <View style="@style/line_marginLeft" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_jobfilter_salary"
+                    style="@style/rl_job_filter">
+
+                    <TextView
+                        style="@style/font_job_filter_black"
+                        android:text="薪资待遇" />
+
+
+                    <TextView
+                        android:id="@+id/tv_jobfilter_salary"
+                        style="@style/font_job_filter_black"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="50dp"
+                        android:text="3000_4499" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/chakanquanbu" />
+
+                </RelativeLayout>
+
+                <View style="@style/line_marginLeft" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_jobfilter_edu"
+                    style="@style/rl_job_filter">
+
+                    <TextView
+                        style="@style/font_job_filter_black"
+                        android:text="学历要求" />
+
+
+                    <TextView
+                        android:id="@+id/tv_jobfilter_edu"
+                        style="@style/font_job_filter_black"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="50dp"
+                        android:text="本科" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/chakanquanbu" />
+
+                </RelativeLayout>
+
+                <View style="@style/line_marginLeft" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_jobfilter_jobyears"
+                    style="@style/rl_job_filter">
+
+                    <TextView
+                        style="@style/font_job_filter_black"
+                        android:text="工作经验" />
+
+
+                    <TextView
+                        android:id="@+id/tv_jobfilter_jobyears"
+                        style="@style/font_job_filter_black"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="50dp"
+                        android:text="3年" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/chakanquanbu" />
+
+                </RelativeLayout>
+
+                <View style="@style/line_marginLeft" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_jobfilter_jobtype"
+                    style="@style/rl_job_filter">
+
+                    <TextView
+                        style="@style/font_job_filter_black"
+                        android:text="工作类型" />
+
+
+                    <TextView
+                        android:id="@+id/tv_jobfilter_jobtype"
+                        style="@style/font_job_filter_black"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="50dp"
+                        android:text="全职" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/chakanquanbu" />
+
+                </RelativeLayout>
+
+                <View style="@style/line_marginLeft" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_jobfilter_pubtime"
+                    style="@style/rl_job_filter">
+
+                    <TextView
+                        style="@style/font_job_filter_black"
+                        android:text="发布时间" />
+
+
+                    <TextView
+                        android:id="@+id/tv_jobfilter_pubtime"
+                        style="@style/font_job_filter_black"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="50dp"
+                        android:text="一天内" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/chakanquanbu" />
+
+                </RelativeLayout>
+
+                <View style="@style/line_fill" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_jobfilter_chaxun"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/ll_jobfilter_ll"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/hongniu"
+                android:text="查询"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+    </ScrollView>
 
 </LinearLayout>

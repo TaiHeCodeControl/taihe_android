@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.APKUtils;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobSearchActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
@@ -29,15 +36,18 @@ import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
 import com.taihe.eggshell.meetinginfo.Act_MeetingInfo;
-import com.taihe.eggshell.main.entity.CompanyDetailActivity;
-import com.taihe.eggshell.resume.ResumManagerActivity;
+import com.taihe.eggshell.resume.ResumeManagerActivity;
+import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.ImagesGallery;
 import com.taihe.eggshell.widget.MyListView;
 import com.taihe.eggshell.widget.MyScrollView;
+import com.taihe.eggshell.widget.ProgressDialog;
 import com.taihe.eggshell.widget.cityselect.CitySelectActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class IndexFragment extends Fragment implements View.OnClickListener{
 
@@ -53,6 +63,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private MyListView positionListView;
     private MyScrollView scrollView;
     private TextView lookJob,jianZhi,shiXi,newInfos,writeResume,playMode,weChat,publicClass,jobPlace;
+    private ChoiceDialog dialog;
 
     private ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
     private ArrayList<ImageView> portImg = new ArrayList<ImageView>();
@@ -89,7 +100,11 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        changeViewPagerListener = (ChangeViewPagerListener)activity;
+        try{
+            changeViewPagerListener = (ChangeViewPagerListener)activity;
+        }catch(ClassCastException e){
+            throw new ClassCastException(activity.toString()+"must implement OnArticleSelectedListener");
+        }
     }
 
     @Override
@@ -189,13 +204,15 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             public void onScrollChange(int x, int y, int oldxX, int oldY) {
                 Message message = Message.obtain();
                 message.what = ALPHA_MESSAGE;
-                if (oldY != 0) {
+                Log.v(TAG,oldY+"");
+                if (oldY >= 0) {
                     message.obj = oldY * (ALPHA_END - ALPHA_START) / scrollView.getMaxScrollAmount() + ALPHA_START;
                 }
                 handler.sendMessage(message);
             }
         });
 
+//        getVersionCode();
     }
 
     @Override
@@ -226,7 +243,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_write_resume:
-                intent = new Intent(mContext,ResumManagerActivity.class);
+                intent = new Intent(mContext,ResumeManagerActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_play_mode:
@@ -306,5 +323,66 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             industry.setProfessionalList(prolist);
             industryList.add(industry);
         }
+    }
+
+    private void getVersionCode(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+
+
+                    dialog = new ChoiceDialog(mContext,new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                           ToastUtils.show(mContext,"更新");
+                           updateAPK();
+                    }
+                },new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                           dialog.dismiss();
+                    }
+                });
+
+                dialog.getTitleText().setText("发现新版本，是否更新？");
+                dialog.getLeftButton().setText("更新");
+                dialog.getRightButton().setText("取消");
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        };
+
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("vercode", APKUtils.getVersionCode() + "");
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),"method",true,params,true,listener,errorListener);
+    }
+
+    private void updateAPK(){
+
+        final ProgressDialog progressDialog = new ProgressDialog(mContext);
+        progressDialog.show();
+
+        new UpdateHelper(mContext,new UpdateHelper.DownloadProgress() {
+            @Override
+            public void progress(int percent) {
+                    progressDialog.getProgressBar().setProgress(percent);
+            }
+
+            @Override
+            public void complete() {
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void error() {
+                ToastUtils.show(mContext,"错误");
+            }
+        }).downloadInBackground("");
     }
 }

@@ -27,7 +27,7 @@ public class AllJobAdapter extends BaseAdapter {
     private Context context;
     // 用来导入布局
     private LayoutInflater inflater = null;
-
+    private checkedListener listener;
     private boolean isHaveCheckBox;
 
 
@@ -76,20 +76,19 @@ public class AllJobAdapter extends BaseAdapter {
             holder.tv_pubTiem = (TextView) view.findViewById(R.id.tv_listjob_pubtime);
             holder.tv_salaryRange = (TextView) view.findViewById(R.id.tv_listjob_salaryrange);
 
+            if(!isHaveCheckBox){
+                holder.cb_select.setVisibility(View.GONE);
+            }
             view.setTag(holder);
         }
-        if(!isHaveCheckBox){
-            holder.cb_select.setVisibility(View.GONE);
-        }
-
         holder.tv_businessName.setText("太和天下");
 
-        holder.cb_select.setChecked(allChecked);
-        holder.cb_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        holder.cb_select.setChecked(list.get(position).isChecked());
+        holder.cb_select.setOnClickListener(new View.OnClickListener() {
 
-                list.get(position).setIsChecked(b);
+            public void onClick(View view) {
+                list.get(position).setIsChecked(!list.get(position).isChecked());
+                listener.checkedPosition(position,list.get(position).isChecked());
             }
         });
 
@@ -98,12 +97,18 @@ public class AllJobAdapter extends BaseAdapter {
     }
 
     public void notifyDataChanged(boolean allChecked){
-        this.allChecked = allChecked;
+        for(JobInfo info:list){
+            info.setIsChecked(allChecked);
+        }
         notifyDataSetChanged();
     }
 
-
-
+    public void setCheckedListener(checkedListener listener){
+        this.listener = listener;
+    }
+    public interface checkedListener{
+        public void checkedPosition(int position,boolean isChecked);
+    }
     class ViewHolder{
 
         CheckBox cb_select;

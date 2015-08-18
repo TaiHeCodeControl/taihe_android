@@ -23,10 +23,12 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 
 
+/**
+ * 选择城市
+ */
 public class AddressSelectActivity extends Activity implements View.OnClickListener {
-    /**
-     * Called when the activity is first created.
-     */
+
+    public static final int RESULT_CODE_ADDRESS = 101;
     private DBManager dbm;
     private SQLiteDatabase db;
     private Spinner spinner1 = null;
@@ -244,12 +246,13 @@ public class AddressSelectActivity extends Activity implements View.OnClickListe
                 AddressSelectActivity.this.finish();
                 break;
             case R.id.btn_address_comfirm://确认地址
-                Intent intent = new Intent(AddressSelectActivity.this, MyBasicActivity.class);
+
+                Intent intent = new Intent();
                 intent.putExtra("Address",addressString);
-                startActivity(intent);
+                setResult(RESULT_CODE_ADDRESS, intent);
                 AddressSelectActivity.this.finish();
-                //当前界面向右退出
-                overridePendingTransition(R.anim.activity_left_to_center, R.anim.activity_center_to_right);
+                //                //当前界面向右退出
+//                overridePendingTransition(R.anim.activity_left_to_center, R.anim.activity_center_to_right);
                 break;
 
             case R.id.btn_address_reset:

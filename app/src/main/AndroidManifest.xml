@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.taihe.eggshell">
 
@@ -26,7 +26,7 @@
     <application
         android:name=".base.EggshellApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/logo_icon"
         android:label="@string/app_name"
         android:persistent="true"
         android:theme="@android:style/Theme.NoTitleBar">
@@ -45,7 +45,8 @@
             android:name=".main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
 
         <activity
             android:name=".main.GuideActivity"
@@ -75,11 +76,7 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <!--我的投递-->
-        <activity
-            android:name=".personalCenter.activity.MyPostActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+
         <!--设置-->
         <activity
             android:name=".personalCenter.activity.SetUpActivity"
@@ -90,11 +87,19 @@
             android:name=".personalCenter.activity.AboutActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
+
+        <!--合作渠道-->
+        <activity
+            android:name=".personalCenter.activity.TeamActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".personalCenter.activity.HelpActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
+        <!--意见反馈-->
         <activity
             android:name=".personalCenter.activity.FeedbackActivity"
             android:label="@string/app_name"
@@ -118,9 +123,11 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
 
+        <!--职位筛选-->
         <activity
             android:name=".job.activity.JobFilterActivity"
             android:label="@string/app_name"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:screenOrientation="portrait" />
 
         <activity
@@ -128,8 +135,28 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
+        <!--行业类别-->
         <activity
-            android:name=".main.entity.CompanyDetailActivity"
+            android:name=".job.activity.IndustryActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <!--我的投递-->
+        <activity
+            android:name=".job.activity.MyPostActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+
+        <!--我的收藏-->
+        <activity
+            android:name=".job.activity.MyCollectActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".main.CompanyDetailActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
@@ -144,12 +171,67 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".resume.ResumManagerActivity"
+            android:name=".resume.ResumeManagerActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".resume.ResumWriteActivity"
+            android:name=".resume.ResumeWriteActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+                android:name=".resume.ResumeMultiActivity"
+                android:label="@string/app_name"
+                android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeWorkActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeEduActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeTrainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeTechActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeProjectActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeBookActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeSelfActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeWorkScanActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeEduScanActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeScanActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 

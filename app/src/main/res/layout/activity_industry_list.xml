@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_bar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray" />
+
+    <TextView
+        android:id="@+id/tv_industry_select"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginLeft="15dp"
+        android:gravity="center_vertical|start"
+        android:text="请选择行业类别"
+        android:textColor="@color/font_color_black"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray" />
+
+    <ListView
+        android:id="@+id/list_industry_industry"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/line_gray"
+        android:footerDividersEnabled="false" />
+
+
+</LinearLayout>

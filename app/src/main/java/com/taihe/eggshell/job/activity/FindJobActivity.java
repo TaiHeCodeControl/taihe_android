@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
@@ -27,6 +28,7 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
 
     private TextView tv_allJob, tv_fujin;
     private ImageView iv_quancheng, iv_fujin, iv_back, iv_filter, iv_search;
+    private RelativeLayout rl_qc,rl_fujin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,11 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
 
     private void initView() {
         vp_pager = (CustomViewPager) findViewById(R.id.vp_findjob_pager);
+
+        rl_fujin = (RelativeLayout) findViewById(R.id.rl_findjob_fujin);
+        rl_qc = (RelativeLayout) findViewById(R.id.rl_findjob_qc);
+        rl_fujin.setOnClickListener(this);
+        rl_qc.setOnClickListener(this);
 
         tv_allJob = (TextView) findViewById(R.id.tv_findjob_all);
         tv_fujin = (TextView) findViewById(R.id.tv_findjob_fujin);
@@ -76,7 +83,7 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
             case R.id.iv_findjob_back:
                 FindJobActivity.this.finish();
                 break;
-            case R.id.tv_findjob_all:
+            case R.id.rl_findjob_qc:
                 vp_pager.setCurrentItem(0);
                 iv_quancheng.setImageResource(R.drawable.quancheng01);
                 iv_fujin.setImageResource(R.drawable.fujin01);
@@ -84,7 +91,7 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
                 tv_allJob.setTextColor(getResources().getColor(R.color.font_color_red));
                 tv_fujin.setTextColor(getResources().getColor(R.color.font_color_black));
                 break;
-            case R.id.tv_findjob_fujin:
+            case R.id.rl_findjob_fujin:
                 vp_pager.setCurrentItem(1);
                 iv_quancheng.setImageResource(R.drawable.quancheng02);
                 iv_fujin.setImageResource(R.drawable.fujin02);

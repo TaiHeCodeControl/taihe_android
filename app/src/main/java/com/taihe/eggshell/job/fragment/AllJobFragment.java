@@ -89,14 +89,20 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
         cb_selectAll = (CheckBox) footerView.findViewById(R.id.cb_findjob_selectall);
 
         cb_selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-
+                for (JobInfo info : jobInfos) {
+                    info.setIsChecked(isChecked);
+                }
                 adapter.notifyDataChanged(isChecked);
             }
         });
 
-
+        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
+            @Override
+            public void checkedPosition(int position, boolean isChecked) {
+                jobInfos.get(position).setIsChecked(isChecked);
+            }
+        });
 
     }
 
@@ -109,13 +115,14 @@ public class AllJobFragment extends Fragment implements View.OnClickListener{
         switch (view.getId()){
             case R.id.btn_alljob_shenqing:
                 JobApplyDialogUtil.isApplyJob(mContext);
+                postJob();
                 break;
         }
     }
 
     public void postJob() {
         for(JobInfo jobInfo : jobInfos){
-
+//            System.out.println(jobInfo.getId()+"======"+jobInfo.isChecked());
 
         }
     }

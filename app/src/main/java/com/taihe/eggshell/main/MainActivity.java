@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -96,8 +97,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         Intent intent = getIntent();
         String tags = intent.getStringExtra("MeFragment");
-        if(tags.equals("MeFragment")){
-            main_viewPager.setCurrentItem(3,false);
+        if(!TextUtils.isEmpty(tags) && tags.equals("MeFragment")){
+//            main_viewPager.setCurrentItem(3,false);
+            radio_me.performClick();
         }else{
             //viewpager默认显示第一页
             main_viewPager.setCurrentItem(0,false);

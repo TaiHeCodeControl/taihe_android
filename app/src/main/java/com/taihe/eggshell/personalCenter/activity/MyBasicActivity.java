@@ -13,6 +13,7 @@ import android.widget.Button;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.widget.addressselect.AddressSelectActivity;
 import com.taihe.eggshell.widget.datepicker.JudgeDate;
 import com.taihe.eggshell.widget.datepicker.ScreenInfo;
@@ -25,6 +26,7 @@ import java.util.Calendar;
 
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -37,13 +39,15 @@ import android.widget.TextView;
 public class MyBasicActivity extends Activity implements View.OnClickListener {
 
 
+    private static final int REQUEST_CODE_CITY = 10;
     private Context mContext;
-    private TextView tv_birthdate, tv_mybasic_sex, tv_address;
+    private TextView tv_birthdate, tv_mybasic_sex, tv_address, tv_mybasic_jianjie;
 
-    private String verTime;
+    private String verTime, jianjie , jianjiehint;
 
     private Intent intent;
-    private ImageView iv_back, iv_birthdate, iv_sexSelect, iv_citySelect;
+    private ImageView iv_back;
+    private RelativeLayout rl_date, rl_sex, rl_city, rl_jianjie;
 
     WheelMain wheelMain;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -61,20 +65,23 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
 
 
         iv_back = (ImageView) findViewById(R.id.iv_mybasic_back);
-        iv_birthdate = (ImageView) findViewById(R.id.iv_mybasic_date);
-        iv_sexSelect = (ImageView) findViewById(R.id.iv_mybasic_sexselect);
-        iv_citySelect = (ImageView) findViewById(R.id.iv_mybasic_cityselect);
+//        iv_birthdate = (ImageView) findViewById(R.id.iv_mybasic_date);
+//        iv_sexSelect = (ImageView) findViewById(R.id.iv_mybasic_sexselect);
+//        iv_citySelect = (ImageView) findViewById(R.id.iv_mybasic_cityselect);
+        tv_mybasic_jianjie = (TextView) findViewById(R.id.tv_mybasic_jianjie);
         tv_birthdate = (TextView) findViewById(R.id.tv_mybasic_birthdate);
         tv_address = (TextView) findViewById(R.id.tv_mybasic_city);
         tv_mybasic_sex = (TextView) findViewById(R.id.tv_mybasic_sex);
 
+        rl_city = (RelativeLayout) findViewById(R.id.rl_mybasic_city);
+        rl_city.setOnClickListener(this);
+        rl_date = (RelativeLayout) findViewById(R.id.rl_mybasic_date);
+        rl_date.setOnClickListener(this);
+        rl_jianjie = (RelativeLayout) findViewById(R.id.rl_mybasic_jianjie);
+        rl_jianjie.setOnClickListener(this);
+        rl_sex = (RelativeLayout) findViewById(R.id.rl_mybasic_sex);
+        rl_sex.setOnClickListener(this);
 
-        intent = getIntent();
-        String address = intent.getStringExtra("Address");
-        if (!TextUtils.isEmpty(address)){
-
-            tv_address.setText(address);
-        }
 
         //初始化当前时间
         Calendar calendar = Calendar.getInstance();
@@ -85,9 +92,9 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
         tv_birthdate.setText(CurrentTime);
         verTime = CurrentTime;
 
-        iv_birthdate.setOnClickListener(this);
-        iv_sexSelect.setOnClickListener(this);
-        iv_citySelect.setOnClickListener(this);
+//        iv_birthdate.setOnClickListener(this);
+//        iv_sexSelect.setOnClickListener(this);
+//        iv_citySelect.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         tv_birthdate.setOnClickListener(this);
     }
@@ -97,26 +104,84 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_mybasic_back://退出当前页面
-                MyBasicActivity.this.finish();
+
+                goBack();
+
                 break;
 
-            case R.id.iv_mybasic_cityselect://选择城市
+            case R.id.rl_mybasic_city://选择城市
 
                 intent = new Intent(MyBasicActivity.this, AddressSelectActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_CITY);
 
                 break;
 
-            case R.id.iv_mybasic_sexselect://选择性别
+            case R.id.rl_mybasic_sex://选择性别
                 selectSex(b);
                 break;
-            case R.id.iv_mybasic_date://选择生日日期
+            case R.id.rl_mybasic_date://选择生日日期
                 // 选择日期
                 selectDate();
+                break;
+            case R.id.rl_mybasic_jianjie:
+                // 请输入您的个人简介
+                showJianjieDialog();
                 break;
         }
     }
 
+    private void goBack() {
+        Intent intent = new Intent(MyBasicActivity.this, MainActivity.class);
+        intent.putExtra("MeFragment", "MeFragment");
+        startActivity(intent);
+
+        MyBasicActivity.this.finish();
+    }
+
+    //-----------------------输入个人简介 start---------------------------------------
+
+    private AlertDialog jianjieDialog = null;
+
+    public void showJianjieDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+        View view = View.inflate(mContext, R.layout.dialog_jianjie,
+                null);
+
+        RelativeLayout rl_cancel = (RelativeLayout) view.findViewById(R.id.rl_dialogsex_cancel);
+
+        final EditText et_jianjie = (EditText) view.findViewById(R.id.et_jianjie_jianjie);
+
+        jianjiehint = tv_mybasic_jianjie.getText().toString().trim();
+        et_jianjie.setHint(jianjiehint);
+        Button btn_ok = (Button) view.findViewById(R.id.btn_jianjie_confirm);
+
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                jianjie = et_jianjie.getText().toString().trim();
+                if(!TextUtils.isEmpty(jianjie)){
+
+                    tv_mybasic_jianjie.setText(jianjie);
+                }
+                jianjieDialog.dismiss();
+
+            }
+        });
+
+        rl_cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                jianjieDialog.dismiss();
+            }
+        });
+
+        builder.setView(view);
+        jianjieDialog = builder.create();
+        jianjieDialog.show();
+    }
 
     //-----------------------选择性别 start---------------------------------------
 
@@ -235,4 +300,23 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
     }
 
     //--------------------------------------------------------------
+
+    //监听返回按钮
+    @Override
+    public void onBackPressed() {
+        goBack();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String address = data.getStringExtra("Address");
+        if(requestCode == REQUEST_CODE_CITY && resultCode == AddressSelectActivity.RESULT_CODE_ADDRESS){
+
+            tv_address.setText(address);
+        }
+    }
+
+
 }

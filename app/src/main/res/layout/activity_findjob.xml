@@ -57,6 +57,7 @@
         android:layout_height="40dp">
 
         <RelativeLayout
+            android:id="@+id/rl_findjob_qc"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent">
@@ -88,6 +89,7 @@
             android:background="@color/line_gray"/>
 
         <RelativeLayout
+            android:id="@+id/rl_findjob_fujin"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent">
