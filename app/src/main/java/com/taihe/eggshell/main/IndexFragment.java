@@ -204,7 +204,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             public void onScrollChange(int x, int y, int oldxX, int oldY) {
                 Message message = Message.obtain();
                 message.what = ALPHA_MESSAGE;
-                Log.v(TAG,oldY+"");
                 if (oldY >= 0) {
                     message.obj = oldY * (ALPHA_END - ALPHA_START) / scrollView.getMaxScrollAmount() + ALPHA_START;
                 }
