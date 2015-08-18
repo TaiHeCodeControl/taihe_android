@@ -163,47 +163,42 @@ public class JobFilterActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        String str="";
-        if(data != null){
-            str = data.getStringExtra("data");
-        }
-        if(str == null || TextUtils.isEmpty(str)){
-            return;
-        }
-        if (REQUEST_CODE_INDUSTRYTYPE == requestCode && IndustryActivity.RESULT_CODE_INDUSTRYTYPE == resultCode) {
-            tv_industry.setText(str); //行业类型
-        }
+        if(resultCode == RESULT_OK){
+            String str="";
+            if(data != null){
+                str = data.getStringExtra("data");
+            }
+            if(str == null || TextUtils.isEmpty(str)){
+                return;
+            }
 
-        if (REQUEST_CODE_POSITION == requestCode && IndustryActivity.RESULT_CODE_POSITION == resultCode) {
-            tv_position.setText(str);//职位类别
+            switch (requestCode){
+                case REQUEST_CODE_INDUSTRYTYPE:
+                    tv_industry.setText(str); //行业类型
+                    break;
+                case REQUEST_CODE_POSITION:
+                    tv_position.setText(str);//职位类别
+                    break;
+                case REQUEST_CODE_JOBYEAR:
+                    tv_jobyears.setText(str);//工作年限
+                    break;
+                case REQUEST_CODE_SALARY:
+                    tv_salary.setText(str);//薪资要求
+                    break;
+                case REQUEST_CODE_EDU:
+                    tv_edu.setText(str);//学历要求
+                    break;
+                case REQUEST_CODE_JOBCITY:
+                    tv_jobcity.setText(str);//工作城市
+                    break;
+                case REQUEST_CODE_JOBTYPE:
+                    tv_jobtype.setText(str); //工作类型
+                    break;
+                case REQUEST_CODE_PUBTIME:
+                    tv_pubtime.setText(str);//发布时间
+                    break;
+            }
         }
-
-
-        if (REQUEST_CODE_JOBYEAR == requestCode && IndustryActivity.RESULT_CODE_JOBYEAR == resultCode) {
-            tv_jobyears.setText(str);//工作年限
-        }
-
-        if (REQUEST_CODE_SALARY == requestCode && IndustryActivity.RESULT_CODE_SALARY == resultCode) {
-            tv_salary.setText(str);//薪资要求
-        }
-
-        if (REQUEST_CODE_EDU == requestCode && IndustryActivity.RESULT_CODE_EDU == resultCode) {
-            tv_edu.setText(str);//学历要求
-        }
-
-        if (REQUEST_CODE_JOBCITY == requestCode && IndustryActivity.RESULT_CODE_JOBCITY == resultCode) {
-            tv_jobcity.setText(str);//工作城市
-        }
-
-        if (REQUEST_CODE_JOBTYPE == requestCode && IndustryActivity.RESULT_CODE_JOBTYPE == resultCode) {
-            tv_jobtype.setText(str); //工作类型
-        }
-
-
-        if (REQUEST_CODE_PUBTIME == requestCode && IndustryActivity.RESULT_CODE_PUBTIME == resultCode) {
-            tv_pubtime.setText(str);//发布时间
-        }
-
 
     }
 }

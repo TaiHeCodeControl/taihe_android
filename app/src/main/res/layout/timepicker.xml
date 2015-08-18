@@ -9,16 +9,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:text="请选择日期"
         android:layout_marginLeft="20dp"
         android:textSize="16sp"
-        android:textColor="@color/blue"/>
+        android:textColor="@color/red"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/blue"/>
+        android:layout_height="0.5dp"
+        android:background="@color/red"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,8 +57,8 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/blue"/>
+        android:layout_height="0.5dp"
+        android:background="@color/red"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,11 +73,11 @@
             android:layout_height="match_parent"
             android:text="取消"
             android:textSize="16sp"
-            android:textColor="@color/blue"/>
+            android:textColor="@color/red"/>
         <View
             android:layout_width="0.8dp"
             android:layout_height="35dp"
-            android:background="@color/blue"/>
+            android:background="@color/red"/>
         <Button
             android:id="@+id/btn_timepicker_ok"
             android:background="@null"
@@ -86,6 +86,6 @@
             android:layout_height="match_parent"
             android:text="确定"
             android:textSize="16sp"
-            android:textColor="@color/blue"/>
+            android:textColor="@color/red"/>
     </LinearLayout>
 </LinearLayout>

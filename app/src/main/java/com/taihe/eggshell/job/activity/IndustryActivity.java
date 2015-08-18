@@ -37,7 +37,7 @@ public class IndustryActivity extends BaseActivity {
     public static final int RESULT_CODE_JOBTYPE = 16;
     public static final int RESULT_CODE_PUBTIME = 17;
 
-    private int RESULT_CODE = 0;
+    public int RESULT_CODE = 0;
 
     @Override
     public void initView() {
@@ -61,7 +61,7 @@ public class IndustryActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.putExtra("data", industLists.get(position));
 
-                    setResult(RESULT_CODE,intent);
+                    setResult(RESULT_OK,intent);
 
                 finish();
 
@@ -177,6 +177,12 @@ public class IndustryActivity extends BaseActivity {
                 industLists.add(i + "全职");
             }
             RESULT_CODE = RESULT_CODE_JOBTYPE;
+        }else if(filterString.equals("status")){
+            title = "求职状态";
+            selectString = "请选择求职状态";
+            industLists.add("离职");
+            industLists.add("在职");
+            industLists.add("其他");
         }
 
     }

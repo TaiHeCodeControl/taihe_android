@@ -35,12 +35,17 @@
             android:gravity="center"
             android:text="必填"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:background="@drawable/txt_background"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
         </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_gray"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -186,7 +191,8 @@
                     <TextView
                         android:id="@+id/id_city_for"
                         style="@style/WriteResumeTextStyle"
-                        android:hint="请选择您的从事行业"/>
+                        android:hint="请选择您的从事行业"
+                        android:text="北京"/>
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"

@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.job.activity.IndustryActivity;
+import com.taihe.eggshell.widget.datepicker.TimeDialog;
 
 /**
  * Created by wang on 2015/8/13.
@@ -28,6 +30,31 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     private EditText resumeName,userName,phoneNum,email,address;
     private RadioGroup radioGroup;
     private RadioButton girlRadio,boyRadio;
+    private TimeDialog timeDialog;
+    private boolean isBirthday = false;
+
+    private static final int RESULT_INDUSTRY = 10;
+    private static final int RESULT_POSITION = 11;
+    private static final int RESULT_MONEY = 12;
+    private static final int RESULT_WORK = 13;
+    private static final int RESULT_TIME = 14;
+    private static final int RESULT_STATUS = 15;
+    private static final int RESULT_BIRTHDAY = 16;
+    private static final int RESULT_SCHOOL = 17;
+    private static final int RESULT_EXPERICE = 18;
+
+    private TimeDialog.CustomTimeListener customTimeListener = new TimeDialog.CustomTimeListener() {
+        @Override
+        public void setTime(String time) {
+            if(isBirthday){
+                forBirthday.setText(time);
+            }else{
+                forTime.setText(time);
+            }
+
+            timeDialog.dismiss();
+        }
+    };
 
     @Override
     public void initView() {
@@ -75,6 +102,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         super.initData();
 
         initTitle("写简历");
+        timeDialog = new TimeDialog(mContext,this,customTimeListener);
         if(true){
             //填充数据
         }
@@ -85,22 +113,49 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         super.onClick(v);
         switch (v.getId()){
             case R.id.id_industry_for:
+                intent = new Intent(mContext, IndustryActivity.class);
+                intent.putExtra("Filter", "industry");
+                startActivityForResult(intent, RESULT_INDUSTRY);
                 break;
             case R.id.id_position_for:
+                intent = new Intent(mContext, IndustryActivity.class);
+                intent.putExtra("Filter", "position");
+                startActivityForResult(intent, RESULT_POSITION);
                 break;
             case R.id.id_money_for:
+                intent = new Intent(mContext, IndustryActivity.class);
+                intent.putExtra("Filter", "salary");
+                startActivityForResult(intent, RESULT_MONEY);
                 break;
             case R.id.id_city_for:
                 break;
             case R.id.id_type_for:
+                intent = new Intent(mContext, IndustryActivity.class);
+                intent.putExtra("Filter", "jobtype");
+                startActivityForResult(intent, RESULT_WORK);
                 break;
             case R.id.id_time_for:
+                isBirthday = false;
+                timeDialog.show();
+                break;
+            case R.id.id_status_for:
+                intent = new Intent(mContext, IndustryActivity.class);
+                intent.putExtra("Filter", "status");
+                startActivityForResult(intent, RESULT_STATUS);
                 break;
             case R.id.id_birthday:
+                isBirthday = true;
+                timeDialog.show();
                 break;
             case R.id.id_top_school:
+                intent = new Intent(mContext, IndustryActivity.class);
+                intent.putExtra("Filter", "edu");
+                startActivityForResult(intent, RESULT_SCHOOL);
                 break;
             case R.id.id_work_exper:
+                intent = new Intent(mContext, IndustryActivity.class);
+                intent.putExtra("Filter", "jobyears");
+                startActivityForResult(intent, RESULT_EXPERICE);
                 break;
             case R.id.id_commit:
                 String industy = forIndusty.getText().toString();
@@ -128,6 +183,40 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                 }
 
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            String result = data.getStringExtra("data");
+            if(TextUtils.isEmpty(result)){
+                return;
+            }
+            switch (requestCode){
+                case RESULT_INDUSTRY:
+                    forIndusty.setText(result);
+                    break;
+                case RESULT_POSITION:
+                    forPosition.setText(result);
+                    break;
+                case RESULT_MONEY:
+                    forMoney.setText(result);
+                    break;
+                case RESULT_WORK:
+                    forWorkType.setText(result);
+                    break;
+                case RESULT_STATUS:
+                    forStatus.setText(result);
+                    break;
+                case RESULT_SCHOOL:
+                    forTopSchool.setText(result);
+                    break;
+                case RESULT_EXPERICE:
+                    forWorkExper.setText(result);
+                    break;
+            }
         }
     }
 
