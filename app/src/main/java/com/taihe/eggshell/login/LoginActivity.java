@@ -196,13 +196,9 @@ public class LoginActivity extends BaseActivity {
         loginTag = intents.getStringExtra("LoginTag");
         if (loginTag.equals("meFragment")) {
 
-            intent = new Intent();
-            intent.putExtra("data",data);
-            setResult(201,intent);
-//            intent = new Intent(LoginActivity.this, MainActivity.class);
-//            intent.putExtra("MeFragment", "MeFragment");
-//            intent.putExtra("data",data);
-//            startActivityForResult(intent,100);
+            intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("MeFragment", "MeFragment");
+            startActivity(intent);
         } else if (loginTag.equals("myBasic")) {
             intent = new Intent(LoginActivity.this, MyBasicActivity.class);
             startActivity(intent);
