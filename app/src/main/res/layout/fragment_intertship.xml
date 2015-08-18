@@ -17,6 +17,7 @@
         android:layout_height="40dp">
 
         <LinearLayout
+            android:id="@+id/lin_fragment_top1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -25,11 +26,13 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/img_fragment_top1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shipin"/>
 
             <TextView
+                android:id="@+id/txt_fragment_top1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -43,6 +46,7 @@
             android:layout_marginBottom="3dp"
             android:background="@color/line_gray"/>
         <LinearLayout
+            android:id="@+id/lin_fragment_top2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -50,15 +54,17 @@
             android:layout_weight="1"
             android:orientation="horizontal">
             <ImageView
+                android:id="@+id/img_fragment_top2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/yuyinck"/>
             <TextView
+                android:id="@+id/txt_fragment_top2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:text="语音课程"
-                android:textColor="@color/black" />
+                android:textColor="@color/font_color_black" />
         </LinearLayout>
     </LinearLayout>
     <View
@@ -138,6 +144,7 @@
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:layout_marginTop="1dp">
                     <com.taihe.eggshell.widget.MyGridView
                         android:id="@+id/id_video_grideview"
@@ -184,5 +191,11 @@
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:id="@+id/lin_fragment_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+    </LinearLayout>
 </LinearLayout>

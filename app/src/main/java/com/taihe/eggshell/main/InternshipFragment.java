@@ -35,9 +35,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InternshipFragment extends Fragment implements View.OnClickListener{
-    private LinearLayout lin_back,lin_head_video,id_lin_more;
-    private ImageView id_back;
-    private TextView id_title;
+    private LinearLayout lin_back,lin_head_video,id_lin_more,lin_fragment_top1,lin_fragment_top2,lin_fragment_video;
+    private ImageView img_fragment_top1,img_fragment_top2;
+    private TextView id_title,txt_fragment_top1,txt_fragment_top2;
     private MyGridView videoGrideView;
     private VideoAdapterGride videoAdapter;
     private  GridView grid_head_video;
@@ -57,7 +57,14 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
 		View v = inflater.inflate(R.layout.fragment_intertship, null) ;
         lin_back = (LinearLayout)v.findViewById(R.id.lin_back);
         lin_head_video = (LinearLayout)v.findViewById(R.id.lin_head_video);
+        lin_fragment_top1 = (LinearLayout)v.findViewById(R.id.lin_fragment_top1);
+        lin_fragment_top2 = (LinearLayout)v.findViewById(R.id.lin_fragment_top2);
+        lin_fragment_video = (LinearLayout)v.findViewById(R.id.lin_fragment_video);
         id_title = (TextView) v.findViewById(R.id.id_title);
+        txt_fragment_top1 = (TextView) v.findViewById(R.id.txt_fragment_top1);
+        txt_fragment_top2 = (TextView) v.findViewById(R.id.txt_fragment_top2);
+        img_fragment_top1 = (ImageView) v.findViewById(R.id.img_fragment_top1);
+        img_fragment_top2 = (ImageView) v.findViewById(R.id.img_fragment_top2);
         id_lin_more = (LinearLayout) v.findViewById(R.id.id_lin_more);
         grid_head_video = (GridView) v.findViewById(R.id.grid_head_video);
         videoGrideView = (MyGridView) v.findViewById(R.id.id_video_grideview);
@@ -74,7 +81,9 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         videoAdapter = new VideoAdapterGride(getActivity());
         listInfo = new ArrayList<VideoInfoMode>();
         id_lin_more.setOnClickListener(this);
-
+        lin_fragment_top1.setOnClickListener(this);
+        lin_fragment_top2.setOnClickListener(this);
+        lin_fragment_video.setVisibility(View.GONE);
         Display dw = getActivity().getWindowManager().getDefaultDisplay();
         viewwidth1 = dw.getWidth();
 
@@ -175,13 +184,36 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
             }
         }).start();
     }
+    public void updataUIFL(){
 
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.id_lin_more:
                 page++;
                 updataUI();
+                break;
+            case R.id.lin_fragment_top1:
+                listInfo.clear();
+                scroll_hotnotes.setVisibility(View.VISIBLE);
+                lin_fragment_video.setVisibility(View.GONE);
+                img_fragment_top1.setBackgroundResource(R.drawable.shipin);
+                img_fragment_top2.setBackgroundResource(R.drawable.yuyinck);
+                txt_fragment_top1.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
+                txt_fragment_top2.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
+                page=1;
+                updataUI();
+                break;
+            case R.id.lin_fragment_top2:
+                scroll_hotnotes.setVisibility(View.GONE);
+                lin_fragment_video.setVisibility(View.VISIBLE);
+                img_fragment_top1.setBackgroundResource(R.drawable.shipinck);
+                img_fragment_top2.setBackgroundResource(R.drawable.yuyin);
+                txt_fragment_top2.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
+                txt_fragment_top1.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
+                page=1;
+                updataUIFL();
                 break;
         }
     }

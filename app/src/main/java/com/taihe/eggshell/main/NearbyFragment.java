@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -39,11 +40,12 @@ import java.util.List;
 import java.util.Map;
 
 public class NearbyFragment extends Fragment implements View.OnClickListener{
-    private TextView id_title;
-    private LinearLayout lin_back;
+    private TextView id_title,txt_around_tag1,txt_around_tag2;
+    private LinearLayout lin_back,lin_around_tag1,lin_around_tag2;
     private Context context;
     private PullToRefreshGridView playView;
     private PlayAdapter playAdapter;
+    private ImageView img_around_tag1,img_around_tag2;
     int limit=2,page=1;
     List<PlayInfoMode> list;
     Handler mHandler = new Handler(){
@@ -86,7 +88,13 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_around, null) ;
         lin_back = (LinearLayout)v.findViewById(R.id.lin_back);
+        lin_around_tag1 = (LinearLayout)v.findViewById(R.id.lin_around_tag1);
+        lin_around_tag2 = (LinearLayout)v.findViewById(R.id.lin_around_tag2);
         id_title = (TextView) v.findViewById(R.id.id_title);
+        txt_around_tag1 = (TextView) v.findViewById(R.id.txt_around_tag1);
+        txt_around_tag2 = (TextView) v.findViewById(R.id.txt_around_tag2);
+        img_around_tag1 = (ImageView) v.findViewById(R.id.img_around_tag1);
+        img_around_tag2 = (ImageView) v.findViewById(R.id.img_around_tag2);
         playView = (PullToRefreshGridView) v.findViewById(R.id.id_video_listview);
         init();
         initData();
@@ -99,6 +107,8 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         playView.setMode(PullToRefreshBase.Mode.BOTH);
         playAdapter = new PlayAdapter(getActivity());
         list = new ArrayList<PlayInfoMode>();
+        lin_around_tag1.setOnClickListener(this);
+        lin_around_tag2.setOnClickListener(this);
         playView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
@@ -118,23 +128,30 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
 	}
 
     public void initData(){
-//        List<PlayInfoMode> list = new ArrayList<PlayInfoMode>();
-//        for(int i=0;i<10;i++) {
-//            PlayInfoMode vMode = new PlayInfoMode();
-//            vMode.setTitle("哈哈"+(i+1));
-//            list.add(vMode);
-//        }
-//        playAdapter.setPlayData(list);
-//        playView.setAdapter(playAdapter);
-//        playView.onRefreshComplete();
-
         getListData();
     }
 
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()){
-
+            case R.id.lin_around_tag1:
+                list.clear();
+                img_around_tag1.setBackgroundResource(R.drawable.high);
+                img_around_tag2.setBackgroundResource(R.drawable.fulick);
+                txt_around_tag1.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
+                txt_around_tag2.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
+                page=1;
+                playView.setVisibility(View.VISIBLE);
+                getListData();
+                playView.onRefreshComplete();
+                break;
+            case R.id.lin_around_tag2:
+                img_around_tag1.setBackgroundResource(R.drawable.highck);
+                img_around_tag2.setBackgroundResource(R.drawable.fuli);
+                txt_around_tag2.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
+                txt_around_tag1.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
+                playView.setVisibility(View.GONE);
+                break;
 		}
 	}
 
