@@ -74,7 +74,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private int[] imageResId; // 图片ID
     private int current = 0;
     private int preSelImgIndex = 0;
-    private String versionNmae = "V1.1";
     private static final int ALPHA_START=0;
     private static final int ALPHA_END=180;
     private static final int ALPHA_MESSAGE = 1;
@@ -228,7 +227,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        dialog.getTitleText().setText("发现新版本"+versionNmae);
+        dialog.getTitleText().setText("发现新版本"+APKUtils.getVersionName());
         dialog.show();
     }
 
@@ -360,7 +359,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                     }
                 });
 
-                dialog.getTitleText().setText("发现新版本"+versionNmae);
+                dialog.getTitleText().setText("发现新版本"+APKUtils.getVersionName());
                 dialog.show();
             }
         };

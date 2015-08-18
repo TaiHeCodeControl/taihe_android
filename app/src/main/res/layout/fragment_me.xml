@@ -375,7 +375,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="25dp"
                     android:layout_toRightOf="@+id/tv_mine_update"
-                    android:text="0.0"
+                    android:text="V1.0"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 

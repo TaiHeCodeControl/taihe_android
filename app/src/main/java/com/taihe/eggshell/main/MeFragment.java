@@ -11,10 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.APKUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.base.utils.UpdateUtils;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
 import com.taihe.eggshell.login.LoginActivity;
@@ -25,6 +31,11 @@ import com.taihe.eggshell.personalCenter.activity.FeedbackActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.widget.ChoiceDialog;
+import com.taihe.eggshell.widget.ProgressDialog;
+import com.taihe.eggshell.widget.UpdateDialog;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 我的界面
@@ -34,6 +45,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     private Context mContext;
 
     private ChoiceDialog dialog;
+    private UpdateDialog updateDialog;
 
     private View rootView;
     private RelativeLayout rl_mine_checkupdate,rl_mine_feedback, rl_setting,rl_editZiliao ,rl_post,rl_collect,rl_jianli,rl_about,rl_hezuo,rl_logout;
@@ -41,7 +53,6 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     private LinearLayout ll_userinfo;
 
     private Intent intent;
-    private String version;
 
     @Override
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
@@ -66,8 +77,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         rl_mine_checkupdate = (RelativeLayout)rootView.findViewById(R.id.rl_mine_checkupdate);
 
         tv_version = (TextView) rootView.findViewById(R.id.tv_mine_version);
-        version = UpdateUtils.getVersion(mContext);
-        tv_version.setText(version);
+        tv_version.setText("V"+APKUtils.getVersionName());
 
         ll_userinfo = (LinearLayout) rootView.findViewById(R.id.ll_mine_userinfo);
         tv_logintxt = (TextView) rootView.findViewById(R.id.tv_mine_logintxt);
@@ -149,7 +159,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);
-                    intent.putExtra("LoginTag","myPost");
+                    intent.putExtra("LoginTag", "myPost");
                     startActivity(intent);
                     getActivity().finish();
                 }
@@ -203,8 +213,69 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.rl_mine_checkupdate://检查更新
-
+//                getVersionCode();
+                ToastUtils.show(mContext,"当前已是最新版本");
                 break;
         }
+    }
+
+    private void getVersionCode(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+
+                updateDialog = new UpdateDialog(mContext,new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        updateDialog.dismiss();
+                    }
+                },new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ToastUtils.show(mContext,"更新");
+                        updateDialog.dismiss();
+//                        updateAPK();
+                    }
+                });
+
+                updateDialog.getTitleText().setText("发现新版本"+APKUtils.getVersionName());
+                updateDialog.show();
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        };
+
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("vercode", APKUtils.getVersionCode() + "");
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), "method", true, params, true, listener, errorListener);
+    }
+
+    private void updateAPK(){
+
+        final ProgressDialog progressDialog = new ProgressDialog(mContext);
+        progressDialog.show();
+
+        new UpdateHelper(mContext,new UpdateHelper.DownloadProgress() {
+            @Override
+            public void progress(int percent) {
+                progressDialog.getProgressBar().setProgress(percent);
+            }
+
+            @Override
+            public void complete() {
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void error() {
+                ToastUtils.show(mContext,"错误");
+            }
+        }).downloadInBackground("");
     }
 }
