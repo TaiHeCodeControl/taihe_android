@@ -98,11 +98,12 @@ public class MeFragment extends Fragment implements View.OnClickListener{
             public void onClick(View v) {
 
                 dialog.dismiss();
+//                EggshellApplication.getApplication().setUser(null);
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
-
                 Intent intent = new Intent(mContext, LoginActivity.class);
-                intent.putExtra("LoginTag","logout");
+                intent.putExtra("LoginTag", "logout");
                 startActivity(intent);
+                getActivity().finish();
             }
         });
 
@@ -119,6 +120,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                 intent = new Intent(mContext,LoginActivity.class);
                 intent.putExtra("LoginTag","meFragment");
                 startActivity(intent);
+                getActivity().finish();
                 break;
             case R.id.rl_mine_editziliao://基本资料
 //                LoginConfirmDialog.dialogShow(mContext);
@@ -129,6 +131,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     intent = new Intent(mContext,LoginActivity.class);
                     intent.putExtra("LoginTag","myBasic");
                     startActivity(intent);
+                    getActivity().finish();
                 }
 
                 break;
@@ -140,6 +143,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     intent = new Intent(mContext,LoginActivity.class);
                     intent.putExtra("LoginTag","myPost");
                     startActivity(intent);
+                    getActivity().finish();
                 }
 
                 break;
@@ -152,6 +156,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     intent = new Intent(mContext,LoginActivity.class);
                     intent.putExtra("LoginTag","myCollect");
                     startActivity(intent);
+                    getActivity().finish();
                 }
 
                 break;
@@ -164,6 +169,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     intent = new Intent(mContext,LoginActivity.class);
                     intent.putExtra("LoginTag","myResume");
                     startActivity(intent);
+                    getActivity().finish();
                 }
                 break;
             case R.id.rl_mine_about://关于蛋壳儿

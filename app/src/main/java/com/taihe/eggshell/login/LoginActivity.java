@@ -107,11 +107,11 @@ public class LoginActivity extends BaseActivity {
 
         Intent intents = getIntent();
         loginTag = intents.getStringExtra("LoginTag");
-        if (loginTag.equals("logout")) {
-            intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("MeFragment", "MeFragment");
-            startActivity(intent);
-        }
+
+        intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("MeFragment", "MeFragment");
+        startActivity(intent);
+
         LoginActivity.this.finish();
     }
 
@@ -199,10 +199,10 @@ public class LoginActivity extends BaseActivity {
         } else if (loginTag.equals("myPost")) {
             intent = new Intent(LoginActivity.this, MyPostActivity.class);
             startActivity(intent);
-        }else if (loginTag.equals("myCollect")) {
+        } else if (loginTag.equals("myCollect")) {
             intent = new Intent(LoginActivity.this, MyCollectActivity.class);
             startActivity(intent);
-        }else if (loginTag.equals("myResume")) {
+        } else if (loginTag.equals("myResume")) {
             intent = new Intent(LoginActivity.this, ResumeManagerActivity.class);
             startActivity(intent);
         }
@@ -212,7 +212,7 @@ public class LoginActivity extends BaseActivity {
     //监听返回按钮
     @Override
     public void onBackPressed() {
-       goBack();
+        goBack();
     }
 
 }
