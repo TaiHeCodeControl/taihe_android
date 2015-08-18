@@ -2,14 +2,26 @@ package com.taihe.eggshell.personalCenter.activity;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateUtils;
+import com.taihe.eggshell.widget.ChoiceDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -69,8 +81,56 @@ public class FeedbackActivity extends BaseActivity{
         if (TextUtils.isEmpty(content)) {
             ToastUtils.show(mContext, "请输入反馈内容");
             return;
-
         }
-        ToastUtils.show(mContext,"意见提交成功，我们将尽快跟你联系");
+
+        toSubmit();
+
     }
+
+    private void toSubmit() {
+
+        Map<String,String> dataParams = new HashMap<String, String>();
+        dataParams.put("uid","001");
+        dataParams.put("source","3");
+        dataParams.put("version","1.0");
+        dataParams.put("opinion",content);
+        dataParams.put("email",email);
+        dataParams.put("qq",qq);
+
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object obj) {
+
+                try {
+                    Log.v(TAG, (String) obj);
+                    JSONObject jsonObject = new JSONObject((String) obj);
+                    int code = jsonObject.getInt("code");
+                    System.out.println("code=========" + code);
+                    if (code == 1) {
+                        ToastUtils.show(mContext, "反馈提交成功，我们将尽快跟你联系");
+                        String data = jsonObject.getString("data");
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        ToastUtils.show(mContext, msg);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        };
+
+        String method = "m=feedback&c=add";
+        RequestUtils.createRequest(mContext, Urls.BaseURL,method,true,dataParams,true,listener,errorListener);
+    }
+
+
 }
