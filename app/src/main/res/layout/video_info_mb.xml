@@ -7,12 +7,13 @@
         android:orientation="vertical"
         android:layout_width="155dp"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:layout_marginBottom="10dp">
 
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="85dp">
+            android:layout_height="125dp">
 
             <ImageView
                 android:id="@+id/img_video_mb_log"
@@ -63,8 +64,8 @@
                 android:layout_alignParentEnd="true"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/qian"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -86,8 +87,8 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/zan"/>
 
                 <TextView
