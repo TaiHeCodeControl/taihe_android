@@ -13,7 +13,7 @@ import org.w3c.dom.Text;
 /**
  * Created by Administrator on 2015/8/12.
  */
-public class Act_MeetingInfo extends BaseActivity implements View.OnClickListener {
+public class Act_MeetingInfo extends BaseActivity {
     private LinearLayout lin_meetinginfo_top1,lin_meetinginfo_top2;
     private TextView txt_meetinginfo_top1,txt_meetinginfo_top2;
     private ImageView img_meetinginfo_top1,img_meetinginfo_top2;
@@ -21,7 +21,6 @@ public class Act_MeetingInfo extends BaseActivity implements View.OnClickListene
     public void initView() {
         setContentView(R.layout.activity_meetinginfo_list);
         super.initView();
-        super.initData();
 
         lin_meetinginfo_top1 = (LinearLayout)findViewById(R.id.lin_meetinginfo_top1);
         lin_meetinginfo_top2 = (LinearLayout)findViewById(R.id.lin_meetinginfo_top2);
@@ -35,6 +34,7 @@ public class Act_MeetingInfo extends BaseActivity implements View.OnClickListene
     }
 
     public void initData(){
+        super.initData();
         initTitle("信息台");
     }
 
@@ -52,6 +52,9 @@ public class Act_MeetingInfo extends BaseActivity implements View.OnClickListene
                 img_meetinginfo_top2.setBackgroundResource(R.drawable.shuangxuanhui);
                 txt_meetinginfo_top2.setTextColor(getResources().getColor(R.color.font_color_red));
                 txt_meetinginfo_top1.setTextColor(getResources().getColor(R.color.font_color_black));
+                break;
+            case R.id.lin_back:
+                finish();
                 break;
         }
     }
