@@ -107,10 +107,11 @@ public class LoginActivity extends BaseActivity {
 
         Intent intents = getIntent();
         loginTag = intents.getStringExtra("LoginTag");
-
-        intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.putExtra("MeFragment", "MeFragment");
-        startActivity(intent);
+        if (loginTag.equals("logout")) {
+            intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("MeFragment", "MeFragment");
+            startActivity(intent);
+        }
 
         LoginActivity.this.finish();
 
@@ -187,15 +188,21 @@ public class LoginActivity extends BaseActivity {
 
     //登录成功保存用户登录信息
     private void loginSuccess() {
-        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{'id':1,'name':'xx','phoneNumber':'89898'}");
+        String data = "{'id':1,'name':'xx','phoneNumber':'89898'}";
+        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, data);
 
         //登录成功后显示界面的判断
         Intent intents = getIntent();
         loginTag = intents.getStringExtra("LoginTag");
         if (loginTag.equals("meFragment")) {
-            intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("MeFragment", "MeFragment");
-            startActivity(intent);
+
+            intent = new Intent();
+            intent.putExtra("data",data);
+            setResult(201,intent);
+//            intent = new Intent(LoginActivity.this, MainActivity.class);
+//            intent.putExtra("MeFragment", "MeFragment");
+//            intent.putExtra("data",data);
+//            startActivityForResult(intent,100);
         } else if (loginTag.equals("myBasic")) {
             intent = new Intent(LoginActivity.this, MyBasicActivity.class);
             startActivity(intent);
