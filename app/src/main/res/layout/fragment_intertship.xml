@@ -159,7 +159,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
-                        android:padding="10dp"
                         android:gravity="center"
                         android:background="@color/white">
 
@@ -169,14 +168,16 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_centerInParent="true"
-                            android:indeterminateDrawable="@drawable/default_ptr_rotate"
-                            android:visibility="gone" />
+                            android:visibility="gone"
+                            android:indeterminateDrawable="@drawable/default_ptr_rotate" />
                         <TextView
                             android:id="@+id/id_txt_more"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/font_color_black"
-                            android:text="上拉加载更多"/>
+                            android:textColor="@color/hint_color"
+                            android:padding="10dp"
+                            android:textSize="15sp"
+                            android:text="加载更多"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

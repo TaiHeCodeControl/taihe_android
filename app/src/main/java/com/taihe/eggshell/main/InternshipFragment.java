@@ -63,7 +63,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         videoGrideView = (MyGridView) v.findViewById(R.id.id_video_grideview);
         scroll_hotnotes = (ScrollView) v.findViewById(R.id.scroll_hotnotes);
         progressBar = (ProgressBar) v.findViewById(R.id.loadingmore);
-        id_lin_more.setVisibility(View.GONE);
+
         init();
         initData();
         return v ;
@@ -73,6 +73,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         lin_back.setVisibility(View.GONE);
         videoAdapter = new VideoAdapterGride(getActivity());
         listInfo = new ArrayList<VideoInfoMode>();
+        id_lin_more.setOnClickListener(this);
 
         Display dw = getActivity().getWindowManager().getDefaultDisplay();
         viewwidth1 = dw.getWidth();
@@ -108,6 +109,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                             page++;
                         }
                         Log.e("err","=====:"+page);
+                        id_lin_more.setVisibility(View.VISIBLE);
                         updataUI();
                     }
                 }
@@ -143,8 +145,9 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                 if (jsonObject.optString("code").equals("0")) {
                     JSONArray j1 = jsonObject.getJSONArray("data");
                     JSONObject j2;
+                    VideoInfoMode vMode;
                     for(int i=0;i<j1.length();i++){
-                        VideoInfoMode vMode = new VideoInfoMode();
+                        vMode = new VideoInfoMode();
                         j2 = j1.getJSONObject(i);
                         vMode.setId(j2.optString("id").toString());
                         vMode.setC_id(j2.optString("c_id").toString());
@@ -157,6 +160,9 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                         vMode.setStatus(j2.optString("status").toString());
                         vMode.setVimage(j2.optString("vimage").toString());
                         listInfo.add(vMode);
+                    }
+                    if(j1.length()<1 && page>1){
+                        page--;
                     }
                     videoAdapter.setVideoData(listInfo);
                     videoGrideView.setAdapter(videoAdapter);
@@ -173,7 +179,10 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-
+            case R.id.id_lin_more:
+                page++;
+                updataUI();
+                break;
         }
     }
 
