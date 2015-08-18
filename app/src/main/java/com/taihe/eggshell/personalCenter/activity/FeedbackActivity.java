@@ -92,7 +92,7 @@ public class FeedbackActivity extends BaseActivity{
         Map<String,String> dataParams = new HashMap<String, String>();
         dataParams.put("uid","001");
         dataParams.put("source","3");
-        dataParams.put("version","1.0");
+        dataParams.put("version",version);
         dataParams.put("opinion",content);
         dataParams.put("email",email);
         dataParams.put("qq",qq);
@@ -108,8 +108,10 @@ public class FeedbackActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     System.out.println("code=========" + code);
                     if (code == 1) {
-                        ToastUtils.show(mContext, "反馈提交成功，我们将尽快跟你联系");
-                        String data = jsonObject.getString("data");
+
+                        String msg = jsonObject.getString("msg");
+                        ToastUtils.show(mContext, msg);
+                        FeedbackActivity.this.finish();
                     } else {
                         String msg = jsonObject.getString("msg");
                         ToastUtils.show(mContext, msg);

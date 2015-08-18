@@ -15,6 +15,7 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.base.utils.UpdateUtils;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.personalCenter.activity.TeamActivity;
@@ -35,11 +36,12 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     private ChoiceDialog dialog;
 
     private View rootView;
-    private RelativeLayout rl_mine_feedback, rl_setting,rl_editZiliao ,rl_post,rl_collect,rl_jianli,rl_about,rl_hezuo,rl_logout;
-    private TextView tv_logintxt,tv_username, tv_qianming , tv_postNum, tv_collectNum , jianliNum;
+    private RelativeLayout rl_mine_checkupdate,rl_mine_feedback, rl_setting,rl_editZiliao ,rl_post,rl_collect,rl_jianli,rl_about,rl_hezuo,rl_logout;
+    private TextView tv_logintxt,tv_version,tv_username, tv_qianming , tv_postNum, tv_collectNum , jianliNum;
     private LinearLayout ll_userinfo;
 
     private Intent intent;
+    private String version;
 
     @Override
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
@@ -61,10 +63,16 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         rl_hezuo = (RelativeLayout)rootView.findViewById(R.id.rl_mine_hezuoqudao);
         rl_logout = (RelativeLayout)rootView.findViewById(R.id.rl_mine_logout);
         rl_mine_feedback = (RelativeLayout)rootView.findViewById(R.id.rl_mine_feedback);
+        rl_mine_checkupdate = (RelativeLayout)rootView.findViewById(R.id.rl_mine_checkupdate);
+
+        tv_version = (TextView) rootView.findViewById(R.id.tv_mine_version);
+        version = UpdateUtils.getVersion(mContext);
+        tv_version.setText(version);
 
         ll_userinfo = (LinearLayout) rootView.findViewById(R.id.ll_mine_userinfo);
         tv_logintxt = (TextView) rootView.findViewById(R.id.tv_mine_logintxt);
 
+        rl_mine_checkupdate.setOnClickListener(this);
         rl_mine_feedback.setOnClickListener(this);
         tv_logintxt.setOnClickListener(this);
         rl_setting.setOnClickListener(this);
@@ -192,6 +200,10 @@ public class MeFragment extends Fragment implements View.OnClickListener{
             case R.id.rl_mine_feedback:
                 intent = new Intent(mContext, FeedbackActivity.class);
                 startActivity(intent);
+                break;
+
+            case R.id.rl_mine_checkupdate://检查更新
+
                 break;
         }
     }
