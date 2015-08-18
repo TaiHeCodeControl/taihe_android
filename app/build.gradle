@@ -26,17 +26,16 @@ android {
     signingConfigs{
 
         debug{
-//            storeFile file("D://androidtool/eggshellandroidkeystory.jks")
             storeFile file("D://AndroidStudioProjects/eggshellandroidkeystory.jks")
-//            storeFile file("D://Studio/StudioWorkSpaces/eggshellandroidkeystory.jks")
+            storeFile file("D://androidtool/eggshellandroidkeystory.jks")
+//          storeFile file("D://Studio/StudioWorkSpaces/eggshellandroidkeystory.jks")
             storePassword "beijingtaihetianxiatouzikonggu"
             keyAlias "eggshellandroidkeystory"
             keyPassword "beijingtaihetianxiatouzikonggu"
         }
 
         release{
-            storeFile file("D://AndroidStudioProjects/eggshellandroidkeystory.jks")
-//            storeFile file("D://androidtool/eggshellandroidkeystory.jks")
+            storeFile file("D://androidtool/eggshellandroidkeystory.jks")
             storePassword "beijingtaihetianxiatouzikonggu"
             keyAlias "eggshellandroidkeystory"
             keyPassword "beijingtaihetianxiatouzikonggu"

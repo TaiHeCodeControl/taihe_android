@@ -93,17 +93,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         rl_about.setOnClickListener(this);
         rl_hezuo.setOnClickListener(this);
         rl_logout.setOnClickListener(this);
-        initView();
-    }
 
-    private void initView() {
-        if(null == EggshellApplication.getApplication().getUser()){
-
-            tv_logintxt.setVisibility(View.VISIBLE);
-            ll_userinfo.setVisibility(View.GONE);
-
-            rl_logout.setVisibility(View.GONE);
-        }
 
         dialog = new ChoiceDialog(mContext, new View.OnClickListener() {
             @Override
@@ -116,12 +106,10 @@ public class MeFragment extends Fragment implements View.OnClickListener{
             public void onClick(View v) {
 
                 dialog.dismiss();
-//                EggshellApplication.getApplication().setUser(null);
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 intent.putExtra("LoginTag", "logout");
                 startActivity(intent);
-                getActivity().finish();
             }
         });
 
@@ -130,15 +118,32 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         dialog.getRightButton().setText("确认退出");
     }
 
+    private void initView() {
+        if(null == EggshellApplication.getApplication().getUser()){
+
+            tv_logintxt.setVisibility(View.VISIBLE);
+            ll_userinfo.setVisibility(View.GONE);
+
+            rl_logout.setVisibility(View.GONE);
+        }else{
+
+            tv_logintxt.setVisibility(View.GONE);
+            ll_userinfo.setVisibility(View.VISIBLE);
+
+            rl_logout.setVisibility(View.VISIBLE);
+        }
+
+
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.tv_mine_logintxt://登录
 
                 intent = new Intent(mContext,LoginActivity.class);
-                intent.putExtra("LoginTag","meFragment");
+                intent.putExtra("LoginTag", "meFragment");
                 startActivity(intent);
-                getActivity().finish();
                 break;
             case R.id.rl_mine_editziliao://基本资料
 //                LoginConfirmDialog.dialogShow(mContext);
@@ -147,9 +152,8 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);
-                    intent.putExtra("LoginTag","myBasic");
+                    intent.putExtra("LoginTag", "myBasic");
                     startActivity(intent);
-                    getActivity().finish();
                 }
 
                 break;
@@ -161,7 +165,6 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     intent = new Intent(mContext,LoginActivity.class);
                     intent.putExtra("LoginTag", "myPost");
                     startActivity(intent);
-                    getActivity().finish();
                 }
 
                 break;
@@ -172,9 +175,8 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);
-                    intent.putExtra("LoginTag","myCollect");
+                    intent.putExtra("LoginTag", "myCollect");
                     startActivity(intent);
-                    getActivity().finish();
                 }
 
                 break;
@@ -185,9 +187,8 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);
-                    intent.putExtra("LoginTag","myResume");
+                    intent.putExtra("LoginTag", "myResume");
                     startActivity(intent);
-                    getActivity().finish();
                 }
                 break;
             case R.id.rl_mine_about://关于蛋壳儿
@@ -278,4 +279,15 @@ public class MeFragment extends Fragment implements View.OnClickListener{
             }
         }).downloadInBackground("");
     }
+
+
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initView();
+    }
+
 }

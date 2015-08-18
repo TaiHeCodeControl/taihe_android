@@ -45,6 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2015-08-12"
+                android:textSize="16sp"
                 android:id="@+id/txt_meetinglist_mb_date"
                 android:textColor="@color/font_color_gray"
                 android:layout_alignTop="@+id/txt_meetinglist_mb_name"
@@ -66,11 +67,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="365"
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/font_color_black"
                     android:id="@+id/txt_meetinglist_mb_addr"
-                    android:textSize="11sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
@@ -87,11 +87,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
                     android:layout_marginLeft="6dp"
                     android:textColor="@color/font_color_black"
                     android:id="@+id/txt_meetinglist_mb_zbf"
-                    android:textSize="11sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
