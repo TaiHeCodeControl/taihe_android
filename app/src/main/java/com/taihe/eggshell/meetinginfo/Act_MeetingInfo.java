@@ -40,6 +40,7 @@ public class Act_MeetingInfo extends BaseActivity {
 
     @Override
     public void onClick(View view) {
+        super.onClick(view);
         switch (view.getId()){
             case R.id.lin_meetinginfo_top1:
                 img_meetinginfo_top1.setBackgroundResource(R.drawable.zhaopinhui);
@@ -52,9 +53,6 @@ public class Act_MeetingInfo extends BaseActivity {
                 img_meetinginfo_top2.setBackgroundResource(R.drawable.shuangxuanhui);
                 txt_meetinginfo_top2.setTextColor(getResources().getColor(R.color.font_color_red));
                 txt_meetinginfo_top1.setTextColor(getResources().getColor(R.color.font_color_black));
-                break;
-            case R.id.lin_back:
-                finish();
                 break;
         }
     }

@@ -164,14 +164,13 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
-                    System.out.println("code=========" + code);
                     if (code == 1) {
                         String data = jsonObject.getString("data");
                         Message msg = new Message();
                         msg.what=100;
                         msg.obj=data;
                         mHandler.sendMessage(msg);
-                        Log.e("data",data);
+                       // Log.e("data",data);
                     } else {
                         String msg = jsonObject.getString("msg");
 //                        ToastUtils.show(mContext, msg);

@@ -96,11 +96,9 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         System.out.print("ACTION_DOWN:"+index);
-                        Log.e("err","ACTION_DOWN:"+index);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         index++;
-                        Log.e("err1","ACTION_DOWN:"+index);
                         break;
                     default:
                         break;
@@ -117,7 +115,6 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                         } else {
                             page++;
                         }
-                        Log.e("err","=====:"+page);
                         id_lin_more.setVisibility(View.VISIBLE);
                         updataUI();
                     }
@@ -175,8 +172,6 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                     }
                     videoAdapter.setVideoData(listInfo);
                     videoGrideView.setAdapter(videoAdapter);
-//                    id_lin_more.setVisibility(View.INVISIBLE);
-//                    videoAdapter.notifyDataSetChanged();
                 } else {
 //					Toast.makeText(getActivity(), jsonObject.length()+"false", Toast.LENGTH_LONG).show();
                 }

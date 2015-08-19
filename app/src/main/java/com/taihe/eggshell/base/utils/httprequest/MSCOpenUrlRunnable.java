@@ -87,7 +87,7 @@ public abstract class MSCOpenUrlRunnable extends Handler implements Runnable {
         this.url = url;
         this.type = post类型;
         this.urlParams = getloginmode(urlParams);
-        System.out.println(url.toString());
+        //System.out.println(url.toString());
     }
 
 

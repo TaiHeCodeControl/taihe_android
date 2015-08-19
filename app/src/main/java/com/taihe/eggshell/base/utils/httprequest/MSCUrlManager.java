@@ -195,7 +195,7 @@ public class MSCUrlManager implements Serializable {
 
 			for (int i = 0; i < urlparams.size(); i++) {
 				params.append(urlparams.get(i).GetUrl());
-				Log.e("textpost", urlparams.get(i).GetUrl());
+				//Log.e("textpost", urlparams.get(i).GetUrl());
 			}
 
 			byte[] bypes = params.toString().getBytes();
@@ -204,8 +204,7 @@ public class MSCUrlManager implements Serializable {
 
 			outputStream.close();
 
-			Log.e("textpost",
-					"urlConn.getResponseCode():" + urlConn.getResponseCode());
+			//Log.e("textpost","urlConn.getResponseCode():" + urlConn.getResponseCode());
 
 			InputStreamReader in = new InputStreamReader(
 					urlConn.getInputStream());
@@ -233,7 +232,7 @@ public class MSCUrlManager implements Serializable {
 					if ((errcode = Integer.decode(resultData)) > 0) {
 						MSCJSONObject jsonObject = new MSCJSONObject();
 						jsonObject.put("errcode", errcode);
-						Log.d("textpost", "errcode：" + errcode);
+						//Log.d("textpost", "errcode：" + errcode);
 						return jsonObject;
 					}
 				} catch (Exception e) {
