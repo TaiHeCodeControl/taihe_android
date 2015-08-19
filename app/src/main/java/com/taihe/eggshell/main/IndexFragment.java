@@ -345,6 +345,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Object o) {
 
+                Log.v(TAG,(String)o);
+
                 dialog = new UpdateDialog(mContext,new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -360,7 +362,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 });
 
                 dialog.getTitleText().setText("发现新版本"+APKUtils.getVersionName());
-                dialog.show();
+//                dialog.show();
             }
         };
 
@@ -374,7 +376,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         Map<String,String> params = new HashMap<String, String>();
         params.put("vercode", APKUtils.getVersionCode() + "");
 
-        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),"method",true,params,true,listener,errorListener);
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_DETAIL,true,params,true,listener,errorListener);
     }
 
     private void updateAPK(){

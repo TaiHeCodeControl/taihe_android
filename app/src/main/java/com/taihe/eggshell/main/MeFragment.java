@@ -77,7 +77,7 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         rl_mine_checkupdate = (RelativeLayout)rootView.findViewById(R.id.rl_mine_checkupdate);
 
         tv_version = (TextView) rootView.findViewById(R.id.tv_mine_version);
-        tv_version.setText("V"+APKUtils.getVersionName());
+        tv_version.setText("当前版本V"+APKUtils.getVersionName());
 
         ll_userinfo = (LinearLayout) rootView.findViewById(R.id.ll_mine_userinfo);
         tv_logintxt = (TextView) rootView.findViewById(R.id.tv_mine_logintxt);
