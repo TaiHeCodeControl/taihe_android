@@ -183,6 +183,13 @@ public class IndustryActivity extends BaseActivity {
             industLists.add("离职");
             industLists.add("在职");
             industLists.add("其他");
+        } else if(filterString.equals("techlevel")){
+            title = "熟练程度";
+            selectString = "请选择";
+            industLists.add("一般");
+            industLists.add("良好");
+            industLists.add("熟练");
+            industLists.add("精通");
         }
 
     }

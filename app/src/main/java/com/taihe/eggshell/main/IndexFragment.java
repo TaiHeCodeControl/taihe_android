@@ -223,7 +223,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View v) {
                 ToastUtils.show(mContext,"更新");
-                updateAPK();
+//                updateAPK();
             }
         });
 

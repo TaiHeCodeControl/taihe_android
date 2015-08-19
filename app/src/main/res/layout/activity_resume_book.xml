@@ -96,17 +96,19 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="10dp" />
 
-            <EditText
+            <TextView
                 android:id="@+id/id_tech_type"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="15dp"
+                android:gravity="center_vertical"
                 android:hint="请填写颁发时间"
                 android:textColor="@color/font_color_black"
                 android:textColorHint="@color/hint_color"
                 android:textSize="15sp"
-                android:background="@null"/>
+                android:background="@null"
+                android:drawableRight="@drawable/xiala"/>
 
         </LinearLayout>
         <View

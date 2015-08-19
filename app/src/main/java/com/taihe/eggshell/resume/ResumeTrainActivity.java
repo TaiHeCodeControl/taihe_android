@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.widget.datepicker.TimeDialog;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by wang on 2015/8/14.
@@ -18,10 +21,26 @@ public class ResumeTrainActivity extends BaseActivity{
 
     private Context mContext;
 
-    private TextView commitText,resetText;
-    private EditText trainEdit,positionEdit,contextEdit,workTimeStart,workTimeEnd;
+    private TextView commitText,resetText,workTimeStart,workTimeEnd;
+    private EditText trainEdit,positionEdit,contextEdit;
     private CheckBox radioButton;
+    private TimeDialog timeDialog;
+
     private String companyName,startTime,endTime,positionName,contextWord;
+    private boolean isStart = false;
+
+    private TimeDialog.CustomTimeListener customTimeListener = new TimeDialog.CustomTimeListener() {
+        @Override
+        public void setTime(String time) {
+            if(isStart){
+                workTimeStart.setText(time);
+            }else{
+                workTimeEnd.setText(time);
+            }
+
+            timeDialog.dismiss();
+        }
+    };
 
     @Override
     public void initView() {
@@ -35,11 +54,12 @@ public class ResumeTrainActivity extends BaseActivity{
         trainEdit = (EditText)findViewById(R.id.id_company_name);
         positionEdit = (EditText)findViewById(R.id.id_position);
         contextEdit = (EditText)findViewById(R.id.id_context);
-        workTimeStart = (EditText)findViewById(R.id.id_start_time);
-        workTimeEnd = (EditText)findViewById(R.id.id_end_time);
-
+        workTimeStart = (TextView)findViewById(R.id.id_start_time);
+        workTimeEnd = (TextView)findViewById(R.id.id_end_time);
         radioButton = (CheckBox)findViewById(R.id.id_gender);
 
+        workTimeStart.setOnClickListener(this);
+        workTimeEnd.setOnClickListener(this);
         commitText.setOnClickListener(this);
         resetText.setOnClickListener(this);
         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -54,12 +74,22 @@ public class ResumeTrainActivity extends BaseActivity{
     public void initData() {
         super.initData();
         initTitle("写简历");
+
+        timeDialog = new TimeDialog(mContext,this,customTimeListener);
     }
 
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()){
+            case R.id.id_start_time:
+                isStart = true;
+                timeDialog.show();
+                break;
+            case R.id.id_end_time:
+                isStart = false;
+                timeDialog.show();
+                break;
             case R.id.id_commit:
                 companyName = trainEdit.getText().toString();
                 startTime = workTimeStart.getText().toString();

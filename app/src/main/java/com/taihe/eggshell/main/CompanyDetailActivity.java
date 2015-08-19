@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -29,6 +30,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
     private Context mContext;
     private TextView companyIndustry,companyType,companyScale,companyAddress,companyBrief,upordown;
     private MyListView jobsListView;
+    private ScrollView scrollView;
 
     private boolean isMore = false;
     private List<JobInfo> jobInfos = new ArrayList<JobInfo>();
@@ -39,7 +41,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
         super.initView();
 
         mContext = this;
-
+        scrollView = (ScrollView)findViewById(R.id.id_scroll_view);
         companyIndustry = (TextView)findViewById(R.id.id_company_industry);
         companyType = (TextView)findViewById(R.id.id_company_type);
         companyScale = (TextView)findViewById(R.id.id_company_scale);
@@ -55,6 +57,13 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
     public void initData() {
         super.initData();
         initTitle("名企详情");
+
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0,0);
+            }
+        });
 
         int companyId = getIntent().getIntExtra("companyId",0);
         ToastUtils.show(mContext,companyId+"哈哈");

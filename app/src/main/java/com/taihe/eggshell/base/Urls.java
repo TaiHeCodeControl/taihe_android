@@ -5,14 +5,12 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 public class Urls {
 
     public static final String BaseURL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";
-
     //测试
     public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";//测试服务器
-
-
     //正式
 //    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";// 正式服务器
-	public static final String getMopHostUrl() {
+
+    public static final String getMopHostUrl() {
 		return PrefUtils.getStringPreference(EggshellApplication.getApplication()
                         .getApplicationContext(), PrefUtils.CONFIG,
                 PrefUtils.KEY_APP_REQUEST_URL, BASE_HYR_MOBILE_URL);
