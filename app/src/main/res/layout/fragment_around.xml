@@ -43,8 +43,8 @@
         <View
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/line_gray"/>
         <LinearLayout
             android:id="@+id/lin_around_tag2"
