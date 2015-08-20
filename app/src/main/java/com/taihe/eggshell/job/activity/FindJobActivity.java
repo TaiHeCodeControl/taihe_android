@@ -27,8 +27,8 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
     private CustomViewPager vp_pager;
 
     private TextView tv_allJob, tv_fujin;
-    private ImageView iv_quancheng, iv_fujin, iv_back, iv_filter, iv_search;
-    private RelativeLayout rl_qc,rl_fujin;
+    private ImageView iv_quancheng, iv_fujin, iv_filter, iv_search;
+    private RelativeLayout rl_qc,rl_fujin, iv_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
 
         iv_search = (ImageView) findViewById(R.id.iv_findjob_search);
         iv_filter = (ImageView) findViewById(R.id.iv_findjob_filter);
-        iv_back = (ImageView) findViewById(R.id.iv_findjob_back);
+        iv_back = (RelativeLayout) findViewById(R.id.iv_findjob_back);
 
         iv_fujin = (ImageView) findViewById(R.id.iv_findjob_fj);
         iv_quancheng = (ImageView) findViewById(R.id.iv_findjob_qc);

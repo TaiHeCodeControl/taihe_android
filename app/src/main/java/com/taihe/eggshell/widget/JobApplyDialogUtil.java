@@ -13,12 +13,11 @@ import com.taihe.eggshell.base.utils.ToastUtils;
  * Created by huan on 2015/8/11.
  */
 public class JobApplyDialogUtil {
-    private static AlertDialog isApplyDialog = null;
+    private static MyDialog isApplyDialog = null;
 
     public static void isApplyJob(final Context mContext){
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
         View view = View.inflate(mContext, R.layout.dialog_isapplyjob,
                 null);
@@ -46,8 +45,7 @@ public class JobApplyDialogUtil {
             }
         });
 
-        builder.setView(view);
-        isApplyDialog = builder.create();
+        isApplyDialog = new MyDialog(mContext,view,R.style.mydialog_style);
         isApplyDialog.show();
     }
 }

@@ -11,15 +11,18 @@
         android:background="@color/include_title_color">
 
 
+        <RelativeLayout
+            android:id="@+id/iv_mybasic_back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/iv_mybasic_back"
-                android:layout_width="90dp"
-                android:scaleType="fitStart"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/icon_return" />
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -107,12 +110,12 @@
 
 
                 <EditText
-                    android:background="@null"
                     android:id="@+id/et_mybasic_nickname"
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
+                    android:background="@null"
                     android:imeOptions="actionNext"
                     android:text="王昕"
                     android:textColor="@color/font_color_gray"
@@ -154,14 +157,14 @@
                     android:textSize="@dimen/font_size_26" />
 
 
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:scaleType="center"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/xiala" />
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="center"
+                    android:src="@drawable/xiala" />
 
             </RelativeLayout>
 
@@ -198,14 +201,14 @@
                     android:textSize="@dimen/font_size_26" />
 
 
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:scaleType="center"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/xiayiye" />
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="center"
+                    android:src="@drawable/xiayiye" />
 
             </RelativeLayout>
 
@@ -232,18 +235,18 @@
 
 
                 <TextView
-                    android:background="@null"
                     android:id="@+id/tv_mybasic_jianjie"
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
-                    android:text="学习是一种信仰学习是一种信仰"
+                    android:background="@null"
                     android:ellipsize="end"
-                    android:singleLine="true"
                     android:imeOptions="actionNext"
                     android:maxLength="15"
                     android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="学习是一种信仰学习是一种信仰"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -300,14 +303,14 @@
                     android:textSize="@dimen/font_size_26" />
 
 
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="match_parent"
-                        android:scaleType="center"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/xiala" />
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:scaleType="center"
+                    android:src="@drawable/xiala" />
 
             </RelativeLayout>
 
@@ -375,8 +378,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
                     android:background="@null"
-                    android:text="488128882"
                     android:imeOptions="actionDone"
+                    android:text="488128882"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 

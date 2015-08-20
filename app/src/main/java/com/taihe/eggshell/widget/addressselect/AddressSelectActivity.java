@@ -14,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
@@ -37,7 +39,7 @@ public class AddressSelectActivity extends Activity implements View.OnClickListe
     private String province = null;
     private String city = null;
     private String district = null;
-    private ImageView iv_back;
+    private LinearLayout lin_back;
     private TextView tv_title;
     private EditText et_jiedao;
     private Button btn_confirm,btn_reset;
@@ -55,10 +57,10 @@ public class AddressSelectActivity extends Activity implements View.OnClickListe
         btn_reset = (Button) findViewById(R.id.btn_address_reset);
         btn_reset.setOnClickListener(this);
         btn_confirm.setOnClickListener(this);
-        iv_back = (ImageView) findViewById(R.id.id_back);
+        lin_back = (LinearLayout) findViewById(R.id.lin_back);
         tv_title = (TextView) findViewById(R.id.id_title);
         tv_title.setText("所在地");
-        iv_back.setOnClickListener(this);
+        lin_back.setOnClickListener(this);
 
 
         spinner1 = (Spinner) findViewById(R.id.spinner1);
@@ -242,7 +244,7 @@ public class AddressSelectActivity extends Activity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.id_back:
+            case R.id.lin_back:
                 AddressSelectActivity.this.finish();
                 break;
             case R.id.btn_address_comfirm://确认地址

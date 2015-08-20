@@ -3,6 +3,7 @@ package com.taihe.eggshell.personalCenter.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
@@ -14,6 +15,7 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
+import com.taihe.eggshell.widget.MyDialog;
 import com.taihe.eggshell.widget.addressselect.AddressSelectActivity;
 import com.taihe.eggshell.widget.datepicker.JudgeDate;
 import com.taihe.eggshell.widget.datepicker.ScreenInfo;
@@ -46,7 +48,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
     private String verTime, jianjie , jianjiehint;
 
     private Intent intent;
-    private ImageView iv_back;
+    private RelativeLayout iv_back;
     private RelativeLayout rl_date, rl_sex, rl_city, rl_jianjie;
 
     WheelMain wheelMain;
@@ -64,7 +66,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
     public void initView() {
 
 
-        iv_back = (ImageView) findViewById(R.id.iv_mybasic_back);
+        iv_back = (RelativeLayout) findViewById(R.id.iv_mybasic_back);
 //        iv_birthdate = (ImageView) findViewById(R.id.iv_mybasic_date);
 //        iv_sexSelect = (ImageView) findViewById(R.id.iv_mybasic_sexselect);
 //        iv_citySelect = (ImageView) findViewById(R.id.iv_mybasic_cityselect);
@@ -140,10 +142,9 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
 
     //-----------------------输入个人简介 start---------------------------------------
 
-    private AlertDialog jianjieDialog = null;
+    private MyDialog jianjieDialog = null;
 
     public void showJianjieDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
         View view = View.inflate(mContext, R.layout.dialog_jianjie,
                 null);
@@ -178,18 +179,16 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
             }
         });
 
-        builder.setView(view);
-        jianjieDialog = builder.create();
+        jianjieDialog =  new MyDialog(mContext,view,R.style.mydialog_style);
         jianjieDialog.show();
     }
 
     //-----------------------选择性别 start---------------------------------------
 
-    private AlertDialog sexSelectDialog = null;
+    private MyDialog sexSelectDialog = null;
     private boolean b = false;
 
     public void selectSex(boolean a) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
         View view = View.inflate(mContext, R.layout.dialog_sexselect,
                 null);
@@ -241,10 +240,9 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
                 sexSelectDialog.dismiss();
             }
         });
-//        builder.setView(view);
-        sexSelectDialog = builder.create();
-        sexSelectDialog.setView(view,0,0,0,0);
+        sexSelectDialog = new MyDialog(mContext,view,R.style.mydialog_style);
         sexSelectDialog.show();
+
     }
 
 

@@ -10,14 +10,20 @@
         android:layout_height="@dimen/title_height"
         android:background="@color/white">
 
-        <ImageView
+
+        <RelativeLayout
             android:id="@+id/iv_findjob_back"
-            android:layout_width="80dp"
-            android:scaleType="fitStart"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/fanhui"/>
+            android:layout_width="50dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/fanhui"/>
+
+        </RelativeLayout>
+
 
         <TextView
             android:text="全职职位"
