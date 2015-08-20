@@ -6,15 +6,52 @@
     android:orientation="vertical">
 
 
+    <ListView
+        android:id="@+id/list_job_all"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/line_gray"
+        android:footerDividersEnabled="false" />
 
-        <ListView
-            android:id="@+id/list_job_all"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:divider="@color/line_gray"
-            android:footerDividersEnabled="false" />
+    <View style="@style/line_fill" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp">
+
+        <CheckBox
+            android:id="@+id/cb_findjob_selectall"
+            style="@style/CustomCheckboxRed"
+            android:layout_width="30dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/cb_findjob_selectall"
+            android:text="全选"
+            android:textColor="@color/font_color_gray"
+            android:textSize="@dimen/font_size_26" />
+
+        <Button
+
+            android:id="@+id/btn_alljob_shenqing"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="112dp"
+            android:background="@drawable/lanniu"
+            android:text="申请职位"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_26" />
 
 
-
-
+    </RelativeLayout>
 </LinearLayout>
