@@ -12,19 +12,24 @@
         android:background="#000000"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-
-        <include android:id="@+id/id_include"
+        <LinearLayout
+            android:id="@+id/lin_video_play_top"
             android:layout_width="match_parent"
             android:layout_height="47dp"
-            layout="@layout/include_title_bar"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true" >
+            <include android:id="@+id/id_include"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                layout="@layout/include_title_bar"/>
+        </LinearLayout>
+
         <com.easefun.polyvsdk.ijk.IjkVideoView
             android:id="@+id/full_videoview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/id_include"
+            android:layout_below="@+id/lin_video_play_top"
             android:layout_centerInParent="true"
             ></com.easefun.polyvsdk.ijk.IjkVideoView>
 

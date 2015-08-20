@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ import com.taihe.eggshell.base.BaseActivity;
  */
 public class VideoPlayActivity extends BaseActivity {
     private static final String TAG = "VideoPlayActivity";
-
+    private LinearLayout lin_video_play_top;
     private IjkVideoView videoview;
     private MediaController mediaController;
     private ProgressBar progressBar;
@@ -43,6 +44,7 @@ public class VideoPlayActivity extends BaseActivity {
     public void initView() {
         setContentView(R.layout.activity_video_play);
         playTitle = (TextView) findViewById(R.id.txt_video_play_title);
+        lin_video_play_top = (LinearLayout) findViewById(R.id.lin_video_play_top);
         super.initView();
         super.initData();
     }
@@ -120,15 +122,19 @@ public class VideoPlayActivity extends BaseActivity {
                 videoview.setVideoLayout(layout);
                 switch (layout) {
                     case IjkVideoView.VIDEO_LAYOUT_ORIGIN:
+                        //Log.e("err","err1");
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_ORIGIN", 1).show();
                         break;
                     case IjkVideoView.VIDEO_LAYOUT_SCALE:
+                       //Log.e("err","err2");
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_SCALE", 1).show();
                         break;
                     case IjkVideoView.VIDEO_LAYOUT_STRETCH:
+                        //Log.e("err","err3");
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_STRETCH", 1).show();
                         break;
                     case IjkVideoView.VIDEO_LAYOUT_ZOOM:
+                        //Log.e("err","err4");
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_ZOOM", 1).show();
                         break;
                 }
@@ -154,6 +160,7 @@ public class VideoPlayActivity extends BaseActivity {
         stopPosition = videoview.getCurrentPosition();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         isLandscape = !isLandscape;
+        lin_video_play_top.setVisibility(View.GONE);
     }
 
     // 切换到竖屏
@@ -163,5 +170,6 @@ public class VideoPlayActivity extends BaseActivity {
         stopPosition = videoview.getCurrentPosition();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         isLandscape = !isLandscape;
+        lin_video_play_top.setVisibility(View.VISIBLE);
     }
 }
