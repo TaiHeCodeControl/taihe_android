@@ -1,12 +1,18 @@
 package com.taihe.eggshell.base;
 
 import android.app.Application;
+import android.app.Service;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.os.Vibrator;
 import android.text.TextUtils;
+import android.util.Log;
 
-import com.baidu.mapapi.SDKInitializer;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.GeofenceClient;
+import com.baidu.location.LocationClient;
 import com.easefun.polyvsdk.PolyvSDKClient;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -26,22 +32,20 @@ import java.io.File;
 
 public class EggshellApplication extends Application {
 
-	public static EggshellApplication eggApplication;
-	private User user;
+    public static EggshellApplication eggApplication;
+    private User user;
     private File saveDir;
 
 
-	public void onCreate() {
-		eggApplication = this;
+    public void onCreate() {
+        eggApplication = this;
         super.onCreate();
+
 
         File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "polyvSDK/Cache");
 //        EggshellCrashHandler.getInstance().init(this);
 
-        //在使用SDK各组件之前初始化context信息，传入ApplicationContext
-        //注意该方法要再setContentView方法之前实现
-//        SDKInitializer.initialize(getApplicationContext());
-        try{
+        try {
             ImageLoaderConfiguration config = new ImageLoaderConfiguration
                     .Builder(getApplicationContext())
                     .memoryCacheExtraOptions(480, 800)
@@ -65,9 +69,9 @@ public class EggshellApplication extends Application {
             //Initialize ImageLoader with configuration
             ImageLoader.getInstance().init(config);
 
-            if( Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED) )   {
-                saveDir = new File(Environment.getExternalStorageDirectory().getPath()+"/polyvdownload");
-                if(!saveDir.exists()) saveDir.mkdir();
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                saveDir = new File(Environment.getExternalStorageDirectory().getPath() + "/polyvdownload");
+                if (!saveDir.exists()) saveDir.mkdir();
             }
             PolyvSDKClient client = PolyvSDKClient.getInstance();
             client.setReadtoken("AAiK2jiX0t-BAnX4n6CrX-xV0TfqPUML");
@@ -76,31 +80,31 @@ public class EggshellApplication extends Application {
             client.setUserId("00018093b1");
             client.setSign(true);
             client.setDownloadDir(saveDir);
-            client.startService(this,PolyvDemoService.class);
-        }catch (Exception ex){
+            client.startService(this, PolyvDemoService.class);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
     }
 
-	public static EggshellApplication getApplication() {
-		return eggApplication;
-	}
+    public static EggshellApplication getApplication() {
+        return eggApplication;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	/**
-	 * 返回用户信息
-	 * 
-	 * @return
-	 */
-	public User getUser() {
-        String json = PrefUtils.getStringPreference(this, PrefUtils.CONFIG,PrefUtils.KEY_USER_JSON, "");
-        if(TextUtils.isEmpty(json)){
+    /**
+     * 返回用户信息
+     *
+     * @return
+     */
+    public User getUser() {
+        String json = PrefUtils.getStringPreference(this, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
+        if (TextUtils.isEmpty(json)) {
             return null;
-        }else{
+        } else {
             if (user == null) {
                 try {
                     User u = new Gson().fromJson(json, User.class);
@@ -109,10 +113,12 @@ public class EggshellApplication extends Application {
                     e.printStackTrace();
                     return null;
                 }
-            }else{
+            } else {
                 return user;
             }
         }
-	}
+    }
+
+
 
 }

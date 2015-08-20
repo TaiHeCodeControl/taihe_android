@@ -50,7 +50,7 @@
     <Button
         android:id="@+id/btn_isapplyjob_ok"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:background="@drawable/lanniu2"
         android:text="确定"
         android:textSize="@dimen/font_size_26"

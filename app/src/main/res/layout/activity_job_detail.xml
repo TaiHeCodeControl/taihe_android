@@ -368,19 +368,21 @@
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
-                <View style="@style/line_marginLeft" />
-
-                <com.taihe.eggshell.widget.MyListView
-                    android:id="@+id/id_other_position"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:divider="@color/white"
-                    android:dividerHeight="0dp"
-                    android:listSelector="@color/white"
-                    android:scrollbars="none" />
+                <View
+                    android:layout_marginTop="15dp"
+                    style="@style/line_fill" />
 
             </LinearLayout>
+            <com.taihe.eggshell.widget.MyListView
+                android:layout_marginLeft="15dp"
+                android:id="@+id/id_other_position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:divider="@color/white"
+                android:dividerHeight="0dp"
+                android:listSelector="@color/white"
+                android:scrollbars="none" />
 
             <Button
                 android:id="@+id/id_apply_button"

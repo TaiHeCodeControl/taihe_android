@@ -241,8 +241,9 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
                 sexSelectDialog.dismiss();
             }
         });
-        builder.setView(view);
+//        builder.setView(view);
         sexSelectDialog = builder.create();
+        sexSelectDialog.setView(view,0,0,0,0);
         sexSelectDialog.show();
     }
 
