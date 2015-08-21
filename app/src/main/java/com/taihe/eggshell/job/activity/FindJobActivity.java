@@ -63,8 +63,7 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
         iv_search.setOnClickListener(this);
         iv_filter.setOnClickListener(this);
         iv_back.setOnClickListener(this);
-        tv_allJob.setOnClickListener(this);
-        tv_fujin.setOnClickListener(this);
+
 
         MyJobFragmentPagerAdapter adapter = new MyJobFragmentPagerAdapter(
                 getSupportFragmentManager());
