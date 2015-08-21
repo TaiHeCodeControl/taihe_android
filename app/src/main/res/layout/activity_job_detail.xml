@@ -340,7 +340,7 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/see_all_updown"
                     android:drawablePadding="8dp"
-                    android:drawableRight="@drawable/down_detail_icon"
+                    android:drawableRight="@drawable/shouqi"
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
@@ -356,7 +356,9 @@
                 android:layout_marginTop="15dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="15dp">
+                android:paddingTop="15dp"
+                android:paddingLeft="15dp">
+
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -378,7 +380,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white">
                 <com.taihe.eggshell.widget.MyListView
-                    android:layout_marginLeft="15dp"
                     android:id="@+id/id_other_position"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

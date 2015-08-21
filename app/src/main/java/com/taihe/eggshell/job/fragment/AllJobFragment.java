@@ -71,11 +71,14 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
 
         list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 //listviewItem点击事件
 
-                Intent intent = new Intent(mContext, JobDetailActivity.class);
-                startActivity(intent);
+                if(position < jobInfos.size()){
+                    Intent intent = new Intent(mContext, JobDetailActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -155,7 +158,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
 
     public void postJob() {
         for (JobInfo jobInfo : jobInfos) {
-//            System.out.println(jobInfo.getId()+"======"+jobInfo.isChecked());
+            System.out.println(jobInfo.getId()+"======"+jobInfo.isChecked());
 
         }
     }

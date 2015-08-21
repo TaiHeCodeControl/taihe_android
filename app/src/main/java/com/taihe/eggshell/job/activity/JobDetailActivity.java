@@ -1,7 +1,9 @@
 package com.taihe.eggshell.job.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,6 +31,8 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private Button applyButton;
     private MyListView jobDescListView,moreJobListView;
     private ImageView collectionImg;
+
+    private  List<JobInfo> jobInfos = null;
 
     @Override
     public void initView() {
@@ -69,24 +73,44 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         titleView.setText("职位详情");
         collectionImg.setVisibility(View.VISIBLE);
 
-        List<JobInfo> jobInfos = new ArrayList<JobInfo>();
+        jobInfos = new ArrayList<JobInfo>();
+        //该公司其他职位信息
         for (int i=0;i<2;i++){
             JobInfo jobInfo = new JobInfo(false,i);
             jobInfo.setId(i);
             jobInfos.add(jobInfo);
         }
+        //该公司其他职位的点击事件
+        moreJobListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //listviewItem点击事件
 
+                if(position < jobInfos.size()){
+                    Intent intent = new Intent(mContext, JobDetailActivity.class);
+                    startActivity(intent);
+                }
+
+            }
+        });
+        //填充listview
         AllJobAdapter jobAdapter = new AllJobAdapter(mContext,jobInfos,false);
         moreJobListView.setAdapter(jobAdapter);
 
+        //职位描述列表
         List<String> desc = new ArrayList<String>();
         for (int i=0;i<5;i++){
             desc.add(i+"、你每年考试的记录看到");
         }
+
+
+        //职位描述信息填充
         JobDescAdapter jobDescAdapter = new JobDescAdapter(mContext,desc);
         jobDescListView.setAdapter(jobDescAdapter);
 
+        //公司介绍
         company_jieshao.setText("\u3000\u3000" + "深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路");
+        //查看全部和点击收起
         company_jieshao.post(new Runnable() {
             @Override
             public void run() {

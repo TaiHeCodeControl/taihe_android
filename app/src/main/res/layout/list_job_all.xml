@@ -8,21 +8,29 @@
         android:layout_width="match_parent"
         android:layout_height="80dp">
 
-        <CheckBox
-            android:focusable="false"
-            android:id="@+id/cb_listjob_select"
-            style="@style/CustomCheckboxRed"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"/>
+        <RelativeLayout
+            android:id="@+id/rl_listjob_select"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <View
+                android:layout_width="15dp"
+                android:layout_height="match_parent"/>
+            <CheckBox
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/cb_listjob_select"
+                style="@style/CustomCheckboxRed"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:focusable="false" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
-            android:layout_toRightOf="@+id/cb_listjob_select"
+            android:layout_toRightOf="@+id/rl_listjob_select"
             android:orientation="vertical">
 
             <TextView
@@ -59,10 +67,10 @@
                 <View
                     android:layout_width="1dp"
                     android:layout_height="12dp"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="7dp"
                     android:layout_marginRight="7dp"
                     android:layout_marginTop="1dp"
-                    android:layout_gravity="center_vertical"
                     android:background="@color/line_gray" />
 
                 <TextView
@@ -102,9 +110,9 @@
     </RelativeLayout>
 
     <View
-        android:layout_marginTop="3dp"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="15dp"
         android:background="@color/line_gray" />
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
@@ -59,7 +60,7 @@ public class AllJobAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
         View view;
-        ViewHolder holder;
+        final ViewHolder holder;
         if(convertView != null){
             view = convertView;
             holder = (ViewHolder) view.getTag();
@@ -75,13 +76,24 @@ public class AllJobAdapter extends BaseAdapter {
             holder.tv_edu = (TextView) view.findViewById(R.id.tv_listjob_edu);
             holder.tv_pubTiem = (TextView) view.findViewById(R.id.tv_listjob_pubtime);
             holder.tv_salaryRange = (TextView) view.findViewById(R.id.tv_listjob_salaryrange);
+            holder.rl_listjob_select = (RelativeLayout) view.findViewById(R.id.rl_listjob_select);
 
             if(!isHaveCheckBox){
                 holder.cb_select.setVisibility(View.GONE);
             }
             view.setTag(holder);
         }
+        holder.cb_select.setChecked(false);
         holder.tv_businessName.setText("太和天下");
+        holder.rl_listjob_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                holder.cb_select.setChecked(true);
+                holder.cb_select.performClick();
+            }
+        });
 
         holder.cb_select.setChecked(list.get(position).isChecked());
         holder.cb_select.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +125,7 @@ public class AllJobAdapter extends BaseAdapter {
 
         CheckBox cb_select;
         TextView tv_jobName, tv_businessName,tv_city,tv_edu,tv_pubTiem,tv_salaryRange;
+        RelativeLayout rl_listjob_select;
     }
 
 
