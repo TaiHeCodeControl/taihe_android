@@ -2,6 +2,7 @@ package com.taihe.eggshell.widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -33,6 +34,7 @@ public class UpdateDialog extends Dialog{
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.update_dialog);
+        getWindow().setBackgroundDrawable(new BitmapDrawable());
 
         titleText = (TextView)findViewById(R.id.id_dialog_title);
         leftButton = (Button)findViewById(R.id.id_dialog_left);

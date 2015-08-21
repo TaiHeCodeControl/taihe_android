@@ -25,7 +25,7 @@
         <item name="android:layout_weight">1.0</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/font_size_14</item>
         <item name="android:textColor">@color/index_tab_color</item>
     </style>
 
@@ -34,7 +34,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1.0</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/font_size_16</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
@@ -88,14 +88,14 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">@dimen/font_size_15</item>
         <item name="android:textColor">@color/font_color_black</item>
     </style>
 
     <style name="ResumeTextStyle_left">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">@dimen/font_size_15</item>
         <item name="android:textColor">@color/font_color_gray</item>
     </style>
 
@@ -111,7 +111,7 @@
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">15dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">@dimen/font_size_15</item>
         <item name="android:textColor">@color/font_color_black</item>
         <item name="android:textColorHint">@color/hint_color</item>
         <item name="android:background">@null</item>

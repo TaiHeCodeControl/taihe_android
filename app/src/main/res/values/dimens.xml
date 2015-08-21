@@ -9,6 +9,14 @@
     <dimen name="font_size_36">18sp</dimen>
     <dimen name="font_size_title">18sp</dimen>
 
+    <dimen name="font_size_14">14sp</dimen>
+    <dimen name="font_size_15">15sp</dimen>
+    <dimen name="font_size_16">16sp</dimen>
+    <dimen name="font_size_17">17sp</dimen>
+    <dimen name="font_size_18">18sp</dimen>
+    <dimen name="font_size_19">19sp</dimen>
+    <dimen name="font_size_20">20sp</dimen>
+
     <!--标题栏高度-->
     <dimen name="title_height">47dp</dimen>
 </resources>

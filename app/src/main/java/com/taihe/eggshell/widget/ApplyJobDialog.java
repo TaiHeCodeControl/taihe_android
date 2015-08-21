@@ -2,6 +2,7 @@ package com.taihe.eggshell.widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -29,6 +30,7 @@ public class ApplyJobDialog extends Dialog{
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_isapplyjob);
+        getWindow().setBackgroundDrawable(new BitmapDrawable());
 
         final ImageView iv_cancel = (ImageView)findViewById(R.id.iv_isapplyjob_cancel);
         final Button btn_ok = (Button)findViewById(R.id.btn_isapplyjob_ok);

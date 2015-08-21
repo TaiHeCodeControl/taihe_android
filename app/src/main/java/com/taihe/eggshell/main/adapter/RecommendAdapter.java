@@ -47,7 +47,7 @@ public class RecommendAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
 
             RecommendCompany company = companyList.get(position);
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_recommend_company,null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_recommend_company,parent,false);
             ImageView companylogo = (ImageView)convertView.findViewById(R.id.id_company_logo);
             companylogo.setImageResource(company.getImgsrc());
 

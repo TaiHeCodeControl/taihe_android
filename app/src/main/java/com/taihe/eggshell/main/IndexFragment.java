@@ -24,6 +24,7 @@ import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.APKUtils;
+import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateHelper;
@@ -227,8 +228,10 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        dialog.getTitleText().setText("发现新版本"+APKUtils.getVersionName());
+        dialog.getTitleText().setText("发现新版本" + APKUtils.getVersionName());
         dialog.show();
+
+        FormatUtils.getMD5("你妹");
     }
 
     @Override

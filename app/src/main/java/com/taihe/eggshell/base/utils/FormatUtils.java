@@ -4,6 +4,12 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.chinaway.framework.swordfish.util.MD5Utils;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by bei on 2015/7/15.
@@ -50,6 +56,24 @@ public class FormatUtils {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static void getMD5(String str){
+        try {
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(str.getBytes());
+            byte[] m = digest.digest();
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0;i<m.length;i++){
+                sb.append(m[i]);
+            }
+
+            Log.v("MD5Utils:",MD5Utils.encode(str)+ "==" +sb.toString());
+
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
     }
 

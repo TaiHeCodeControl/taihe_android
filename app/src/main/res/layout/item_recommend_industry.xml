@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="金融银行"
-            android:textSize="14sp"
+            android:textSize="@dimen/font_size_14"
             android:textColor="@color/index_tab_color"
             android:drawableTop="@drawable/hulianwang"
             android:drawablePadding="8dp"
