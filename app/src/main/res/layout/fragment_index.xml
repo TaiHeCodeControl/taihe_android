@@ -207,5 +207,6 @@
                 android:src="@drawable/search_icon"
                 android:layout_alignParentRight="true"/>
         </RelativeLayout>
+
     </LinearLayout>
 </RelativeLayout>

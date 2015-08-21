@@ -29,6 +29,7 @@ public class LoadingProgressDialog extends Dialog {
         getWindow().setBackgroundDrawable(new BitmapDrawable());
 
         setContentView(R.layout.progressdialog_item);
+        setCanceledOnTouchOutside(false);
 
         TextView tvMsg = (TextView) this.findViewById(R.id.dialog_text);
         if (tvMsg != null) {
