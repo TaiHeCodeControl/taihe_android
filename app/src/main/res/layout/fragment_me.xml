@@ -5,6 +5,83 @@
     android:background="@color/background_gray"
     android:orientation="vertical">
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的"
+            android:textColor="@color/font_color_black"
+            android:textSize="@dimen/font_size_title" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/wodebeijing">
+
+        <com.taihe.eggshell.widget.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/circleiv_mine_icon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/touxiang"
+            app:border_color="#FFFFFF"
+            app:border_width="3dp" />
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/circleiv_mine_icon">
+
+            <TextView
+                android:id="@+id/tv_mine_logintxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="点击登录"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_32"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                android:id="@+id/ll_mine_userinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_mine_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="王昕"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_32" />
+
+                <TextView
+                    android:id="@+id/tv_mine_qianming"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="学习是一种信仰"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_26" />
+
+
+            </LinearLayout>
+
+        </FrameLayout>
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -14,82 +91,6 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/title_height"
-                android:background="@color/white">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="我的"
-                    android:textColor="@color/font_color_black"
-                    android:textSize="@dimen/font_size_title" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:background="@drawable/wodebeijing">
-
-                <com.taihe.eggshell.widget.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/circleiv_mine_icon"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:background="@drawable/touxiang"
-                    app:border_color="#FFFFFF"
-                    app:border_width="3dp" />
-
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/circleiv_mine_icon">
-
-                    <TextView
-                        android:id="@+id/tv_mine_logintxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="点击登录"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/font_size_32"
-                        android:layout_gravity="center_vertical"
-                        android:visibility="invisible"/>
-
-                    <LinearLayout
-                        android:id="@+id/ll_mine_userinfo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                     >
-                        <TextView
-                            android:id="@+id/tv_mine_username"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:text="王昕"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/font_size_32" />
-
-                        <TextView
-                            android:id="@+id/tv_mine_qianming"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="学习是一种信仰"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/font_size_26" />
-
-
-                    </LinearLayout>
-
-                </FrameLayout>
-            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_mine_editziliao"
@@ -290,8 +291,7 @@
 
             </RelativeLayout>
 
-            <View
-                style="@style/line_marginLeft"/>
+            <View style="@style/line_marginLeft" />
 
             <RelativeLayout
                 android:id="@+id/rl_mine_hezuoqudao"
@@ -319,8 +319,7 @@
 
             </RelativeLayout>
 
-            <View
-                style="@style/line_marginLeft"/>
+            <View style="@style/line_marginLeft" />
 
             <RelativeLayout
                 android:id="@+id/rl_mine_feedback"
@@ -348,8 +347,7 @@
 
             </RelativeLayout>
 
-            <View
-                style="@style/line_marginLeft"/>
+            <View style="@style/line_marginLeft" />
 
             <RelativeLayout
                 android:id="@+id/rl_mine_checkupdate"
@@ -372,9 +370,9 @@
                     android:id="@+id/tv_mine_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="25dp"
-                    android:layout_centerInParent="true"
                     android:text="V1.0"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
@@ -401,16 +399,16 @@
                 android:background="@color/background_gray" />
 
 
-
             <RelativeLayout
                 android:id="@+id/rl_mine_logout"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:background="@drawable/ucenter_selected_background">
+
                 <View
-                    android:layout_alignParentTop="true"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
+                    android:layout_alignParentTop="true"
                     android:background="@color/line_gray" />
 
                 <TextView
@@ -423,14 +421,12 @@
                     android:textSize="@dimen/font_size_26" />
 
                 <View
-                    android:layout_alignParentBottom="true"
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
                     android:background="@color/line_gray" />
 
             </RelativeLayout>
-
-
 
 
             <RelativeLayout
