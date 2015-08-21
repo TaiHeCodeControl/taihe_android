@@ -1,11 +1,9 @@
 package com.taihe.eggshell.personalCenter.activity;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -31,7 +29,7 @@ import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateUtils;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.widget.ChoiceDialog;
-import com.taihe.eggshell.widget.CustomProgressDialog;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.HorizontalProgressBarWithNumber;
 
 import org.json.JSONException;
@@ -408,14 +406,14 @@ public class SetUpActivity extends BaseActivity {
     }
 
     // =========================加载动画========================================
-    private CustomProgressDialog loading;
+    private LoadingProgressDialog loading;
 
     /**
      * 加载动画
      */
     private void initLoading() {
         if (loading == null) {
-            loading = new CustomProgressDialog(this, getResources().getString(
+            loading = new LoadingProgressDialog(this, getResources().getString(
                     R.string.submitcertificate_string_wait_dialog));
         }
         loading.show();

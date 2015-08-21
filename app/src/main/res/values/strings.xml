@@ -48,5 +48,5 @@
 
     <!-- 自定义progressdialog -->
     <string name="app_progress_dialog">请稍后&#8230;&#8230;&#8230;</string>
-    <string name="submitcertificate_string_wait_dialog">请耐心等待&#8230;&#8230;</string>
+    <string name="submitcertificate_string_wait_dialog">正在请求&#8230;&#8230;</string>
 </resources>

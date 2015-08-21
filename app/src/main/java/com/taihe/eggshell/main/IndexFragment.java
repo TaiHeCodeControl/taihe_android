@@ -38,13 +38,12 @@ import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
 import com.taihe.eggshell.meetinginfo.Act_MeetingInfo;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
-import com.taihe.eggshell.widget.ChoiceDialog;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.ImagesGallery;
 import com.taihe.eggshell.widget.MyListView;
 import com.taihe.eggshell.widget.MyScrollView;
 import com.taihe.eggshell.widget.ProgressDialog;
 import com.taihe.eggshell.widget.UpdateDialog;
-import com.taihe.eggshell.widget.cityselect.CitySelectActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -240,6 +239,9 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             case R.id.id_job_place:
 //                intent = new Intent(mContext, CitySelectActivity.class);
 //                startActivity(intent);
+                LoadingProgressDialog loading = new LoadingProgressDialog(mContext, getResources().getString(
+                        R.string.submitcertificate_string_wait_dialog));
+                loading.show();
                 break;
             case R.id.id_search_job:
                 intent = new Intent(mContext, JobSearchActivity.class);
