@@ -230,7 +230,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         dialog.getTitleText().setText("发现新版本" + APKUtils.getVersionName());
         dialog.show();
 
-        FormatUtils.getMD5("你妹");
+//        FormatUtils.getMD5("你妹");
     }
 
     @Override
