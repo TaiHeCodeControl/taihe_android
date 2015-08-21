@@ -1,11 +1,14 @@
 package com.taihe.eggshell.personalCenter.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.Window;
@@ -38,14 +41,15 @@ import android.widget.TextView;
  * 基本资料界面，个人基本信息的查看和编辑
  * Created by huan on 2015/8/11.
  */
-public class MyBasicActivity extends Activity implements View.OnClickListener {
+public class MyBasicActivity extends Activity implements View.OnClickListener, TextWatcher {
 
 
     private static final int REQUEST_CODE_CITY = 10;
     private Context mContext;
-    private TextView tv_birthdate, tv_mybasic_sex, tv_address, tv_mybasic_jianjie;
+    private TextView tv_birthdate, tv_mybasic_sex, tv_address, tv_mybasic_jianjie, tv_save;
+    private EditText et_nickname, et_qq, et_email;
 
-    private String verTime, jianjie , jianjiehint;
+    private String verTime, jianjie, jianjiehint;
 
     private Intent intent;
     private RelativeLayout iv_back;
@@ -53,6 +57,8 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
 
     WheelMain wheelMain;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private String oldnickname,oldsex,oldaddress,oldjianjie,oldbirthday,oldemail,oldqq;
+    private String newnickname,newsex,newaddress,newjianjie,newbirthday,newemail,newqq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +73,19 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
 
 
         iv_back = (RelativeLayout) findViewById(R.id.iv_mybasic_back);
-//        iv_birthdate = (ImageView) findViewById(R.id.iv_mybasic_date);
-//        iv_sexSelect = (ImageView) findViewById(R.id.iv_mybasic_sexselect);
-//        iv_citySelect = (ImageView) findViewById(R.id.iv_mybasic_cityselect);
         tv_mybasic_jianjie = (TextView) findViewById(R.id.tv_mybasic_jianjie);
         tv_birthdate = (TextView) findViewById(R.id.tv_mybasic_birthdate);
         tv_address = (TextView) findViewById(R.id.tv_mybasic_city);
         tv_mybasic_sex = (TextView) findViewById(R.id.tv_mybasic_sex);
+        tv_save = (TextView) findViewById(R.id.tv_mybasic_save);
+        tv_save.setOnClickListener(this);
+        tv_save.setClickable(false);
+
+
+        et_nickname = (EditText) findViewById(R.id.et_mybasic_nickname);
+        et_qq = (EditText) findViewById(R.id.et_mybasic_qq);
+        et_email = (EditText) findViewById(R.id.et_mybasic_email);
+
 
         rl_city = (RelativeLayout) findViewById(R.id.rl_mybasic_city);
         rl_city.setOnClickListener(this);
@@ -94,11 +106,30 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
         tv_birthdate.setText(CurrentTime);
         verTime = CurrentTime;
 
-//        iv_birthdate.setOnClickListener(this);
-//        iv_sexSelect.setOnClickListener(this);
-//        iv_citySelect.setOnClickListener(this);
+
         iv_back.setOnClickListener(this);
         tv_birthdate.setOnClickListener(this);
+
+        tv_address.addTextChangedListener(this);
+
+        tv_birthdate.addTextChangedListener(this);
+
+        tv_mybasic_sex.addTextChangedListener(this);
+
+        tv_mybasic_jianjie.addTextChangedListener(this);
+        et_email.addTextChangedListener(this);
+
+        et_qq.addTextChangedListener(this);
+
+        et_nickname.addTextChangedListener(this);
+
+        oldaddress = tv_address.getText().toString().trim();
+        oldnickname = et_nickname.getText().toString().trim();
+        oldqq = et_qq.getText().toString().trim();
+        oldemail = et_email.getText().toString().trim();
+        oldbirthday = tv_birthdate.getText().toString().trim();
+        oldjianjie = tv_mybasic_jianjie.getText().toString().trim();
+        oldsex = tv_mybasic_sex.getText().toString().trim();
     }
 
 
@@ -128,6 +159,10 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
             case R.id.rl_mybasic_jianjie:
                 // 请输入您的个人简介
                 showJianjieDialog();
+                break;
+
+            case R.id.tv_mybasic_save://保存修改信息
+                ToastUtils.show(mContext, "资料修改成功");
                 break;
         }
     }
@@ -162,7 +197,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
             public void onClick(View view) {
 
                 jianjie = et_jianjie.getText().toString().trim();
-                if(!TextUtils.isEmpty(jianjie)){
+                if (!TextUtils.isEmpty(jianjie)) {
 
                     tv_mybasic_jianjie.setText(jianjie);
                 }
@@ -179,7 +214,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
             }
         });
 
-        jianjieDialog =  new MyDialog(mContext,view,R.style.mydialog_style);
+        jianjieDialog = new MyDialog(mContext, view, R.style.mydialog_style);
         jianjieDialog.show();
     }
 
@@ -240,7 +275,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
                 sexSelectDialog.dismiss();
             }
         });
-        sexSelectDialog = new MyDialog(mContext,view,R.style.mydialog_style);
+        sexSelectDialog = new MyDialog(mContext, view, R.style.mydialog_style);
         sexSelectDialog.show();
 
     }
@@ -310,18 +345,57 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String address="";
-        if(data != null){
+        String address = "";
+        if (data != null) {
             address = data.getStringExtra("Address");
         }
-        if(address == null || TextUtils.isEmpty(address)){
+        if (address == null || TextUtils.isEmpty(address)) {
             return;
         }
-        if(requestCode == REQUEST_CODE_CITY && resultCode == AddressSelectActivity.RESULT_CODE_ADDRESS){
+        if (requestCode == REQUEST_CODE_CITY && resultCode == AddressSelectActivity.RESULT_CODE_ADDRESS) {
 
             tv_address.setText(address);
         }
     }
 
 
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
+        setButtonState();
+
+    }
+
+    /**
+     * 设置按钮的点击状态
+     */
+    private void setButtonState() {
+        newaddress = tv_address.getText().toString().trim();
+        newnickname = et_nickname.getText().toString().trim();
+        newqq = et_qq.getText().toString().trim();
+        newemail = et_email.getText().toString().trim();
+        newbirthday = tv_birthdate.getText().toString().trim();
+        newjianjie = tv_mybasic_jianjie.getText().toString().trim();
+        newsex = tv_mybasic_sex.getText().toString().trim();
+
+        if (!newaddress.equals(oldaddress) || !newnickname.equals(oldnickname) || !newqq.equals(oldqq) ||!newemail.equals(oldemail) || !newbirthday.equals(oldbirthday) || !newjianjie.equals(oldjianjie) || !newsex.equals(oldsex)) {
+            tv_save.setClickable(true);
+            tv_save.setTextColor(getResources().getColor(R.color.font_color_red));
+        } else {
+            tv_save.setClickable(false);
+            tv_save.setTextColor(getResources().getColor(R.color.font_color_gray));
+        }
+
+    }
 }
