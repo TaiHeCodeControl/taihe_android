@@ -6,20 +6,38 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.easefun.polyvsdk.PolyvSDKClient;
 import com.easefun.polyvsdk.ijk.IjkVideoView;
 import com.easefun.polyvsdk.ijk.OnPreparedListener;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.main.adapter.VideoInfoAdapter;
+import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Thinkpad on 2015/7/24.
@@ -29,9 +47,9 @@ public class VideoPlayActivity extends BaseActivity {
     private LinearLayout lin_video_play_top;
     private IjkVideoView videoview;
     private MediaController mediaController;
+    private VideoInfoAdapter videoAdapter;
     private ProgressBar progressBar;
-    private String path;
-    private String vid;
+    private String path,vid,c_id,plist;
     int w, h;
     private WindowManager wm;
     RelativeLayout rl;
@@ -40,11 +58,48 @@ public class VideoPlayActivity extends BaseActivity {
     private boolean encrypt = false;
     float ratio;
     private TextView playTitle;
+    private List<VideoInfoMode> listInfo;
+    private ListView lst_video_play;
+    String[] arrPlist;
+    Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 100:
+                    try{
+                        JSONArray j1 = new JSONArray(msg.obj.toString());
+                        JSONObject j2;
+                        for(int i=0;i<j1.length();i++){
+                            VideoInfoMode vMode = new VideoInfoMode();
+                            j2 = j1.getJSONObject(i);
+                            vMode.setId(j2.optString("id").toString());
+                            vMode.setC_id(j2.optString("c_id").toString());
+                            vMode.setVideo_id(j2.optString("video_id").toString());
+                            vMode.setVideo_name(j2.optString("video_name").toString());
+                            vMode.setVideo_hour(j2.optString("video_hour").toString());
+                            vMode.setVideo_teacher(j2.optString("video_teacher").toString());
+                            vMode.setVideo_about(j2.optString("video_about").toString());
+                            vMode.setVideo_obvious(j2.optString("video_obvious").toString());
+                            vMode.setVimage(j2.optString("vimage").toString());
+                            vMode.setStatus(j2.optString("status").toString());
+                            listInfo.add(vMode);
+                        }
+                        videoAdapter.setVideoData(listInfo);
+                        lst_video_play.setAdapter(videoAdapter);
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                    break;
+            }
+        }
+    };
     @Override
     public void initView() {
         setContentView(R.layout.activity_video_play);
         playTitle = (TextView) findViewById(R.id.txt_video_play_title);
         lin_video_play_top = (LinearLayout) findViewById(R.id.lin_video_play_top);
+        lst_video_play = (ListView) findViewById(R.id.lst_video_play);
         super.initView();
         super.initData();
     }
@@ -52,16 +107,21 @@ public class VideoPlayActivity extends BaseActivity {
     @Override
     public void initData() {
         initTitle("课程播放");
+        listInfo = new ArrayList<VideoInfoMode>();
+        videoAdapter = new VideoInfoAdapter(getApplicationContext());
+        lst_video_play.setDividerHeight(0);
         Bundle e = getIntent().getExtras();
         String title="";
         if (e != null) {
             path = e.getString("path");
             vid = e.getString("vid");
+            plist = e.getString("plist");
             title = e.getString("title");
         }
         if (vid != null && vid.length() > 0) {
             encrypt = true;
         }
+        arrPlist = plist.split(",");
         playTitle.setText(title);
         wm = this.getWindowManager();
         w = wm.getDefaultDisplay().getWidth();
@@ -140,8 +200,60 @@ public class VideoPlayActivity extends BaseActivity {
                 }
             }
         });
+        getData();
+        lst_video_play.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                view.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.bg_gray));
+                videoAdapter.setSelectedPosition(i);
+                videoAdapter.notifyDataSetInvalidated();
+                videoview.setVid(listInfo.get(i).getVideo_id(), 1);
+                playTitle.setText(listInfo.get(i).getVideo_name());
+            }
+        });
     }
 
+    void getData(){
+
+        //返回监听事件
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object obj) {//返回值
+                try {
+                    JSONObject jsonObject = new JSONObject((String) obj);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        String data = jsonObject.getString("data");
+                        Message msg = new Message();
+                        msg.what=100;
+                        msg.obj=data;
+                        mHandler.sendMessage(msg);
+                        // Log.e("data",data);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+//                        ToastUtils.show(mContext, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {//返回值
+//                    String err = new String(volleyError.networkResponse.data);
+//                    volleyError.networkResponse.statusCode;
+            }
+        };
+
+        Map<String,String> map = new HashMap<String,String>();
+//        map.put("limit",""+limit);
+//        map.put("page",""+page);
+
+        String url = "http://195.198.1.122:8066/eggker/phpv/API.php/video/getGroup?id="+arrPlist[arrPlist.length-1];
+        RequestUtils.createRequest(getApplicationContext(), url, "", true, map, true, listener, errorListener);
+    }
     @Override
     public void onClick(View v) {
         super.onClick(v);

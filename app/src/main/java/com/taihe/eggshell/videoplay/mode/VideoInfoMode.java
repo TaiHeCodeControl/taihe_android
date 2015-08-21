@@ -14,6 +14,7 @@ public class VideoInfoMode {
     public String video_obvious;
     public String status;
     public String vimage;
+    public String plist;
     public String getId() {
         return id;
     }
@@ -73,5 +74,13 @@ public class VideoInfoMode {
     }
     public void setVimage(String vimage) {
         this.vimage = vimage;
+    }
+
+    public String getPlist() {
+        return plist;
+    }
+
+    public void setPlist(String plist) {
+        this.plist = plist;
     }
 }

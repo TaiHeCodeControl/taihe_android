@@ -165,6 +165,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                         vMode.setVideo_obvious(j2.optString("video_obvious").toString());
                         vMode.setStatus(j2.optString("status").toString());
                         vMode.setVimage(j2.optString("vimage").toString());
+                        vMode.setPlist(j2.optString("plist").toString());
                         listInfo.add(vMode);
                     }
                     if(j1.length()<1 && page>1){

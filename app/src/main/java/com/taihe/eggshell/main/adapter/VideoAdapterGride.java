@@ -76,6 +76,8 @@ public class VideoAdapterGride extends BaseAdapter{
                 Intent intent = new Intent(mContext,VideoPlayActivity.class);
                 intent.putExtra("vid", list.get(position).getVideo_id().toString());
                 intent.putExtra("title", list.get(position).getVideo_name().toString());
+                intent.putExtra("c_id", list.get(position).getC_id().toString());
+                intent.putExtra("plist", list.get(position).getPlist().toString());
                 intent.putExtra("path", "");
                 mContext.startActivity(intent);
             }

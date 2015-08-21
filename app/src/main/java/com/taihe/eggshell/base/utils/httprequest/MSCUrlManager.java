@@ -88,6 +88,7 @@ public class MSCUrlManager implements Serializable {
 
 	private String geturlstr() {
 		String url = http + apitype + urlapi + state;
+        Log.e("url", url);
 		if (listMscUrlStrings != null) {
 
 			Set<String> strings = listMscUrlStrings.keySet();
