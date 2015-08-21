@@ -175,4 +175,12 @@
         <item name="android:backgroundDimAmount">0.6</item>
 
     </style>
+
+    <!--选择图片布局的弹出方式-->
+    <style name="pop_ani">
+        <item name="android:windowEnterAnimation">@anim/pop_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_bottom_out</item>
+    </style>
+
+
 </resources>
