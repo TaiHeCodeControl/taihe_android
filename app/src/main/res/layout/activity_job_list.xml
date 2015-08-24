@@ -28,10 +28,12 @@
 
     <ListView
         android:id="@+id/list_job_all"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="0dp"
         android:divider="@color/line_gray"
         android:footerDividersEnabled="false" />
 
-
+<include
+    layout="@layout/list_job_collect_footer"/>
 </LinearLayout>

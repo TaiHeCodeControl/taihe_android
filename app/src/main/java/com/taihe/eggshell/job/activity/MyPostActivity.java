@@ -2,13 +2,17 @@ package com.taihe.eggshell.job.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
@@ -38,8 +42,8 @@ public class MyPostActivity extends BaseActivity{
     private ListView list_job_all;
     private Context mContext;
 
-    private LinearLayout lin_back;
 
+    private View footerView;
     private static final String TAG = "MyPostActivity";
 
     @Override
@@ -60,8 +64,6 @@ public class MyPostActivity extends BaseActivity{
 
     public void initListView() {
 
-        lin_back = (LinearLayout) findViewById(R.id.lin_back);
-        lin_back.setOnClickListener(this);
         jobInfos = new ArrayList<JobInfo>();
 
         for(int i = 0; i < 10;i++){
@@ -69,6 +71,11 @@ public class MyPostActivity extends BaseActivity{
             jobInfos.add(jobInfo);
         }
         list_job_all = (ListView)findViewById(R.id.list_job_all);
+
+        //给listview增加底部view
+        footerView = View.inflate(mContext, R.layout.list_job_all_footer, null);
+        footerView.setVisibility(View.GONE);
+        list_job_all.addFooterView(footerView);
 
         list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -79,39 +86,69 @@ public class MyPostActivity extends BaseActivity{
                 startActivity(intent);
             }
         });
+        list_job_all.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(final AbsListView absListView, int scrollState) {
+                //当不滚动时
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                    //判断是否滚动到底部
+                    if (absListView.getLastVisiblePosition() == absListView.getCount() - 1) {
+                        //加载更多
+                        footerView.setVisibility(View.VISIBLE);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                TextView tv = (TextView) footerView.findViewById(R.id.tv_alljob_footer_txt);
+                                ProgressBar pb = (ProgressBar) footerView.findViewById(R.id.pb_alljob_footer_loading);
+                                pb.setVisibility(View.GONE);
+
+                                if (absListView.getCount() < 20) {
+
+                                    for (int i = 0; i < 5; i++) {
+                                        jobInfo = new JobInfo(false, i);
+                                        jobInfos.add(jobInfo);
+                                    }
+                                    adapter.notifyDataSetChanged();
+                                } else {
+                                    tv.setText("没有更多了");
+                                }
 
 
-    }
+                            }
+                        }, 2000);
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+            }
+        });
 
 
-    private void initListData() {
-        adapter = new AllJobAdapter(mContext,jobInfos,true);
-        View footerView = View.inflate(mContext,R.layout.list_job_collect_footer,null);
-
-
-        list_job_all.addFooterView(footerView);
-
-        list_job_all.setAdapter(adapter);
-
-        Button btn_shenqing = (Button)footerView.findViewById(R.id.btn_alljob_shenqing);
+        Button btn_shenqing = (Button)findViewById(R.id.btn_alljob_shenqing);
         btn_shenqing.setOnClickListener(this);
-        cb_selectAll = (CheckBox) footerView.findViewById(R.id.cb_findjob_selectall);
+        cb_selectAll = (CheckBox)findViewById(R.id.cb_findjob_selectall);
 
         cb_selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 for (JobInfo info : jobInfos) {
                     info.setIsChecked(isChecked);
                 }
-                adapter.notifyDataChanged(isChecked);
+                adapter.notifyDataSetChanged();
             }
         });
+    }
 
-        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
-            @Override
-            public void checkedPosition(int position, boolean isChecked) {
-                jobInfos.get(position).setIsChecked(isChecked);
-            }
-        });
+
+    private void initListData() {
+        adapter = new AllJobAdapter(mContext,jobInfos,true);
+        list_job_all.setAdapter(adapter);
+
+
 
     }
 
@@ -122,6 +159,7 @@ public class MyPostActivity extends BaseActivity{
 
     @Override
     public void onClick(View view) {
+        super.onClick(view);
         switch (view.getId()){
             case R.id.lin_back:
                 goBack();

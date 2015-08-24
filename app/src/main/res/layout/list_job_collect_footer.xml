@@ -5,6 +5,9 @@
     android:background="@color/white"
     android:paddingBottom="20dp"
     >
+    <View
+       style="@style/line_fill"
+        android:layout_alignParentTop="true"/>
 
     <CheckBox
         android:id="@+id/cb_findjob_selectall"
@@ -22,14 +25,14 @@
         android:layout_toRightOf="@+id/cb_findjob_selectall"
         android:text="全选" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:textSize="@dimen/font_size_26"
-        android:textColor="#C8C8C8"
-        android:text="加载更多" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="18dp"-->
+        <!--android:textSize="@dimen/font_size_26"-->
+        <!--android:textColor="#C8C8C8"-->
+        <!--android:text="加载更多" />-->
 
     <LinearLayout
         android:layout_marginTop="48dp"

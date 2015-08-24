@@ -33,7 +33,7 @@
             android:layout_marginLeft="15dp"
             android:background="@drawable/touxiang"
             app:border_color="#FFFFFF"
-            app:border_width="3dp" />
+            app:border_width="1dp" />
 
 
         <FrameLayout

@@ -61,6 +61,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
 
     private void initView() {
 
+
         jobInfos = new ArrayList<JobInfo>();
 
         for (int i = 0; i < 10; i++) {
@@ -68,13 +69,17 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
             jobInfos.add(jobInfo);
         }
         list_job_all = (ListView) rootView.findViewById(R.id.list_job_all);
+        //给listview增加底部view
+        footerView = View.inflate(mContext, R.layout.list_job_all_footer, null);
+        footerView.setVisibility(View.GONE);
+        list_job_all.addFooterView(footerView);
 
         list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 //listviewItem点击事件
 
-                if(position < jobInfos.size()){
+                if (position < jobInfos.size()) {
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
                     startActivity(intent);
                 }
@@ -82,20 +87,9 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-    }
-
-
-    private void initDate() {
-        adapter = new AllJobAdapter(mContext, jobInfos, true);
-        footerView = View.inflate(mContext, R.layout.list_job_all_footer, null);
-        footerView.setVisibility(View.GONE);
-        list_job_all.addFooterView(footerView);
-
-        list_job_all.setAdapter(adapter);
-
         list_job_all.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+            public void onScrollStateChanged(final AbsListView absListView, int scrollState) {
                 //当不滚动时
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
                     //判断是否滚动到底部
@@ -110,9 +104,21 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                                 TextView tv = (TextView) footerView.findViewById(R.id.tv_alljob_footer_txt);
                                 ProgressBar pb = (ProgressBar) footerView.findViewById(R.id.pb_alljob_footer_loading);
                                 pb.setVisibility(View.GONE);
-                                tv.setText("没有更多了");
+
+                                if (absListView.getCount() < 100) {
+
+                                    for (int i = 0; i < 5; i++) {
+                                        jobInfo = new JobInfo(false, i);
+                                        jobInfos.add(jobInfo);
+                                    }
+                                    adapter.notifyDataSetChanged();
+                                } else {
+                                    tv.setText("没有更多了");
+                                }
+
+
                             }
-                        },2000);
+                        }, 2000);
                     }
                 }
             }
@@ -132,16 +138,32 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                 for (JobInfo info : jobInfos) {
                     info.setIsChecked(isChecked);
                 }
-                adapter.notifyDataChanged(isChecked);
+                adapter.notifyDataSetChanged();
             }
         });
+
+
+    }
+
+
+    private void initDate() {
+        adapter = new AllJobAdapter(mContext, jobInfos, true);
 
         adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
             @Override
             public void checkedPosition(int position, boolean isChecked) {
                 jobInfos.get(position).setIsChecked(isChecked);
+//                //如果有listview没有被选中，全选按钮状态为false
+//                if(!jobInfos.get(position).isChecked()){
+//
+//                    cb_selectAll.setChecked(false);
+//                }
             }
         });
+
+        list_job_all.setAdapter(adapter);
+
+
 
     }
 
@@ -151,14 +173,14 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.btn_alljob_shenqing:
                 JobApplyDialogUtil.isApplyJob(mContext);
-                postJob();
+                postJob();//申请职位
                 break;
         }
     }
 
     public void postJob() {
         for (JobInfo jobInfo : jobInfos) {
-            System.out.println(jobInfo.getId()+"======"+jobInfo.isChecked());
+            System.out.println(jobInfo.getId() + "======" + jobInfo.isChecked());
 
         }
     }
