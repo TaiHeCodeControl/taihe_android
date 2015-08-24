@@ -1,6 +1,7 @@
 package com.taihe.eggshell.job.adapter;
 
 import android.content.Context;
+import android.location.GpsStatus;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +24,14 @@ public class AllJobAdapter extends BaseAdapter {
 
     // 填充数据的list
     private List<JobInfo> list;
-    private boolean allChecked = false;
     // 上下文
     private Context context;
     // 用来导入布局
     private LayoutInflater inflater = null;
-    private checkedListener listener;
     private boolean isHaveCheckBox;
+
+    private checkedListener listener;
+
 
 
     // 构造器
@@ -101,19 +103,15 @@ public class AllJobAdapter extends BaseAdapter {
             public void onClick(View view) {
                 list.get(position).setIsChecked(!list.get(position).isChecked());
                 listener.checkedPosition(position,list.get(position).isChecked());
+
             }
         });
+
 
 
         return view;
     }
 
-    public void notifyDataChanged(boolean allChecked){
-        for(JobInfo info:list){
-            info.setIsChecked(allChecked);
-        }
-        notifyDataSetChanged();
-    }
 
     public void setCheckedListener(checkedListener listener){
         this.listener = listener;
@@ -121,6 +119,8 @@ public class AllJobAdapter extends BaseAdapter {
     public interface checkedListener{
         public void checkedPosition(int position,boolean isChecked);
     }
+
+
     class ViewHolder{
 
         CheckBox cb_select;
