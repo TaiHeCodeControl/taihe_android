@@ -1,18 +1,11 @@
 package com.taihe.eggshell.base;
 
 import android.app.Application;
-import android.app.Service;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.os.Environment;
-import android.os.Vibrator;
-import android.text.TextUtils;
-import android.util.Log;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.GeofenceClient;
-import com.baidu.location.LocationClient;
+import android.os.Environment;
+import android.text.TextUtils;
+
+
 import com.easefun.polyvsdk.PolyvSDKClient;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -24,7 +17,6 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
-import com.taihe.eggshell.base.utils.UpdateUtils;
 import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.videoplay.PolyvDemoService;
 
