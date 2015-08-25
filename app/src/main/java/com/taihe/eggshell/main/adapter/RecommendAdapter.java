@@ -1,6 +1,9 @@
 package com.taihe.eggshell.main.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +12,10 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.network.http.toolbox.ImageLoader;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.main.entity.RecommendCompany;
 import com.taihe.eggshell.widget.MyGridView;
 
@@ -49,6 +55,7 @@ public class RecommendAdapter extends BaseAdapter{
             RecommendCompany company = companyList.get(position);
             convertView = LayoutInflater.from(context).inflate(R.layout.item_recommend_company,parent,false);
             ImageView companylogo = (ImageView)convertView.findViewById(R.id.id_company_logo);
+//            ImageLoader.getInstance().displayImage("http://img10.3lian.com/c1/newpic/05/32/52.jpg",companylogo);
             companylogo.setImageResource(company.getImgsrc());
 
         return convertView;

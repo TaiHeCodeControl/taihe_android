@@ -35,7 +35,7 @@ public class ResumeScanActivity extends BaseActivity{
     public void initData() {
         super.initData();
 
-        initTitle("预览简历");
+        initTitle("简历预览");
     }
 
 }
