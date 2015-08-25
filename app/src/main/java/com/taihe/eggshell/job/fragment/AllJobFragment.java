@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
@@ -39,16 +40,19 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
 
 
     private AllJobAdapter adapter;
-    private CheckBox cb_selectAll;
+    public CheckBox cb_selectAll;
 
 
-    private List<JobInfo> jobInfos = null;
+    public List<JobInfo> jobInfos = null;
     private JobInfo jobInfo;
 
     private View footerView;
     private ListView list_job_all;
     private View rootView;
     private Context mContext;
+
+    //选中条数的统计
+    public int selectSize = 0;
 
 
     @Override
@@ -107,13 +111,16 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                                 ProgressBar pb = (ProgressBar) footerView.findViewById(R.id.pb_alljob_footer_loading);
                                 pb.setVisibility(View.GONE);
 
-                                if (absListView.getCount() < 100) {
+                                if (absListView.getCount() < 30) {
 
-                                    for (int i = 0; i < 5; i++) {
-                                        jobInfo = new JobInfo(false, jobInfos.size() - 1 + i);
+                                    for (int i = 0; i < 10; i++) {
+                                        jobInfo = new JobInfo(false, jobInfos.size() + i);
                                         jobInfos.add(jobInfo);
+
                                     }
+                                    pb.setVisibility(View.VISIBLE);
                                     adapter.notifyDataSetChanged();
+                                    cb_selectAll.setChecked(false);
                                 } else {
                                     tv.setText("没有更多了");
                                 }
@@ -135,12 +142,21 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
         btn_shenqing.setOnClickListener(this);
         cb_selectAll = (CheckBox) rootView.findViewById(R.id.cb_findjob_selectall);
 
-        cb_selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                for (JobInfo info : jobInfos) {
-                    info.setIsChecked(isChecked);
+        cb_selectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!cb_selectAll.isChecked()) {
+                    cb_selectAll.setChecked(false);
+                    for (JobInfo info : jobInfos) {
+                        info.setIsChecked(false);
+                    }
+                } else {
+                    cb_selectAll.setChecked(true);
+                    selectSize = jobInfos.size();
+                    for (JobInfo info : jobInfos) {
+                        info.setIsChecked(true);
+                    }
                 }
-
                 adapter.notifyDataSetChanged();
             }
         });
@@ -157,10 +173,17 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
             public void checkedPosition(int position, boolean isChecked) {
                 jobInfos.get(position).setIsChecked(isChecked);
                 //如果有listview没有被选中，全选按钮状态为false
-                if(!jobInfos.get(position).isChecked()){
-
+                if (jobInfos.get(position).isChecked()) {
+                    selectSize += 1;
+                    if (selectSize == jobInfos.size()) {
+                        cb_selectAll.setChecked(true);
+                    }
+                } else {
+                    selectSize -= 1;
                     cb_selectAll.setChecked(false);
                 }
+
+
             }
         });
 
@@ -182,7 +205,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
 
     public void postJob() {
         for (JobInfo jobInfo : jobInfos) {
-            System.out.println(jobInfo.getId() + "======" + jobInfo.isChecked());
+//            System.out.println(jobInfo.getId() + "======" + jobInfo.isChecked());
 
         }
     }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.main.MainActivity;
@@ -42,6 +43,9 @@ public class MyCollectActivity extends BaseActivity {
 
     private View footerView;
     private static final String TAG = "MyCollectActivity";
+
+    //选中条数的统计
+    public int selectSize = 0;
 
     @Override
     public void initView() {
@@ -107,6 +111,7 @@ public class MyCollectActivity extends BaseActivity {
                                         jobInfo = new JobInfo(false, i);
                                         jobInfos.add(jobInfo);
                                     }
+                                    pb.setVisibility(View.VISIBLE);
                                     adapter.notifyDataSetChanged();
                                 } else {
                                     tv.setText("没有更多了");
@@ -130,10 +135,21 @@ public class MyCollectActivity extends BaseActivity {
         btn_shenqing.setOnClickListener(this);
         cb_selectAll = (CheckBox) findViewById(R.id.cb_findjob_selectall);
 
-        cb_selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                for (JobInfo info : jobInfos) {
-                    info.setIsChecked(isChecked);
+
+        cb_selectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!cb_selectAll.isChecked()) {
+                    cb_selectAll.setChecked(false);
+                    for (JobInfo info : jobInfos) {
+                        info.setIsChecked(false);
+                    }
+                } else {
+                    cb_selectAll.setChecked(true);
+                    selectSize = jobInfos.size();
+                    for (JobInfo info : jobInfos) {
+                        info.setIsChecked(true);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -147,11 +163,18 @@ public class MyCollectActivity extends BaseActivity {
             @Override
             public void checkedPosition(int position, boolean isChecked) {
                 jobInfos.get(position).setIsChecked(isChecked);
-//                //如果有listview没有被选中，全选按钮状态为false
-//                if(!jobInfos.get(position).isChecked()){
-//
-//                    cb_selectAll.setChecked(false);
-//                }
+                //如果有listview没有被选中，全选按钮状态为false
+                if (jobInfos.get(position).isChecked()) {
+                    selectSize += 1;
+                    if (selectSize == jobInfos.size()) {
+                        cb_selectAll.setChecked(true);
+                    }
+                } else {
+                    selectSize -= 1;
+                    cb_selectAll.setChecked(false);
+                }
+
+
             }
         });
         list_job_all.setAdapter(adapter);

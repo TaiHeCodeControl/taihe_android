@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.job.bean.JobInfo;
+import com.taihe.eggshell.job.fragment.AllJobFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,25 +88,35 @@ public class AllJobAdapter extends BaseAdapter {
 
             view.setTag(holder);
         }
-
-
         holder.tv_businessName.setText("太和天下");
+
+        //设置checkBox默认不可点
+        holder.cb_select.setClickable(false);
+
         holder.rl_listjob_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
-                holder.cb_select.setChecked(true);
+                holder.cb_select.setClickable(true);
                 holder.cb_select.performClick();
             }
         });
 
+
         holder.cb_select.setChecked(list.get(position).isChecked());
+
         holder.cb_select.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                list.get(position).setIsChecked(!list.get(position).isChecked());
-                listener.checkedPosition(position, list.get(position).isChecked());
+                if (list.get(position).isChecked()) {
+                    list.get(position).setIsChecked(false);
+                    listener.checkedPosition(position, false);
+                } else {
+                    list.get(position).setIsChecked(true);
+                    listener.checkedPosition(position, true);
+                }
+
 
             }
         });

@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * Created by huan on 2015/7/23.
  */
-public class MyPostActivity extends BaseActivity{
+public class MyPostActivity extends BaseActivity {
 
 
     private AllJobAdapter adapter;
@@ -45,6 +45,9 @@ public class MyPostActivity extends BaseActivity{
 
     private View footerView;
     private static final String TAG = "MyPostActivity";
+
+    //选中条数的统计
+    public int selectSize = 0;
 
     @Override
     public void initView() {
@@ -66,11 +69,11 @@ public class MyPostActivity extends BaseActivity{
 
         jobInfos = new ArrayList<JobInfo>();
 
-        for(int i = 0; i < 10;i++){
-            jobInfo = new JobInfo(false,i);
+        for (int i = 0; i < 10; i++) {
+            jobInfo = new JobInfo(false, i);
             jobInfos.add(jobInfo);
         }
-        list_job_all = (ListView)findViewById(R.id.list_job_all);
+        list_job_all = (ListView) findViewById(R.id.list_job_all);
 
         //给listview增加底部view
         footerView = View.inflate(mContext, R.layout.list_job_all_footer, null);
@@ -106,10 +109,11 @@ public class MyPostActivity extends BaseActivity{
 
                                 if (absListView.getCount() < 20) {
 
-                                    for (int i = 0; i < 5; i++) {
+                                    for (int i = 0; i < 10; i++) {
                                         jobInfo = new JobInfo(false, i);
                                         jobInfos.add(jobInfo);
                                     }
+                                    pb.setVisibility(View.VISIBLE);
                                     adapter.notifyDataSetChanged();
                                 } else {
                                     tv.setText("没有更多了");
@@ -129,14 +133,25 @@ public class MyPostActivity extends BaseActivity{
         });
 
 
-        Button btn_shenqing = (Button)findViewById(R.id.btn_alljob_shenqing);
+        Button btn_shenqing = (Button) findViewById(R.id.btn_alljob_shenqing);
         btn_shenqing.setOnClickListener(this);
-        cb_selectAll = (CheckBox)findViewById(R.id.cb_findjob_selectall);
+        cb_selectAll = (CheckBox) findViewById(R.id.cb_findjob_selectall);
 
-        cb_selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                for (JobInfo info : jobInfos) {
-                    info.setIsChecked(isChecked);
+
+        cb_selectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!cb_selectAll.isChecked()) {
+                    cb_selectAll.setChecked(false);
+                    for (JobInfo info : jobInfos) {
+                        info.setIsChecked(false);
+                    }
+                } else {
+                    cb_selectAll.setChecked(true);
+                    selectSize = jobInfos.size();
+                    for (JobInfo info : jobInfos) {
+                        info.setIsChecked(true);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -145,33 +160,35 @@ public class MyPostActivity extends BaseActivity{
 
 
     private void initListData() {
-        adapter = new AllJobAdapter(mContext,jobInfos,true);
+        adapter = new AllJobAdapter(mContext, jobInfos, true);
         adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
             @Override
             public void checkedPosition(int position, boolean isChecked) {
                 jobInfos.get(position).setIsChecked(isChecked);
-//                //如果有listview没有被选中，全选按钮状态为false
-//                if(!jobInfos.get(position).isChecked()){
-//
-//                    cb_selectAll.setChecked(false);
-//                }
+                //如果有listview没有被选中，全选按钮状态为false
+                if (jobInfos.get(position).isChecked()) {
+                    selectSize += 1;
+                    if (selectSize == jobInfos.size()) {
+                        cb_selectAll.setChecked(true);
+                    }
+                } else {
+                    selectSize -= 1;
+                    cb_selectAll.setChecked(false);
+                }
+
+
             }
         });
         list_job_all.setAdapter(adapter);
 
 
-
     }
-
-
-
-
 
 
     @Override
     public void onClick(View view) {
         super.onClick(view);
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.lin_back:
                 goBack();
 
@@ -191,7 +208,7 @@ public class MyPostActivity extends BaseActivity{
     }
 
     public void postJob() {
-        for(JobInfo jobInfo : jobInfos){
+        for (JobInfo jobInfo : jobInfos) {
 //            System.out.println(jobInfo.getId()+"======"+jobInfo.isChecked());
 
         }
