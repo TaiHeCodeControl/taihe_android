@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+    android:layout_width="250dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/white"
+    android:background="@drawable/find_paassword_background"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/id_dialog_title"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
         android:text="来者何人"
+        android:padding="30dp"
         android:textSize="18sp"
-        android:textColor="@color/blue"
+        android:textColor="@color/font_color_black"
         android:layout_gravity="center_horizontal"/>
 
     <View
@@ -24,8 +24,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -35,11 +33,12 @@
             android:layout_height="40dp"
             android:text="小的"
             android:textSize="16sp"
+            android:textColor="@color/font_color_red"
             android:background="@null"/>
         
         <View
             android:layout_width="0.5dp"
-            android:layout_height="35dp"
+            android:layout_height="match_parent"
             android:background="@color/red"/>
 
         <Button
@@ -48,6 +47,7 @@
             android:layout_height="40dp"
             android:textSize="16sp"
             android:text="大人"
+            android:textColor="@color/font_color_red"
             android:background="@null"/>
     </LinearLayout>
 

@@ -27,7 +27,9 @@ import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 全部职位列表
@@ -48,6 +50,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
     private View rootView;
     private Context mContext;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_job_all, null);
@@ -60,7 +63,6 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
 
 
     private void initView() {
-
 
         jobInfos = new ArrayList<JobInfo>();
 
@@ -108,7 +110,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                                 if (absListView.getCount() < 100) {
 
                                     for (int i = 0; i < 5; i++) {
-                                        jobInfo = new JobInfo(false, i);
+                                        jobInfo = new JobInfo(false, jobInfos.size() - 1 + i);
                                         jobInfos.add(jobInfo);
                                     }
                                     adapter.notifyDataSetChanged();
@@ -138,6 +140,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                 for (JobInfo info : jobInfos) {
                     info.setIsChecked(isChecked);
                 }
+
                 adapter.notifyDataSetChanged();
             }
         });
@@ -153,16 +156,15 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
             @Override
             public void checkedPosition(int position, boolean isChecked) {
                 jobInfos.get(position).setIsChecked(isChecked);
-//                //如果有listview没有被选中，全选按钮状态为false
-//                if(!jobInfos.get(position).isChecked()){
-//
-//                    cb_selectAll.setChecked(false);
-//                }
+                //如果有listview没有被选中，全选按钮状态为false
+                if(!jobInfos.get(position).isChecked()){
+
+                    cb_selectAll.setChecked(false);
+                }
             }
         });
 
         list_job_all.setAdapter(adapter);
-
 
 
     }

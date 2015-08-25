@@ -15,7 +15,9 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.job.bean.JobInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by huan on 2015/8/10.
@@ -33,15 +35,13 @@ public class AllJobAdapter extends BaseAdapter {
     private checkedListener listener;
 
 
-
     // 构造器
-    public AllJobAdapter(Context context,List<JobInfo> jobInfos,boolean isHaveCheckBox) {
+    public AllJobAdapter(Context context, List<JobInfo> jobInfos, boolean isHaveCheckBox) {
         inflater = LayoutInflater.from(context);
         this.context = context;
         this.list = jobInfos;
         this.isHaveCheckBox = isHaveCheckBox;
     }
-
 
 
     @Override
@@ -63,10 +63,10 @@ public class AllJobAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
         View view;
         final ViewHolder holder;
-        if(convertView != null){
+        if (convertView != null) {
             view = convertView;
             holder = (ViewHolder) view.getTag();
-        }else{
+        } else {
 
             view = inflater.inflate(R.layout.list_job_all, null);
             holder = new ViewHolder();
@@ -80,12 +80,15 @@ public class AllJobAdapter extends BaseAdapter {
             holder.tv_salaryRange = (TextView) view.findViewById(R.id.tv_listjob_salaryrange);
             holder.rl_listjob_select = (RelativeLayout) view.findViewById(R.id.rl_listjob_select);
 
-            if(!isHaveCheckBox){
+            //判断listview是否带有checkBox
+            if (!isHaveCheckBox) {
                 holder.cb_select.setVisibility(View.GONE);
             }
+
             view.setTag(holder);
         }
-        holder.cb_select.setChecked(false);
+
+
         holder.tv_businessName.setText("太和天下");
         holder.rl_listjob_select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,32 +105,30 @@ public class AllJobAdapter extends BaseAdapter {
 
             public void onClick(View view) {
                 list.get(position).setIsChecked(!list.get(position).isChecked());
-                listener.checkedPosition(position,list.get(position).isChecked());
+                listener.checkedPosition(position, list.get(position).isChecked());
 
             }
         });
-
-
 
         return view;
     }
 
 
-    public void setCheckedListener(checkedListener listener){
+    public void setCheckedListener(checkedListener listener) {
         this.listener = listener;
     }
-    public interface checkedListener{
-        public void checkedPosition(int position,boolean isChecked);
+
+    public interface checkedListener {
+        public void checkedPosition(int position, boolean isChecked);
     }
 
 
-    class ViewHolder{
+    class ViewHolder {
 
         CheckBox cb_select;
-        TextView tv_jobName, tv_businessName,tv_city,tv_edu,tv_pubTiem,tv_salaryRange;
+        TextView tv_jobName, tv_businessName, tv_city, tv_edu, tv_pubTiem, tv_salaryRange;
         RelativeLayout rl_listjob_select;
     }
-
 
 
 }

@@ -143,7 +143,17 @@ public class MyCollectActivity extends BaseActivity {
 
     private void initListData() {
         adapter = new AllJobAdapter(mContext, jobInfos, true);
-
+        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
+            @Override
+            public void checkedPosition(int position, boolean isChecked) {
+                jobInfos.get(position).setIsChecked(isChecked);
+//                //如果有listview没有被选中，全选按钮状态为false
+//                if(!jobInfos.get(position).isChecked()){
+//
+//                    cb_selectAll.setChecked(false);
+//                }
+            }
+        });
         list_job_all.setAdapter(adapter);
 
 
