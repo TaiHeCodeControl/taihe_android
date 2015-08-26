@@ -2,60 +2,67 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingBottom="15dp"
-    android:background="@drawable/shenqing">
+    android:background="@drawable/shenqing"
+    android:paddingBottom="15dp">
 
-    <TextView
-        android:id="@+id/tv_isapplyjob_title"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_isapplyjob_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
-        android:layout_marginLeft="10dp"
-        android:gravity="center_vertical"
-        android:text="申请职位"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_size_26" />
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_isapplyjob_title"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="申请职位"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_26" />
 
 
-    <ImageView
-        android:id="@+id/iv_isapplyjob_cancel"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/cha"
-        android:layout_alignTop="@+id/tv_isapplyjob_title"
-        android:layout_alignParentRight="true" />
+        <ImageView
+            android:id="@+id/iv_isapplyjob_cancel"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/cha" />
+    </LinearLayout>
 
 
-    <CheckBox
-        android:id="@+id/cb_isapplyjob_xuanze"
-        android:layout_width="30dp"
-        android:layout_height="60dp"
-        style="@style/CustomCheckboxBlue"
-        android:layout_below="@+id/tv_isapplyjob_title"
-        android:checked="true"
-        android:layout_marginLeft="10dp" />
+    <!--<CheckBox-->
+    <!--android:id="@+id/cb_isapplyjob_xuanze"-->
+    <!--android:layout_width="30dp"-->
+    <!--android:layout_height="60dp"-->
+    <!--style="@style/CustomCheckboxBlue"-->
+    <!--android:layout_below="@+id/tv_isapplyjob_title"-->
+    <!--android:checked="true"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:visibility="invisible"/>-->
 
     <TextView
         android:id="@+id/tv_isapplyjob_resumename"
-        android:layout_toRightOf="@+id/cb_isapplyjob_xuanze"
-        android:layout_below="@+id/tv_isapplyjob_title"
-        android:layout_marginTop="23dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="个人简历20150730"
+        android:layout_below="@+id/ll_isapplyjob_title"
+        android:lineSpacingExtra="8dp"
+        android:padding="30dp"
+        android:text="个人简历20150730个人简历20150730个人简历20150730个人简历20150730个人简历20150730"
         android:textColor="@color/font_color_black"
-        android:textSize="@dimen/font_size_26"/>
+        android:textSize="@dimen/font_size_26" />
 
 
     <Button
         android:id="@+id/btn_isapplyjob_ok"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_below="@+id/tv_isapplyjob_resumename"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:background="@drawable/lanniu2"
         android:text="确定"
-        android:textSize="@dimen/font_size_26"
         android:textColor="@color/white"
-        android:layout_below="@+id/cb_isapplyjob_xuanze"
-        android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true" />
+        android:textSize="@dimen/font_size_26" />
 </RelativeLayout>

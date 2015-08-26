@@ -133,7 +133,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         super.onClick(v);
         switch (v.getId()) {
             case R.id.id_apply_button:
-                JobApplyDialogUtil.isApplyJob(mContext);
+                JobApplyDialogUtil.isApplyJob(mContext,10,2);
                 break;
             case R.id.id_see_all:
                 company_jieshao.setMaxLines(Integer.MAX_VALUE);

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -72,18 +73,23 @@ public class AllJobAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.list_job_all, null);
             holder = new ViewHolder();
 
-            holder.cb_select = (CheckBox) view.findViewById(R.id.cb_listjob_select);
+//            holder.cb_select = (CheckBox) view.findViewById(R.id.cb_listjob_select);
             holder.tv_jobName = (TextView) view.findViewById(R.id.tv_listjob_jobname);
             holder.tv_businessName = (TextView) view.findViewById(R.id.tv_listjob_businessname);
             holder.tv_city = (TextView) view.findViewById(R.id.tv_listjob_city);
             holder.tv_edu = (TextView) view.findViewById(R.id.tv_listjob_edu);
             holder.tv_pubTiem = (TextView) view.findViewById(R.id.tv_listjob_pubtime);
             holder.tv_salaryRange = (TextView) view.findViewById(R.id.tv_listjob_salaryrange);
-            holder.rl_listjob_select = (RelativeLayout) view.findViewById(R.id.rl_listjob_select);
+//            holder.rl_listjob_select = (RelativeLayout) view.findViewById(R.id.rl_listjob_select);
+            holder.view_marginLeft = view.findViewById(R.id.view_marginLeft);
+            holder.iv_xuanze = (ImageView) view.findViewById(R.id.iv_joblist_xuanze);
+
 
             //判断listview是否带有checkBox
             if (!isHaveCheckBox) {
-                holder.cb_select.setVisibility(View.GONE);
+//                holder.cb_select.setVisibility(View.GONE);
+                holder.iv_xuanze.setVisibility(View.GONE);
+                holder.view_marginLeft.setVisibility(View.VISIBLE);
             }
 
             view.setTag(holder);
@@ -91,28 +97,35 @@ public class AllJobAdapter extends BaseAdapter {
         holder.tv_businessName.setText("太和天下");
 
         //设置checkBox默认不可点
-        holder.cb_select.setClickable(false);
+//        holder.cb_select.setClickable(false);
 
-        holder.rl_listjob_select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+//        holder.rl_listjob_select.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//                holder.cb_select.setClickable(true);
+//                holder.cb_select.performClick();
+//            }
+//        });
 
+//        holder.cb_select.setChecked(list.get(position).isChecked());
 
-                holder.cb_select.setClickable(true);
-                holder.cb_select.performClick();
-            }
-        });
+        if (list.get(position).isChecked()) {
+            holder.iv_xuanze.setImageResource(R.drawable.xuankuang_red);
+        } else {
+            holder.iv_xuanze.setImageResource(R.drawable.xuankuang);
+        }
 
-
-        holder.cb_select.setChecked(list.get(position).isChecked());
-
-        holder.cb_select.setOnClickListener(new View.OnClickListener() {
+        holder.iv_xuanze.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
                 if (list.get(position).isChecked()) {
+                    holder.iv_xuanze.setImageResource(R.drawable.xuankuang);
                     list.get(position).setIsChecked(false);
                     listener.checkedPosition(position, false);
                 } else {
+                    holder.iv_xuanze.setImageResource(R.drawable.xuankuang_red);
                     list.get(position).setIsChecked(true);
                     listener.checkedPosition(position, true);
                 }
@@ -136,8 +149,10 @@ public class AllJobAdapter extends BaseAdapter {
 
     class ViewHolder {
 
-        CheckBox cb_select;
+//        CheckBox cb_select;
         TextView tv_jobName, tv_businessName, tv_city, tv_edu, tv_pubTiem, tv_salaryRange;
+        View view_marginLeft;
+        ImageView iv_xuanze;
         RelativeLayout rl_listjob_select;
     }
 

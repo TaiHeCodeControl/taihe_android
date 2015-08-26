@@ -192,7 +192,7 @@ public class MyCollectActivity extends BaseActivity {
 
                 break;
             case R.id.btn_alljob_shenqing:
-                JobApplyDialogUtil.isApplyJob(mContext);
+                JobApplyDialogUtil.isApplyJob(mContext,10,2);
                 postJob();
                 break;
         }

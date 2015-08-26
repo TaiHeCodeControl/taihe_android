@@ -52,8 +52,8 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
     private Context mContext;
 
     //选中条数的统计
-    public int selectSize = 0;
-
+    private int selectSize = 0;
+    private int postednum = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -197,7 +197,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_alljob_shenqing:
-                JobApplyDialogUtil.isApplyJob(mContext);
+                JobApplyDialogUtil.isApplyJob(mContext,selectSize,postednum);
                 postJob();//申请职位
                 break;
         }

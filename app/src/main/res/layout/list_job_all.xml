@@ -8,23 +8,43 @@
         android:layout_width="match_parent"
         android:layout_height="80dp">
 
-        <RelativeLayout
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_listjob_select"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<View-->
+        <!--android:layout_width="15dp"-->
+        <!--android:layout_height="match_parent"/>-->
+        <!--<CheckBox-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginRight="20dp"-->
+        <!--android:id="@+id/cb_listjob_select"-->
+        <!--style="@style/CustomCheckboxRed"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:focusable="false" />-->
+        <!--</RelativeLayout>-->
+
+        <FrameLayout
             android:id="@+id/rl_listjob_select"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
             <View
+                android:id="@+id/view_marginLeft"
                 android:layout_width="15dp"
-                android:layout_height="match_parent"/>
-            <CheckBox
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:id="@+id/cb_listjob_select"
-                style="@style/CustomCheckboxRed"
-                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:focusable="false" />
-        </RelativeLayout>
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/iv_joblist_xuanze"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@drawable/xuankuang"
+               />
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -103,7 +123,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tv_listjob_pubtime"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             android:text="5K-7K"
             android:textColor="@color/font_color_red"
             android:textSize="@dimen/font_size_26" />
@@ -112,7 +132,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="3dp"
         android:layout_marginLeft="15dp"
         android:background="@color/line_gray" />
 </LinearLayout>
