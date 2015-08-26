@@ -105,13 +105,13 @@ public class LoginActivity extends BaseActivity {
 
     private void goBack() {
 
-        Intent intents = getIntent();
-        loginTag = intents.getStringExtra("LoginTag");
-        if (loginTag.equals("logout")) {
-            intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("MeFragment", "MeFragment");
-            startActivity(intent);
-        }
+//        Intent intents = getIntent();
+//        loginTag = intents.getStringExtra("LoginTag");
+//        if (loginTag.equals("logout")) {
+//            intent = new Intent(LoginActivity.this, MainActivity.class);
+//            intent.putExtra("MeFragment", "MeFragment");
+//            startActivity(intent);
+//        }
 
         LoginActivity.this.finish();
 
@@ -197,7 +197,7 @@ public class LoginActivity extends BaseActivity {
         if (loginTag.equals("meFragment")) {
 
             intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.putExtra("MeFragment", "MeFragment");
+            intent.putExtra("Main", "MeFragment");
             startActivity(intent);
         } else if (loginTag.equals("myBasic")) {
             intent = new Intent(LoginActivity.this, MyBasicActivity.class);

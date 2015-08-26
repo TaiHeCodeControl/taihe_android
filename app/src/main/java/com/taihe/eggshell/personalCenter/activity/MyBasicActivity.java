@@ -1,21 +1,17 @@
 package com.taihe.eggshell.personalCenter.activity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.widget.MyDialog;
@@ -32,7 +28,6 @@ import java.util.Calendar;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

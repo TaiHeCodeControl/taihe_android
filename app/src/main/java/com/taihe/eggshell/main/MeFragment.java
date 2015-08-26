@@ -1,14 +1,17 @@
 package com.taihe.eggshell.main;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,28 +57,30 @@ import java.util.Map;
 /**
  * 我的界面
  */
-public class MeFragment extends Fragment implements View.OnClickListener{
+public class MeFragment extends Fragment implements View.OnClickListener {
 
+
+    private static final String TAG = "MeFragment" ;
     private Context mContext;
 
     private ChoiceDialog dialog;
     private UpdateDialog updateDialog;
 
     private View rootView;
-    private RelativeLayout rl_mine_checkupdate,rl_mine_feedback, rl_setting,rl_editZiliao ,rl_post,rl_collect,rl_jianli,rl_about,rl_hezuo,rl_logout;
-    private TextView tv_logintxt,tv_version,tv_username, tv_qianming , tv_postNum, tv_collectNum , jianliNum;
+    private RelativeLayout rl_mine_checkupdate, rl_mine_feedback, rl_setting, rl_editZiliao, rl_post, rl_collect, rl_jianli, rl_about, rl_hezuo, rl_logout;
+    private TextView tv_logintxt, tv_version, tv_username, tv_qianming, tv_postNum, tv_collectNum, jianliNum;
     private LinearLayout ll_userinfo;
 
     private CircleImageView circleiv_mine_icon;
     private Intent intent;
 
     @Override
-	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mContext = getActivity();
-		rootView = inflater.inflate(R.layout.fragment_me, null) ;
-		return rootView ;
-	}
+        rootView = inflater.inflate(R.layout.fragment_me, null);
+        return rootView;
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -83,19 +88,19 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         circleiv_mine_icon = (CircleImageView) rootView.findViewById(R.id.circleiv_mine_icon);
         circleiv_mine_icon.setOnClickListener(this);
 
-        rl_setting = (RelativeLayout)rootView.findViewById(R.id.rl_mine_setting);
-        rl_editZiliao = (RelativeLayout)rootView.findViewById(R.id.rl_mine_editziliao);
-        rl_post = (RelativeLayout)rootView.findViewById(R.id.rl_mine_postposition);
-        rl_collect = (RelativeLayout)rootView.findViewById(R.id.rl_mine_collectpostion);
-        rl_jianli = (RelativeLayout)rootView.findViewById(R.id.rl_mine_jianliguanli);
-        rl_about = (RelativeLayout)rootView.findViewById(R.id.rl_mine_about);
-        rl_hezuo = (RelativeLayout)rootView.findViewById(R.id.rl_mine_hezuoqudao);
-        rl_logout = (RelativeLayout)rootView.findViewById(R.id.rl_mine_logout);
-        rl_mine_feedback = (RelativeLayout)rootView.findViewById(R.id.rl_mine_feedback);
-        rl_mine_checkupdate = (RelativeLayout)rootView.findViewById(R.id.rl_mine_checkupdate);
+        rl_setting = (RelativeLayout) rootView.findViewById(R.id.rl_mine_setting);
+        rl_editZiliao = (RelativeLayout) rootView.findViewById(R.id.rl_mine_editziliao);
+        rl_post = (RelativeLayout) rootView.findViewById(R.id.rl_mine_postposition);
+        rl_collect = (RelativeLayout) rootView.findViewById(R.id.rl_mine_collectpostion);
+        rl_jianli = (RelativeLayout) rootView.findViewById(R.id.rl_mine_jianliguanli);
+        rl_about = (RelativeLayout) rootView.findViewById(R.id.rl_mine_about);
+        rl_hezuo = (RelativeLayout) rootView.findViewById(R.id.rl_mine_hezuoqudao);
+        rl_logout = (RelativeLayout) rootView.findViewById(R.id.rl_mine_logout);
+        rl_mine_feedback = (RelativeLayout) rootView.findViewById(R.id.rl_mine_feedback);
+        rl_mine_checkupdate = (RelativeLayout) rootView.findViewById(R.id.rl_mine_checkupdate);
 
         tv_version = (TextView) rootView.findViewById(R.id.tv_mine_version);
-        tv_version.setText("当前版本V"+APKUtils.getVersionName());
+        tv_version.setText("当前版本V" + APKUtils.getVersionName());
 
         ll_userinfo = (LinearLayout) rootView.findViewById(R.id.ll_mine_userinfo);
         tv_logintxt = (TextView) rootView.findViewById(R.id.tv_mine_logintxt);
@@ -125,9 +130,10 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 
                 dialog.dismiss();
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
-                Intent intent = new Intent(mContext, LoginActivity.class);
-                intent.putExtra("LoginTag", "logout");
+                Intent intent = new Intent(mContext, MainActivity.class);
                 startActivity(intent);
+                ((MainActivity)getActivity()).radio_index.performClick();
+
             }
         });
 
@@ -139,15 +145,15 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initView() {
-
+        //初始化选择图片popWindow
         initImageSelect();
-        if(null == EggshellApplication.getApplication().getUser()){
+        if (null == EggshellApplication.getApplication().getUser()) {
 
             tv_logintxt.setVisibility(View.VISIBLE);
             ll_userinfo.setVisibility(View.GONE);
 
             rl_logout.setVisibility(View.GONE);
-        }else{
+        } else {
 
             tv_logintxt.setVisibility(View.GONE);
             ll_userinfo.setVisibility(View.VISIBLE);
@@ -160,31 +166,31 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_mine_logintxt://登录
 
-                intent = new Intent(mContext,LoginActivity.class);
+                intent = new Intent(mContext, LoginActivity.class);
                 intent.putExtra("LoginTag", "meFragment");
                 startActivity(intent);
                 break;
             case R.id.rl_mine_editziliao://基本资料
 //                LoginConfirmDialog.dialogShow(mContext);
-                if(null != EggshellApplication.getApplication().getUser()){
-                    intent = new Intent(mContext,MyBasicActivity.class);
+                if (null != EggshellApplication.getApplication().getUser()) {
+                    intent = new Intent(mContext, MyBasicActivity.class);
                     startActivity(intent);
-                }else{
-                    intent = new Intent(mContext,LoginActivity.class);
+                } else {
+                    intent = new Intent(mContext, LoginActivity.class);
                     intent.putExtra("LoginTag", "myBasic");
                     startActivity(intent);
                 }
 
                 break;
             case R.id.rl_mine_postposition://我的投递
-                if(null != EggshellApplication.getApplication().getUser()){
-                    intent = new Intent(mContext,MyPostActivity.class);
+                if (null != EggshellApplication.getApplication().getUser()) {
+                    intent = new Intent(mContext, MyPostActivity.class);
                     startActivity(intent);
-                }else{
-                    intent = new Intent(mContext,LoginActivity.class);
+                } else {
+                    intent = new Intent(mContext, LoginActivity.class);
                     intent.putExtra("LoginTag", "myPost");
                     startActivity(intent);
                 }
@@ -192,11 +198,11 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.rl_mine_collectpostion://我的收藏
-                if(null != EggshellApplication.getApplication().getUser()){
-                    intent = new Intent(mContext,MyCollectActivity.class);
+                if (null != EggshellApplication.getApplication().getUser()) {
+                    intent = new Intent(mContext, MyCollectActivity.class);
                     startActivity(intent);
-                }else{
-                    intent = new Intent(mContext,LoginActivity.class);
+                } else {
+                    intent = new Intent(mContext, LoginActivity.class);
                     intent.putExtra("LoginTag", "myCollect");
                     startActivity(intent);
                 }
@@ -204,21 +210,21 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.rl_mine_jianliguanli://简历管理
-                if(null != EggshellApplication.getApplication().getUser()){
-                    intent = new Intent(mContext,ResumeManagerActivity.class);
+                if (null != EggshellApplication.getApplication().getUser()) {
+                    intent = new Intent(mContext, ResumeManagerActivity.class);
                     startActivity(intent);
-                }else{
-                    intent = new Intent(mContext,LoginActivity.class);
+                } else {
+                    intent = new Intent(mContext, LoginActivity.class);
                     intent.putExtra("LoginTag", "myResume");
                     startActivity(intent);
                 }
                 break;
             case R.id.rl_mine_about://关于蛋壳儿
-                intent = new Intent(mContext,AboutActivity.class);
+                intent = new Intent(mContext, AboutActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rl_mine_hezuoqudao://合作渠道
-                intent = new Intent(mContext,TeamActivity.class);
+                intent = new Intent(mContext, TeamActivity.class);
                 startActivity(intent);
                 break;
             case R.id.rl_mine_logout://退出登录
@@ -237,12 +243,12 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 
             case R.id.rl_mine_checkupdate://检查更新
 //                getVersionCode();
-                ToastUtils.show(mContext,"当前已是最新版本");
+                ToastUtils.show(mContext, "当前已是最新版本");
                 break;
 
             case R.id.circleiv_mine_icon:
 
-                    showCameraPopWindow();
+                showCameraPopWindow();
                 break;
 
             // 以下是修改头像中的点击事件
@@ -271,26 +277,26 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    private void getVersionCode(){
+    private void getVersionCode() {
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
 
-                updateDialog = new UpdateDialog(mContext,new View.OnClickListener() {
+                updateDialog = new UpdateDialog(mContext, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         updateDialog.dismiss();
                     }
-                },new View.OnClickListener() {
+                }, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ToastUtils.show(mContext,"更新");
+                        ToastUtils.show(mContext, "更新");
                         updateDialog.dismiss();
 //                        updateAPK();
                     }
                 });
 
-                updateDialog.getTitleText().setText("发现新版本"+APKUtils.getVersionName());
+                updateDialog.getTitleText().setText("发现新版本" + APKUtils.getVersionName());
                 updateDialog.show();
             }
         };
@@ -302,18 +308,18 @@ public class MeFragment extends Fragment implements View.OnClickListener{
             }
         };
 
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("vercode", APKUtils.getVersionCode() + "");
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), "method", true, params, true, listener, errorListener);
     }
 
-    private void updateAPK(){
+    private void updateAPK() {
 
         final ProgressDialog progressDialog = new ProgressDialog(mContext);
         progressDialog.show();
 
-        new UpdateHelper(mContext,new UpdateHelper.DownloadProgress() {
+        new UpdateHelper(mContext, new UpdateHelper.DownloadProgress() {
             @Override
             public void progress(int percent) {
                 progressDialog.getProgressBar().setProgress(percent);
@@ -326,13 +332,10 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void error() {
-                ToastUtils.show(mContext,"错误");
+                ToastUtils.show(mContext, "错误");
             }
         }).downloadInBackground("");
     }
-
-
-
 
 
     @Override
@@ -340,7 +343,6 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         super.onResume();
         initView();
     }
-
 
 
     // ================================以下是修改头像代码============================
@@ -404,10 +406,10 @@ public class MeFragment extends Fragment implements View.OnClickListener{
 
     /**
      * 添加新笔记时弹出的popWin关闭的事件，主要是为了将背景透明度改回来
-     * @author cg
      *
+     * @author cg
      */
-    class poponDismissListener implements PopupWindow.OnDismissListener{
+    class poponDismissListener implements PopupWindow.OnDismissListener {
 
         @Override
         public void onDismiss() {
@@ -417,16 +419,18 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         }
 
     }
+
     /**
      * 设置添加屏幕的背景透明度
+     *
      * @param bgAlpha
      */
-    public void backgroundAlpha(float bgAlpha)
-    {
+    public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getActivity().getWindow().setAttributes(lp);
     }
+
     //
     private String uploadFile = Environment.getDataDirectory()
             + "/data/com.taihe.eggshell/temp.jpg";
@@ -440,7 +444,9 @@ public class MeFragment extends Fragment implements View.OnClickListener{
     private FileInputStream fStream;
     private String fString;
 
-    /************************ 从相机或者本地选图片到ImageView的method **********/
+    /**
+     * ********************* 从相机或者本地选图片到ImageView的method *********
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 

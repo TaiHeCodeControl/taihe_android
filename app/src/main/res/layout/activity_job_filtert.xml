@@ -47,7 +47,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="50dp"
                         android:background="@null"
-                        android:text="数据分析经理" />
+                        android:hint="输入关键字，例:工程师"
+                       />
 
                     <ImageView
                         android:id="@+id/iv_jobfilter_clear"
@@ -285,7 +286,7 @@
             <Button
                 android:id="@+id/btn_jobfilter_chaxun"
                 android:layout_width="150dp"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:layout_below="@+id/ll_jobfilter_ll"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/hongniu"

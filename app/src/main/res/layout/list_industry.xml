@@ -9,11 +9,14 @@
         android:id="@+id/tv_industrylist_industry"
         style="@style/font_job_filter_gray"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
         android:text="计算机/互联网" />
 
     <View
-        style="@style/line_fill"
-        android:layout_alignParentBottom="true" />
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/tv_industrylist_industry"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_gray"
+        />
 </RelativeLayout>

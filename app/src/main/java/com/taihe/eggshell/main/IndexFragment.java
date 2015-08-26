@@ -101,6 +101,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+        Log.i(TAG, "onAttach===============");
         try{
             changeViewPagerListener = (ChangeViewPagerListener)activity;
         }catch(ClassCastException e){
@@ -381,7 +383,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         Map<String,String> params = new HashMap<String, String>();
         params.put("vercode", APKUtils.getVersionCode() + "");
 
-        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_DETAIL,true,params,true,listener,errorListener);
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_DETAIL, true, params, true, listener, errorListener);
     }
 
     private void updateAPK(){
@@ -406,4 +408,5 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             }
         }).downloadInBackground("");
     }
+
 }

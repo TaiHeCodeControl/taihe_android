@@ -47,7 +47,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     private CustomViewPager main_viewPager;
     private RadioGroup main_tab_RadioGroup;
-    private RadioButton radio_index, radio_social, radio_openclass, radio_me;
+    public  RadioButton radio_index;
+    private RadioButton radio_social, radio_openclass, radio_me;
     private ArrayList<Fragment> fragmentList;
 
     private int current = 0;
@@ -98,7 +99,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         main_viewPager.setOffscreenPageLimit(0);// 控制预加载的页面数量（默认情况下参数为1）
 
         Intent intent = getIntent();
-        String tags = intent.getStringExtra("MeFragment");
+        String tags = intent.getStringExtra("Main");
         if (!TextUtils.isEmpty(tags) && tags.equals("MeFragment")) {
 //            main_viewPager.setCurrentItem(3,false);
             radio_me.performClick();
