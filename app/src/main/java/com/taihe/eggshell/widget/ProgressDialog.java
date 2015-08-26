@@ -2,6 +2,8 @@ package com.taihe.eggshell.widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.Window;
 import android.widget.ProgressBar;
 
 import com.taihe.eggshell.R;
@@ -19,7 +21,10 @@ public class ProgressDialog extends Dialog{
     }
 
     private void initView(){
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.upload_progress);
+        getWindow().setBackgroundDrawable(new BitmapDrawable());
+        setCanceledOnTouchOutside(false);
         progressBar = (ProgressBar)findViewById(R.id.update_progress);
     }
 

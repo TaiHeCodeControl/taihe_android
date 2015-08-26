@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.Constants;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.APKUtils;
 import com.taihe.eggshell.base.utils.FormatUtils;
@@ -45,6 +46,8 @@ import com.taihe.eggshell.widget.MyScrollView;
 import com.taihe.eggshell.widget.ProgressDialog;
 import com.taihe.eggshell.widget.UpdateDialog;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -225,7 +228,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View v) {
                 ToastUtils.show(mContext,"更新");
-//                updateAPK();
+                dialog.dismiss();
+                updateAPK();
             }
         });
 
@@ -406,7 +410,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             public void error() {
                 ToastUtils.show(mContext,"错误");
             }
-        }).downloadInBackground("");
+        }).downloadInBackground(Constants.UPDATE_APK_URL);
     }
 
 }

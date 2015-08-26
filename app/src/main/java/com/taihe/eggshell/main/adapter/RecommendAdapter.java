@@ -52,13 +52,25 @@ public class RecommendAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-            RecommendCompany company = companyList.get(position);
+        RecommendCompany company = companyList.get(position);
+        LogoViewHolder holder;
+        if(convertView == null){
+            holder = new LogoViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.item_recommend_company,parent,false);
-            ImageView companylogo = (ImageView)convertView.findViewById(R.id.id_company_logo);
+            holder.imageView = (ImageView)convertView.findViewById(R.id.id_company_logo);
+            convertView.setTag(holder);
+        }else{
+            holder = (LogoViewHolder)convertView.getTag();
+        }
+
 //            ImageLoader.getInstance().displayImage("http://img10.3lian.com/c1/newpic/05/32/52.jpg",companylogo);
-            companylogo.setImageResource(company.getImgsrc());
+            holder.imageView.setImageResource(company.getImgsrc());
 
         return convertView;
+    }
+
+    class LogoViewHolder{
+        ImageView imageView;
     }
 
 }
