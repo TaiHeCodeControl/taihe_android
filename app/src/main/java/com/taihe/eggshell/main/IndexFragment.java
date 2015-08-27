@@ -105,7 +105,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        Log.i(TAG, "onAttach===============");
         try{
             changeViewPagerListener = (ChangeViewPagerListener)activity;
         }catch(ClassCastException e){
@@ -210,10 +209,12 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             public void onScrollChange(int x, int y, int oldxX, int oldY) {
                 Message message = Message.obtain();
                 message.what = ALPHA_MESSAGE;
+                ToastUtils.show(mContext,oldY+"");
                 if (oldY >= 0) {
                     message.obj = oldY * (ALPHA_END - ALPHA_START) / scrollView.getMaxScrollAmount() + ALPHA_START;
                 }
                 handler.sendMessage(message);
+
             }
         });
 
