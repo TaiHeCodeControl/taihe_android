@@ -30,6 +30,9 @@ import com.taihe.eggshell.resume.ResumeManagerActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by huan on 2015/8/5.
  */
@@ -130,22 +133,18 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.show(getApplicationContext(), R.string.login_login_phone_toast);
             return;
         }
-//       final String url = "http://195.198.1.195/index.php?m=api&username=18810309239&pw=111111";
-//        new Thread(){
-//            public void run(){
-//                String str = HttpsUtils.doGet(url);
-//                System.out.println(str + "=============------------------");
-//
-//            };
-//        }.start();
 
-        loginSuccess();
-//        loginFromNet();
+//        loginSuccess();
+        loginFromNet();
 
 
     }
 
     private void loginFromNet() {
+
+        Map<String,String> dataParams = new HashMap<String,String>();
+        dataParams.put("phonenumber",userphone);
+        dataParams.put("password",password);
 
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
@@ -182,8 +181,13 @@ public class LoginActivity extends BaseActivity {
 //                    volleyError.networkResponse.statusCode;
             }
         };
-        String method = "&username=" + userphone + "&pw=" + password;
-        RequestUtils.createRequest_GET(mContext, Urls.getMopHostUrl(), method, false, "", "", listener, errorListener);
+//        String method = "&username=" + userphone + "&pw=" + password;
+//        RequestUtils.createRequest_GET(mContext, Urls.getMopHostUrl(), method, false, "", "", listener, errorListener);
+
+
+        String method = "http://195.198.1.122:8066/eggker/interface/register";
+        RequestUtils.createRequest(mContext, "",method,true,dataParams,true,listener,errorListener);
+
     }
 
     //登录成功保存用户登录信息

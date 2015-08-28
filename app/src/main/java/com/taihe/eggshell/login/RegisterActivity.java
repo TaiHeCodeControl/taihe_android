@@ -2,6 +2,8 @@ package com.taihe.eggshell.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,9 @@ import com.taihe.eggshell.main.entity.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 注册成功直接登录
@@ -106,9 +111,55 @@ public class RegisterActivity extends BaseActivity {
     //获取短信验证码
     private void getCode() {
 
+        p_num = phone_num.getText().toString();
+        if (TextUtils.isEmpty(p_num)) {
+            ToastUtils.show(mContext, "请输入手机号");
+            return;
+        } else if (!FormatUtils.isMobileNO(p_num)) {
+            ToastUtils.show(RegisterActivity.this, "手机号格式不正确");
+            return;
+        }
+        Map<String, String> dataParams = new HashMap<String, String>();
+        dataParams.put("phonenumber", p_num);
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object obj) {
+
+                try {
+                    Log.v(TAG, (String) obj);
+                    JSONObject jsonObject = new JSONObject((String) obj);
+                    int code = jsonObject.getInt("code");
+                    System.out.println("code=========" + code);
+                    if (code == 0) {
+
+                        String msg = jsonObject.getString("msg");
+                        ToastUtils.show(mContext, msg);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+                        ToastUtils.show(mContext, msg);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.v("TAG:",volleyError.networkResponse.statusCode+"");
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+
+            }
+        };
+
+        String method = "http://195.198.1.122:8066/eggker/interface/register/chTelphone";
+        RequestUtils.createRequest(mContext, "", method, true, dataParams, true, listener, errorListener);
     }
 
-    private void registerFromNet() {
+        private void registerFromNet() {
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
             @Override
