@@ -5,6 +5,7 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -144,14 +145,15 @@ public class VideoPlayActivity extends BaseActivity {
 
         }
         changeToPortrait();
+//        videoview.setVideoLayout(IjkVideoView.VIDEO_LAYOUT_STRETCH);
         videoview.setOnPreparedListener(new OnPreparedListener() {
 
             @Override
             public void onPrepared(IMediaPlayer mp) {
                 // TODO Auto-generated method stub
-
             }
         });
+
         mediaController.setOnBoardBackListener(new MediaController.OnBoardBackListener() {
 
             @Override
@@ -182,19 +184,19 @@ public class VideoPlayActivity extends BaseActivity {
                 videoview.setVideoLayout(layout);
                 switch (layout) {
                     case IjkVideoView.VIDEO_LAYOUT_ORIGIN:
-                        //Log.e("err","err1");
+                        Log.e("err","err1=="+layout);
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_ORIGIN", 1).show();
                         break;
                     case IjkVideoView.VIDEO_LAYOUT_SCALE:
-                       //Log.e("err","err2");
+                       Log.e("err","err2=="+layout);
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_SCALE", 1).show();
                         break;
                     case IjkVideoView.VIDEO_LAYOUT_STRETCH:
-                        //Log.e("err","err3");
+                        Log.e("err","err3=="+layout);
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_STRETCH", 1).show();
                         break;
                     case IjkVideoView.VIDEO_LAYOUT_ZOOM:
-                        //Log.e("err","err4");
+                        Log.e("err","err4=="+layout);
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_ZOOM", 1).show();
                         break;
                 }
@@ -273,6 +275,7 @@ public class VideoPlayActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         isLandscape = !isLandscape;
         lin_video_play_top.setVisibility(View.GONE);
+
     }
 
     // 切换到竖屏
@@ -283,5 +286,26 @@ public class VideoPlayActivity extends BaseActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         isLandscape = !isLandscape;
         lin_video_play_top.setVisibility(View.VISIBLE);
+    }
+    // 配置文件设置congfigchange 切屏调用一次该方法，hide()之后再次show才会出现在正确位置
+    @Override
+    public void onConfigurationChanged(Configuration arg0) {
+        // TODO Auto-generated method stub
+        super.onConfigurationChanged(arg0);
+        videoview.setVideoLayout(IjkVideoView.VIDEO_LAYOUT_SCALE);
+        mediaController.hide();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // TODO Auto-generated method stub
+        super.onBackPressed();
+        if(videoview.getMediaPlayer()!=null) videoview.getMediaPlayer().release();
+    }
+
+    @Override
+    protected void onPause() {
+        // TODO Auto-generated method stub
+        super.onPause();
     }
 }

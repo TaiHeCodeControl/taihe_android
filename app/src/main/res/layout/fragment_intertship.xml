@@ -8,13 +8,15 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/line_gray"/>
+        android:background="@color/line_gray"
+        android:visibility="gone" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/white"
         android:gravity="center"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/lin_fragment_top1"
