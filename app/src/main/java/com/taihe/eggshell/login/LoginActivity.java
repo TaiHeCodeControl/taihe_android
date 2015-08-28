@@ -16,6 +16,7 @@ import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.FormatUtils;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.base.utils.PrefUtils;
@@ -46,7 +47,7 @@ public class LoginActivity extends BaseActivity {
     private Button btn_login;
     private TextView tv_forgetPassword;
     private TextView tv_regist;
-    private ImageView iv_back;
+    private LinearLayout lin_back;
 
     private String userphone;
     private String password;
@@ -67,9 +68,9 @@ public class LoginActivity extends BaseActivity {
         btn_login = (Button) findViewById(R.id.btn_login_login);
         tv_forgetPassword = (TextView) findViewById(R.id.tv_login_forgetpassword);
         tv_regist = (TextView) findViewById(R.id.tv_login_regist);
-        iv_back = (ImageView) findViewById(R.id.id_back);
+        lin_back = (LinearLayout) findViewById(R.id.lin_back);
 
-        iv_back.setOnClickListener(this);
+        lin_back.setOnClickListener(this);
         btn_login.setOnClickListener(this);
         tv_forgetPassword.setOnClickListener(this);
         tv_regist.setOnClickListener(this);
@@ -85,11 +86,9 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
-        super.onClick(v);
         switch (v.getId()) {
-            case R.id.id_back:
+            case R.id.lin_back:
                 goBack();
-
                 break;
             case R.id.btn_login_login:
                 login();
@@ -134,7 +133,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-//        loginSuccess();
+        loginSuccess();
         loginFromNet();
 
 

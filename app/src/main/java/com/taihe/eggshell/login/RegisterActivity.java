@@ -3,12 +3,14 @@ package com.taihe.eggshell.login;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.Tag;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -43,7 +45,7 @@ public class RegisterActivity extends BaseActivity {
     private EditText password;
     private EditText phone_code;
     private Button btn_register;
-    private ImageView iv_back;
+    private LinearLayout lin_back;
 
     private TextView tv_getcode;
 
@@ -61,12 +63,12 @@ public class RegisterActivity extends BaseActivity {
         phone_code = (EditText) findViewById(R.id.et_regist_code);
         password = (EditText) findViewById(R.id.et_regist_pwd);
         btn_register = (Button) findViewById(R.id.btn_regist_register);
-        iv_back = (ImageView) findViewById(R.id.id_back);
+        lin_back = (LinearLayout) findViewById(R.id.lin_back);
         tv_getcode = (TextView) findViewById(R.id.tv_regist_getcode);
 
         tv_getcode.setOnClickListener(this);
 
-        iv_back.setOnClickListener(this);
+        lin_back.setOnClickListener(this);
         btn_register.setOnClickListener(this);
     }
 
@@ -77,9 +79,8 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
-        super.onClick(v);
         switch (v.getId()) {
-            case R.id.id_back:
+            case R.id.lin_back:
                 RegisterActivity.this.finish();
                 break;
             case R.id.tv_regist_getcode:
@@ -110,7 +111,7 @@ public class RegisterActivity extends BaseActivity {
 
     //获取短信验证码
     private void getCode() {
-
+        getCodeFromNet();
         p_num = phone_num.getText().toString();
         if (TextUtils.isEmpty(p_num)) {
             ToastUtils.show(mContext, "请输入手机号");
@@ -197,5 +198,32 @@ public class RegisterActivity extends BaseActivity {
         String method = "&c=res&username=shaoyelaile&password=123456&usertype=1&moblie=18911790395&source=7";
         RequestUtils.createRequest_GET(mContext, Urls.getMopHostUrl(), method, false, "", "", listener, errorListener);
     }
+
+    private void getCodeFromNet(){
+
+        tv_getcode.setEnabled(false);
+        TimerCount timerCount = new TimerCount(1000*60,1000);
+        timerCount.start();
+        tv_getcode.setBackgroundResource(R.drawable.msg_count_start);
+    }
+
+    private class TimerCount extends CountDownTimer {
+
+        public TimerCount(long millisInFuture,long countDownInterval){
+            super(millisInFuture,countDownInterval);
+        }
+        @Override
+        public void onTick(long l) {
+            tv_getcode.setText(l/1000+"秒后重发");
+        }
+
+        @Override
+        public void onFinish() {
+            tv_getcode.setText("获取验证码");
+            tv_getcode.setEnabled(true);
+            tv_getcode.setBackgroundResource(R.drawable.msg_vercode_background);
+        }
+    }
+
 
 }
