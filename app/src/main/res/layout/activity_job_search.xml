@@ -41,7 +41,8 @@
             android:layout_toLeftOf="@+id/btn_jobsearch_search"
             android:hint="数据分析经理"
             android:textSize="15dp"
-            android:textColor="#C8C8C8"
+            android:textColor="@color/black"
+            android:textColorHint="#C8C8C8"
             android:paddingLeft="10dp"
             android:background="@drawable/soushuokuang"/>
 

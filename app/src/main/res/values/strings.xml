@@ -10,6 +10,7 @@
     <string name="login_login_phone_toast">请输入正确的手机号</string>
     <string name="main_around_title">附近</string>
     <string name="main_around_left">地图</string>
+    <string name="check_network">请检查网络...</string>
 
 
     <string name="set_aboutus">

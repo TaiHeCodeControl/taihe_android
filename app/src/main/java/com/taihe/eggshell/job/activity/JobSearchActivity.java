@@ -16,6 +16,7 @@ import com.chinaway.framework.swordfish.DbUtils;
 import com.chinaway.framework.swordfish.db.sqlite.Selector;
 import com.chinaway.framework.swordfish.db.sqlite.WhereBuilder;
 import com.chinaway.framework.swordfish.exception.DbException;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.DbHelper;
@@ -107,21 +108,26 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                    ToastUtils.show(mContext,"地址");
                 break;
             case R.id.btn_jobsearch_search:
-                String word = searchWork.getText().toString();
-                if(!TextUtils.isEmpty(word)){
-                    ToastUtils.show(mContext,"搜索");
-                    SearchHistory history = new SearchHistory();
-                    history.setName(word);
-                    history.setTime(new Date().toString());
-                    try {
-                        db.saveOrUpdate(history);
-                    } catch (DbException e) {
-                        e.printStackTrace();
+                if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+                    String word = searchWork.getText().toString();
+                    if(!TextUtils.isEmpty(word)){
+                        ToastUtils.show(mContext,"搜索");
+                        SearchHistory history = new SearchHistory();
+                        history.setName(word);
+                        history.setTime(new Date().toString());
+                        try {
+                            db.saveOrUpdate(history);
+                        } catch (DbException e) {
+                            e.printStackTrace();
+                        }
+
+                        getDataFromDatabase();
+                    }else{
+                        ToastUtils.show(mContext,"请输入内容");
                     }
                 }else{
-                    ToastUtils.show(mContext,"请输入内容");
+                    ToastUtils.show(mContext,R.string.check_network);
                 }
-
                 break;
         }
     }
