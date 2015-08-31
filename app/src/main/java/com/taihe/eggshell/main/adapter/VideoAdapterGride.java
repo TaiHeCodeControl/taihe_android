@@ -8,8 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.taihe.eggshell.videoplay.VideoPlayActivity;
 
@@ -73,13 +75,18 @@ public class VideoAdapterGride extends BaseAdapter{
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext,VideoPlayActivity.class);
-                intent.putExtra("vid", list.get(position).getVideo_id().toString());
-                intent.putExtra("title", list.get(position).getVideo_name().toString());
-                intent.putExtra("c_id", list.get(position).getC_id().toString());
-                intent.putExtra("plist", list.get(position).getPlist().toString());
-                intent.putExtra("path", "");
-                mContext.startActivity(intent);
+                if (RequestUtils.GetWebType(mContext) != 0) {
+                    Intent intent = new Intent(mContext,VideoPlayActivity.class);
+                    intent.putExtra("vid", list.get(position).getVideo_id().toString());
+                    intent.putExtra("title", list.get(position).getVideo_name().toString());
+                    intent.putExtra("c_id", list.get(position).getC_id().toString());
+                    intent.putExtra("plist", list.get(position).getPlist().toString());
+                    intent.putExtra("path", "");
+                    mContext.startActivity(intent);
+                }else{
+                    Toast.makeText(mContext,"网络连接异常,请检查网络是否正常！",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
         return convertView;

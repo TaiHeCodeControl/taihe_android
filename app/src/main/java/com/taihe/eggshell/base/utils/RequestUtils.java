@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.chinaway.framework.swordfish.network.http.AuthFailureError;
@@ -245,6 +248,52 @@ public class RequestUtils {
             return manager.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             return "Unknown";
+        }
+    }
+
+    /**
+     * 判断用户的网络类型
+     *
+     * @return 无网络:0 <br>
+     *         Wifl:1 <br>
+     *         3G:3 <br>
+     *         2G:2<br>
+     *         default:4
+     * **/
+    public static int GetWebType(Context context) {
+        ConnectivityManager cManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cManager.getActiveNetworkInfo();
+        if (null == networkInfo) {
+            return 0;
+        } else {
+            switch (networkInfo.getType()) {
+                case ConnectivityManager.TYPE_WIFI: // wifi
+                    return 1;
+                case ConnectivityManager.TYPE_MOBILE:// 手机网络
+                    // * NETWORK_TYPE_CDMA 网络类型为CDMA
+                    // * NETWORK_TYPE_EDGE 网络类型为EDGE
+                    // * NETWORK_TYPE_EVDO_0 网络类型为EVDO0
+                    // * NETWORK_TYPE_EVDO_A 网络类型为EVDOA
+                    // * NETWORK_TYPE_GPRS 网络类型为GPRS
+                    // * NETWORK_TYPE_HSDPA 网络类型为HSDPA
+                    // * NETWORK_TYPE_HSPA 网络类型为HSPA
+                    // * NETWORK_TYPE_HSUPA 网络类型为HSUPA
+                    // * NETWORK_TYPE_UMTS 网络类型为UMTS
+                    // 联通的3G为UMTS或HSDPA，移动和联通的2G为GPRS或EDGE，电信的2G为CDMA，电信的3G为EVDO
+                    switch (networkInfo.getSubtype()) {
+                        case TelephonyManager.NETWORK_TYPE_EVDO_0:
+                        case TelephonyManager.NETWORK_TYPE_EVDO_A:
+                        case TelephonyManager.NETWORK_TYPE_EVDO_B:
+                        case TelephonyManager.NETWORK_TYPE_HSDPA:
+                            return 3;
+                        case TelephonyManager.NETWORK_TYPE_CDMA:
+                        case TelephonyManager.NETWORK_TYPE_GPRS:
+                        case TelephonyManager.NETWORK_TYPE_EDGE:
+                            return 2;
+                    }
+                    break;
+            }
+            return 4;
         }
     }
 }

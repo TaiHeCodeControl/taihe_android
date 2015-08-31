@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
@@ -136,7 +137,11 @@ public class VideoPlayActivity extends BaseActivity {
         videoview.setMediaBufferingIndicator(progressBar);
         if (encrypt) {
             try{
-                videoview.setVid(vid, 1);
+                if (RequestUtils.GetWebType(getApplicationContext()) != 0) {
+                    videoview.setVid(vid, 1);
+                }else{
+                    Toast.makeText(getApplicationContext(), "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
+                }
             }catch (Exception ex){
                 ex.printStackTrace();
             }
@@ -184,19 +189,19 @@ public class VideoPlayActivity extends BaseActivity {
                 videoview.setVideoLayout(layout);
                 switch (layout) {
                     case IjkVideoView.VIDEO_LAYOUT_ORIGIN:
-                        Log.e("err","err1=="+layout);
+//                        Log.e("err","err1=="+layout);
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_ORIGIN", 1).show();
                         break;
                     case IjkVideoView.VIDEO_LAYOUT_SCALE:
-                       Log.e("err","err2=="+layout);
+//                       Log.e("err","err2=="+layout);
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_SCALE", 1).show();
                         break;
                     case IjkVideoView.VIDEO_LAYOUT_STRETCH:
-                        Log.e("err","err3=="+layout);
+//                        Log.e("err","err3=="+layout);
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_STRETCH", 1).show();
                         break;
                     case IjkVideoView.VIDEO_LAYOUT_ZOOM:
-                        Log.e("err","err4=="+layout);
+//                        Log.e("err","err4=="+layout);
                         //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_ZOOM", 1).show();
                         break;
                 }
@@ -209,7 +214,11 @@ public class VideoPlayActivity extends BaseActivity {
                 view.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.bg_gray));
                 videoAdapter.setSelectedPosition(i);
                 videoAdapter.notifyDataSetInvalidated();
-                videoview.setVid(listInfo.get(i).getVideo_id(), 1);
+                if (RequestUtils.GetWebType(getApplicationContext()) != 0) {
+                    videoview.setVid(listInfo.get(i).getVideo_id(), 1);
+                }else{
+                    Toast.makeText(getApplicationContext(), "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
+                }
                 playTitle.setText(listInfo.get(i).getVideo_name());
             }
         });
