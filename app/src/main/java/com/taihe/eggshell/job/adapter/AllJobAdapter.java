@@ -94,7 +94,7 @@ public class AllJobAdapter extends BaseAdapter {
 
             view.setTag(holder);
         }
-        holder.tv_businessName.setText("太和天下");
+        holder.tv_businessName.setText("太和天下" + position);
 
         //设置checkBox默认不可点
 //        holder.cb_select.setClickable(false);

@@ -3,6 +3,7 @@ package com.taihe.eggshell.job.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -23,6 +24,7 @@ import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -46,6 +48,27 @@ public class MyCollectActivity extends BaseActivity {
 
     //选中条数的统计
     public int selectSize = 0;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 100:
+
+                    Iterator<JobInfo> it = jobInfos.iterator();
+                    while (it.hasNext()) {
+                        JobInfo jobinfo = it.next();
+                        if (jobinfo.isChecked()) {
+                            it.remove();
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                    cb_selectAll.setChecked(false);
+                    break;
+            }
+        }
+    };
 
     @Override
     public void initView() {
@@ -107,12 +130,13 @@ public class MyCollectActivity extends BaseActivity {
 
                                 if (absListView.getCount() < 20) {
 
-                                    for (int i = 0; i < 5; i++) {
+                                    for (int i = 0; i < 10; i++) {
                                         jobInfo = new JobInfo(false, i);
                                         jobInfos.add(jobInfo);
                                     }
                                     pb.setVisibility(View.VISIBLE);
                                     adapter.notifyDataSetChanged();
+                                    cb_selectAll.setChecked(false);
                                 } else {
                                     tv.setText("没有更多了");
                                 }
@@ -132,6 +156,8 @@ public class MyCollectActivity extends BaseActivity {
 
 
         Button btn_shenqing = (Button) findViewById(R.id.btn_alljob_shenqing);
+        Button btn_delete = (Button) findViewById(R.id.btn_collectjob_delete);
+        btn_delete.setOnClickListener(this);
         btn_shenqing.setOnClickListener(this);
         cb_selectAll = (CheckBox) findViewById(R.id.cb_findjob_selectall);
 
@@ -191,8 +217,22 @@ public class MyCollectActivity extends BaseActivity {
                 goBack();
 
                 break;
-            case R.id.btn_alljob_shenqing:
-                JobApplyDialogUtil.isApplyJob(mContext,10,2);
+            case R.id.btn_collectjob_delete:
+
+                Message msg = new Message();
+                msg.what=100;
+                mHandler.sendMessage(msg);
+
+//                for(int i = 0; i < jobInfos.size(); i ++){
+//                    if(!jobInfo.isChecked()){
+//                        jobInfos.remove(i);
+//                    }
+//                }
+//                adapter.notifyDataSetChanged();
+//                cb_selectAll.setChecked(false);
+                break;
+            case R.id.btn_alljob_shenqing://投递selectSize条职位，其中已投递条数需要从服务器获取
+                JobApplyDialogUtil.isApplyJob(mContext,selectSize,2);
                 postJob();
                 break;
         }
@@ -207,7 +247,7 @@ public class MyCollectActivity extends BaseActivity {
 
     public void postJob() {
         for (JobInfo jobInfo : jobInfos) {
-//            System.out.println(jobInfo.getId()+"======"+jobInfo.isChecked());
+            System.out.println(jobInfo.getId()+"======"+jobInfo.isChecked());
 
         }
     }

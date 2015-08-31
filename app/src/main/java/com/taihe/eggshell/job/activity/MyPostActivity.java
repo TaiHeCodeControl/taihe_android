@@ -115,6 +115,7 @@ public class MyPostActivity extends BaseActivity {
                                     }
                                     pb.setVisibility(View.VISIBLE);
                                     adapter.notifyDataSetChanged();
+                                    cb_selectAll.setChecked(false);
                                 } else {
                                     tv.setText("没有更多了");
                                 }

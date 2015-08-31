@@ -111,7 +111,7 @@ public class RegisterActivity extends BaseActivity {
 
     //获取短信验证码
     private void getCode() {
-        getCodeFromNet();
+
         p_num = phone_num.getText().toString();
         if (TextUtils.isEmpty(p_num)) {
             ToastUtils.show(mContext, "请输入手机号");
@@ -120,6 +120,7 @@ public class RegisterActivity extends BaseActivity {
             ToastUtils.show(RegisterActivity.this, "手机号格式不正确");
             return;
         }
+        getCodeFromNet();
         Map<String, String> dataParams = new HashMap<String, String>();
         dataParams.put("phonenumber", p_num);
 
@@ -136,6 +137,7 @@ public class RegisterActivity extends BaseActivity {
 
                         String msg = jsonObject.getString("msg");
                         ToastUtils.show(mContext, msg);
+
                     } else {
                         String msg = jsonObject.getString("msg");
                         ToastUtils.show(mContext, msg);
@@ -156,7 +158,7 @@ public class RegisterActivity extends BaseActivity {
             }
         };
 
-        String method = "http://195.198.1.122:8066/eggker/interface/register/chTelphone";
+        String method = "http://195.198.1.197/eggker/interface/register/chTelphone";
         RequestUtils.createRequest(mContext, "", method, true, dataParams, true, listener, errorListener);
     }
 
