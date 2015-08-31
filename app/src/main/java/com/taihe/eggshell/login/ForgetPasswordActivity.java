@@ -1,17 +1,32 @@
 package com.taihe.eggshell.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.FormatUtils;
+import com.taihe.eggshell.base.utils.PrefUtils;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -20,9 +35,12 @@ import com.taihe.eggshell.base.utils.ToastUtils;
  */
 public class ForgetPasswordActivity extends BaseActivity {
 
+    private Context mContext;
+
     private EditText phone_num;
     private EditText phone_code;
     private TextView getCode,nextStep;
+    private LoadingProgressDialog loading;
 
     private String pwd;
     private String p_num;
@@ -35,6 +53,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         super.initView();
         overridePendingTransition(R.anim.activity_right_to_center, R.anim.activity_center_to_left);
 
+        mContext = this;
         phone_num = (EditText) findViewById(R.id.id_phone_num);
         phone_code = (EditText) findViewById(R.id.id_vercode);
         getCode = (TextView) findViewById(R.id.id_get_code);
@@ -70,8 +89,15 @@ public class ForgetPasswordActivity extends BaseActivity {
             ToastUtils.show(ForgetPasswordActivity.this, "手机号格式不正确");
             return;
         }
+        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+            loading = new LoadingProgressDialog(mContext, getResources().getString(
+                    R.string.submitcertificate_string_wait_dialog));
+            loading.show();
+            getCodeFromNet();
+        }else{
+            ToastUtils.show(mContext,R.string.check_network);
+        }
 
-        getCodeFromNet();
     }
 
     private void nextStep() {
@@ -92,10 +118,44 @@ public class ForgetPasswordActivity extends BaseActivity {
 
     private void getCodeFromNet(){
 
-        getCode.setEnabled(false);
-        TimerCount timerCount = new TimerCount(1000*60,1000);
-        timerCount.start();
-        getCode.setBackgroundResource(R.drawable.msg_count_start);
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                loading.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if(code ==0){
+                        ToastUtils.show(mContext,"发送成功");
+                        getCode.setEnabled(false);
+                        TimerCount timerCount = new TimerCount(1000*60,1000);
+                        timerCount.start();
+                        getCode.setBackgroundResource(R.drawable.msg_count_start);
+                    }else{
+                        ToastUtils.show(mContext,"获取失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                loading.dismiss();
+                if(null!=volleyError.networkResponse.data){
+                    Log.v("Forget:",new String(volleyError.networkResponse.data));
+                }
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+            }
+        };
+
+        Map<String,String> param = new HashMap<String, String>();
+        param.put("telphone",p_num);
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_GET_CODE,false,param,true,listener,errorListener);
     }
 
     private class TimerCount extends CountDownTimer{

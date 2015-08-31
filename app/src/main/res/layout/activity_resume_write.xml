@@ -192,7 +192,69 @@
                         android:id="@+id/id_city_for"
                         style="@style/WriteResumeTextStyle"
                         android:hint="请选择您的从事行业"
-                        android:text="北京"/>
+                        android:text="北京"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/id_province"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:hint="省份"
+                        android:textColorHint="@color/hint_color"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_15"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@drawable/xiala"/>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/line_gray"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="10dp" />
+
+                    <TextView
+                        android:id="@+id/id_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:hint="城市"
+                        android:textColorHint="@color/hint_color"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_15"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@drawable/xiala"/>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/line_gray"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="10dp" />
+
+                    <TextView
+                        android:id="@+id/id_county"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:hint="区县"
+                        android:textColorHint="@color/hint_color"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_15"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@drawable/xiala"/>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/line_gray"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="10dp" />
+
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"

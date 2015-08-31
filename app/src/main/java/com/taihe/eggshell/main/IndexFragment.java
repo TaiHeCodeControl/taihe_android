@@ -23,14 +23,15 @@ import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Constants;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.APKUtils;
-import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobSearchActivity;
+import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
 import com.taihe.eggshell.main.adapter.IndustryAdapter;
 import com.taihe.eggshell.main.adapter.RecommendAdapter;
@@ -46,8 +47,6 @@ import com.taihe.eggshell.widget.MyScrollView;
 import com.taihe.eggshell.widget.ProgressDialog;
 import com.taihe.eggshell.widget.UpdateDialog;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -153,7 +152,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         weChat.setOnClickListener(this);
         publicClass.setOnClickListener(this);
         searchRelativeLayout.setOnClickListener(this);
-        jobPlace.setOnClickListener(this);
+//        jobPlace.setOnClickListener(this);
     }
 
     private void initData(){
@@ -209,7 +208,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             public void onScrollChange(int x, int y, int oldxX, int oldY) {
                 Message message = Message.obtain();
                 message.what = ALPHA_MESSAGE;
-                ToastUtils.show(mContext,oldY+"");
                 if (oldY >= 0) {
                     message.obj = oldY * (ALPHA_END - ALPHA_START) / scrollView.getMaxScrollAmount() + ALPHA_START;
                 }
@@ -246,9 +244,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             case R.id.id_job_place:
 //                intent = new Intent(mContext, CitySelectActivity.class);
 //                startActivity(intent);
-                LoadingProgressDialog loading = new LoadingProgressDialog(mContext, getResources().getString(
-                        R.string.submitcertificate_string_wait_dialog));
-                loading.show();
                 break;
             case R.id.id_search_job:
                 intent = new Intent(mContext, JobSearchActivity.class);
@@ -273,6 +268,13 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             case R.id.id_write_resume:
                 intent = new Intent(mContext,ResumeManagerActivity.class);
                 startActivity(intent);
+                /*if(null!= EggshellApplication.getApplication().getUser()){
+                    intent = new Intent(mContext,ResumeManagerActivity.class);
+                    startActivity(intent);
+                }else{
+                    intent = new Intent(mContext,LoginActivity.class);
+                    startActivity(intent);
+                }*/
                 break;
             case R.id.id_play_mode:
                 changeViewPagerListener.changeViewPager(1);

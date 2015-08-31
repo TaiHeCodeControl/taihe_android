@@ -178,9 +178,9 @@
             android:padding="5dp"
             android:text="北京"
             android:textSize="18sp"
-            android:textColor="@color/white"
-            android:drawablePadding="5dp"
-            android:drawableRight="@drawable/down_icon"/>
+            android:textColor="@color/white"/>
+            <!--android:drawablePadding="5dp"
+            android:drawableRight="@drawable/down_icon"-->
 
         <RelativeLayout
             android:id="@+id/id_search_job"

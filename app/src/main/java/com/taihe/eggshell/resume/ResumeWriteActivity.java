@@ -15,6 +15,8 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.IndustryActivity;
+import com.taihe.eggshell.widget.CityDialog;
+import com.taihe.eggshell.widget.CityPopWindow;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
 
 /**
@@ -26,11 +28,12 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     private Context mContext;
 
     private Intent intent;
-    private TextView forIndusty,forPosition,forMoney,forCity,forWorkType,forTime,forStatus,forBirthday,forTopSchool,forWorkExper,commitTextView;
+    private TextView forIndusty,forPosition,forMoney,forCity,forProvince,forICity,forCounty,forWorkType,forTime,forStatus,forBirthday,forTopSchool,forWorkExper,commitTextView;
     private EditText resumeName,userName,phoneNum,email,address;
     private RadioGroup radioGroup;
     private RadioButton girlRadio,boyRadio;
     private TimeDialog timeDialog;
+    private CityDialog cityDialog;
     private boolean isBirthday = false;
 
     private static final int RESULT_INDUSTRY = 10;
@@ -65,6 +68,9 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         forPosition = (TextView)findViewById(R.id.id_position_for);
         forMoney = (TextView)findViewById(R.id.id_money_for);
         forCity = (TextView)findViewById(R.id.id_city_for);
+        forProvince = (TextView)findViewById(R.id.id_province);
+        forICity = (TextView)findViewById(R.id.id_city);
+        forCounty = (TextView)findViewById(R.id.id_county);
         forWorkType = (TextView)findViewById(R.id.id_type_for);
         forTime = (TextView)findViewById(R.id.id_time_for);
         forStatus = (TextView)findViewById(R.id.id_status_for);
@@ -88,6 +94,9 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         forPosition.setOnClickListener(this);
         forMoney.setOnClickListener(this);
         forCity.setOnClickListener(this);
+        forProvince.setOnClickListener(this);
+        forICity.setOnClickListener(this);
+        forCounty.setOnClickListener(this);
         forWorkType.setOnClickListener(this);
         forTime.setOnClickListener(this);
         forStatus.setOnClickListener(this);
@@ -127,7 +136,23 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                 intent.putExtra("Filter", "salary");
                 startActivityForResult(intent, RESULT_MONEY);
                 break;
-            case R.id.id_city_for:
+            case R.id.id_province:
+                break;
+            case R.id.id_city:
+                break;
+            case R.id.id_county:
+                /*CityPopWindow popWindow = new CityPopWindow(mContext);
+                popWindow.setAsDropDown(forCounty);
+*/
+                cityDialog = new CityDialog(mContext,new CityDialog.CityClickListener() {
+                    @Override
+                    public void cityId(String id) {
+                        ToastUtils.show(mContext,id);
+                        forCounty.setText(id);
+                        cityDialog.dismiss();
+                    }
+                });
+                cityDialog.show();
                 break;
             case R.id.id_type_for:
                 intent = new Intent(mContext, IndustryActivity.class);
