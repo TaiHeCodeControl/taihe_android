@@ -135,7 +135,6 @@
                 android:layout_marginLeft="75dp"
                 android:background="@null"
                 android:hint="请输入验证码"
-                android:inputType="textPassword"
                 android:textColor="@color/font_color_black"
                 android:textColorHint="#C8C8C8"
                 android:textSize="@dimen/font_size_26" />

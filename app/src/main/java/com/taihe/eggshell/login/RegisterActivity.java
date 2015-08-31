@@ -27,6 +27,7 @@ import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.main.entity.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -99,9 +100,7 @@ public class RegisterActivity extends BaseActivity {
         pwd = password.getText().toString();
         if (!FormatUtils.isMobileNO(p_num)) {
             ToastUtils.show(RegisterActivity.this, "手机号格式不正确");
-        } else if (!p_code.equals("1234")) {
-            ToastUtils.show(RegisterActivity.this, "验证码不正确");
-        } else if (pwd.length() < 6) {
+        }else if (pwd.length() < 6) {
             ToastUtils.show(RegisterActivity.this, "密码长度太短");
         } else {
             //服务器注册
@@ -122,7 +121,7 @@ public class RegisterActivity extends BaseActivity {
         }
         getCodeFromNet();
         Map<String, String> dataParams = new HashMap<String, String>();
-        dataParams.put("phonenumber", p_num);
+        dataParams.put("telphone", p_num);
 
         Response.Listener listener = new Response.Listener() {
             @Override
@@ -135,11 +134,15 @@ public class RegisterActivity extends BaseActivity {
                     System.out.println("code=========" + code);
                     if (code == 0) {
 
-                        String msg = jsonObject.getString("msg");
+                        String msg = jsonObject.getString("message");
                         ToastUtils.show(mContext, msg);
 
+                    } else if (code == 1000) {
+                        ToastUtils.show(mContext, "手机号为空");
+                    } else if (code == 1002) {
+                        ToastUtils.show(mContext, "改手机号已经注册过了");
                     } else {
-                        String msg = jsonObject.getString("msg");
+                        String msg = jsonObject.getString("message");
                         ToastUtils.show(mContext, msg);
                     }
 
@@ -152,8 +155,8 @@ public class RegisterActivity extends BaseActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.v("TAG:",volleyError.networkResponse.statusCode+"");
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+                Log.v("TAG:", volleyError.networkResponse.statusCode + "");
+                ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
 
             }
         };
@@ -162,7 +165,13 @@ public class RegisterActivity extends BaseActivity {
         RequestUtils.createRequest(mContext, "", method, true, dataParams, true, listener, errorListener);
     }
 
-        private void registerFromNet() {
+    private void registerFromNet() {
+
+        Map<String, String> dataParams = new HashMap<String, String>();
+        dataParams.put("telphone", p_num);
+        dataParams.put("password", pwd);
+        dataParams.put("code", p_code);
+
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
             @Override
@@ -171,6 +180,7 @@ public class RegisterActivity extends BaseActivity {
                     Log.v(TAG, (String) obj);
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
+                    System.out.println("code=========" + code);
                     if (code == 0) {
                         ToastUtils.show(mContext, "注册成功");
                         String data = jsonObject.getString("data");
@@ -179,8 +189,14 @@ public class RegisterActivity extends BaseActivity {
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(intent);
                         RegisterActivity.this.finish();
+                    } else if (code == 1001) {
+                        ToastUtils.show(mContext, "验证码错误");
+                        String msg = jsonObject.getString("message");
+                        JSONArray data = jsonObject.getJSONArray("data");
+
+                        ToastUtils.show(mContext, msg);
                     } else {
-                        String msg = jsonObject.getString("msg");
+                        String msg = jsonObject.getString("message");
                         ToastUtils.show(mContext, msg);
                     }
 
@@ -193,30 +209,32 @@ public class RegisterActivity extends BaseActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
-//                    String err = new String(volleyError.networkResponse.data);
-//                    volleyError.networkResponse.statusCode;
+                Log.v("TAG:", volleyError.networkResponse.statusCode + "");
+                ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
             }
         };
-        String method = "&c=res&username=shaoyelaile&password=123456&usertype=1&moblie=18911790395&source=7";
-        RequestUtils.createRequest_GET(mContext, Urls.getMopHostUrl(), method, false, "", "", listener, errorListener);
+//        String method = "http://195.198.1.197/eggker/interface/register?telphone=" + p_num + "&password=" + pwd + "&code" + p_code;
+        String method = "http://195.198.1.197/eggker/interface/register";
+        RequestUtils.createRequest(mContext, "", method, false, dataParams, true, listener, errorListener);
     }
 
-    private void getCodeFromNet(){
+    private void getCodeFromNet() {
 
         tv_getcode.setEnabled(false);
-        TimerCount timerCount = new TimerCount(1000*60,1000);
+        TimerCount timerCount = new TimerCount(1000 * 60, 1000);
         timerCount.start();
         tv_getcode.setBackgroundResource(R.drawable.msg_count_start);
     }
 
     private class TimerCount extends CountDownTimer {
 
-        public TimerCount(long millisInFuture,long countDownInterval){
-            super(millisInFuture,countDownInterval);
+        public TimerCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
         }
+
         @Override
         public void onTick(long l) {
-            tv_getcode.setText(l/1000+"秒后重发");
+            tv_getcode.setText(l / 1000 + "秒后重发");
         }
 
         @Override

@@ -223,13 +223,6 @@ public class MyCollectActivity extends BaseActivity {
                 msg.what=100;
                 mHandler.sendMessage(msg);
 
-//                for(int i = 0; i < jobInfos.size(); i ++){
-//                    if(!jobInfo.isChecked()){
-//                        jobInfos.remove(i);
-//                    }
-//                }
-//                adapter.notifyDataSetChanged();
-//                cb_selectAll.setChecked(false);
                 break;
             case R.id.btn_alljob_shenqing://投递selectSize条职位，其中已投递条数需要从服务器获取
                 JobApplyDialogUtil.isApplyJob(mContext,selectSize,2);

@@ -142,7 +142,7 @@ public class LoginActivity extends BaseActivity {
     private void loginFromNet() {
 
         Map<String,String> dataParams = new HashMap<String,String>();
-        dataParams.put("phonenumber",userphone);
+        dataParams.put("username",userphone);
         dataParams.put("password",password);
 
         //返回监听事件
@@ -163,7 +163,7 @@ public class LoginActivity extends BaseActivity {
 
 
                     } else {
-                        String msg = jsonObject.getString("msg");
+                        String msg = jsonObject.getString("message");
                         ToastUtils.show(mContext, msg);
                     }
 
@@ -184,8 +184,8 @@ public class LoginActivity extends BaseActivity {
 //        RequestUtils.createRequest_GET(mContext, Urls.getMopHostUrl(), method, false, "", "", listener, errorListener);
 
 
-        String method = "http://195.198.1.122:8066/eggker/interface/register";
-        RequestUtils.createRequest(mContext, "",method,true,dataParams,true,listener,errorListener);
+        String method = "http://195.198.1.197/eggker/interface/login/";
+        RequestUtils.createRequest(mContext, "",method,false,dataParams,true,listener,errorListener);
 
     }
 
