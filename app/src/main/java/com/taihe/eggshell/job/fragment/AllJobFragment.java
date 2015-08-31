@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +19,25 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +54,6 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
     private AllJobAdapter adapter;
     public CheckBox cb_selectAll;
 
-
     public List<JobInfo> jobInfos = null;
     private JobInfo jobInfo;
 
@@ -50,7 +61,9 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
     private ListView list_job_all;
     private View rootView;
     private Context mContext;
-
+    private LoadingProgressDialog dialog;
+    private int page = 0;
+    private int pageSize = 10;
     //选中条数的统计
     private int selectSize = 0;
     private int postednum = 0;
@@ -70,10 +83,6 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
 
         jobInfos = new ArrayList<JobInfo>();
 
-        for (int i = 0; i < 10; i++) {
-            jobInfo = new JobInfo(false, i);
-            jobInfos.add(jobInfo);
-        }
         list_job_all = (ListView) rootView.findViewById(R.id.list_job_all);
         //给listview增加底部view
         footerView = View.inflate(mContext, R.layout.list_job_all_footer, null);
@@ -166,8 +175,17 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
 
 
     private void initDate() {
-        adapter = new AllJobAdapter(mContext, jobInfos, true);
 
+        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+            dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                    R.string.submitcertificate_string_wait_dialog));
+            dialog.show();
+            getList();
+        }else{
+            ToastUtils.show(mContext,R.string.check_network);
+        }
+
+        adapter = new AllJobAdapter(mContext, jobInfos, true);
         adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
             @Override
             public void checkedPosition(int position, boolean isChecked) {
@@ -188,7 +206,51 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
         });
 
         list_job_all.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
 
+    private void getList(){
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                dialog.dismiss();
+                try {
+                    Log.v("HHH:",(String)o);
+                    JSONObject jsonObject = new JSONObject((String)o);
+
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if(code ==0){
+                        String data = jsonObject.getString("data");
+                        Gson gson = new Gson();
+                        List<JobInfo> joblist =  gson.fromJson(data,new TypeToken<List<JobInfo>>(){}.getType());
+                        jobInfos.addAll(joblist);
+                        adapter.notifyDataSetChanged();
+                    }else{
+                        ToastUtils.show(mContext,"获取失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                if(null!=volleyError.networkResponse.data){
+                    Log.v("Forget:", new String(volleyError.networkResponse.data));
+                }
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+            }
+        };
+
+        Map<String,String> param = new HashMap<String, String>();
+        param.put("page",page+"");
+        param.put("pageSize",pageSize+"");
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
 
     }
 

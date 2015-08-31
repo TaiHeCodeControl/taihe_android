@@ -6,7 +6,7 @@ public class Urls {
 
     public static final String BaseURL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";
     //测试
-    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.197/eggker/interface";//测试服务器
+    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.117/eggker/interface";//测试服务器
     //正式
 //    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";// 正式服务器
 
@@ -25,5 +25,7 @@ public class Urls {
     public static final String METHOD_DETAIL = "m=act&c=detail";//
     public static final String METHOD_GET_CODE = "/login/send_code";//获取验证码
     public static final String METHOD_RESET_PASSWORD = "";//重置密码
+
+    public static final String METHOD_JOB_LIST = "/Position/loadMore";
 
 }

@@ -63,6 +63,8 @@ public class AllJobAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup viewGroup) {
+
+        JobInfo jobInfo = list.get(position);
         View view;
         final ViewHolder holder;
         if (convertView != null) {
@@ -94,7 +96,8 @@ public class AllJobAdapter extends BaseAdapter {
 
             view.setTag(holder);
         }
-        holder.tv_businessName.setText("太和天下" + position);
+        holder.tv_jobName.setText(jobInfo.getName() + position);
+        holder.tv_businessName.setText(jobInfo.getCom_name());
 
         //设置checkBox默认不可点
 //        holder.cb_select.setClickable(false);
