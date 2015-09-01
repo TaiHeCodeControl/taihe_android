@@ -100,7 +100,7 @@ public class RegisterActivity extends BaseActivity {
         pwd = password.getText().toString();
         if (!FormatUtils.isMobileNO(p_num)) {
             ToastUtils.show(RegisterActivity.this, "手机号格式不正确");
-        }else if (pwd.length() < 6) {
+        } else if (pwd.length() < 6) {
             ToastUtils.show(RegisterActivity.this, "密码长度太短");
         } else {
             //服务器注册
@@ -161,10 +161,12 @@ public class RegisterActivity extends BaseActivity {
             }
         };
 
-        String method = "http://195.198.1.197/eggker/interface/register/chTelphone";
-        RequestUtils.createRequest(mContext, "", method, true, dataParams, true, listener, errorListener);
+        String method = "/register/chTelphone";
+        RequestUtils.createRequest(mContext, Urls.BASE_HYR_MOBILE_URL, method, false, dataParams, true, listener, errorListener);
     }
 
+
+    //注册
     private void registerFromNet() {
 
         Map<String, String> dataParams = new HashMap<String, String>();
@@ -183,17 +185,27 @@ public class RegisterActivity extends BaseActivity {
                     System.out.println("code=========" + code);
                     if (code == 0) {
                         ToastUtils.show(mContext, "注册成功");
-                        String data = jsonObject.getString("data");
+                        JSONObject data = jsonObject.getJSONObject("data");
+
+                        String telphone = data.getString("telphone");
+                        String uid = data.getString("uid");
+                        Log.i(TAG, uid);
+                        Log.i(TAG, telphone);
 
                         PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{'id':1,'name':'xx','phoneNumber':'89898'}");
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(intent);
                         RegisterActivity.this.finish();
                     } else if (code == 1001) {
-                        ToastUtils.show(mContext, "验证码错误");
+//                        ToastUtils.show(mContext, "验证码错误");
                         String msg = jsonObject.getString("message");
                         JSONArray data = jsonObject.getJSONArray("data");
 
+                        ToastUtils.show(mContext, msg);
+                    } else if (code == 1002) {
+//                        ToastUtils.show(mContext, "该手机号已注册");
+                        String msg = jsonObject.getString("message");
+                        JSONArray data = jsonObject.getJSONArray("data");
                         ToastUtils.show(mContext, msg);
                     } else {
                         String msg = jsonObject.getString("message");
@@ -214,8 +226,8 @@ public class RegisterActivity extends BaseActivity {
             }
         };
 //        String method = "http://195.198.1.197/eggker/interface/register?telphone=" + p_num + "&password=" + pwd + "&code" + p_code;
-        String method = "http://195.198.1.197/eggker/interface/register";
-        RequestUtils.createRequest(mContext, "", method, false, dataParams, true, listener, errorListener);
+        String method = "/register";
+        RequestUtils.createRequest(mContext, Urls.BASE_HYR_MOBILE_URL, method, false, dataParams, true, listener, errorListener);
     }
 
     private void getCodeFromNet() {

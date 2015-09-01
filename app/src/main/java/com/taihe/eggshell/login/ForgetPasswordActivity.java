@@ -217,7 +217,7 @@ public class ForgetPasswordActivity extends BaseActivity {
 
         Map<String,String> param = new HashMap<String, String>();
         param.put("telphone",p_num);
-        param.put("code",p_code);//18810309239//128536
+        param.put("code",p_code);
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_CHECK_CODE,false,param,true,listener,errorListener);
 
     }
