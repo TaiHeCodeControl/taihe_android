@@ -186,8 +186,7 @@ public class LoginActivity extends BaseActivity {
             }
         };
 
-        String method = "/login/";
-        RequestUtils.createRequest(mContext, Urls.BASE_HYR_MOBILE_URL, method, false, dataParams, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, Urls.BASE_HYR_MOBILE_URL, Urls.METHOD_LOGIN, false, dataParams, true, listener, errorListener);
 
     }
 

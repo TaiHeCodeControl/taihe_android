@@ -140,8 +140,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         dialog.getTitleText().setText("确定退出当前账号吗？");
         dialog.getLeftButton().setText("以后再说");
         dialog.getRightButton().setText("确认退出");
-
-
     }
 
     private void initView() {
