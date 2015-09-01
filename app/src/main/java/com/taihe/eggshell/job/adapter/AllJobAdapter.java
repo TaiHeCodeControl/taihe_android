@@ -96,7 +96,6 @@ public class AllJobAdapter extends BaseAdapter {
 
             view.setTag(holder);
         }
-
         holder.tv_jobName.setText(jobInfo.getName() + position);
         holder.tv_businessName.setText(jobInfo.getCom_name());
         holder.tv_city.setText(jobInfo.getProvinceid());

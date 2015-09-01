@@ -25,7 +25,7 @@ import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
@@ -57,8 +57,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
     public List<JobInfo> jobInfos = null;
     private JobInfo jobInfo;
 
-    private View footerView;
-    private ListView list_job_all;
+    private PullToRefreshGridView list_job_all;
     private View rootView;
     private Context mContext;
     private LoadingProgressDialog dialog;
@@ -83,11 +82,23 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
 
         jobInfos = new ArrayList<JobInfo>();
 
-        list_job_all = (ListView) rootView.findViewById(R.id.list_job_all);
-        //给listview增加底部view
-        footerView = View.inflate(mContext, R.layout.list_job_all_footer, null);
-        footerView.setVisibility(View.GONE);
-        list_job_all.addFooterView(footerView);
+        list_job_all = (PullToRefreshGridView) rootView.findViewById(R.id.list_alljob_all);
+        list_job_all.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
+//        list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+//            @Override
+//            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+//
+//            }
+//
+//            @Override
+//            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+//
+//                page++;
+//                initDate();
+//                list_job_all.onRefreshComplete();
+//            }
+//        });
+
 
         list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -98,51 +109,6 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
                     startActivity(intent);
                 }
-
-            }
-        });
-
-        list_job_all.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(final AbsListView absListView, int scrollState) {
-                //当不滚动时
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-                    //判断是否滚动到底部
-                    if (absListView.getLastVisiblePosition() == absListView.getCount() - 1) {
-                        //加载更多
-                        footerView.setVisibility(View.VISIBLE);
-
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                TextView tv = (TextView) footerView.findViewById(R.id.tv_alljob_footer_txt);
-                                ProgressBar pb = (ProgressBar) footerView.findViewById(R.id.pb_alljob_footer_loading);
-                                pb.setVisibility(View.GONE);
-
-                                if (absListView.getCount() < 30) {
-
-                                    for (int i = 0; i < 10; i++) {
-                                        jobInfo = new JobInfo(false, jobInfos.size() + i);
-                                        jobInfos.add(jobInfo);
-
-                                    }
-                                    pb.setVisibility(View.VISIBLE);
-                                    adapter.notifyDataSetChanged();
-                                    cb_selectAll.setChecked(false);
-                                } else {
-                                    tv.setText("没有更多了");
-                                }
-
-
-                            }
-                        }, 2000);
-                    }
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
             }
         });
@@ -185,28 +151,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
             ToastUtils.show(mContext,R.string.check_network);
         }
 
-        adapter = new AllJobAdapter(mContext, jobInfos, true);
-        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
-            @Override
-            public void checkedPosition(int position, boolean isChecked) {
-                jobInfos.get(position).setIsChecked(isChecked);
-                //如果有listview没有被选中，全选按钮状态为false
-                if (jobInfos.get(position).isChecked()) {
-                    selectSize += 1;
-                    if (selectSize == jobInfos.size()) {
-                        cb_selectAll.setChecked(true);
-                    }
-                } else {
-                    selectSize -= 1;
-                    cb_selectAll.setChecked(false);
-                }
 
-
-            }
-        });
-
-        list_job_all.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
     private void getList(){
@@ -225,6 +170,28 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                         Gson gson = new Gson();
                         List<JobInfo> joblist =  gson.fromJson(data,new TypeToken<List<JobInfo>>(){}.getType());
                         jobInfos.addAll(joblist);
+//                        adapter.notifyDataSetChanged();
+                        adapter = new AllJobAdapter(mContext, jobInfos, true);
+                        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
+                            @Override
+                            public void checkedPosition(int position, boolean isChecked) {
+                                jobInfos.get(position).setIsChecked(isChecked);
+                                //如果有listview没有被选中，全选按钮状态为false
+                                if (jobInfos.get(position).isChecked()) {
+                                    selectSize += 1;
+                                    if (selectSize == jobInfos.size()) {
+                                        cb_selectAll.setChecked(true);
+                                    }
+                                } else {
+                                    selectSize -= 1;
+                                    cb_selectAll.setChecked(false);
+                                }
+
+
+                            }
+                        });
+
+                        list_job_all.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     }else{
                         ToastUtils.show(mContext,"获取失败");
@@ -250,7 +217,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
         param.put("page",page+"");
         param.put("pageSize",pageSize+"");
 
-        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
 
     }
 

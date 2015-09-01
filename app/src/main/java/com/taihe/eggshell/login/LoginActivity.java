@@ -133,7 +133,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-        loginSuccess();
+//        loginSuccess();
         loginFromNet();
 
 
@@ -141,9 +141,9 @@ public class LoginActivity extends BaseActivity {
 
     private void loginFromNet() {
 
-        Map<String,String> dataParams = new HashMap<String,String>();
-        dataParams.put("username",userphone);
-        dataParams.put("password",password);
+        Map<String, String> dataParams = new HashMap<String, String>();
+        dataParams.put("username", userphone);
+        dataParams.put("password", password);
 
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
@@ -156,7 +156,12 @@ public class LoginActivity extends BaseActivity {
                     System.out.println("code=========" + code);
                     if (code == 0) {
                         ToastUtils.show(mContext, "登录成功");
-                        String data = jsonObject.getString("data");
+                        JSONObject data = jsonObject.getJSONObject("data");
+
+                        String telphone = data.getString("telphone");
+                        Log.i(TAG, telphone);
+                        String uid = data.getString("uid");
+                        Log.i(TAG, uid);
 
                         //登录成功保存用户登录信息
                         loginSuccess();
@@ -180,12 +185,8 @@ public class LoginActivity extends BaseActivity {
 //                    volleyError.networkResponse.statusCode;
             }
         };
-//        String method = "&username=" + userphone + "&pw=" + password;
-//        RequestUtils.createRequest_GET(mContext, Urls.getMopHostUrl(), method, false, "", "", listener, errorListener);
 
-
-        String method = "http://195.198.1.197/eggker/interface/login/";
-        RequestUtils.createRequest(mContext, "",method,false,dataParams,true,listener,errorListener);
+        RequestUtils.createRequest(mContext, Urls.BASE_HYR_MOBILE_URL, Urls.METHOD_LOGIN, false, dataParams, true, listener, errorListener);
 
     }
 

@@ -67,6 +67,9 @@ public class ForgetPasswordActivity extends BaseActivity {
     public void initData() {
         super.initData();
         initTitle("找回密码");
+
+        loading = new LoadingProgressDialog(mContext, getResources().getString(
+                R.string.submitcertificate_string_wait_dialog));
     }
 
     @Override
@@ -90,8 +93,6 @@ public class ForgetPasswordActivity extends BaseActivity {
             return;
         }
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
-            loading = new LoadingProgressDialog(mContext, getResources().getString(
-                    R.string.submitcertificate_string_wait_dialog));
             loading.show();
             getCodeFromNet();
         }else{
@@ -109,10 +110,13 @@ public class ForgetPasswordActivity extends BaseActivity {
         } else if (p_code.equals(p_num)) {
             ToastUtils.show(ForgetPasswordActivity.this, "验证码不正确");
         } else{
-            ToastUtils.show(ForgetPasswordActivity.this, "正在修改");
-            Intent intent = new Intent(ForgetPasswordActivity.this,RestPwdActivity.class);
-            startActivity(intent);
-            ForgetPasswordActivity.this.finish();
+            if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                loading.show();
+                getCheckCode();
+            }else{
+                ToastUtils.show(mContext,R.string.check_network);
+            }
+
         }
     }
 
@@ -176,5 +180,46 @@ public class ForgetPasswordActivity extends BaseActivity {
         }
     }
 
+
+    private void getCheckCode(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                loading.dismiss();
+                try {
+//                    Log.v("TAD:",(String)o);
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if(code ==0){
+                        Intent intent = new Intent(ForgetPasswordActivity.this,RestPwdActivity.class);
+                        intent.putExtra("phonenum",p_num);
+                        startActivity(intent);
+                        ForgetPasswordActivity.this.finish();
+                    }else{
+                        ToastUtils.show(mContext,"获取失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                loading.dismiss();
+                if(null!=volleyError.networkResponse.data){
+                    Log.v("Forget:",new String(volleyError.networkResponse.data));
+                }
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+            }
+        };
+
+        Map<String,String> param = new HashMap<String, String>();
+        param.put("telphone",p_num);
+        param.put("code",p_code);
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_CHECK_CODE,false,param,true,listener,errorListener);
+
+    }
 
 }
