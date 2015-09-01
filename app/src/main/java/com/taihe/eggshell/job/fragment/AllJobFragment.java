@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -83,21 +84,22 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
         jobInfos = new ArrayList<JobInfo>();
 
         list_job_all = (PullToRefreshGridView) rootView.findViewById(R.id.list_alljob_all);
+
         list_job_all.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
-//        list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
-//            @Override
-//            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-//
-//            }
-//
-//            @Override
-//            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-//
-//                page++;
-//                initDate();
-//                list_job_all.onRefreshComplete();
-//            }
-//        });
+        list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+                cb_selectAll.setChecked(false);
+                page++;
+                getList();
+                list_job_all.onRefreshComplete();
+            }
+        });
 
 
         list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -106,7 +108,10 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                 //listviewItem点击事件
 
                 if (position < jobInfos.size()) {
+                    JobInfo job = jobInfos.get(position);
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
+                    intent.putExtra("ID",job.getId());
+                    Log.i("ID",job.getId() + "");
                     startActivity(intent);
                 }
 
@@ -170,7 +175,6 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                         Gson gson = new Gson();
                         List<JobInfo> joblist =  gson.fromJson(data,new TypeToken<List<JobInfo>>(){}.getType());
                         jobInfos.addAll(joblist);
-//                        adapter.notifyDataSetChanged();
                         adapter = new AllJobAdapter(mContext, jobInfos, true);
                         adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
                             @Override

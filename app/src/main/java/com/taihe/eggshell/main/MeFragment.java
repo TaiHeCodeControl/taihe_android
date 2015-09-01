@@ -35,6 +35,7 @@ import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.base.utils.UpdateUtils;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
 import com.taihe.eggshell.login.LoginActivity;
+import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.personalCenter.activity.TeamActivity;
 import com.taihe.eggshell.personalCenter.activity.AboutActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
@@ -105,6 +106,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         ll_userinfo = (LinearLayout) rootView.findViewById(R.id.ll_mine_userinfo);
         tv_logintxt = (TextView) rootView.findViewById(R.id.tv_mine_logintxt);
 
+        tv_username = (TextView) rootView.findViewById(R.id.tv_mine_username);
+
+
         rl_mine_checkupdate.setOnClickListener(this);
         rl_mine_feedback.setOnClickListener(this);
         tv_logintxt.setOnClickListener(this);
@@ -145,18 +149,23 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private void initView() {
         //初始化选择图片popWindow
         initImageSelect();
-        if (null == EggshellApplication.getApplication().getUser()) {
+        User user = EggshellApplication.getApplication().getUser();
+
+        if (null == user) {
 
             tv_logintxt.setVisibility(View.VISIBLE);
             ll_userinfo.setVisibility(View.GONE);
 
             rl_logout.setVisibility(View.GONE);
         } else {
-
+            String phoneNum = user.getPhoneNumber();
+            Log.i("PHONeNUM",phoneNum);
+            String nick = user.getName();
             tv_logintxt.setVisibility(View.GONE);
             ll_userinfo.setVisibility(View.VISIBLE);
 
             rl_logout.setVisibility(View.VISIBLE);
+            tv_username.setText(phoneNum);
         }
 
 

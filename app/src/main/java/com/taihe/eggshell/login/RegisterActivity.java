@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.google.gson.Gson;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
@@ -53,6 +54,9 @@ public class RegisterActivity extends BaseActivity {
     private String pwd;
     private String p_num;
     private String p_code;
+
+    private String telphone;
+    private String uid;
 
     @Override
     public void initView() {
@@ -162,7 +166,7 @@ public class RegisterActivity extends BaseActivity {
         };
 
         String method = "/register/chTelphone";
-        RequestUtils.createRequest(mContext, Urls.BASE_HYR_MOBILE_URL, method, false, dataParams, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "http://195.198.1.197/eggker/interface", method, false, dataParams, true, listener, errorListener);
     }
 
 
@@ -187,23 +191,27 @@ public class RegisterActivity extends BaseActivity {
                         ToastUtils.show(mContext, "注册成功");
                         JSONObject data = jsonObject.getJSONObject("data");
 
-                        String telphone = data.getString("telphone");
-                        String uid = data.getString("uid");
+                        telphone = data.getString("telphone");
+                        uid = data.getString("uid");
                         Log.i(TAG, uid);
                         Log.i(TAG, telphone);
 
-                        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "{'id':1,'name':'xx','phoneNumber':'89898'}");
+                        Map<String, String> datas = new HashMap<String, String>();
+                        datas.put("uid", uid);
+                        datas.put("phoneNumber", telphone);
+                        Gson gson = new Gson();
+                        // 将对象转换为JSON数据
+                        String userData = gson.toJson(datas);
+                        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, userData);
+
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                         startActivity(intent);
                         RegisterActivity.this.finish();
                     } else if (code == 1001) {
-//                        ToastUtils.show(mContext, "验证码错误");
                         String msg = jsonObject.getString("message");
                         JSONArray data = jsonObject.getJSONArray("data");
-
                         ToastUtils.show(mContext, msg);
                     } else if (code == 1002) {
-//                        ToastUtils.show(mContext, "该手机号已注册");
                         String msg = jsonObject.getString("message");
                         JSONArray data = jsonObject.getJSONArray("data");
                         ToastUtils.show(mContext, msg);
@@ -227,7 +235,7 @@ public class RegisterActivity extends BaseActivity {
         };
 //        String method = "http://195.198.1.197/eggker/interface/register?telphone=" + p_num + "&password=" + pwd + "&code" + p_code;
         String method = "/register";
-        RequestUtils.createRequest(mContext, Urls.BASE_HYR_MOBILE_URL, method, false, dataParams, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "http://195.198.1.197/eggker/interface", method, false, dataParams, true, listener, errorListener);
     }
 
     private void getCodeFromNet() {
