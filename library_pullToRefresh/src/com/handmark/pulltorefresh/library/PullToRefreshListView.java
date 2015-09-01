@@ -57,16 +57,6 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 		super(context, mode, style);
 	}
 
-    @Override
-    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
-        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
-
-                MeasureSpec.AT_MOST);
-
-        super.onMeasure(widthMeasureSpec, expandSpec);
-    }
-
 	@Override
 	public final Orientation getPullToRefreshScrollDirection() {
 		return Orientation.VERTICAL;
@@ -218,7 +208,7 @@ public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView
 			lv = new InternalListViewSDK9(context, attrs);
 		} else {
 			lv = new InternalListView(context, attrs);
-			
+
 		}
 		lv.setDividerHeight(0);
 		return lv;

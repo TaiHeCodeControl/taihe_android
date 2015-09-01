@@ -30,6 +30,6 @@ public class Urls {
     public static final String METHOD_JOB_LIST = "/Position/loadMore";//职位列表
     public static final String METHOD_JOB_DETAIL = "/Position/details";//职位详情
 
-    public static final String NEARBY_URL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?m=act&c=list";//玩出范
+    public static final String NEARBY_URL = "http://195.198.1.83/eggker/interface/Activity/index/";//玩出范
 
 }
