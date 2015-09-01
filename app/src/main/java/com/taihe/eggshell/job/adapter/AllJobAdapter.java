@@ -96,9 +96,13 @@ public class AllJobAdapter extends BaseAdapter {
 
             view.setTag(holder);
         }
+
         holder.tv_jobName.setText(jobInfo.getName() + position);
         holder.tv_businessName.setText(jobInfo.getCom_name());
-
+        holder.tv_city.setText(jobInfo.getProvinceid());
+        holder.tv_edu.setText(jobInfo.getEdu());
+        holder.tv_pubTiem.setText(jobInfo.getLastupdate());
+        holder.tv_salaryRange.setText(jobInfo.getSalary());
         //设置checkBox默认不可点
 //        holder.cb_select.setClickable(false);
 
