@@ -2,23 +2,37 @@ package com.taihe.eggshell.job.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.adapter.JobDescAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.MyListView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wang on 2015/8/10.
@@ -31,6 +45,8 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private Button applyButton;
     private MyListView jobDescListView, moreJobListView;
     private ImageView collectionImg;
+    private LoadingProgressDialog dialog;
+    private String jobId = "23";
 
     private List<JobInfo> jobInfos = null;
     private boolean isCollect = false;
@@ -73,6 +89,16 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         super.initData();
         titleView.setText("职位详情");
         collectionImg.setVisibility(View.VISIBLE);
+
+        dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                R.string.submitcertificate_string_wait_dialog));
+
+        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+            dialog.show();
+            getDetail();
+        }else{
+            ToastUtils.show(mContext,R.string.check_network);
+        }
 
         jobInfos = new ArrayList<JobInfo>();
         //该公司其他职位信息
@@ -157,5 +183,45 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+    private void getDetail(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                dialog.dismiss();
+                try {
+                    Log.v(TAG, (String) o);
+                    JSONObject jsonObject = new JSONObject((String)o);
+
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if(code ==0){
+                        String data = jsonObject.getString("data");
+                        Gson gson = new Gson();
+                    }else{
+                        ToastUtils.show(mContext,"获取失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                if(null!=volleyError.networkResponse.data){
+                    Log.v("Forget:", new String(volleyError.networkResponse.data));
+                }
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+            }
+        };
+
+        Map<String,String> param = new HashMap<String, String>();
+        param.put("id",jobId);///id/23/pid/7
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
+
     }
 }
