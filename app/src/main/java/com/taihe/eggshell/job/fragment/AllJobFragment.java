@@ -25,7 +25,7 @@ import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
@@ -57,7 +57,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
     public List<JobInfo> jobInfos = null;
     private JobInfo jobInfo;
 
-    private PullToRefreshListView list_job_all;
+    private PullToRefreshGridView list_job_all;
     private View rootView;
     private Context mContext;
     private LoadingProgressDialog dialog;
@@ -82,22 +82,22 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
 
         jobInfos = new ArrayList<JobInfo>();
 
-        list_job_all = (PullToRefreshListView) rootView.findViewById(R.id.list_alljob_all);
+        list_job_all = (PullToRefreshGridView) rootView.findViewById(R.id.list_alljob_all);
         list_job_all.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
-        list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-
-                page++;
-                initDate();
-                list_job_all.onRefreshComplete();
-            }
-        });
+//        list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+//            @Override
+//            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+//
+//            }
+//
+//            @Override
+//            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+//
+//                page++;
+//                initDate();
+//                list_job_all.onRefreshComplete();
+//            }
+//        });
 
 
         list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {

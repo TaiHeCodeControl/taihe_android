@@ -24,7 +24,6 @@ import android.util.Log;
  * @author kalunren
  * **/
 public class MSCUrlManager implements Serializable {
-	public static String httpmain = "http://www.gmtxw06.com";
 	public static String http = "http://195.198.1.122:8066/eggker/phpv/API.php";
 	// public static String http = "http://192.168.1.109/gzxd/index.php?";
 

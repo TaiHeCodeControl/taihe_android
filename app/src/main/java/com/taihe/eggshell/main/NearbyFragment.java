@@ -21,6 +21,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.httprequest.MSCJSONObject;
 import com.taihe.eggshell.base.utils.httprequest.MSCOpenUrlRunnable;
@@ -46,7 +47,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
     private PullToRefreshGridView playView;
     private PlayAdapter playAdapter;
     private ImageView img_around_tag1,img_around_tag2;
-    int limit=2,page=1;
+    int limit=2,page=1,type=1;
     List<PlayInfoMode> list;
     Handler mHandler = new Handler(){
         @Override
@@ -136,6 +137,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
 		switch (view.getId()){
             case R.id.lin_around_tag1:
                 list.clear();
+                type=1;
                 img_around_tag1.setBackgroundResource(R.drawable.high);
                 img_around_tag2.setBackgroundResource(R.drawable.fulick);
                 txt_around_tag1.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
@@ -146,6 +148,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 playView.onRefreshComplete();
                 break;
             case R.id.lin_around_tag2:
+                type=2;
                 img_around_tag1.setBackgroundResource(R.drawable.highck);
                 img_around_tag2.setBackgroundResource(R.drawable.fuli);
                 txt_around_tag2.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
@@ -192,11 +195,11 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         Map<String,String> map = new HashMap<String,String>();
 //        map.put("m","act");
 //        map.put("c","list");
-//        map.put("tokey","740c957a");
+        map.put("type",""+type);
         map.put("limit",""+limit);
         map.put("page",""+page);
 
-        String url = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?m=act&c=list";
+        String url = Urls.NEARBY_URL;
         RequestUtils.createRequest(getActivity(), url, "", true, map, true, listener, errorListener);
     }
 
