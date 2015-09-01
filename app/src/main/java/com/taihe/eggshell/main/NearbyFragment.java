@@ -201,7 +201,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
 //        map.put("limit",""+limit);
 //        map.put("page",""+page);
         String sWhere="";
-        sWhere="type/"+type+"/page/"+page+"/limit/"+limit;
+        sWhere="type="+type+"&page="+page+"&limit="+limit;
         String url = Urls.NEARBY_URL+sWhere;
         RequestUtils.createRequest(getActivity(), url, "", true, map, true, listener, errorListener);
     }
