@@ -255,7 +255,6 @@
             android:theme="@style/android:Theme.Holo.Light"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
-
         <!--视频播放页-->
         <activity
             android:name=".videoplay.VideoPlayActivity"

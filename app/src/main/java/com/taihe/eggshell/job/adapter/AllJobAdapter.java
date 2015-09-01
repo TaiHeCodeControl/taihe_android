@@ -45,7 +45,6 @@ public class AllJobAdapter extends BaseAdapter {
         this.isHaveCheckBox = isHaveCheckBox;
     }
 
-
     @Override
     public int getCount() {
         return list.size();
