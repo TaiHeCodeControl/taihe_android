@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
@@ -26,12 +27,14 @@ public class PlayAdapter extends BaseAdapter{
 
     private Context mContext;
     private  List<PlayInfoMode> list;
+    private int type;
 
     public PlayAdapter(Context context){
         this.mContext = context;
     }
-    public void setPlayData( List<PlayInfoMode> list){
+    public void setPlayData( List<PlayInfoMode> list,int type){
         this.list = list;
+        this.type = type;
         notifyDataSetChanged();
     }
     @Override
@@ -60,20 +63,37 @@ public class PlayAdapter extends BaseAdapter{
             viewHolder.txtUser = (TextView)convertView.findViewById(R.id.txt_meetinglist_mb_zbf);
             viewHolder.txtDate = (TextView)convertView.findViewById(R.id.txt_meetinglist_mb_date);
             viewHolder.imgPic = (ImageView)convertView.findViewById(R.id.img_meetinglist_mb_log);
+
+            viewHolder.txtTitle2 = (TextView)convertView.findViewById(R.id.txt_meetinglist_mb_name2);
+            viewHolder.txtDate2 = (TextView)convertView.findViewById(R.id.txt_meetinglist_mb_date2);
+
+            viewHolder.tag1 = (RelativeLayout)convertView.findViewById(R.id.relative_meeting_list_mb_tag1);
+            viewHolder.tag2 = (RelativeLayout)convertView.findViewById(R.id.relative_meeting_list_mb_tag2);
+
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder)convertView.getTag();
         }
-        viewHolder.txtTitle.setText(list.get(position).getTitle().toString());
-        viewHolder.txtAddr.setText(list.get(position).getAddress().toString());
-        viewHolder.txtUser.setText(list.get(position).getUser().toString());
-        viewHolder.txtDate.setText(list.get(position).getStarttime().toString());
+        if(type==1) {
+            viewHolder.tag1.setVisibility(View.VISIBLE);
+            viewHolder.tag2.setVisibility(View.GONE);
+            viewHolder.txtTitle.setText(list.get(position).getTitle().toString());
+            viewHolder.txtAddr.setText(list.get(position).getAddress().toString());
+            viewHolder.txtUser.setText(list.get(position).getUser().toString());
+            viewHolder.txtDate.setText(list.get(position).getStarttime().toString());
+        }else{
+            viewHolder.tag2.setVisibility(View.VISIBLE);
+            viewHolder.tag1.setVisibility(View.GONE);
+            viewHolder.txtTitle2.setText(list.get(position).getTitle().toString());
+            viewHolder.txtDate2.setText(list.get(position).getStarttime().toString()+"～"+list.get(position).getEndtime().toString());
+        }
         FinalBitmap bitmap = FinalBitmap.create(mContext);
         bitmap.display(viewHolder.imgPic,list.get(position).getLogo().toString());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext,InfoDetailActivity.class);
+                intent.putExtra("type", type);
                 intent.putExtra("id", list.get(position).getId().toString());
                 intent.putExtra("title", list.get(position).getTitle().toString());
                 intent.putExtra("logo", list.get(position).getLogo().toString());
@@ -92,7 +112,9 @@ public class PlayAdapter extends BaseAdapter{
         return convertView;
     }
     class ViewHolder{
-        TextView txtTitle,txtAddr,txtUser,txtDate,txtAbout;
+        TextView txtTitle,txtAddr,txtUser,txtDate;
+        TextView txtTitle2,txtDate2;
         ImageView imgPic;
+        RelativeLayout tag1,tag2;
     }
 }

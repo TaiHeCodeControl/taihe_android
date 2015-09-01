@@ -76,7 +76,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                             vMode.setEndtime(j2.optString("endtime").toString());
                             list.add(vMode);
                         }
-                        playAdapter.setPlayData(list);
+                        playAdapter.setPlayData(list,type);
                         playView.setAdapter(playAdapter);
                     }catch (Exception ex){
                         ex.printStackTrace();
@@ -105,7 +105,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
 	public void init(){
         id_title.setText("玩出范");
         lin_back.setVisibility(View.GONE);
-        playView.setMode(PullToRefreshBase.Mode.BOTH);
+        playView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         playAdapter = new PlayAdapter(getActivity());
         list = new ArrayList<PlayInfoMode>();
         lin_around_tag1.setOnClickListener(this);
@@ -148,12 +148,16 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 playView.onRefreshComplete();
                 break;
             case R.id.lin_around_tag2:
+                list.clear();
                 type=2;
                 img_around_tag1.setBackgroundResource(R.drawable.highck);
                 img_around_tag2.setBackgroundResource(R.drawable.fuli);
                 txt_around_tag2.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
                 txt_around_tag1.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
-                playView.setVisibility(View.GONE);
+                page=1;
+//                playView.setVisibility(View.GONE);
+                getListData();
+                playView.onRefreshComplete();
                 break;
 		}
 	}
@@ -167,7 +171,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
-                    if (code == 1) {
+                    if (code == 0) {
                         String data = jsonObject.getString("data");
                         Message msg = new Message();
                         msg.what=100;
@@ -193,13 +197,12 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         };
 
         Map<String,String> map = new HashMap<String,String>();
-//        map.put("m","act");
-//        map.put("c","list");
-        map.put("type",""+type);
-        map.put("limit",""+limit);
-        map.put("page",""+page);
-
-        String url = Urls.NEARBY_URL;
+//        map.put("type",""+type);
+//        map.put("limit",""+limit);
+//        map.put("page",""+page);
+        String sWhere="";
+        sWhere="type/"+type+"/page/"+page+"/limit/"+limit;
+        String url = Urls.NEARBY_URL+sWhere;
         RequestUtils.createRequest(getActivity(), url, "", true, map, true, listener, errorListener);
     }
 
