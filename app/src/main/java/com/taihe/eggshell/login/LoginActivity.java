@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.google.gson.Gson;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
@@ -24,6 +25,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
+import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
@@ -51,7 +53,8 @@ public class LoginActivity extends BaseActivity {
 
     private String userphone;
     private String password;
-
+    private String telphone;
+    private String uid;
     private Intent intent;
     private String loginTag;
 
@@ -158,10 +161,8 @@ public class LoginActivity extends BaseActivity {
                         ToastUtils.show(mContext, "登录成功");
                         JSONObject data = jsonObject.getJSONObject("data");
 
-                        String telphone = data.getString("telphone");
-                        Log.i(TAG, telphone);
-                        String uid = data.getString("uid");
-                        Log.i(TAG, uid);
+                        telphone = data.getString("telphone");
+                        uid = data.getString("uid");
 
                         //登录成功保存用户登录信息
                         loginSuccess();
@@ -186,13 +187,18 @@ public class LoginActivity extends BaseActivity {
             }
         };
 
-        RequestUtils.createRequest(mContext, Urls.BASE_HYR_MOBILE_URL, Urls.METHOD_LOGIN, false, dataParams, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "http://195.198.1.197/eggker/interface", Urls.METHOD_LOGIN, false, dataParams, true, listener, errorListener);
 
     }
 
     //登录成功保存用户登录信息
     private void loginSuccess() {
-        String data = "{'id':1,'name':'xx','phoneNumber':'89898'}";
+        Map<String, String> datas = new HashMap<String, String>();
+        datas.put("uid", uid);
+        datas.put("phoneNumber", telphone);
+        Gson gson = new Gson();
+        // 将对象转换为JSON数据
+        String data = gson.toJson(datas);
         PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, data);
 
         //登录成功后显示界面的判断
