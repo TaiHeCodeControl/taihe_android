@@ -383,7 +383,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                    ToastUtils.show(mContext,volleyError.networkResponse.statusCode+R.string.error_server);
             }
         };
 

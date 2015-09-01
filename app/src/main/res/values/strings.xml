@@ -11,6 +11,7 @@
     <string name="main_around_title">附近</string>
     <string name="main_around_left">地图</string>
     <string name="check_network">请检查网络...</string>
+    <string name="error_server">服务器错误</string>
 
 
     <string name="set_aboutus">

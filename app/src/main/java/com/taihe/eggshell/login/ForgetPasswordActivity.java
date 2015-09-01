@@ -152,7 +152,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                 if(null!=volleyError.networkResponse.data){
                     Log.v("Forget:",new String(volleyError.networkResponse.data));
                 }
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+R.string.error_server);
             }
         };
 
@@ -187,7 +187,7 @@ public class ForgetPasswordActivity extends BaseActivity {
             public void onResponse(Object o) {
                 loading.dismiss();
                 try {
-//                    Log.v("TAD:",(String)o);
+                    Log.v("TAD:",(String)o);
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if(code ==0){
@@ -196,7 +196,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                         startActivity(intent);
                         ForgetPasswordActivity.this.finish();
                     }else{
-                        ToastUtils.show(mContext,"获取失败");
+                        ToastUtils.show(mContext,jsonObject.getString("message"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -211,7 +211,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                 if(null!=volleyError.networkResponse.data){
                     Log.v("Forget:",new String(volleyError.networkResponse.data));
                 }
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+R.string.error_server);
             }
         };
 
