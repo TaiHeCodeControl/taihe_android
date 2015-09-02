@@ -30,6 +30,11 @@ public class Urls {
     public static final String METHOD_JOB_LIST = "/Position/loadMore";//职位列表
     public static final String METHOD_JOB_DETAIL = "/Position/details";//职位详情
 
-    public static final String NEARBY_URL = "http://195.198.1.83/eggker/interface/Activity/index?";//玩出范
+    public static final String NEARBY_URL = "http://195.198.1.84/eggker/interface/Activity/index?";//玩出范
+    public static final String RESUME_WORK_URL = "http://195.198.1.120/eggker/interface/Except/resume_work";//工作经历
+    public static final String RESUME_EDU_URL = "http://195.198.1.120/eggker/interface/Except/resume_edu";//教育经历
+    public static final String RESUME_TRAIN_URL = "http://195.198.1.120/eggker/interface/Except/resume_training";//简历预览
+    public static final String RESUME_LOOK_URL = "http://195.198.1.120/eggker/interface/Except/resume_preview";//简历预览
+
 
 }

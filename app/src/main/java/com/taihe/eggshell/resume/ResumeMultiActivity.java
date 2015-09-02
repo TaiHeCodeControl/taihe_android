@@ -21,6 +21,7 @@ public class ResumeMultiActivity extends BaseActivity{
     private TextView resumeName;
     private RelativeLayout workExper,educationExper,trainExper,industryTech,projectExper,certBook,selfEvaluation;
     private Intent intent;
+    private String eid;
 
     @Override
     public void initView() {
@@ -47,8 +48,9 @@ public class ResumeMultiActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-
         initTitle("写简历");
+        eid="18";
+//        eid=getIntent().getStringExtra("eid");
     }
 
     @Override
@@ -57,14 +59,17 @@ public class ResumeMultiActivity extends BaseActivity{
         switch (v.getId()){
             case R.id.id_work_exper:
                 intent = new Intent(mContext,ResumeWorkActivity.class);
+                intent.putExtra("eid",eid);
                 startActivity(intent);
                 break;
             case R.id.id_edu_exper:
                 intent = new Intent(mContext,ResumeEduActivity.class);
+                intent.putExtra("eid",eid);
                 startActivity(intent);
                 break;
             case R.id.id_train_exper:
                 intent = new Intent(mContext,ResumeTrainActivity.class);
+                intent.putExtra("eid",eid);
                 startActivity(intent);
                 break;
             case R.id.id_industy_tech:

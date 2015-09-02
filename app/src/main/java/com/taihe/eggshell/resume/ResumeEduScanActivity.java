@@ -1,6 +1,7 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -21,7 +22,7 @@ public class ResumeEduScanActivity extends BaseActivity{
 
     private TextView goonTextView;
     private TextView schoolTextView,industyTextView,positionTextView,contextTextView,schoolTimeStart;
-
+    private String eid,schoolName,startTime,endTime,industyName,positionName,contextWord;
     @Override
     public void initView() {
         setContentView(R.layout.activity_resume_edu_scan);
@@ -43,6 +44,20 @@ public class ResumeEduScanActivity extends BaseActivity{
     public void initData() {
         super.initData();
         initTitle("写简历");
+        Intent intent = getIntent();
+        eid = intent.getStringExtra("eid");
+        schoolName = intent.getStringExtra("name");
+        startTime = intent.getStringExtra("sdate");
+        endTime = intent.getStringExtra("edate");
+        industyName = intent.getStringExtra("specialty");
+        positionName = intent.getStringExtra("title");
+        contextWord = intent.getStringExtra("content");
+
+        schoolTextView.setText(schoolName);
+        industyTextView.setText(industyName);
+        positionTextView.setText(positionName);
+        contextTextView.setText(contextWord);
+        schoolTimeStart.setText(startTime+"到"+endTime);
     }
 
     @Override
@@ -50,6 +65,10 @@ public class ResumeEduScanActivity extends BaseActivity{
         super.onClick(v);
         switch (v.getId()){
             case R.id.id_go_on:
+                Intent intent = new Intent(mContext,ResumeEduActivity.class);
+                intent.putExtra("eid",eid);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

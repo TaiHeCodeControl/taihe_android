@@ -2,10 +2,7 @@ package com.taihe.eggshell.main;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,17 +16,11 @@ import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
-import com.taihe.eggshell.base.utils.httprequest.MSCJSONObject;
-import com.taihe.eggshell.base.utils.httprequest.MSCOpenUrlRunnable;
-import com.taihe.eggshell.base.utils.httprequest.MSCPostUrlParam;
-import com.taihe.eggshell.base.utils.httprequest.MSCUrlManager;
 import com.taihe.eggshell.main.adapter.PlayAdapter;
 import com.taihe.eggshell.main.mode.PlayInfoMode;
-import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,42 +40,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
     private ImageView img_around_tag1,img_around_tag2;
     int limit=2,page=1,type=1;
     List<PlayInfoMode> list;
-    Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case 100:
-                    try{
-                        playView.isSelected();
-                        JSONArray j1 = new JSONArray(msg.obj.toString());
-                        JSONObject j2;
-                        for(int i=0;i<j1.length();i++){
-                            PlayInfoMode vMode = new PlayInfoMode();
-                            j2 = j1.getJSONObject(i);
-                            vMode.setId(j2.optString("id").toString());
-                            vMode.setTitle(j2.optString("title").toString());
-                            vMode.setAddress(j2.optString("address").toString());
-                            vMode.setOrganizers(j2.optString("organizers").toString());
-                            vMode.setEvery_time(j2.optString("every_time").toString());
-                            vMode.setUser(j2.optString("user").toString());
-                            vMode.setTelphone(j2.optString("telphone").toString());
-                            vMode.setTraffic_route(j2.optString("traffic_route").toString());
-                            vMode.setLogo(j2.optString("logo").toString());
-                            vMode.setContent(j2.optString("content").toString());
-                            vMode.setStarttime(j2.optString("starttime").toString());
-                            vMode.setEndtime(j2.optString("endtime").toString());
-                            list.add(vMode);
-                        }
-                        playAdapter.setPlayData(list,type);
-                        playView.setAdapter(playAdapter);
-                    }catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                    break;
-            }
-        }
-    };
+
 	@Override
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_around, null) ;
@@ -173,10 +129,35 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         String data = jsonObject.getString("data");
-                        Message msg = new Message();
-                        msg.what=100;
-                        msg.obj=data;
-                        mHandler.sendMessage(msg);
+                        try{
+                            playView.isSelected();
+                            JSONArray j1 = new JSONArray(data);
+                            JSONObject j2;
+                            for(int i=0;i<j1.length();i++){
+                                PlayInfoMode vMode = new PlayInfoMode();
+                                j2 = j1.getJSONObject(i);
+                                vMode.setId(j2.optString("id").toString());
+                                vMode.setTitle(j2.optString("title").toString());
+                                vMode.setAddress(j2.optString("address").toString());
+                                vMode.setOrganizers(j2.optString("organizers").toString());
+                                vMode.setEvery_time(j2.optString("every_time").toString());
+                                vMode.setUser(j2.optString("user").toString());
+                                vMode.setTelphone(j2.optString("telphone").toString());
+                                vMode.setTraffic_route(j2.optString("traffic_route").toString());
+                                vMode.setLogo(j2.optString("logo").toString());
+                                vMode.setContent(j2.optString("content").toString());
+                                vMode.setStarttime(j2.optString("starttime").toString());
+                                vMode.setEndtime(j2.optString("endtime").toString());
+                                list.add(vMode);
+                            }
+                            playAdapter.setPlayData(list,type);
+                            playView.setAdapter(playAdapter);
+                            if(list.size()==0){
+                                playView.removeAllViews();
+                            }
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                        }
                        // Log.e("data",data);
                     } else {
                         String msg = jsonObject.getString("msg");
@@ -197,11 +178,11 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         };
 
         Map<String,String> map = new HashMap<String,String>();
-//        map.put("type",""+type);
-//        map.put("limit",""+limit);
-//        map.put("page",""+page);
+        map.put("type",""+type);
+        map.put("limit",""+limit);
+        map.put("page",""+page);
         String sWhere="";
-        sWhere="type="+type+"&page="+page+"&limit="+limit;
+//        sWhere="type="+type+"&page="+page+"&limit="+limit;
         String url = Urls.NEARBY_URL+sWhere;
         RequestUtils.createRequest(getActivity(), url, "", true, map, true, listener, errorListener);
     }

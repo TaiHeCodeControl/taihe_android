@@ -1,6 +1,7 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -21,7 +22,7 @@ public class ResumeWorkScanActivity extends BaseActivity{
 
     private TextView commitText;
     private TextView companyTextView,departTextView,positionTextView,contextTextView,workTimeStart;
-
+    private String eid,companyName,startTime,endTime,departName,positionName,contextWord;
     @Override
     public void initView() {
         setContentView(R.layout.activity_resume_work_scan);
@@ -37,12 +38,27 @@ public class ResumeWorkScanActivity extends BaseActivity{
         workTimeStart = (TextView)findViewById(R.id.id_start_time);
 
         commitText.setOnClickListener(this);
+
     }
 
     @Override
     public void initData() {
         super.initData();
         initTitle("写简历");
+        Intent intent = getIntent();
+        eid = intent.getStringExtra("eid");
+        companyName = intent.getStringExtra("name");
+        startTime = intent.getStringExtra("sdate");
+        endTime = intent.getStringExtra("edate");
+        departName = intent.getStringExtra("department");
+        positionName = intent.getStringExtra("title");
+        contextWord = intent.getStringExtra("content");
+
+        companyTextView.setText(companyName);
+        departTextView.setText(departName);
+        positionTextView.setText(positionName);
+        contextTextView.setText(contextWord);
+        workTimeStart.setText(startTime+"到"+endTime);
     }
 
     @Override
@@ -50,7 +66,10 @@ public class ResumeWorkScanActivity extends BaseActivity{
         super.onClick(v);
         switch (v.getId()){
             case R.id.id_go_on:
-
+                Intent intent = new Intent(mContext,ResumeWorkActivity.class);
+                intent.putExtra("eid",eid);
+                startActivity(intent);
+                finish();
                 break;
         }
     }
