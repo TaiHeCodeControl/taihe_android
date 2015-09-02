@@ -21,7 +21,9 @@ public class Urls {
 
     public static final String METHOD_REPEAT_PHONE = "/auth/local/existed";//手机号是否重复注册
 
-    public static final String METHOD_LOGIN = "/login/";//登录
+    public static final String METHOD_LOGIN = "/login";//登录
+    public static final String METHOD_REGIST = "/register";//注册
+    public static final String METHOD_REGIST_GETCODE = "/register/chTelphone";//注册获取验证码
 
     public static final String METHOD_DETAIL = "m=act&c=detail";//
     public static final String METHOD_GET_CODE = "/login/send_code";//获取验证码

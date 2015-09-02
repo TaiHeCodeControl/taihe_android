@@ -14,6 +14,15 @@ public class JobInfo {
     private String edu;
     private String lastupdate;
     private String com_name;
+    private String uid;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
     public JobInfo(boolean isChecked, int id) {
         this.isChecked = isChecked;

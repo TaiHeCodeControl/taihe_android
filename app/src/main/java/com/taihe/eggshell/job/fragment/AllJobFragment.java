@@ -111,6 +111,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                     JobInfo job = jobInfos.get(position);
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
                     intent.putExtra("ID",job.getId());
+                    intent.putExtra("UID",job.getUid());
                     Log.i("ID",job.getId() + "");
                     startActivity(intent);
                 }

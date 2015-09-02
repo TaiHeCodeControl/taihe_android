@@ -47,11 +47,14 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private ImageView collectionImg;
     private LoadingProgressDialog dialog;
     private int jobId;
+    private String uid;
 
     private List<JobInfo> jobInfos = null;
     private boolean isCollect = false;
 
     private Intent intent;
+
+    private String address,cj_name,com_name,content,description,edu,exp,hy,id,lastupdate,linkmail,linktel,mun,name,provinceid,salary,type;
 
     @Override
     public void initView() {
@@ -61,6 +64,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         mContext = this;
         intent = getIntent();
         jobId = intent.getIntExtra("ID", 1);
+        uid = intent.getStringExtra("UID");
         Log.i("ID", jobId + "");
         titleView = (TextView) findViewById(R.id.id_title);
         collectionImg = (ImageView) findViewById(R.id.id_other);
@@ -104,10 +108,14 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             ToastUtils.show(mContext, R.string.check_network);
         }
 
+
+
+
+
         jobInfos = new ArrayList<JobInfo>();
         //该公司其他职位信息
         for (int i = 0; i < 2; i++) {
-            JobInfo jobInfo = new JobInfo(false, i);
+            JobInfo jobInfo = new JobInfo(false, i );
             jobInfo.setId(i);
             jobInfos.add(jobInfo);
         }
@@ -198,11 +206,49 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 try {
                     Log.v(TAG, (String) o);
                     JSONObject jsonObject = new JSONObject((String) o);
-
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {
-                        String data = jsonObject.getString("data");
-                        Gson gson = new Gson();
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        address = data.optString("address").substring(0, 6);
+                        cj_name = data.optString("cj_name");
+                        com_name = data.optString("com_name");
+                        content = data.optString("content");
+                        description = data.optString("description");
+                        edu = data.optString("edu");
+                        exp = data.optString("exp");
+                        hy = data.optString("hy");
+                        id = data.optString("id");
+                        lastupdate = data.optString("lastupdate");
+                        linkmail = data.optString("linkmail");
+                        linktel = data.optString("linktel");
+                        mun = data.optString("mun");
+                        name = data.optString("name");
+                        provinceid = data.optString("provinceid");
+                        salary = data.optString("salary");
+                        type = data.optString("type");
+                        //54不限 55全职 56兼职
+                        if(type.equals("55")){
+                            type = "全职";
+                        }else if(type.equals("56")){
+                            type = "兼职";
+                        }else {
+                            type = "不限";
+                        }
+
+
+                        //职位详情信息填充
+                        jobtitle.setText(cj_name);
+                        jobcompany.setText(com_name);
+                        jobstart.setText(lastupdate);//发布时间
+                        jobend.setText(lastupdate);//有效时间
+                        jobtype.setText(type);//工作性质
+                        joblevel.setText(edu);//学历要求
+                        jobyears.setText(exp);//工作年限
+                        jobaddress.setText(address);
+                        jobmoney.setText(salary);
+                        jobnum.setText(hy);//招聘人数
+                        company_jieshao.setText(content);
+
                     } else {
                         ToastUtils.show(mContext, "获取失败");
                     }
@@ -229,8 +275,8 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         };
 
         Map<String, String> param = new HashMap<String, String>();
-        param.put("id", jobId + "");///id/23/pid/7
-//        param.put("id",7 + "");
+        param.put("id", uid + "");///id/23/pid/7
+        param.put("pid",jobId + "");
 
         RequestUtils.createRequest(mContext, "http://195.198.1.84/eggker/interface", Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
 
