@@ -69,7 +69,7 @@ public class FindJobActivity extends FragmentActivity implements View.OnClickLis
                 getSupportFragmentManager());
         vp_pager.setAdapter(adapter);
         //Viewpager中每次显示出来一个页面Fragment时，都会把旁边的一个页面也预加载了，
-//        vp_pager.setOffscreenPageLimit(0);//控制预加载的页面数量（默认情况下参数为1）
+        vp_pager.setOffscreenPageLimit(0);//控制预加载的页面数量（默认情况下参数为1）
     }
 
     private void initData() {

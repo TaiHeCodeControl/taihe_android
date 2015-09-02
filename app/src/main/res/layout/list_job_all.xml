@@ -8,24 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="80dp">
 
-        <!--<RelativeLayout-->
-        <!--android:id="@+id/rl_listjob_select"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent">-->
-        <!--<View-->
-        <!--android:layout_width="15dp"-->
-        <!--android:layout_height="match_parent"/>-->
-        <!--<CheckBox-->
-        <!--android:layout_marginLeft="20dp"-->
-        <!--android:layout_marginRight="20dp"-->
-        <!--android:id="@+id/cb_listjob_select"-->
-        <!--style="@style/CustomCheckboxRed"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:focusable="false" />-->
-        <!--</RelativeLayout>-->
-
         <FrameLayout
             android:id="@+id/rl_listjob_select"
             android:layout_width="wrap_content"
@@ -59,6 +41,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="职位名称"
+                android:ellipsize="end"
+                android:imeOptions="actionNext"
+                android:maxLength="14"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/font_color_black"
                 android:textSize="@dimen/font_size_30" />
 
@@ -68,6 +55,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="公司名称"
+                android:ellipsize="end"
+                android:imeOptions="actionNext"
+                android:maxLength="16"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="@color/font_color_gray"
                 android:textSize="@dimen/font_size_26" />
 

@@ -99,22 +99,10 @@ public class AllJobAdapter extends BaseAdapter {
         holder.tv_businessName.setText(jobInfo.getCom_name());
         holder.tv_city.setText(jobInfo.getProvinceid());
         holder.tv_edu.setText(jobInfo.getEdu());
+
         holder.tv_pubTiem.setText(jobInfo.getLastupdate());
+
         holder.tv_salaryRange.setText(jobInfo.getSalary());
-        //设置checkBox默认不可点
-//        holder.cb_select.setClickable(false);
-
-//        holder.rl_listjob_select.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//
-//                holder.cb_select.setClickable(true);
-//                holder.cb_select.performClick();
-//            }
-//        });
-
-//        holder.cb_select.setChecked(list.get(position).isChecked());
 
         if (list.get(position).isChecked()) {
             holder.iv_xuanze.setImageResource(R.drawable.xuankuang_red);
@@ -154,11 +142,9 @@ public class AllJobAdapter extends BaseAdapter {
 
     class ViewHolder {
 
-//        CheckBox cb_select;
         TextView tv_jobName, tv_businessName, tv_city, tv_edu, tv_pubTiem, tv_salaryRange;
         View view_marginLeft;
         ImageView iv_xuanze;
-        RelativeLayout rl_listjob_select;
     }
 
 

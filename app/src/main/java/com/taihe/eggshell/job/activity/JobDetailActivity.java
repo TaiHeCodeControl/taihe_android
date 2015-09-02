@@ -46,10 +46,12 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private MyListView jobDescListView, moreJobListView;
     private ImageView collectionImg;
     private LoadingProgressDialog dialog;
-    private String jobId = "23";
+    private int jobId;
 
     private List<JobInfo> jobInfos = null;
     private boolean isCollect = false;
+
+    private Intent intent;
 
     @Override
     public void initView() {
@@ -57,7 +59,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         setContentView(R.layout.activity_job_detail);
         super.initView();
         mContext = this;
-
+        intent = getIntent();
+        jobId = intent.getIntExtra("ID", 1);
+        Log.i("ID", jobId + "");
         titleView = (TextView) findViewById(R.id.id_title);
         collectionImg = (ImageView) findViewById(R.id.id_other);
         jobtitle = (TextView) findViewById(R.id.id_job_name);
@@ -93,11 +97,11 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         dialog = new LoadingProgressDialog(mContext, getResources().getString(
                 R.string.submitcertificate_string_wait_dialog));
 
-        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             dialog.show();
             getDetail();
-        }else{
-            ToastUtils.show(mContext,R.string.check_network);
+        } else {
+            ToastUtils.show(mContext, R.string.check_network);
         }
 
         jobInfos = new ArrayList<JobInfo>();
@@ -159,7 +163,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         super.onClick(v);
         switch (v.getId()) {
             case R.id.id_apply_button:
-                JobApplyDialogUtil.isApplyJob(mContext,10,2);
+                JobApplyDialogUtil.isApplyJob(mContext, 10, 2);
                 break;
             case R.id.id_see_all:
                 company_jieshao.setMaxLines(Integer.MAX_VALUE);
@@ -176,7 +180,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                     collectionImg.setImageResource(R.drawable.shoucang);
                     ToastUtils.show(mContext, "取消收藏");
                     isCollect = false;
-                }else{
+                } else {
                     collectionImg.setImageResource(R.drawable.shoucang2);
                     ToastUtils.show(mContext, "收藏");
                     isCollect = true;
@@ -185,21 +189,22 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
-    private void getDetail(){
+    //获取职位详情
+    private void getDetail() {
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
                     Log.v(TAG, (String) o);
-                    JSONObject jsonObject = new JSONObject((String)o);
+                    JSONObject jsonObject = new JSONObject((String) o);
 
                     int code = Integer.valueOf(jsonObject.getString("code"));
-                    if(code ==0){
+                    if (code == 0) {
                         String data = jsonObject.getString("data");
                         Gson gson = new Gson();
-                    }else{
-                        ToastUtils.show(mContext,"获取失败");
+                    } else {
+                        ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -211,17 +216,23 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if(null!=volleyError.networkResponse.data){
-                    Log.v("Forget:", new String(volleyError.networkResponse.data));
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("Forget:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
                 }
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+
             }
         };
 
-        Map<String,String> param = new HashMap<String, String>();
-        param.put("id",jobId);///id/23/pid/7
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("id", jobId + "");///id/23/pid/7
+//        param.put("id",7 + "");
 
-        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "http://195.198.1.84/eggker/interface", Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
 
     }
 }

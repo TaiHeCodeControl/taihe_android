@@ -62,7 +62,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
     private View rootView;
     private Context mContext;
     private LoadingProgressDialog dialog;
-    private int page = 0;
+    private int page = 1;
     private int pageSize = 10;
     //选中条数的统计
     private int selectSize = 0;
@@ -167,6 +167,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                 dialog.dismiss();
                 try {
                     Log.v("HHH:",(String)o);
+
                     JSONObject jsonObject = new JSONObject((String)o);
 
                     int code = Integer.valueOf(jsonObject.getString("code"));
@@ -210,18 +211,24 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if(null!=volleyError.networkResponse.data){
-                    Log.v("Forget:", new String(volleyError.networkResponse.data));
+                try{
+                    if(null!=volleyError.networkResponse.data){
+                        Log.v("Forget:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+
+                }catch(Exception e){
+                    ToastUtils.show(mContext,"联网失败");
                 }
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+
             }
         };
 
         Map<String,String> param = new HashMap<String, String>();
         param.put("page",page+"");
-        param.put("pageSize",pageSize+"");
+        param.put("limit",pageSize+"");
 
-        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "http://195.198.1.84/eggker/interface", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
 
     }
 
