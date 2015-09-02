@@ -276,6 +276,19 @@
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
+                <TextView
+                    android:id="@+id/tv_jobdetail_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="岗位职责"
+                    android:ellipsize="end"
+                    android:lineSpacingExtra="5dp"
+                    android:lineSpacingMultiplier="1.0"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_job_desc"
                     android:layout_width="match_parent"
@@ -283,7 +296,8 @@
                     android:layout_marginTop="15dp"
                     android:divider="@null"
                     android:listSelector="@color/white"
-                    android:scrollbars="none" />
+                    android:scrollbars="none"
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <LinearLayout

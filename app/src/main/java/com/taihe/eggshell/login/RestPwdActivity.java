@@ -106,7 +106,7 @@ public class RestPwdActivity extends BaseActivity implements View.OnClickListene
                         startActivity(new Intent(mContext,LoginActivity.class));
                         finish();
                     }else{
-                        ToastUtils.show(mContext,"获取失败");
+                        ToastUtils.show(mContext,jsonObject.getString("message"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -121,7 +121,7 @@ public class RestPwdActivity extends BaseActivity implements View.OnClickListene
                 if(null!=volleyError.networkResponse.data){
                     Log.v("Forget:", new String(volleyError.networkResponse.data));
                 }
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
             }
         };
 

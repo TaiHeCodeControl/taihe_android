@@ -35,6 +35,7 @@ import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.base.utils.UpdateUtils;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
 import com.taihe.eggshell.login.LoginActivity;
+import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.personalCenter.activity.TeamActivity;
 import com.taihe.eggshell.personalCenter.activity.AboutActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
@@ -73,6 +74,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     private CircleImageView circleiv_mine_icon;
     private Intent intent;
+    private User user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -104,6 +106,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         ll_userinfo = (LinearLayout) rootView.findViewById(R.id.ll_mine_userinfo);
         tv_logintxt = (TextView) rootView.findViewById(R.id.tv_mine_logintxt);
+
+        tv_username = (TextView) rootView.findViewById(R.id.tv_mine_username);
+
 
         rl_mine_checkupdate.setOnClickListener(this);
         rl_mine_feedback.setOnClickListener(this);
@@ -145,18 +150,23 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private void initView() {
         //初始化选择图片popWindow
         initImageSelect();
-        if (null == EggshellApplication.getApplication().getUser()) {
+        user = EggshellApplication.getApplication().getUser();
+
+        if (null == user) {
 
             tv_logintxt.setVisibility(View.VISIBLE);
             ll_userinfo.setVisibility(View.GONE);
 
             rl_logout.setVisibility(View.GONE);
         } else {
-
+            String phoneNum = user.getPhoneNumber();
+            Log.i("PHONeNUM",phoneNum);
+            String nick = user.getName();
             tv_logintxt.setVisibility(View.GONE);
             ll_userinfo.setVisibility(View.VISIBLE);
 
             rl_logout.setVisibility(View.VISIBLE);
+            tv_username.setText(phoneNum);
         }
 
 
@@ -245,8 +255,16 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.circleiv_mine_icon:
+                //判断登录状态，
+                if (null == user) {//登录
+                    intent = new Intent(mContext, LoginActivity.class);
+                    intent.putExtra("LoginTag", "meFragment");
+                    startActivity(intent);
+                }else{
+                    showCameraPopWindow();
+                }
 
-                showCameraPopWindow();
+
                 break;
 
             // 以下是修改头像中的点击事件

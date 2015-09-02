@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -61,7 +62,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
     private View rootView;
     private Context mContext;
     private LoadingProgressDialog dialog;
-    private int page = 0;
+    private int page = 1;
     private int pageSize = 10;
     //选中条数的统计
     private int selectSize = 0;
@@ -83,21 +84,22 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
         jobInfos = new ArrayList<JobInfo>();
 
         list_job_all = (PullToRefreshGridView) rootView.findViewById(R.id.list_alljob_all);
+
         list_job_all.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
-//        list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
-//            @Override
-//            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-//
-//            }
-//
-//            @Override
-//            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-//
-//                page++;
-//                initDate();
-//                list_job_all.onRefreshComplete();
-//            }
-//        });
+        list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+                cb_selectAll.setChecked(false);
+                page++;
+                getList();
+                list_job_all.onRefreshComplete();
+            }
+        });
 
 
         list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -106,7 +108,11 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                 //listviewItem点击事件
 
                 if (position < jobInfos.size()) {
+                    JobInfo job = jobInfos.get(position);
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
+                    intent.putExtra("ID",job.getId());
+                    intent.putExtra("UID",job.getUid());
+                    Log.i("ID",job.getId() + "");
                     startActivity(intent);
                 }
 
@@ -162,6 +168,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                 dialog.dismiss();
                 try {
                     Log.v("HHH:",(String)o);
+
                     JSONObject jsonObject = new JSONObject((String)o);
 
                     int code = Integer.valueOf(jsonObject.getString("code"));
@@ -170,7 +177,6 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
                         Gson gson = new Gson();
                         List<JobInfo> joblist =  gson.fromJson(data,new TypeToken<List<JobInfo>>(){}.getType());
                         jobInfos.addAll(joblist);
-//                        adapter.notifyDataSetChanged();
                         adapter = new AllJobAdapter(mContext, jobInfos, true);
                         adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
                             @Override
@@ -206,18 +212,24 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                if(null!=volleyError.networkResponse.data){
-                    Log.v("Forget:", new String(volleyError.networkResponse.data));
+                try{
+                    if(null!=volleyError.networkResponse.data){
+                        Log.v("Forget:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+
+                }catch(Exception e){
+                    ToastUtils.show(mContext,"联网失败");
                 }
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+
             }
         };
 
         Map<String,String> param = new HashMap<String, String>();
         param.put("page",page+"");
-        param.put("pageSize",pageSize+"");
+        param.put("limit",pageSize+"");
 
-        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "http://195.198.1.84/eggker/interface", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
 
     }
 
