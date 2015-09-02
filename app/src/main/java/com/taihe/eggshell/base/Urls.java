@@ -6,8 +6,7 @@ public class Urls {
 
     public static final String BaseURL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";
     //测试
-//    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.197/eggker/interface";//测试服务器
-    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.83/eggker/interface";//测试服务器
+    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.211/eggker/interface";//测试服务器
     //正式
 //    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";// 正式服务器
 
@@ -31,6 +30,9 @@ public class Urls {
     public static final String METHOD_CHECK_CODE = "/login/next";//判断验证码
     public static final String METHOD_JOB_LIST = "/Position/loadMore";//职位列表
     public static final String METHOD_JOB_DETAIL = "/Position/details";//职位详情
+    public static final String METHOD_STATIC_DATA = "/Except/except_select";//静态数据
+    public static final String METHOD_CREATE_RESUME = "/Except/except";//创建简历
+    public static final String METHOD_UPDATE = "/update";//版本更新
 
     public static final String NEARBY_URL = "http://195.198.1.83/eggker/interface/Activity/index/";//玩出范
 

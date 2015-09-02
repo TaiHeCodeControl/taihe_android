@@ -3,6 +3,7 @@ package com.taihe.eggshell.resume;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -11,13 +12,24 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.IndustryActivity;
+import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.widget.CityDialog;
 import com.taihe.eggshell.widget.CityPopWindow;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by wang on 2015/8/13.
@@ -35,6 +47,10 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     private TimeDialog timeDialog;
     private CityDialog cityDialog;
     private boolean isBirthday = false;
+    private Map<String,String> params = new HashMap<String, String>();
+    private StaticData result;
+    private String sex = "0";
+    private int id_industry,id_positon,id_money,id_type,id_status,id_school,id_workex;
 
     private static final int RESULT_INDUSTRY = 10;
     private static final int RESULT_POSITION = 11;
@@ -81,7 +97,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
 
         resumeName = (EditText)findViewById(R.id.id_resume_name);
         userName = (EditText)findViewById(R.id.id_name);
-        phoneNum = (EditText)findViewById(R.id.id_phone_num);
+        phoneNum = (EditText)findViewById(R.id.id_phone);
         email = (EditText)findViewById(R.id.id_email);
         address = (EditText)findViewById(R.id.id_addres_now);
 
@@ -141,13 +157,9 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
             case R.id.id_city:
                 break;
             case R.id.id_county:
-                /*CityPopWindow popWindow = new CityPopWindow(mContext);
-                popWindow.setAsDropDown(forCounty);
-*/
                 cityDialog = new CityDialog(mContext,new CityDialog.CityClickListener() {
                     @Override
                     public void cityId(String id) {
-                        ToastUtils.show(mContext,id);
                         forCounty.setText(id);
                         cityDialog.dismiss();
                     }
@@ -183,6 +195,11 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                 startActivityForResult(intent, RESULT_EXPERICE);
                 break;
             case R.id.id_commit:
+                String resumname = resumeName.getText().toString();
+                String uname = userName.getText().toString();
+                String phonenu = phoneNum.getText().toString();
+                String emails = email.getText().toString();
+                String addr = address.getText().toString();
                 String industy = forIndusty.getText().toString();
                 String positon = forPosition.getText().toString();
                 String money = forMoney.getText().toString();
@@ -194,17 +211,34 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                 String school = forTopSchool.getText().toString();
                 String workexper = forWorkExper.getText().toString();
 
-                if(TextUtils.isEmpty(industy)||TextUtils.isEmpty(positon)||TextUtils.isEmpty(money)||
+                if(TextUtils.isEmpty(resumname)||TextUtils.isEmpty(uname)||TextUtils.isEmpty(phonenu)||
+                        TextUtils.isEmpty(emails)||TextUtils.isEmpty(addr)||TextUtils.isEmpty(industy)||
+                        TextUtils.isEmpty(positon)||TextUtils.isEmpty(money)||
                         TextUtils.isEmpty(city)||TextUtils.isEmpty(type)||TextUtils.isEmpty(time)||
                         TextUtils.isEmpty(status)||TextUtils.isEmpty(birthday)||
                         TextUtils.isEmpty(school)||TextUtils.isEmpty(workexper)){
                     ToastUtils.show(mContext,"还有空着的");
-                    intent = new Intent(mContext,ResumeMultiActivity.class);
-                    startActivity(intent);
                     return;
                 }else{
-                    intent = new Intent(mContext,ResumeMultiActivity.class);
-                    startActivity(intent);
+                    params.put("uid", "65");
+                    params.put("name", resumname);
+                    params.put("hy", id_industry+"");
+                    params.put("job_classid", id_positon+"");
+                    params.put("salary", id_money+"");
+                    params.put("proyinceid", "2");
+                    params.put("type", id_type+"");
+                    params.put("report", time);
+                    params.put("jobstatus", id_status+"");
+                    params.put("uname", uname);
+                    params.put("birthday", birthday);
+                    params.put("edu", id_school+"");
+                    params.put("exp", id_workex+"");
+                    params.put("telphone", phonenu);
+                    params.put("email", emails);
+                    params.put("address", addr);
+                    params.put("sex",sex);
+                    params.put("three_cityid",city);
+                    submitInfoToServer();
                 }
 
                 break;
@@ -215,31 +249,38 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
-            String result = data.getStringExtra("data");
-            if(TextUtils.isEmpty(result)){
+            result = data.getParcelableExtra("data");
+            if(null == result){
                 return;
             }
             switch (requestCode){
                 case RESULT_INDUSTRY:
-                    forIndusty.setText(result);
+                    forIndusty.setText(result.getName());
+                    id_industry = result.getId();
                     break;
                 case RESULT_POSITION:
-                    forPosition.setText(result);
+                    forPosition.setText(result.getName());
+                    id_positon = result.getId();
                     break;
                 case RESULT_MONEY:
-                    forMoney.setText(result);
+                    forMoney.setText(result.getName());
+                    id_money = result.getId();
                     break;
                 case RESULT_WORK:
-                    forWorkType.setText(result);
+                    forWorkType.setText(result.getName());
+                    id_type = result.getId();
                     break;
                 case RESULT_STATUS:
-                    forStatus.setText(result);
+                    forStatus.setText(result.getName());
+                    id_status = result.getId();
                     break;
                 case RESULT_SCHOOL:
-                    forTopSchool.setText(result);
+                    forTopSchool.setText(result.getName());
+                    id_school = result.getId();
                     break;
                 case RESULT_EXPERICE:
-                    forWorkExper.setText(result);
+                    forWorkExper.setText(result.getName());
+                    id_workex = result.getId();
                     break;
             }
         }
@@ -249,11 +290,44 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.id_gender_boy:
+                        sex = "0";
                         girlRadio.setChecked(false);
                         break;
                     case R.id.id_gender_girl:
+                        sex = "1";
                         boyRadio.setChecked(false);
                         break;
                 }
+    }
+
+    private void submitInfoToServer(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+
+                Log.v(TAG, (String) o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        String data = jsonObject.getString("data");
+                        intent = new Intent(mContext,ResumeMultiActivity.class);
+                        startActivity(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
+            }
+        };
+        Log.v("PAR:",params.toString());
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_CREATE_RESUME, false, params, true, listener, errorListener);
+
     }
 }

@@ -47,6 +47,9 @@ import com.taihe.eggshell.widget.MyScrollView;
 import com.taihe.eggshell.widget.ProgressDialog;
 import com.taihe.eggshell.widget.UpdateDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -216,24 +219,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-//        getVersionCode();
-
-        dialog = new UpdateDialog(mContext,new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        },new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.show(mContext,"更新");
-                dialog.dismiss();
-                updateAPK();
-            }
-        });
-
-        dialog.getTitleText().setText("发现新版本" + APKUtils.getVersionName());
-        dialog.show();
+        getVersionCode();
 
 //        FormatUtils.getMD5("你妹");
     }
@@ -360,6 +346,15 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             public void onResponse(Object o) {
 
                 Log.v(TAG,(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0) {
+                        JSONObject data = jsonObject.getJSONObject("data");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 dialog = new UpdateDialog(mContext,new View.OnClickListener() {
                     @Override
@@ -383,14 +378,14 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                    ToastUtils.show(mContext,volleyError.networkResponse.statusCode+R.string.error_server);
+                    ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
             }
         };
 
         Map<String,String> params = new HashMap<String, String>();
-        params.put("vercode", APKUtils.getVersionCode() + "");
+        params.put("version", APKUtils.getVersionCode() + "");
 
-        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_DETAIL, true, params, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_UPDATE, true, params, true, listener, errorListener);
     }
 
     private void updateAPK(){

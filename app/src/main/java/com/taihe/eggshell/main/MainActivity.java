@@ -3,39 +3,34 @@ package com.taihe.eggshell.main;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.chinaway.framework.swordfish.DbUtils;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
-import com.easefun.polyvsdk.PolyvSDKClient;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.EggshellApplication;
+import com.taihe.eggshell.base.DbHelper;
 import com.taihe.eggshell.base.Urls;
-import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
-import com.taihe.eggshell.login.LoginActivity;
-import com.taihe.eggshell.main.entity.User;
-import com.taihe.eggshell.videoplay.PolyvDemoService;
-import com.taihe.eggshell.widget.ChoiceDialog;
+import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.widget.CustomViewPager;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,6 +45,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     public  RadioButton radio_index;
     private RadioButton radio_social, radio_openclass, radio_me;
     private ArrayList<Fragment> fragmentList;
+    private DbUtils db;
 
     private int current = 0;
 
@@ -78,6 +74,101 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     }
 
     public void initData() {
+
+        db = DbHelper.getDbUtils(DbHelper.DB_TYPE_USER);
+
+        getStaticDataFromNet();
+    }
+
+    private void getStaticDataFromNet(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+
+//                Log.v(TAG,(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String hy = data.getString("hy");
+                        Gson gson = new Gson();
+                        List<StaticData> industryList = gson.fromJson(hy,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<industryList.size();i++){
+                            industryList.get(i).setType("hy");
+                        }
+                        db.saveOrUpdateAll(industryList);
+
+                        String pay = data.getString("pay");
+                        List<StaticData> salaryList = gson.fromJson(pay,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<salaryList.size();i++){
+                            salaryList.get(i).setType("pay");
+                        }
+                        db.saveOrUpdateAll(salaryList);
+
+                        String type = data.getString("type");
+                        List<StaticData> workTypeList = gson.fromJson(type,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<workTypeList.size();i++){
+                            workTypeList.get(i).setType("type");
+                        }
+                        db.saveOrUpdateAll(workTypeList);
+
+                        String workexper = data.getString("experience");
+                        List<StaticData> workExperinceList = gson.fromJson(workexper,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<workExperinceList.size();i++){
+                            workExperinceList.get(i).setType("experience");
+                        }
+                        db.saveOrUpdateAll(workExperinceList);
+
+                        String dgtime = data.getString("dgtime");
+                        List<StaticData> dgTimeList = gson.fromJson(dgtime,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<dgTimeList.size();i++){
+                            dgTimeList.get(i).setType("dgtime");
+                        }
+                        db.saveOrUpdateAll(dgTimeList);
+
+                        String status = data.getString("jobstatus");
+                        List<StaticData> jobStatusList = gson.fromJson(status,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<jobStatusList.size();i++){
+                            jobStatusList.get(i).setType("jobstatus");
+                        }
+                        db.saveOrUpdateAll(jobStatusList);
+
+                        String education = data.getString("education");
+                        List<StaticData> educationList = gson.fromJson(education,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<educationList.size();i++){
+                            educationList.get(i).setType("education");
+                        }
+                        db.saveOrUpdateAll(educationList);
+
+                        String job_classid = data.getString("job_classid");
+                        if(job_classid.equals("false")){
+                            Log.v(TAG,"暂无");
+                        }else{
+
+                        }
+
+                    }else{
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
+            }
+        };
+
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("", "");
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_STATIC_DATA, false, params, true, listener, errorListener);
+
     }
 
     public void initViewPager() {

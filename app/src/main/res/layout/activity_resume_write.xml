@@ -502,6 +502,8 @@
                         android:layout_marginLeft="10dp"
                         android:hint="请输入您的手机号码"
                         android:textSize="15sp"
+                        android:maxLength="11"
+                        android:inputType="phone"
                         android:textColor="@color/font_color_black"
                         android:textColorHint="@color/hint_color"
                         android:layout_weight="1"
