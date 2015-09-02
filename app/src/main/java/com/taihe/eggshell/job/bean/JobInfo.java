@@ -16,17 +16,20 @@ public class JobInfo {
     private String com_name;
     private String uid;
 
+    public JobInfo() {
+    }
+
+    public JobInfo(boolean isChecked, int id) {
+        this.isChecked = isChecked;
+        this.id = id;
+    }
+
     public String getUid() {
         return uid;
     }
 
     public void setUid(String uid) {
         this.uid = uid;
-    }
-
-    public JobInfo(boolean isChecked, int id) {
-        this.isChecked = isChecked;
-        this.id = id;
     }
 
     public boolean isChecked() {
