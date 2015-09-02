@@ -2,6 +2,7 @@ package com.taihe.eggshell.job.adapter;
 
 import android.content.Context;
 import android.location.GpsStatus;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.job.fragment.AllJobFragment;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -95,14 +98,33 @@ public class AllJobAdapter extends BaseAdapter {
 
             view.setTag(holder);
         }
-        holder.tv_jobName.setText(jobInfo.getName());
-        holder.tv_businessName.setText(jobInfo.getCom_name());
-        holder.tv_city.setText(jobInfo.getProvinceid());
-        holder.tv_edu.setText(jobInfo.getEdu());
 
-        holder.tv_pubTiem.setText(jobInfo.getLastupdate());
+        String jobName = jobInfo.getName();
+        if(!TextUtils.isEmpty(jobName)){
 
-        holder.tv_salaryRange.setText(jobInfo.getSalary());
+            holder.tv_jobName.setText(jobName);
+        }
+        if(!TextUtils.isEmpty(jobInfo.getCom_name())){
+
+            holder.tv_businessName.setText(jobInfo.getCom_name());
+        }
+        if(!TextUtils.isEmpty(jobInfo.getProvinceid())){
+
+            holder.tv_city.setText(jobInfo.getProvinceid());
+        }
+        if(!TextUtils.isEmpty(jobInfo.getEdu())){
+            holder.tv_edu.setText(jobInfo.getEdu());
+        }
+      if(!TextUtils.isEmpty(jobInfo.getLastupdate())){
+
+          holder.tv_pubTiem.setText(jobInfo.getLastupdate().substring(5));
+      }
+
+        if(!TextUtils.isEmpty(jobInfo.getSalary())){
+
+            holder.tv_salaryRange.setText(jobInfo.getSalary());
+        }
+
 
         if (list.get(position).isChecked()) {
             holder.iv_xuanze.setImageResource(R.drawable.xuankuang_red);
