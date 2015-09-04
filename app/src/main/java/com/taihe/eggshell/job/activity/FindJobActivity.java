@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.lidroid.xutils.view.annotation.ViewInject;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
@@ -277,6 +278,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.rl_findjob_fujin:
                 jobInfos.clear();
+                page = 1;
                 getList();
                 iv_quancheng.setImageResource(R.drawable.quancheng02);
                 iv_fujin.setImageResource(R.drawable.fujin02);

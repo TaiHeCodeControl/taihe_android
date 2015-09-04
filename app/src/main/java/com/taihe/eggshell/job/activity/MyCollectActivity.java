@@ -4,30 +4,49 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
+ * 收藏职位列表
  * Created by huan on 2015/8/14.
  */
 public class MyCollectActivity extends BaseActivity {
@@ -36,39 +55,100 @@ public class MyCollectActivity extends BaseActivity {
     private AllJobAdapter adapter;
     private CheckBox cb_selectAll;
 
-
+    private LoadingProgressDialog dialog;
     private List<JobInfo> jobInfos = null;
     private JobInfo jobInfo;
 
-    private ListView list_job_all;
+    private PullToRefreshGridView list_job_all;
     private Context mContext;
 
     private View footerView;
     private static final String TAG = "MyCollectActivity";
 
+    private int page = 1;
+    private int pageSize = 10;
     //选中条数的统计
-    public int selectSize = 0;
+    private int selectSize = 0;
+    private int postednum = 0;
+    private int[] deletePositionNum;
+    private List<Integer> delPositionNum = null;
+    private TextView tv_collect_num;
+    private StringBuilder sb = new StringBuilder();
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
-                case 100:
+            switch (msg.what) {
+                case 100://删除职位
 
                     Iterator<JobInfo> it = jobInfos.iterator();
                     while (it.hasNext()) {
                         JobInfo jobinfo = it.next();
                         if (jobinfo.isChecked()) {
+                            sb.append(jobinfo.getId());
+                            sb.append(",");
                             it.remove();
                         }
                     }
-                    adapter.notifyDataSetChanged();
-                    cb_selectAll.setChecked(false);
+                    deletePositin();
+
                     break;
             }
         }
     };
+
+    private void deletePositin() {
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                dialog.dismiss();
+                try {
+                    Log.v("HHH:", (String) o);
+
+                    JSONObject jsonObject = new JSONObject((String) o);
+
+
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if (code == 0) {
+
+                        adapter.notifyDataSetChanged();
+                        cb_selectAll.setChecked(false);
+                    } else {
+                        ToastUtils.show(mContext, "获取失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("MYCOLLECTDELETE:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
+            }
+        };
+
+        Map<String, String> param = new HashMap<String, String>();
+
+        String ss = sb.toString();
+
+        param.put("id", ss);
+        param.put("uid", 141 + "");
+        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_LIST_COLLECT_DELETE, false, param, true, listener, errorListener);
+
+    }
 
     @Override
     public void initView() {
@@ -89,68 +169,37 @@ public class MyCollectActivity extends BaseActivity {
     public void initListView() {
 
         jobInfos = new ArrayList<JobInfo>();
+        tv_collect_num = (TextView) findViewById(R.id.tv_collect_num);//收藏职位记录
+        list_job_all = (PullToRefreshGridView) findViewById(R.id.list_job);
 
-        for (int i = 0; i < 10; i++) {
-            jobInfo = new JobInfo(false, i);
-            jobInfos.add(jobInfo);
-        }
-        list_job_all = (ListView) findViewById(R.id.list_job_all);
-
-        //给listview增加底部view
-        footerView = View.inflate(mContext, R.layout.list_job_all_footer, null);
-        footerView.setVisibility(View.GONE);
-        list_job_all.addFooterView(footerView);
-
+        list_job_all.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
+        //  职位详情
         list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 //listviewItem点击事件
 
+                JobInfo job = jobInfos.get(position);
                 Intent intent = new Intent(mContext, JobDetailActivity.class);
+                intent.putExtra("ID", job.getId());
+                intent.putExtra("UID", job.getUid());
+                Log.i("ID", job.getId() + "");
                 startActivity(intent);
             }
         });
-        list_job_all.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+        list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
             @Override
-            public void onScrollStateChanged(final AbsListView absListView, int scrollState) {
-                //当不滚动时
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
-                    //判断是否滚动到底部
-                    if (absListView.getLastVisiblePosition() == absListView.getCount() - 1) {
-                        //加载更多
-                        footerView.setVisibility(View.VISIBLE);
+            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
 
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                TextView tv = (TextView) footerView.findViewById(R.id.tv_alljob_footer_txt);
-                                ProgressBar pb = (ProgressBar) footerView.findViewById(R.id.pb_alljob_footer_loading);
-                                pb.setVisibility(View.GONE);
-
-                                if (absListView.getCount() < 20) {
-
-                                    for (int i = 0; i < 10; i++) {
-                                        jobInfo = new JobInfo(false, i);
-                                        jobInfos.add(jobInfo);
-                                    }
-                                    pb.setVisibility(View.VISIBLE);
-                                    adapter.notifyDataSetChanged();
-                                    cb_selectAll.setChecked(false);
-                                } else {
-                                    tv.setText("没有更多了");
-                                }
-
-
-                            }
-                        }, 2000);
-                    }
-                }
             }
 
             @Override
-            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
+            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+                cb_selectAll.setChecked(false);
+                page++;
+                getList();
+                list_job_all.onRefreshComplete();
             }
         });
 
@@ -184,27 +233,94 @@ public class MyCollectActivity extends BaseActivity {
 
 
     private void initListData() {
-        adapter = new AllJobAdapter(mContext, jobInfos, true);
-        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
+
+        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+            dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                    R.string.submitcertificate_string_wait_dialog));
+            dialog.show();
+            getList();
+        } else {
+            ToastUtils.show(mContext, R.string.check_network);
+        }
+
+
+    }
+
+    private void getList() {
+
+        Response.Listener listener = new Response.Listener() {
             @Override
-            public void checkedPosition(int position, boolean isChecked) {
-                jobInfos.get(position).setIsChecked(isChecked);
-                //如果有listview没有被选中，全选按钮状态为false
-                if (jobInfos.get(position).isChecked()) {
-                    selectSize += 1;
-                    if (selectSize == jobInfos.size()) {
-                        cb_selectAll.setChecked(true);
+            public void onResponse(Object o) {
+                dialog.dismiss();
+                try {
+                    Log.v("HHH:", (String) o);
+
+                    JSONObject jsonObject = new JSONObject((String) o);
+
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if (code == 0) {
+                        String data = jsonObject.getString("data");
+                        Gson gson = new Gson();
+                        List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
+                        }.getType());
+
+                        jobInfos.addAll(joblist);
+                        int size = jobInfos.size();
+
+                        tv_collect_num.setText(size + "条记录");
+                        adapter = new AllJobAdapter(mContext, jobInfos, true);
+                        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
+                            @Override
+                            public void checkedPosition(int position, boolean isChecked) {
+                                jobInfos.get(position).setIsChecked(isChecked);
+                                //如果有listview没有被选中，全选按钮状态为false
+                                if (jobInfos.get(position).isChecked()) {
+                                    selectSize += 1;
+                                    if (selectSize == jobInfos.size()) {
+                                        cb_selectAll.setChecked(true);
+                                    }
+                                } else {
+                                    selectSize -= 1;
+                                    cb_selectAll.setChecked(false);
+                                }
+
+
+                            }
+                        });
+
+                        list_job_all.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        ToastUtils.show(mContext, "获取失败");
                     }
-                } else {
-                    selectSize -= 1;
-                    cb_selectAll.setChecked(false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("MYCOLLECT:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
                 }
 
-
             }
-        });
-        list_job_all.setAdapter(adapter);
+        };
 
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("page", page + "");
+        param.put("limit", pageSize + "");
+        param.put("uid", 141 + "");
+        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_LIST_COLLECT, false, param, true, listener, errorListener);
 
     }
 
@@ -217,15 +333,13 @@ public class MyCollectActivity extends BaseActivity {
                 goBack();
 
                 break;
-            case R.id.btn_collectjob_delete:
+            case R.id.btn_collectjob_delete://删除职位
 
-                Message msg = new Message();
-                msg.what=100;
-                mHandler.sendMessage(msg);
+                mHandler.sendEmptyMessage(100);
 
                 break;
             case R.id.btn_alljob_shenqing://投递selectSize条职位，其中已投递条数需要从服务器获取
-                JobApplyDialogUtil.isApplyJob(mContext,selectSize,2);
+                JobApplyDialogUtil.isApplyJob(mContext, selectSize, 2);
                 postJob();
                 break;
         }
@@ -240,7 +354,7 @@ public class MyCollectActivity extends BaseActivity {
 
     public void postJob() {
         for (JobInfo jobInfo : jobInfos) {
-            System.out.println(jobInfo.getId()+"======"+jobInfo.isChecked());
+            System.out.println(jobInfo.getId() + "======" + jobInfo.isChecked());
 
         }
     }

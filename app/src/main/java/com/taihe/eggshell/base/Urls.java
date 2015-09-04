@@ -26,6 +26,8 @@ public class Urls {
     public static final String METHOD_RESET_PASSWORD = "/login/update_pwd";//重置密码
     public static final String METHOD_CHECK_CODE = "/login/next";//判断验证码
     public static final String METHOD_JOB_LIST = "/Position/loadMore";//职位列表
+    public static final String METHOD_JOB_LIST_COLLECT = "/Position/collectlist";//收藏职位列表
+    public static final String METHOD_JOB_LIST_COLLECT_DELETE = "/Position/delcollectlist";//收藏职位列表
     public static final String METHOD_JOB_DETAIL = "/Position/details";//职位详情
     public static final String METHOD_JOB_COLLECT = "/Position/collect";//职位收藏
     public static final String METHOD_STATIC_DATA = "/Except/except_select";//静态数据

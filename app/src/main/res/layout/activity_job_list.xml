@@ -13,6 +13,7 @@
         android:background="@color/line_gray" />
 
     <TextView
+        android:id="@+id/tv_collect_num"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginRight="10dp"
@@ -26,14 +27,28 @@
         android:layout_height="0.5dp"
         android:background="@color/line_gray" />
 
-    <ListView
-        android:id="@+id/list_job_all"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_weight="1"
         android:layout_height="0dp"
-        android:divider="@color/line_gray"
-        android:footerDividersEnabled="false" />
+        android:layout_weight="1">
 
+    <com.handmark.pulltorefresh.library.PullToRefreshGridView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/list_job"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:divider="@color/gray"
+        android:numColumns="1"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="true"
+        android:listSelector="@color/white"
+        android:smoothScrollbar="true"
+        ptr:ptrAnimationStyle="flip" >
+    </com.handmark.pulltorefresh.library.PullToRefreshGridView>
+</LinearLayout>
 <include
     layout="@layout/list_job_collect_footer"/>
 </LinearLayout>

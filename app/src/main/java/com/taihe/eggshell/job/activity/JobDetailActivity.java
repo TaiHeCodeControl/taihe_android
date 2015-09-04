@@ -230,9 +230,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 } else {
                     //收藏职位
                     collectPosition();
-                    collectionImg.setImageResource(R.drawable.shoucang2);//已收藏图标
-                    ToastUtils.show(mContext, "收藏");
-                    isCollect = true;
+
                 }
                 break;
         }
@@ -250,8 +248,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                     int code = jsonObject.getInt("code");
                     System.out.println("collectCode=========" + code);
                     if (code == 0) {
-
-
+                        ToastUtils.show(mContext, "职位收藏成功");
+                        collectionImg.setImageResource(R.drawable.shoucang2);//已收藏图标
+                        isCollect = true;
                     } else {
                         ToastUtils.show(mContext, "获取失败");
                     }
@@ -280,7 +279,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         param.put("uid", UserId + "");
         param.put("job_id", jobId + "");
 
-        RequestUtils.createRequest(mContext, "http://195.198.1.83/one/interface", Urls.METHOD_JOB_COLLECT, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_COLLECT, false, param, true, listener, errorListener);
 
     }
 
