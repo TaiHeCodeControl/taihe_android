@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/include_title_color">
+    android:background="@color/include_title_color"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,49 +15,50 @@
             android:id="@+id/iv_findjob_back"
             android:layout_width="50dp"
             android:layout_height="match_parent">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/fanhui"/>
+                android:src="@drawable/fanhui" />
 
         </RelativeLayout>
 
 
         <TextView
-            android:text="全职职位"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
-            android:textSize="18dp"
-            android:textColor="@color/font_color_black"/>
+            android:text="全职职位"
+            android:textColor="@color/font_color_black"
+            android:textSize="18dp" />
 
         <ImageView
             android:id="@+id/iv_findjob_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:src="@drawable/sousuo001"
-            android:layout_toLeftOf="@+id/iv_findjob_filter"
             android:layout_marginRight="20dp"
-            />
+            android:layout_toLeftOf="@+id/iv_findjob_filter"
+            android:src="@drawable/sousuo001" />
 
         <ImageView
             android:id="@+id/iv_findjob_filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
-            android:src="@drawable/liebiao"
-            android:layout_alignParentRight="true"
-            />
+            android:src="@drawable/liebiao" />
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/line_gray"/>
+        android:background="@color/line_gray" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp">
@@ -65,72 +66,134 @@
         <RelativeLayout
             android:id="@+id/rl_findjob_qc"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/iv_findjob_qc"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="70dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/quancheng01"/>
-            <TextView
-                android:layout_toRightOf="@+id/iv_findjob_qc"
-                android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="70dp"
+                android:src="@drawable/quancheng01" />
+
+            <TextView
                 android:id="@+id/tv_findjob_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/iv_findjob_qc"
+                android:text="全城"
                 android:textColor="@color/font_color_red"
-                android:text="全城"/>
+                android:textSize="13dp" />
 
         </RelativeLayout>
 
 
         <View
-            android:layout_margin="5dp"
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="@color/line_gray"/>
+            android:layout_margin="5dp"
+            android:background="@color/line_gray" />
 
         <RelativeLayout
             android:id="@+id/rl_findjob_fujin"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/iv_findjob_fj"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="70dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/fujin01"/>
-            <TextView
-                android:layout_toRightOf="@+id/iv_findjob_fj"
-                android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="70dp"
+                android:src="@drawable/fujin01" />
+
+            <TextView
                 android:id="@+id/tv_findjob_fujin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/iv_findjob_fj"
+                android:text="附近"
                 android:textColor="@color/black"
-                android:text="附近"/>
+                android:textSize="13dp" />
 
         </RelativeLayout>
 
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/line_gray"/>
+        android:background="@color/line_gray" />
 
-    <com.taihe.eggshell.widget.CustomViewPager
-        android:id="@+id/vp_findjob_pager"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+        <com.handmark.pulltorefresh.library.PullToRefreshGridView xmlns:ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/list_alljob_all"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:divider="@color/gray"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="true"
+            android:listSelector="@color/white"
+            android:numColumns="1"
+            android:smoothScrollbar="true"
+            ptr:ptrAnimationStyle="flip"></com.handmark.pulltorefresh.library.PullToRefreshGridView>
+
+    </LinearLayout>
+
+    <View style="@style/line_fill" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp">
+
+        <CheckBox
+            android:id="@+id/cb_findjob_selectall"
+            style="@style/CustomCheckboxRed"
+            android:layout_width="30dp"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/cb_findjob_selectall"
+            android:text="全选"
+            android:textColor="@color/font_color_gray"
+            android:textSize="@dimen/font_size_26" />
+
+        <Button
+
+            android:id="@+id/btn_alljob_shenqing"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="112dp"
+            android:background="@drawable/lanniu"
+            android:text="申请职位"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_26" />
+
+
+    </RelativeLayout>
 </LinearLayout>

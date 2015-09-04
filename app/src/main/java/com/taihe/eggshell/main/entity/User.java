@@ -10,6 +10,9 @@ public class User {
     private String phoneNumber;
     private String token;
 
+    public User() {
+    }
+
     public User(int id, String name, String phoneNumber) {
         this.id = id;
         this.name = name;
