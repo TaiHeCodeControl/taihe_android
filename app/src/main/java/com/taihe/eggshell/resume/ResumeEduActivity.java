@@ -78,9 +78,13 @@ public class ResumeEduActivity extends BaseActivity{
         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String date = sDateFormat.format(new java.util.Date());
-                schoolTimeEnd.setText(date);
+                if(isChecked) {
+                    SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-M-d");
+                    String date = sDateFormat.format(new java.util.Date());
+                    schoolTimeEnd.setText(date);
+                }else{
+                    schoolTimeEnd.setText("");
+                }
             }
         });
     }

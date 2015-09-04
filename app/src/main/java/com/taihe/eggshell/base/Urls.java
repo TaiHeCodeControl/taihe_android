@@ -35,11 +35,14 @@ public class Urls {
     public static final String METHOD_UPDATE = "/update";//版本更新
     public static final String METHOD_RESUME_TECH = "/Except/resume_skill";//简历--技能
 
-    public static final String NEARBY_URL = "http://195.198.1.84/eggker/interface/Activity/index?";//玩出范
+    public static final String NEARBY_URL = "http://195.198.1.83/eggker/interface/Activity/index?";//玩出范
     public static final String RESUME_WORK_URL = "http://195.198.1.120/eggker/interface/Except/resume_work";//工作经历
     public static final String RESUME_EDU_URL = "http://195.198.1.120/eggker/interface/Except/resume_edu";//教育经历
-    public static final String RESUME_TRAIN_URL = "http://195.198.1.120/eggker/interface/Except/resume_training";//简历预览
+    public static final String RESUME_TRAIN_URL = "http://195.198.1.120/eggker/interface/Except/resume_training";//培训预览
     public static final String RESUME_LOOK_URL = "http://195.198.1.120/eggker/interface/Except/resume_preview";//简历预览
+    public static final String RESUME_PROJECT_URL = "http://195.198.1.120/eggker/interface/Except/resume_project";//项目经验
+    public static final String RESUME_BOOK_URL = "http://195.198.1.120/eggker/interface/Except/resume_cert";//证书
+    public static final String RESUME_OTHER_URL = "http://195.198.1.120/eggker/interface/Except/resume_other";//自我评价
 
 
 }

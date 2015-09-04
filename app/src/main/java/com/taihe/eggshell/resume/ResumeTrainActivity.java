@@ -79,7 +79,7 @@ public class ResumeTrainActivity extends BaseActivity{
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-M-d");
                     String date = sDateFormat.format(new java.util.Date());
                     workTimeEnd.setText(date);
                 }else{
