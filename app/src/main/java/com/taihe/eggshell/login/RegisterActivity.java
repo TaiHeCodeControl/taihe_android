@@ -197,7 +197,7 @@ public class RegisterActivity extends BaseActivity {
                         Log.i(TAG, telphone);
 
                         Map<String, String> datas = new HashMap<String, String>();
-                        datas.put("uid", uid);
+                        datas.put("id", uid);
                         datas.put("phoneNumber", telphone);
                         Gson gson = new Gson();
                         // 将对象转换为JSON数据

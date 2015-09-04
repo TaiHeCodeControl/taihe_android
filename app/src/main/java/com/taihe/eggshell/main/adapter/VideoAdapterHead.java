@@ -1,6 +1,7 @@
 package com.taihe.eggshell.main.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.View;
@@ -9,8 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.videoplay.VideoPlayActivity;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 
 import net.tsz.afinal.FinalBitmap;
@@ -51,7 +55,7 @@ public class VideoAdapterHead extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if(null==convertView){
             viewHolder = new ViewHolder();
@@ -67,36 +71,24 @@ public class VideoAdapterHead extends BaseAdapter{
         viewHolder.txtName.setText(list.get(position).getVideo_teacher().toString());
         FinalBitmap bitmap = FinalBitmap.create(mContext);
         bitmap.display(viewHolder.imgPic,list.get(position).getVimage().toString());
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (RequestUtils.GetWebType(mContext) != 0) {
+                    Intent intent = new Intent(mContext,VideoPlayActivity.class);
+                    intent.putExtra("vid", list.get(position).getVideo_id().toString());
+                    intent.putExtra("title", list.get(position).getVideo_name().toString());
+                    intent.putExtra("c_id", list.get(position).getC_id().toString());
+                    intent.putExtra("plist", list.get(position).getPlist().toString());
+                    intent.putExtra("path", "");
+                    mContext.startActivity(intent);
+                }else{
+                    Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
+                }
 
+            }
+        });
         return convertView;
-    }
-    public static Bitmap getHttpBitmap(String url){
-        URL myFileURL;
-        Bitmap bitmap=null;
-        try{
-            myFileURL = new URL(url);
-            //获得连接
-            HttpURLConnection conn=(HttpURLConnection)myFileURL.openConnection();
-            //设置超时时间为6000毫秒，conn.setConnectionTiem(0);表示没有时间限制
-            conn.setConnectTimeout(6000);
-            //连接设置获得数据流
-            conn.setDoInput(true);
-            //不使用缓存
-            conn.setUseCaches(false);
-            //这句可有可无，没有影响
-            //conn.connect();
-            //得到数据流
-            InputStream is = conn.getInputStream();
-            //解析得到图片
-            bitmap = BitmapFactory.decodeStream(is);
-            //关闭数据流
-            is.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        return bitmap;
-
     }
     class ViewHolder{
         TextView txtTitle,txtName,txtMoney,txtObvious,txtAbout;

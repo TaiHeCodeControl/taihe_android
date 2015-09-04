@@ -194,7 +194,7 @@ public class LoginActivity extends BaseActivity {
     //登录成功保存用户登录信息
     private void loginSuccess() {
         Map<String, String> datas = new HashMap<String, String>();
-        datas.put("uid", uid);
+        datas.put("id", uid);
         datas.put("phoneNumber", telphone);
         Gson gson = new Gson();
         // 将对象转换为JSON数据

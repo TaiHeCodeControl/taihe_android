@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.Html;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.GsonUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
@@ -67,6 +69,8 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
     private TextView tv_jobdetail_description;
 
+    private int UserId;
+
     @Override
     public void initView() {
 
@@ -74,6 +78,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         super.initView();
         mContext = this;
         jobInfos = new ArrayList<JobInfo>();
+        UserId = EggshellApplication.getApplication().getUser().getId();
+        Log.i("USERID",UserId + "");
+
         intent = getIntent();
         jobId = intent.getIntExtra("ID", 1);
         uid = intent.getStringExtra("UID");
@@ -221,12 +228,60 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                     ToastUtils.show(mContext, "取消收藏");
                     isCollect = false;
                 } else {
-                    collectionImg.setImageResource(R.drawable.shoucang2);
+                    //收藏职位
+                    collectPosition();
+                    collectionImg.setImageResource(R.drawable.shoucang2);//已收藏图标
                     ToastUtils.show(mContext, "收藏");
                     isCollect = true;
                 }
                 break;
         }
+    }
+
+    //收藏职位
+    private void collectPosition() {
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                dialog.dismiss();
+                try {
+                    Log.v(TAG, (String) o);
+                    JSONObject jsonObject = new JSONObject((String) o);
+                    int code = jsonObject.getInt("code");
+                    System.out.println("collectCode=========" + code);
+                    if (code == 0) {
+
+
+                    } else {
+                        ToastUtils.show(mContext, "获取失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("jobDetailCollect:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
+            }
+        };
+
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("uid", UserId + "");
+        param.put("job_id", jobId + "");
+
+        RequestUtils.createRequest(mContext, "http://195.198.1.83/one/interface", Urls.METHOD_JOB_COLLECT, false, param, true, listener, errorListener);
+
     }
 
     //获取职位详情
@@ -287,7 +342,13 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         jobaddress.setText(address);
                         jobmoney.setText(salary);
                         jobnum.setText(hy);//招聘人数
+
+                        byte[] bytes= Base64.decode(content, Base64.DEFAULT);
+                        content = new String(bytes,"UTF-8");
                         company_jieshao.setText(Html.fromHtml(content));//公司介绍
+
+                        byte[] descriptionbytes= Base64.decode(description, Base64.DEFAULT);
+                        description = new String(descriptionbytes,"UTF-8");
                         tv_jobdetail_description.setText(Html.fromHtml(description));//职责描述
 
                         int size = jobDetaiInfo.data.lists.size();
@@ -333,7 +394,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 dialog.dismiss();
                 try {
                     if (null != volleyError.networkResponse.data) {
-                        Log.v("Forget:", new String(volleyError.networkResponse.data));
+                        Log.v("jobDetail:", new String(volleyError.networkResponse.data));
                     }
                     ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
                 } catch (Exception e) {

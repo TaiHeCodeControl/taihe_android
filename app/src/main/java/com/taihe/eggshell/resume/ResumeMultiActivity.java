@@ -74,18 +74,22 @@ public class ResumeMultiActivity extends BaseActivity{
                 break;
             case R.id.id_industy_tech:
                 intent = new Intent(mContext,ResumeTechActivity.class);
+                intent.putExtra("eid",eid);
                 startActivity(intent);
                 break;
             case R.id.id_project_exper:
                 intent = new Intent(mContext,ResumeProjectActivity.class);
+                intent.putExtra("eid",eid);
                 startActivity(intent);
                 break;
             case R.id.id_conver_book:
                 intent = new Intent(mContext,ResumeBookActivity.class);
+                intent.putExtra("eid",eid);
                 startActivity(intent);
                 break;
             case R.id.id_self_evalu:
                 intent = new Intent(mContext,ResumeSelfActivity.class);
+                intent.putExtra("eid",eid);
                 startActivity(intent);
                 break;
         }

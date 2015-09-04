@@ -17,12 +17,17 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.httprequest.MSCJSONObject;
 import com.taihe.eggshell.base.utils.httprequest.MSCOpenUrlRunnable;
 import com.taihe.eggshell.base.utils.httprequest.MSCPostUrlParam;
 import com.taihe.eggshell.base.utils.httprequest.MSCUrlManager;
 import com.taihe.eggshell.main.adapter.VideoAdapterHead;
+import com.taihe.eggshell.main.mode.PlayInfoMode;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.taihe.eggshell.main.adapter.VideoAdapterGride;
 import com.taihe.eggshell.widget.MyGridView;
@@ -32,7 +37,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InternshipFragment extends Fragment implements View.OnClickListener{
     private LinearLayout lin_back,lin_head_video,id_lin_more,lin_fragment_top1,lin_fragment_top2,lin_fragment_video;
@@ -43,7 +50,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     private  GridView grid_head_video;
     private int viewwidth1 = 0,index=0;
     private ScrollView scroll_hotnotes;
-    List<VideoInfoMode> listInfo;
+    List<VideoInfoMode> listInfo,listTopInfo;
     int pagesize=4,page=1;
     private ProgressBar progressBar;
     Handler mHandler = new Handler(){
@@ -80,6 +87,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         lin_back.setVisibility(View.GONE);
         videoAdapter = new VideoAdapterGride(getActivity());
         listInfo = new ArrayList<VideoInfoMode>();
+        listTopInfo = new ArrayList<VideoInfoMode>();
         id_lin_more.setOnClickListener(this);
         lin_fragment_top1.setOnClickListener(this);
         lin_fragment_top2.setOnClickListener(this);
@@ -125,60 +133,93 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     }
 
    void initData(){
-       List<VideoInfoMode> listHead = new ArrayList<VideoInfoMode>();
-       for (int i = 0; i <3 ; i++) {
-           VideoInfoMode headMode = new VideoInfoMode();
-           headMode.setVideo_teacher("老师"+(i+1));
-           headMode.setVideo_name("物理特技教师" + (i + 1));
-           headMode.setVimage("http://img.videocc.net/uimage/0/00018093b1/e/00018093b18897dc6d44dc97088d9dde_0.jpg");
-           listHead.add(headMode);
-       }
-       VideoAdapterHead headAdapter = new VideoAdapterHead(getActivity());
-       headAdapter.setVideoData(listHead);
-       grid_head_video.setAdapter(headAdapter);
-
        updataUI();
    }
     public void updataUI(){
-        MSCUrlManager url = new MSCUrlManager("video","getPageList",pagesize,page);
-        List<MSCPostUrlParam> list = new ArrayList<MSCPostUrlParam>();
-        list.add(new MSCPostUrlParam("token", pagesize));
-//        list.add(new MSCPostUrlParam("pagesize", pagesize));
-//        list.add(new MSCPostUrlParam("page", page));
-        new Thread(new MSCOpenUrlRunnable(url, list) {
+    //返回监听事件
+        Response.Listener listener = new Response.Listener() {
             @Override
-            public void onControl(MSCJSONObject jsonObject) throws JSONException {
-                if (jsonObject.optString("code").equals("0")) {
-                    JSONArray j1 = jsonObject.getJSONArray("data");
-                    JSONObject j2;
-                    VideoInfoMode vMode;
-                    for(int i=0;i<j1.length();i++){
-                        vMode = new VideoInfoMode();
-                        j2 = j1.getJSONObject(i);
-                        vMode.setId(j2.optString("id").toString());
-                        vMode.setC_id(j2.optString("c_id").toString());
-                        vMode.setVideo_id(j2.optString("video_id").toString());
-                        vMode.setVideo_name(j2.optString("video_name").toString());
-                        vMode.setVideo_hour(j2.optString("video_hour").toString());
-                        vMode.setVideo_teacher(j2.optString("video_teacher").toString());
-                        vMode.setVideo_about(j2.optString("video_about").toString());
-                        vMode.setVideo_obvious(j2.optString("video_obvious").toString());
-                        vMode.setStatus(j2.optString("status").toString());
-                        vMode.setVimage(j2.optString("vimage").toString());
-                        vMode.setPlist(j2.optString("plist").toString());
-                        listInfo.add(vMode);
+            public void onResponse(Object obj) {//返回值
+                try {
+                    JSONObject jsonObject = new JSONObject((String) obj);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        try{
+                            JSONArray j1 = jsonObject.getJSONArray("data");
+                            JSONArray jt = jsonObject.getJSONArray("teacher");
+                            JSONObject j2;
+                            VideoInfoMode vMode;
+                            for (int i = 0; i < jt.length(); i++) {
+                                vMode = new VideoInfoMode();
+                                j2 = jt.getJSONObject(i);
+                                vMode.setId(j2.optString("id").toString());
+                                vMode.setC_id(j2.optString("c_id").toString());
+                                vMode.setVideo_id(j2.optString("video_id").toString());
+                                vMode.setVideo_name(j2.optString("video_name").toString());
+                                vMode.setVideo_hour(j2.optString("video_hour").toString());
+                                vMode.setVideo_teacher(j2.optString("video_teacher").toString());
+                                vMode.setVideo_about(j2.optString("video_about").toString());
+                                vMode.setVideo_obvious(j2.optString("video_obvious").toString());
+                                vMode.setStatus(j2.optString("status").toString());
+                                vMode.setVimage(j2.optString("vimage").toString());
+                                vMode.setPlist(j2.optString("plist").toString());
+                                listTopInfo.add(vMode);
+                            }
+                            for(int i=0;i<j1.length();i++){
+                                vMode = new VideoInfoMode();
+                                j2 = j1.getJSONObject(i);
+                                vMode.setId(j2.optString("id").toString());
+                                vMode.setC_id(j2.optString("c_id").toString());
+                                vMode.setVideo_id(j2.optString("video_id").toString());
+                                vMode.setVideo_name(j2.optString("video_name").toString());
+                                vMode.setVideo_hour(j2.optString("video_hour").toString());
+                                vMode.setVideo_teacher(j2.optString("video_teacher").toString());
+                                vMode.setVideo_about(j2.optString("video_about").toString());
+                                vMode.setVideo_obvious(j2.optString("video_obvious").toString());
+                                vMode.setStatus(j2.optString("status").toString());
+                                vMode.setVimage(j2.optString("vimage").toString());
+                                vMode.setPlist(j2.optString("plist").toString());
+                                listInfo.add(vMode);
+                            }
+                            if(j1.length()<1 && page>1){
+                                page--;
+                            }
+                            videoAdapter.setVideoData(listInfo);
+                            videoGrideView.setAdapter(videoAdapter);
+                            //更新头部名师风采
+                            VideoAdapterHead headAdapter = new VideoAdapterHead(getActivity());
+                            headAdapter.setVideoData(listTopInfo);
+                            grid_head_video.setAdapter(headAdapter);
+
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                        // Log.e("data",data);
+                    } else {
+                        String msg = jsonObject.getString("msg");
+//                        ToastUtils.show(mContext, msg);
                     }
-                    if(j1.length()<1 && page>1){
-                        page--;
-                    }
-                    videoAdapter.setVideoData(listInfo);
-                    videoGrideView.setAdapter(videoAdapter);
-                } else {
-//					Toast.makeText(getActivity(), jsonObject.length()+"false", Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                super.onControl(jsonObject);
             }
-        }).start();
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {//返回值
+//                    String err = new String(volleyError.networkResponse.data);
+//                    volleyError.networkResponse.statusCode;
+            }
+        };
+
+        Map<String,String> map = new HashMap<String,String>();
+//        map.put("pagesize",""+pagesize);
+//        map.put("page",""+page);
+        String sWhere="";
+        sWhere="?page="+page+"&pagesize="+pagesize;
+        String url = Urls.VIDEO_LIST_URL+sWhere;
+        RequestUtils.createRequest(getActivity(), url, "", true, map, true, listener, errorListener);
     }
     public void updataUIFL(){
 
