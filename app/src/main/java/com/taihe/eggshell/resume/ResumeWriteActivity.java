@@ -20,6 +20,7 @@ import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.IndustryActivity;
+import com.taihe.eggshell.main.entity.CityBJ;
 import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.widget.CityDialog;
 import com.taihe.eggshell.widget.CityPopWindow;
@@ -51,7 +52,8 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     private boolean isBirthday = false;
     private Map<String,String> params = new HashMap<String, String>();
     private StaticData result;
-    private String sex = "0";
+    private CityBJ city;
+    private String sex = "男";
     private int id_industry,id_positon,id_money,id_type,id_status,id_school,id_workex;
 
     private static final int RESULT_INDUSTRY = 10;
@@ -159,8 +161,9 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
             case R.id.id_county:
                 cityDialog = new CityDialog(mContext,new CityDialog.CityClickListener() {
                     @Override
-                    public void cityId(String id) {
-                        forCounty.setText(id);
+                    public void city(CityBJ c) {
+                        forCounty.setText(c.getName());
+                        city = c;
                         cityDialog.dismiss();
                     }
                 });
@@ -203,7 +206,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                 String industy = forIndusty.getText().toString();
                 String positon = forPosition.getText().toString();
                 String money = forMoney.getText().toString();
-                String city = forCity.getText().toString();
+                String cityname = forCounty.getText().toString();
                 String type = forWorkType.getText().toString();
                 String time = forTime.getText().toString();
                 String status = forStatus.getText().toString();
@@ -214,7 +217,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                 if(TextUtils.isEmpty(resumname)||TextUtils.isEmpty(uname)||TextUtils.isEmpty(phonenu)||
                         TextUtils.isEmpty(emails)||TextUtils.isEmpty(addr)||TextUtils.isEmpty(industy)||
                         TextUtils.isEmpty(positon)||TextUtils.isEmpty(money)||
-                        TextUtils.isEmpty(city)||TextUtils.isEmpty(type)||TextUtils.isEmpty(time)||
+                        TextUtils.isEmpty(cityname)||TextUtils.isEmpty(type)||TextUtils.isEmpty(time)||
                         TextUtils.isEmpty(status)||TextUtils.isEmpty(birthday)||
                         TextUtils.isEmpty(school)||TextUtils.isEmpty(workexper)){
                     ToastUtils.show(mContext,"还有空着的");
@@ -227,7 +230,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     params.put("hy", id_industry+"");
                     params.put("job_classid", id_positon+"");
                     params.put("salary", id_money+"");
-                    params.put("proyinceid", "2");
+                    params.put("provinceid", "2");
                     params.put("type", id_type+"");
                     params.put("report", time);
                     params.put("jobstatus", id_status+"");
@@ -239,7 +242,8 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     params.put("email", emails);
                     params.put("address", addr);
                     params.put("sex",sex);
-                    params.put("three_cityid",city);
+                    params.put("three_cityid",city.getId()+"");
+                    params.put("keyid","52");
 
                     loading.show();
                     submitInfoToServer();
@@ -294,11 +298,11 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.id_gender_boy:
-                        sex = "0";
+                        sex = "男";
                         girlRadio.setChecked(false);
                         break;
                     case R.id.id_gender_girl:
-                        sex = "1";
+                        sex = "女";
                         boyRadio.setChecked(false);
                         break;
                 }
@@ -315,6 +319,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     int code = jsonObject.getInt("code");
                     if(code == 0){
                         String resumeId = jsonObject.getString("data");
+                        ToastUtils.show(mContext,"提交成功");
                         intent = new Intent(mContext,ResumeMultiActivity.class);
                         intent.putExtra("eid",resumeId);
                         startActivity(intent);

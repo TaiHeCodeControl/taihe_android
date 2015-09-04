@@ -24,6 +24,7 @@ import com.taihe.eggshell.base.DbHelper;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.main.entity.CityBJ;
 import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.widget.CustomViewPager;
 import org.json.JSONObject;
@@ -154,6 +155,10 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                             inglist.get(i).setType("ing");
                         }
                         db.saveOrUpdateAll(inglist);
+
+                        String citys = data.getString("three_cityid");//北京市
+                        List<CityBJ> cityBJList = gson.fromJson(citys,new TypeToken<List<CityBJ>>(){}.getType());
+                        db.saveOrUpdateAll(cityBJList);
 
                         String job_classid = data.getString("job_classid");
                         if(job_classid.equals("false")){

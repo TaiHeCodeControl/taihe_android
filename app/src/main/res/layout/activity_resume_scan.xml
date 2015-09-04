@@ -19,6 +19,7 @@
         android:padding="10dp">
 
         <TextView
+            android:id="@+id/id_resume_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -129,7 +130,7 @@
                         android:text="经验:\u3000\u3000"/>
 
                     <TextView
-                        android:id="@+id/id_start_time"
+                        android:id="@+id/id_experince"
                         style="@style/ResumeTextStyle"
                         android:text="1-3年"/>
 
@@ -144,9 +145,9 @@
                         android:text="所在地:\u3000"/>
 
                     <TextView
-                        android:id="@+id/id_industy"
+                        android:id="@+id/id_address"
                         style="@style/ResumeTextStyle"
-                        android:text="请填写所学专业" />
+                        android:text="请填写所在地" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -160,7 +161,7 @@
                     <TextView
                         android:id="@+id/id_telphone"
                         style="@style/ResumeTextStyle"
-                        android:text="请填写社团职位" />
+                        android:text="1893332" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -174,7 +175,7 @@
                     <TextView
                         android:id="@+id/id_email"
                         style="@style/ResumeTextStyle"
-                        android:text="请填写社团职位" />
+                        android:text="122sdfd@qq.com" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -183,7 +184,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:paddingTop="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -213,7 +215,7 @@
                     <TextView
                         android:id="@+id/id_hope_position"
                         style="@style/ResumeTextStyle"
-                        android:text="请填写社团职位" />
+                        android:text="" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -228,7 +230,7 @@
                     <TextView
                         android:id="@+id/id_hope_industy"
                         style="@style/ResumeTextStyle"
-                        android:text="请填写社团职位" />
+                        android:text="" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -241,9 +243,9 @@
                         android:text="待遇要求:" />
 
                     <TextView
-                        android:id="@+id/id_want"
+                        android:id="@+id/id_want_money"
                         style="@style/ResumeTextStyle"
-                        android:text="请填写社团职位" />
+                        android:text="" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -258,7 +260,7 @@
                     <TextView
                         android:id="@+id/id_work_ear"
                         style="@style/ResumeTextStyle"
-                        android:text="请填写社团职位" />
+                        android:text="" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -273,7 +275,7 @@
                     <TextView
                         android:id="@+id/id_come_time"
                         style="@style/ResumeTextStyle"
-                        android:text="请填写社团职位" />
+                        android:text="" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -288,7 +290,7 @@
                     <TextView
                         android:id="@+id/id_status"
                         style="@style/ResumeTextStyle"
-                        android:text="请填写社团职位" />
+                        android:text="" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -303,7 +305,7 @@
                     <TextView
                         android:id="@+id/id_position_type"
                         style="@style/ResumeTextStyle"
-                        android:text="请填写社团职位" />
+                        android:text="" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -314,7 +316,8 @@
                 android:background="@color/white"
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -338,7 +341,7 @@
                     android:paddingLeft="15dp"
                     android:orientation="vertical">
                     <TextView
-                        android:id="@+id/id_time"
+                        android:id="@+id/id_time_work"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -386,7 +389,8 @@
                 android:background="@color/white"
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -446,6 +450,7 @@
                             android:textColor="@color/black"/>
 
                         <TextView
+                            android:id="@+id/id_school_posion"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
@@ -478,22 +483,31 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/id_tech_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
                     android:textColor="@color/red"
                     android:text="专业技能"
                     android:textSize="@dimen/font_size_15"/>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:background="@color/line_gray"/>
+
+                <TextView
+                    android:id="@+id/id_tech_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:text="计算机"
+                    android:textColor="@color/black"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -774,7 +788,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:text="培训经历"
+                    android:text="自我评价"
                     android:textSize="@dimen/font_size_15"
                     android:textColor="@color/red"/>
 
