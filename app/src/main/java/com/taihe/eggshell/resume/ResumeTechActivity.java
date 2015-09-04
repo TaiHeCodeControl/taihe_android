@@ -3,29 +3,48 @@ package com.taihe.eggshell.resume;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.IndustryActivity;
+import com.taihe.eggshell.main.entity.StaticData;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by wang on 2015/8/14.
  */
 public class ResumeTechActivity extends BaseActivity{
 
-    private static final String TAG = "ResumeTrainActivity";
+    private static final String TAG = "ResumeTechActivity";
 
     private Context mContext;
 
     private Intent intent;
     private TextView commitText,resetText,techtypeEdit,levelEdit;
     private EditText techEdit,techYear,workTimeEnd;
+    private LoadingProgressDialog loading;
+
     private String techName,years,techType,techLevel;
+    private int id_skill,id_level;
+    private Map<String,String> params = new HashMap<String, String>();
 
     private static final int RESULT_INDUSTRY = 20;
     private static final int RESULT_LEVEL = 21;
@@ -54,6 +73,8 @@ public class ResumeTechActivity extends BaseActivity{
     public void initData() {
         super.initData();
         initTitle("写简历");
+
+        loading = new LoadingProgressDialog(mContext,"正在提交...");
     }
 
     @Override
@@ -62,7 +83,7 @@ public class ResumeTechActivity extends BaseActivity{
         switch (v.getId()){
             case R.id.id_tech_type:
                 intent = new Intent(mContext, IndustryActivity.class);
-                intent.putExtra("Filter", "industry");
+                intent.putExtra("Filter", "skill");
                 startActivityForResult(intent, RESULT_INDUSTRY);
                 break;
             case R.id.id_tech_level:
@@ -76,6 +97,25 @@ public class ResumeTechActivity extends BaseActivity{
                 techType = techtypeEdit.getText().toString();
                 techLevel = levelEdit.getText().toString();
 
+                if(TextUtils.isEmpty(techName) || TextUtils.isEmpty(techLevel) ||
+                        TextUtils.isEmpty(techType) || TextUtils.isEmpty(years)){
+                    ToastUtils.show(mContext,"请填写完整");
+                }else{
+                    params.put("uid","65");
+                    params.put("eid","31");
+                    params.put("name",techName);
+                    params.put("skill",id_skill+"");
+                    params.put("ing",id_level+"");
+                    params.put("longtime",years);
+                    if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+                        loading.show();
+                        submitToServer();
+                    }else{
+                        ToastUtils.show(mContext,R.string.check_network);
+                    }
+
+                }
+
                 break;
             case R.id.id_reset:
                 techEdit.setHint("请填写单位名称");
@@ -88,20 +128,54 @@ public class ResumeTechActivity extends BaseActivity{
         }
     }
 
+    private void submitToServer(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                loading.dismiss();
+//                Log.v(TAG,(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        ToastUtils.show(mContext,"创建成功");
+                        finish();
+                    }else{
+                        ToastUtils.show(mContext,"创建失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                loading.dismiss();
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
+            }
+        };
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_RESUME_TECH,false,params,true,listener,errorListener);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
-            String result = data.getStringExtra("data");
-            if(TextUtils.isEmpty(result)){
+            StaticData result = data.getParcelableExtra("data");
+            if(null == result){
                 return;
             }
             switch (requestCode){
                 case RESULT_INDUSTRY:
-                    techtypeEdit.setText(result);
+                    techtypeEdit.setText(result.getName());
+                    id_skill = result.getId();
                     break;
                 case RESULT_LEVEL:
-                    levelEdit.setText(result);
+                    levelEdit.setText(result.getName());
+                    id_level = result.getId();
                     break;
             }
         }

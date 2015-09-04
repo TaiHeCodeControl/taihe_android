@@ -6,7 +6,7 @@ public class Urls {
 
     public static final String BaseURL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";
     //测试
-    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.211/eggker/interface";//测试服务器
+    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.120/eggker/interface";//测试服务器
     //正式
 //    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";// 正式服务器
 
@@ -33,6 +33,7 @@ public class Urls {
     public static final String METHOD_STATIC_DATA = "/Except/except_select";//静态数据
     public static final String METHOD_CREATE_RESUME = "/Except/except";//创建简历
     public static final String METHOD_UPDATE = "/update";//版本更新
+    public static final String METHOD_RESUME_TECH = "/Except/resume_skill";//简历--技能
 
     public static final String NEARBY_URL = "http://195.198.1.84/eggker/interface/Activity/index?";//玩出范
     public static final String RESUME_WORK_URL = "http://195.198.1.120/eggker/interface/Except/resume_work";//工作经历

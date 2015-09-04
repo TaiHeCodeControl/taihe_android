@@ -68,6 +68,8 @@
                 android:layout_marginRight="13dp"
                 android:textColor="@color/font_color_black"
                 android:textColorHint="@color/hint_color"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:textSize="15sp"
                 android:layout_weight="1"
                 android:background="@null" />

@@ -141,6 +141,20 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         }
                         db.saveOrUpdateAll(educationList);
 
+                        String skill = data.getString("skill");//技能
+                        List<StaticData> skillList = gson.fromJson(skill,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<skillList.size();i++){
+                            skillList.get(i).setType("skill");
+                        }
+                        db.saveOrUpdateAll(skillList);
+
+                        String ing = data.getString("ing");//熟练程度
+                        List<StaticData> inglist = gson.fromJson(ing,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<inglist.size();i++){
+                            inglist.get(i).setType("ing");
+                        }
+                        db.saveOrUpdateAll(inglist);
+
                         String job_classid = data.getString("job_classid");
                         if(job_classid.equals("false")){
                             Log.v(TAG,"暂无");

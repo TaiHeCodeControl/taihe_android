@@ -152,7 +152,15 @@ public class IndustryActivity extends BaseActivity {
             title = "熟练程度";
             selectString = "请选择";
             for(StaticData data:staticDataList){
-                if(data.getType().equals("hy")){
+                if(data.getType().equals("ing")){
+                    selectedDataList.add(data);
+                }
+            }
+        } else if(filterString.equals("skill")){
+            title = "技能类别";
+            selectString = "请选择";
+            for(StaticData data:staticDataList){
+                if(data.getType().equals("skill")){
                     selectedDataList.add(data);
                 }
             }

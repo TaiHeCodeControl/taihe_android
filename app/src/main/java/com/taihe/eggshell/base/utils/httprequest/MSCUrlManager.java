@@ -223,7 +223,7 @@ public class MSCUrlManager implements Serializable {
 //			resultData = resultData.replace("align=\"center\"", "align=center");
 //			resultData = resultData.replace("	", "");
 //			resultData = resultData.replace(" ", "");
-			Log.d("textpost", "yuanshitextpost:" + resultData);
+			//Log.d("textpost", "yuanshitextpost:" + resultData);
 			
 			
 			if (resultData.length() == 4) {
@@ -239,7 +239,7 @@ public class MSCUrlManager implements Serializable {
 					Log.d("textpost", "转换errcode异常：" + resultData);
 				}
 			}
-			Log.d("textpost", "textpost:" + resultData);
+			//Log.d("textpost", "textpost:" + resultData);
 
 			// 将array 转换 为 object格式
 			if (resultData.length() > 0

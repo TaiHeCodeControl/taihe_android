@@ -23,6 +23,7 @@ import com.taihe.eggshell.job.activity.IndustryActivity;
 import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.widget.CityDialog;
 import com.taihe.eggshell.widget.CityPopWindow;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
 
 import org.json.JSONException;
@@ -46,6 +47,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     private RadioButton girlRadio,boyRadio;
     private TimeDialog timeDialog;
     private CityDialog cityDialog;
+    private LoadingProgressDialog loading;
     private boolean isBirthday = false;
     private Map<String,String> params = new HashMap<String, String>();
     private StaticData result;
@@ -128,9 +130,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
 
         initTitle("写简历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
-        if(true){
-            //填充数据
-        }
+        loading = new LoadingProgressDialog(mContext,"正在提交...");
     }
 
     @Override
@@ -218,6 +218,8 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         TextUtils.isEmpty(status)||TextUtils.isEmpty(birthday)||
                         TextUtils.isEmpty(school)||TextUtils.isEmpty(workexper)){
                     ToastUtils.show(mContext,"还有空着的");
+                    intent = new Intent(mContext,ResumeMultiActivity.class);
+                    startActivity(intent);
                     return;
                 }else{
                     params.put("uid", "65");
@@ -238,6 +240,8 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     params.put("address", addr);
                     params.put("sex",sex);
                     params.put("three_cityid",city);
+
+                    loading.show();
                     submitInfoToServer();
                 }
 
@@ -304,14 +308,15 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-
-                Log.v(TAG, (String) o);
+                loading.dismiss();
+//                Log.v(TAG, (String) o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
                     if(code == 0){
-                        String data = jsonObject.getString("data");
+                        String resumeId = jsonObject.getString("data");
                         intent = new Intent(mContext,ResumeMultiActivity.class);
+                        intent.putExtra("eid",resumeId);
                         startActivity(intent);
                     }
                 } catch (JSONException e) {
@@ -323,10 +328,11 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                loading.dismiss();
                 ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
             }
         };
-        Log.v("PAR:",params.toString());
+//        Log.v("PAR:",params.toString());
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_CREATE_RESUME, false, params, true, listener, errorListener);
 
     }
