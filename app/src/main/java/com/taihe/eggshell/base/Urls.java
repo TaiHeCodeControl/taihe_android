@@ -44,6 +44,7 @@ public class Urls {
     public static final String RESUME_PROJECT_URL = "http://195.198.1.120/eggker/interface/Except/resume_project";//项目经验
     public static final String RESUME_BOOK_URL = "http://195.198.1.120/eggker/interface/Except/resume_cert";//证书
     public static final String RESUME_OTHER_URL = "http://195.198.1.120/eggker/interface/Except/resume_other";//自我评价
+    public static final String VIDEO_LIST_URL = "http://195.198.1.211/eggker/phpv/api.php/video/getPageList";//公开课
 
 
 }
