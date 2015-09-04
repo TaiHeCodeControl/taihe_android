@@ -2,12 +2,15 @@ package com.taihe.eggshell.job.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
@@ -51,7 +54,10 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private LoadingProgressDialog dialog;
     private int jobId;
     private String uid;
+    private LinearLayout ll_moreposition;
+    private TextView tv_allzhiwei, tv_shouqizhiwei;
 
+    private ScrollView sc_detail;
     private List<JobInfo> jobInfos = null;
     private boolean isCollect = false;
 
@@ -98,6 +104,15 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         shouqi.setOnClickListener(this);
 
         tv_jobdetail_description = (TextView) findViewById(R.id.tv_jobdetail_description);
+        tv_allzhiwei = (TextView) findViewById(R.id.id_see_allzhize);
+        tv_allzhiwei.setOnClickListener(this);
+
+        tv_shouqizhiwei = (TextView) findViewById(R.id.id_see_shouqizhize);
+        tv_shouqizhiwei.setOnClickListener(this);
+        ll_moreposition = (LinearLayout) findViewById(R.id.ll_jobdetail_moreposition);
+
+        sc_detail = (ScrollView) findViewById(R.id.sv_detail);
+        sc_detail.smoothScrollTo(0,20);
     }
 
     @Override
@@ -105,18 +120,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         super.initData();
         titleView.setText("职位详情");
         collectionImg.setVisibility(View.VISIBLE);
-
-        dialog = new LoadingProgressDialog(mContext, getResources().getString(
-                R.string.submitcertificate_string_wait_dialog));
-
-        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-            dialog.show();
-
-            getDetail();
-
-        } else {
-            ToastUtils.show(mContext, R.string.check_network);
-        }
 
 
         //该公司其他职位的点击事件
@@ -134,44 +137,53 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
             }
         });
-        //填充listview
-        AllJobAdapter jobAdapter = new AllJobAdapter(mContext, jobInfos, false);
-        moreJobListView.setAdapter(jobAdapter);
 
-        //职位描述列表
-        List<String> desc = new ArrayList<String>();
-        for (int i = 0; i < 5; i++) {
-            desc.add(i + "、你每年考试的记录看到");
+        dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                R.string.submitcertificate_string_wait_dialog));
+
+        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+            dialog.show();
+
+            getDetail();
+
+        } else {
+            ToastUtils.show(mContext, R.string.check_network);
         }
 
-        //岗位职责
-        tv_jobdetail_description.post(new Runnable() {
-            @Override
-            public void run() {
 
-            }
-        });
-        //职位描述信息填充
-        JobDescAdapter jobDescAdapter = new JobDescAdapter(mContext, desc);
-        jobDescListView.setAdapter(jobDescAdapter);
-
+//        //职位描述列表
+//        List<String> desc = new ArrayList<String>();
+//        for (int i = 0; i < 5; i++) {
+//            desc.add(i + "、你每年考试的记录看到");
+//        }
+//
+//        //岗位职责
+//        tv_jobdetail_description.post(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
+//        //职位描述信息填充
+//        JobDescAdapter jobDescAdapter = new JobDescAdapter(mContext, desc);
+//        jobDescListView.setAdapter(jobDescAdapter);
         //公司介绍
-        company_jieshao.setText("\u3000\u3000" + "深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路");
-        //查看全部和点击收起
-        company_jieshao.post(new Runnable() {
-            @Override
-            public void run() {
-                Log.i("jieshao_line", company_jieshao.getLineCount() + "");
-                if (company_jieshao.getLineCount() > 3) {
-                    company_jieshao.setMaxLines(2);
-                    updown.setVisibility(View.VISIBLE);
-                    shouqi.setVisibility(View.GONE);
-                } else {
-                    updown.setVisibility(View.GONE);
-                    shouqi.setVisibility(View.GONE);
-                }
-            }
-        });
+//        company_jieshao.setText("\u3000\u3000" + "深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路");
+//        //查看全部和点击收起
+//        company_jieshao.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                Log.i("jieshao_line", company_jieshao.getLineCount() + "");
+//                if (company_jieshao.getLineCount() > 3) {
+//                    company_jieshao.setMaxLines(2);
+//                    updown.setVisibility(View.VISIBLE);
+//                    shouqi.setVisibility(View.GONE);
+//                } else {
+//                    updown.setVisibility(View.GONE);
+//                    shouqi.setVisibility(View.GONE);
+//                }
+//            }
+//        });
 
 
     }
@@ -189,9 +201,19 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 shouqi.setVisibility(View.VISIBLE);
                 break;
             case R.id.id_see_shouqi:
-                company_jieshao.setMaxLines(2);
+                company_jieshao.setMaxLines(3);
                 updown.setVisibility(View.VISIBLE);
                 shouqi.setVisibility(View.GONE);
+                break;
+            case R.id.id_see_allzhize:
+                tv_jobdetail_description.setMaxLines(Integer.MAX_VALUE);
+                tv_allzhiwei.setVisibility(View.GONE);
+                tv_shouqizhiwei.setVisibility(View.VISIBLE);
+                break;
+            case R.id.id_see_shouqizhize:
+                tv_jobdetail_description.setMaxLines(3);
+                tv_allzhiwei.setVisibility(View.VISIBLE);
+                tv_shouqizhiwei.setVisibility(View.GONE);
                 break;
             case R.id.id_other:
                 if (isCollect) {
@@ -221,7 +243,13 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                                     JobDetailInfo.class);
                     int code = jobDetaiInfo.code;
                     if (code == 0) {
-                        address = jobDetaiInfo.data.address.substring(0, 6);
+
+                        address = jobDetaiInfo.data.address;
+                        if(address.length() >6){
+
+                        address =  address.substring(0, 6);
+                        }
+//                        address = jobDetaiInfo.data.address.split("区")[0].toString();
                         cj_name = jobDetaiInfo.data.cj_name;
                         com_name = jobDetaiInfo.data.com_name;
                         content = jobDetaiInfo.data.content;
@@ -263,6 +291,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         tv_jobdetail_description.setText(Html.fromHtml(description));//职责描述
 
                         int size = jobDetaiInfo.data.lists.size();
+                        if (size < 1) {//如果没有更多职位，隐藏更多职位
+                            ll_moreposition.setVisibility(View.GONE);
+                        }
                         //该公司其他职位信息
                         for (int i = 0; i < size; i++) {
                             JobInfo jobInfo = new JobInfo();
@@ -280,6 +311,12 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                             jobInfos.add(jobInfo);
                         }
 
+
+                        //填充listview
+                        AllJobAdapter jobAdapter = new AllJobAdapter(mContext, jobInfos, false);
+                        moreJobListView.setAdapter(jobAdapter);
+
+                        new GetLinesAsyncTask().execute();
 
                     } else {
                         ToastUtils.show(mContext, "获取失败");
@@ -310,7 +347,37 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         param.put("id", uid + "");///id/23/pid/7
         param.put("pid", jobId + "");
 
-        RequestUtils.createRequest(mContext, "http://195.198.1.84/eggker/interface", Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
 
+    }
+
+    private class GetLinesAsyncTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPostExecute(final Void result) {
+            super.onPostExecute(result);
+            int lineCount = company_jieshao.getLineCount();
+            int zhiweiline = tv_jobdetail_description.getLineCount();
+            if (lineCount <= 3) {
+                updown.setVisibility(View.GONE);
+                shouqi.setVisibility(View.GONE);
+            } else {
+                company_jieshao.setMaxLines(3);
+                updown.setVisibility(View.VISIBLE);
+                shouqi.setVisibility(View.GONE);
+            }
+            if (zhiweiline <= 3) {
+                tv_shouqizhiwei.setVisibility(View.GONE);
+                tv_allzhiwei.setVisibility(View.GONE);
+            } else {
+                tv_jobdetail_description.setMaxLines(3);
+                tv_shouqizhiwei.setVisibility(View.GONE);
+                tv_allzhiwei.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            return null;
+        }
     }
 }

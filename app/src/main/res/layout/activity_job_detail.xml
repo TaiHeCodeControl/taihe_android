@@ -10,9 +10,11 @@
     <View style="@style/line_fill" />
 
     <ScrollView
+        android:id="@+id/sv_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -288,6 +290,38 @@
                     android:lineSpacingMultiplier="1.0"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
+                <TextView
+                    android:id="@+id/id_see_allzhize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/see_all_updown"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@drawable/down_detail_icon"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="查看全部"
+                    android:textColor="@color/font_color_red"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/id_see_shouqizhize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/see_all_updown"
+                    android:drawablePadding="8dp"
+                    android:drawableRight="@drawable/shouqi"
+                    android:gravity="center"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="点击收起"
+                    android:textColor="@color/font_color_red"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
 
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_job_desc"
@@ -365,6 +399,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_jobdetail_moreposition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -400,6 +435,7 @@
                     android:divider="@color/white"
                     android:dividerHeight="0dp"
                     android:listSelector="@color/white"
+                    android:focusable="false"
                     android:scrollbars="none" />
             </RelativeLayout>
 

@@ -229,7 +229,7 @@ public class AllJobFragment extends Fragment implements View.OnClickListener {
         param.put("page",page+"");
         param.put("limit",pageSize+"");
 
-        RequestUtils.createRequest(mContext, "http://195.198.1.84/eggker/interface", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
 
     }
 
