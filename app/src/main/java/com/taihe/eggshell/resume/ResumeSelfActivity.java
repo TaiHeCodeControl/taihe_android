@@ -32,10 +32,10 @@ public class ResumeSelfActivity extends BaseActivity{
 
     private Context mContext;
 
-    private TextView commitText,resetText;
+    private TextView commitText,resetText,resume_name;
     private EditText contextEdit;
     private String content;
-    private String eid;
+    private Resumes eid;
     @Override
     public void initView() {
         setContentView(R.layout.activity_resume_self);
@@ -43,6 +43,7 @@ public class ResumeSelfActivity extends BaseActivity{
 
         mContext = this;
 
+        resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_commit);
         resetText = (TextView)findViewById(R.id.id_reset);
         contextEdit = (EditText)findViewById(R.id.id_context);
@@ -54,7 +55,8 @@ public class ResumeSelfActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-        eid=getIntent().getStringExtra("eid");
+        eid=getIntent().getParcelableExtra("eid");
+        resume_name.setText(eid.getName()+"-自我评价");
         initTitle("写简历");
     }
 
@@ -115,7 +117,7 @@ public class ResumeSelfActivity extends BaseActivity{
 
         Map<String,String> map = new HashMap<String,String>();
         map.put("uid", "65");//EggshellApplication.getApplication().getUser().getId()+""
-        map.put("eid",eid);
+        map.put("eid",eid.getRid()+"");
         map.put("content",content);
 
         RequestUtils.createRequest(mContext, Urls.RESUME_OTHER_URL, "", true, map, true, listener, errorListener);

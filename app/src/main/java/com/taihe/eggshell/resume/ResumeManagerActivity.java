@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
@@ -47,7 +48,7 @@ public class ResumeManagerActivity extends BaseActivity{
     private RelativeLayout resumeRelative;
     private View line;
 
-    private boolean isSelected = true;
+    private boolean isSelected = false;
 
     @Override
     public void initView() {
@@ -78,6 +79,11 @@ public class ResumeManagerActivity extends BaseActivity{
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isSelected = isChecked;
+                if(isSelected){
+//                    EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
+                }else{
+//                    EggshellApplication.getApplication().getUser().setResumeid("");
+                }
             }
         });
     }
@@ -115,10 +121,20 @@ public class ResumeManagerActivity extends BaseActivity{
                 startActivity(intent);
                 break;
             case R.id.id_edt:
-                intent = new Intent(mContext,ResumeWriteActivity.class);
-                startActivity(intent);
+                if(isSelected){
+                    intent = new Intent(mContext,ResumeWriteActivity.class);
+                    intent.putExtra("eid",resume.getRid()+"");
+                    startActivity(intent);
+                }else{
+                    ToastUtils.show(mContext,"请选择简历");
+                }
                 break;
             case R.id.id_use:
+                if(isSelected){
+                    ToastUtils.show(mContext,"你使用了简历:"+resume.getName());
+                }else{
+                    ToastUtils.show(mContext,"请选择简历");
+                }
                 break;
             case R.id.id_del:
                 if(isSelected){
@@ -149,10 +165,13 @@ public class ResumeManagerActivity extends BaseActivity{
                         Gson gson = new Gson();
                         List<Resumes> resumesList = gson.fromJson(data,new TypeToken<List<Resumes>>(){}.getType());
                         if(resumesList.size()>0){
+                            createResume.setEnabled(false);
+                            createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.unable_select_background));
                             resumeRelative.setVisibility(View.VISIBLE);
                             line.setVisibility(View.VISIBLE);
                             resume = resumesList.get(0);
                             checkBox.setText(resume.getName());
+//                            EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
                         }else{
                             resumeRelative.setVisibility(View.GONE);
                             line.setVisibility(View.GONE);
@@ -189,6 +208,9 @@ public class ResumeManagerActivity extends BaseActivity{
                     if(code == 0){
                         resumeRelative.setVisibility(View.GONE);
                         line.setVisibility(View.GONE);
+                        createResume.setEnabled(true);
+                        createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.msg_vercode_background));
+//                        EggshellApplication.getApplication().getUser().setResumeid("");
                         ToastUtils.show(mContext,"删除成功");
                     }
                 } catch (JSONException e) {

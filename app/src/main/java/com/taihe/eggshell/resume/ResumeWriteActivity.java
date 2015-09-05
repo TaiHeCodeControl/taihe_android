@@ -53,7 +53,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     private Map<String,String> params = new HashMap<String, String>();
     private StaticData result;
     private CityBJ city;
-    private String sex = "男";
+    private String sex = "6";
     private int id_industry,id_positon,id_money,id_type,id_status,id_school,id_workex;
 
     private static final int RESULT_INDUSTRY = 10;
@@ -133,6 +133,10 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         initTitle("写简历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
         loading = new LoadingProgressDialog(mContext,"正在提交...");
+
+        if(null!=getIntent().getStringExtra("eid")){
+            getInfo(getIntent().getStringExtra("eid"));
+        }
     }
 
     @Override
@@ -147,6 +151,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
             case R.id.id_position_for:
                 intent = new Intent(mContext, IndustryActivity.class);
                 intent.putExtra("Filter", "position");
+                intent.putExtra("flag","pos");
                 startActivityForResult(intent, RESULT_POSITION);
                 break;
             case R.id.id_money_for:
@@ -243,7 +248,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     params.put("address", addr);
                     params.put("sex",sex);
                     params.put("three_cityid",city.getId()+"");
-                    params.put("keyid","52");
+                    params.put("cityid","52");
 
                     loading.show();
                     submitInfoToServer();
@@ -298,14 +303,74 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.id_gender_boy:
-                        sex = "男";
+                        sex = "6";
                         girlRadio.setChecked(false);
                         break;
                     case R.id.id_gender_girl:
-                        sex = "女";
+                        sex = "7";
                         boyRadio.setChecked(false);
                         break;
                 }
+    }
+
+    private void getInfo(String id){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                Log.v(TAG,(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        JSONObject area = data.getJSONObject("area");
+                        String addres = area.getString("name");
+                        address.setText(addres);
+                        address.setText(addres);
+                        JSONObject info = data.getJSONObject("info");
+                        String name = info.getString("name");
+                        userName.setText(name);
+                        String emails = info.getString("email");
+                        email.setText(emails);
+                        String edu = info.getString("edu");
+                        forTopSchool.setText(edu);
+                        String experince = info.getString("exp");
+                        forWorkExper.setText(experince);
+                        String sexs = info.getString("sex");
+//                        gender.setText(sexs);
+
+                        String hy = data.getString("hy");
+                        forIndusty.setText(hy);
+                        JSONObject job = data.getJSONObject("job");
+                        String hopeposiont = job.getString("name");
+                        forPosition.setText(hopeposiont);
+
+                        String salary = data.getString("salary");
+                        forMoney.setText(salary);
+                        String status = data.getString("jobst");
+                        forStatus.setText(status);
+                        String worktype = data.getString("ctype");
+                        forWorkType.setText(worktype);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        };
+
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("id",id);
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_RESUME_SCAN, false, map, true, listener, errorListener);
+
     }
 
     private void submitInfoToServer(){
@@ -313,7 +378,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-//                Log.v(TAG, (String) o);
+                Log.v(TAG, (String) o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
@@ -321,7 +386,10 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         String resumeId = jsonObject.getString("data");
                         ToastUtils.show(mContext,"提交成功");
                         intent = new Intent(mContext,ResumeMultiActivity.class);
-                        intent.putExtra("eid",resumeId);
+                        Resumes resume = new Resumes();
+                        resume.setRid(Integer.valueOf(resumeId));
+                        resume.setName(resumeName.getText().toString());
+                        intent.putExtra("resume",resume);
                         startActivity(intent);
                     }
                 } catch (JSONException e) {

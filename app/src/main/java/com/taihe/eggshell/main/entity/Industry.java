@@ -15,6 +15,7 @@ public class Industry {
     private int id;
     private String name;
     private int imgsrc;
+    private String typese;
     private List<Professional> professionalList;
 
     public Industry(){}
@@ -41,6 +42,14 @@ public class Industry {
 
     public void setProfessionalList(List<Professional> professionalList) {
         this.professionalList = professionalList;
+    }
+
+    public String getTypese() {
+        return typese;
+    }
+
+    public void setTypese(String typese) {
+        this.typese = typese;
     }
 
     public int getImgsrc() {

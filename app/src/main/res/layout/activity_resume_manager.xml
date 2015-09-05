@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_centerVertical="true"
-                android:checked="true"
+                android:checked="false"
                 android:text="个人简历"
                 android:textColor="@color/black"
                 android:textSize="15sp"

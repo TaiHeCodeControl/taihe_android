@@ -113,6 +113,45 @@ public class ResumeScanActivity extends BaseActivity{
             @Override
             public void onResponse(Object o) {
                 Log.v(TAG,(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        JSONObject area = data.getJSONObject("area");
+                        String addres = area.getString("name");//地区
+                        hopeaddress.setText(addres);
+                        JSONObject info = data.getJSONObject("info");
+                        String name = info.getString("name");//姓名
+                        userName.setText(name);
+                        String emails = info.getString("email");//邮箱
+                        email.setText(emails);
+                        String edu = info.getString("edu");//学历
+                        schoolLevel.setText(edu);
+                        String experince = info.getString("exp");//工作经验
+                        experice.setText(experince);
+                        String sexs = info.getString("sex");
+                        gender.setText(sexs);
+                        String addre = info.getString("address");
+                        address.setText(addre);
+
+                        String hy = data.getString("hy");//期望行业
+                        hopeindustry.setText(hy);
+                        JSONObject job = data.getJSONObject("job");//期望职位
+                        String hopeposiont = job.getString("name");
+                        hopeposition.setText(hopeposiont);
+
+                        String salary = data.getString("salary");//薪资
+                        hopemoney.setText(salary);
+                        String status = data.getString("jobst");//求职状态
+                        staus.setText(status);
+                        String worktype = data.getString("ctype");//职位性质
+                        positiontype.setText(worktype);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
 

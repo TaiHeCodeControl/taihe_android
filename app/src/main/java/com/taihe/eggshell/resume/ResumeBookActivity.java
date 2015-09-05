@@ -33,12 +33,12 @@ public class ResumeBookActivity extends BaseActivity{
 
     private Context mContext;
 
-    private TextView commitText,resetText,timeEdit;
+    private TextView commitText,resetText,timeEdit,resume_name;
     private EditText bookEdit,techLevelEdit,contextEdit;
     private TimeDialog timeDialog;
 
     private String techName,years,techType,contextWord;
-    private String eid;
+    private Resumes eid;
     private TimeDialog.CustomTimeListener customTimeListener = new TimeDialog.CustomTimeListener() {
         @Override
         public void setTime(String time) {
@@ -54,6 +54,7 @@ public class ResumeBookActivity extends BaseActivity{
 
         mContext = this;
 
+        resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_commit);
         resetText = (TextView)findViewById(R.id.id_reset);
         bookEdit = (EditText)findViewById(R.id.id_tech_name);
@@ -70,7 +71,8 @@ public class ResumeBookActivity extends BaseActivity{
     public void initData() {
         super.initData();
         initTitle("写简历");
-        eid=getIntent().getStringExtra("eid");
+        eid=getIntent().getParcelableExtra("eid");
+        resume_name.setText(eid.getName()+"-证书");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
     }
 
@@ -154,7 +156,7 @@ public class ResumeBookActivity extends BaseActivity{
 
         Map<String,String> map = new HashMap<String,String>();
         map.put("uid", "65");//EggshellApplication.getApplication().getUser().getId()+""
-        map.put("eid",eid);
+        map.put("eid",eid.getRid()+"");
         map.put("name",techName);
         map.put("sdate",years);
         map.put("title",techType);

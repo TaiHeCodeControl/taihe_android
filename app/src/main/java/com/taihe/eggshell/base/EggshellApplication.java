@@ -17,17 +17,19 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
+import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.videoplay.PolyvDemoService;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EggshellApplication extends Application {
 
     public static EggshellApplication eggApplication;
     private User user;
     private File saveDir;
-
 
     public void onCreate() {
         eggApplication = this;
@@ -110,6 +112,8 @@ public class EggshellApplication extends Application {
             }
         }
     }
+
+
 
 
 

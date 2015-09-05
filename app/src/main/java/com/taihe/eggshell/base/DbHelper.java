@@ -14,7 +14,7 @@ public class DbHelper {
 	 * 不同分类的库版本，需分开管理，方便升级维护
 	 */
 	public static final int DB_VERSION_SYS = 1;
-	public static final int DB_VERSION_USER = 1;
+	public static final int DB_VERSION_USER = 4;
 
 	/**
 	 * 获取数据库操作的帮助类

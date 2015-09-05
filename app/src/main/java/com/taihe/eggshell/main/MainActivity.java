@@ -47,8 +47,20 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     private RadioButton radio_social, radio_openclass, radio_me;
     private ArrayList<Fragment> fragmentList;
     private DbUtils db;
-
     private int current = 0;
+
+    public static List<StaticData> hylist = new ArrayList<StaticData>();
+    public static List<StaticData> paylist = new ArrayList<StaticData>();
+    public static List<StaticData> typelist = new ArrayList<StaticData>();
+    public static List<StaticData> experiencelist = new ArrayList<StaticData>();
+    public static List<StaticData> dgtimelist = new ArrayList<StaticData>();
+    public static List<StaticData> jobstatuslist = new ArrayList<StaticData>();
+    public static List<StaticData> educationlist = new ArrayList<StaticData>();
+    public static List<StaticData> skilllist = new ArrayList<StaticData>();
+    public static List<StaticData> inglists = new ArrayList<StaticData>();
+//    public static List<StaticData> three_cityidlist = new ArrayList<StaticData>();
+//    public static List<StaticData> industrylist = new ArrayList<StaticData>();
+//    public static List<StaticData> industrylist = new ArrayList<StaticData>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,77 +107,98 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         String hy = data.getString("hy");
                         Gson gson = new Gson();
                         List<StaticData> industryList = gson.fromJson(hy,new TypeToken<List<StaticData>>(){}.getType());
+
                         for(int i=0;i<industryList.size();i++){
-                            industryList.get(i).setType("hy");
+                            industryList.get(i).setTypese("hy");
                         }
-                        db.saveOrUpdateAll(industryList);
+                        hylist.clear();
+                        hylist.addAll(industryList);
+//                        db.saveOrUpdateAll(industryList);
 
                         String pay = data.getString("pay");
                         List<StaticData> salaryList = gson.fromJson(pay,new TypeToken<List<StaticData>>(){}.getType());
                         for(int i=0;i<salaryList.size();i++){
-                            salaryList.get(i).setType("pay");
+                            salaryList.get(i).setTypese("pay");
                         }
-                        db.saveOrUpdateAll(salaryList);
+                        paylist.clear();
+                        paylist.addAll(salaryList);
+//                        db.saveOrUpdateAll(salaryList);
 
                         String type = data.getString("type");
-                        List<StaticData> workTypeList = gson.fromJson(type,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<workTypeList.size();i++){
-                            workTypeList.get(i).setType("type");
+                        if(!type.equals("false")){
+                            List<StaticData> workTypeList = gson.fromJson(type,new TypeToken<List<StaticData>>(){}.getType());
+                            for(int i=0;i<workTypeList.size();i++){
+                                workTypeList.get(i).setTypese("types");
+                            }
+                            typelist.clear();
+                            typelist.addAll(workTypeList);
+//                            db.saveOrUpdateAll(workTypeList);
                         }
-                        db.saveOrUpdateAll(workTypeList);
 
                         String workexper = data.getString("experience");
                         List<StaticData> workExperinceList = gson.fromJson(workexper,new TypeToken<List<StaticData>>(){}.getType());
                         for(int i=0;i<workExperinceList.size();i++){
-                            workExperinceList.get(i).setType("experience");
+                            workExperinceList.get(i).setTypese("experience");
                         }
-                        db.saveOrUpdateAll(workExperinceList);
+                        experiencelist.clear();
+                        experiencelist.addAll(workExperinceList);
+//                        db.saveOrUpdateAll(workExperinceList);
 
                         String dgtime = data.getString("dgtime");
                         List<StaticData> dgTimeList = gson.fromJson(dgtime,new TypeToken<List<StaticData>>(){}.getType());
                         for(int i=0;i<dgTimeList.size();i++){
-                            dgTimeList.get(i).setType("dgtime");
+                            dgTimeList.get(i).setTypese("dgtime");
                         }
-                        db.saveOrUpdateAll(dgTimeList);
+                        dgtimelist.clear();
+                        dgtimelist.addAll(dgTimeList);
+//                        db.saveOrUpdateAll(dgTimeList);
 
                         String status = data.getString("jobstatus");
                         List<StaticData> jobStatusList = gson.fromJson(status,new TypeToken<List<StaticData>>(){}.getType());
                         for(int i=0;i<jobStatusList.size();i++){
-                            jobStatusList.get(i).setType("jobstatus");
+                            jobStatusList.get(i).setTypese("jobstatus");
                         }
-                        db.saveOrUpdateAll(jobStatusList);
+                        jobstatuslist.clear();
+                        jobstatuslist.addAll(jobStatusList);
+//                        db.saveOrUpdateAll(jobStatusList);
 
                         String education = data.getString("education");
                         List<StaticData> educationList = gson.fromJson(education,new TypeToken<List<StaticData>>(){}.getType());
                         for(int i=0;i<educationList.size();i++){
-                            educationList.get(i).setType("education");
+                            educationList.get(i).setTypese("education");
                         }
-                        db.saveOrUpdateAll(educationList);
+                        educationlist.clear();
+                        educationlist.addAll(educationList);
+//                        db.saveOrUpdateAll(educationList);
 
                         String skill = data.getString("skill");//技能
                         List<StaticData> skillList = gson.fromJson(skill,new TypeToken<List<StaticData>>(){}.getType());
                         for(int i=0;i<skillList.size();i++){
-                            skillList.get(i).setType("skill");
+                            skillList.get(i).setTypese("skill");
                         }
-                        db.saveOrUpdateAll(skillList);
+                        skilllist.clear();
+                        skilllist.addAll(skillList);
+//                        db.saveOrUpdateAll(skillList);
 
                         String ing = data.getString("ing");//熟练程度
                         List<StaticData> inglist = gson.fromJson(ing,new TypeToken<List<StaticData>>(){}.getType());
                         for(int i=0;i<inglist.size();i++){
-                            inglist.get(i).setType("ing");
+                            inglist.get(i).setTypese("ing");
                         }
-                        db.saveOrUpdateAll(inglist);
+                        inglists.clear();
+                        inglists.addAll(inglist);
+//                        db.saveOrUpdateAll(inglist);
 
                         String citys = data.getString("three_cityid");//北京市
                         List<CityBJ> cityBJList = gson.fromJson(citys,new TypeToken<List<CityBJ>>(){}.getType());
                         db.saveOrUpdateAll(cityBJList);
 
                         String job_classid = data.getString("job_classid");
-                        if(job_classid.equals("false")){
-                            Log.v(TAG,"暂无");
-                        }else{
-
+                        List<StaticData> joblist = gson.fromJson(job_classid,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<joblist.size();i++){
+                            joblist.get(i).setTypese("job");
                         }
+                        db.saveOrUpdateAll(joblist);
 
                     }else{
 

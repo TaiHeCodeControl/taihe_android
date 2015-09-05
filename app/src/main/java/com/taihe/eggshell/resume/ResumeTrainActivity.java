@@ -35,14 +35,14 @@ public class ResumeTrainActivity extends BaseActivity{
 
     private Context mContext;
 
-    private TextView commitText,resetText,workTimeStart,workTimeEnd;
+    private TextView commitText,resetText,workTimeStart,workTimeEnd,resume_name;
     private EditText trainEdit,positionEdit,contextEdit;
     private CheckBox radioButton;
     private TimeDialog timeDialog;
 
     private String companyName,startTime,endTime,positionName,contextWord;
     private boolean isStart = false;
-    private String eid;
+    private Resumes eid;
     private TimeDialog.CustomTimeListener customTimeListener = new TimeDialog.CustomTimeListener() {
         @Override
         public void setTime(String time) {
@@ -63,6 +63,7 @@ public class ResumeTrainActivity extends BaseActivity{
 
         mContext = this;
 
+        resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_commit);
         resetText = (TextView)findViewById(R.id.id_reset);
         trainEdit = (EditText)findViewById(R.id.id_company_name);
@@ -94,7 +95,8 @@ public class ResumeTrainActivity extends BaseActivity{
     public void initData() {
         super.initData();
         initTitle("写简历");
-        eid=getIntent().getStringExtra("eid");
+        eid=getIntent().getParcelableExtra("eid");
+        resume_name.setText(eid.getName()+"-培训经历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
     }
 
@@ -189,7 +191,7 @@ public class ResumeTrainActivity extends BaseActivity{
 
         Map<String,String> map = new HashMap<String,String>();
         map.put("uid", "65");//EggshellApplication.getApplication().getUser().getId()+""
-        map.put("eid",eid);
+        map.put("eid",eid.getRid()+"");
         map.put("name",companyName);
         map.put("sdate",startTime);
         map.put("edate",endTime);

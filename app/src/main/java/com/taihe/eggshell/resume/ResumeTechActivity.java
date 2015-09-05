@@ -38,10 +38,10 @@ public class ResumeTechActivity extends BaseActivity{
     private Context mContext;
 
     private Intent intent;
-    private TextView commitText,resetText,techtypeEdit,levelEdit;
+    private TextView commitText,resetText,techtypeEdit,levelEdit,resume_name;
     private EditText techEdit,techYear,workTimeEnd;
     private LoadingProgressDialog loading;
-
+    private Resumes resume;
     private String techName,years,techType,techLevel;
     private int id_skill,id_level;
     private Map<String,String> params = new HashMap<String, String>();
@@ -56,6 +56,7 @@ public class ResumeTechActivity extends BaseActivity{
 
         mContext = this;
 
+        resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_commit);
         resetText = (TextView)findViewById(R.id.id_reset);
         techEdit = (EditText)findViewById(R.id.id_tech_name);
@@ -74,6 +75,8 @@ public class ResumeTechActivity extends BaseActivity{
         super.initData();
         initTitle("写简历");
 
+        resume = getIntent().getParcelableExtra("eid");
+        resume_name.setText(resume.getName()+"-专业技能");
         loading = new LoadingProgressDialog(mContext,"正在提交...");
     }
 
@@ -102,7 +105,7 @@ public class ResumeTechActivity extends BaseActivity{
                     ToastUtils.show(mContext,"请填写完整");
                 }else{
                     params.put("uid","65");
-                    params.put("eid","31");
+                    params.put("eid",resume.getRid()+"");
                     params.put("name",techName);
                     params.put("skill",id_skill+"");
                     params.put("ing",id_level+"");

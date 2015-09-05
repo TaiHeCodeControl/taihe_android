@@ -9,6 +9,7 @@ public class User {
     private String name;
     private String phoneNumber;
     private String token;
+    private String resumeid;
 
     public User() {
     }
@@ -49,5 +50,13 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getResumeid() {
+        return resumeid;
+    }
+
+    public void setResumeid(String resumeid) {
+        this.resumeid = resumeid;
     }
 }
