@@ -19,8 +19,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.adapter.PlayAdapter;
 import com.taihe.eggshell.main.mode.PlayInfoMode;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -160,8 +162,8 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                         }
                        // Log.e("data",data);
                     } else {
-                        String msg = jsonObject.getString("msg");
-//                        ToastUtils.show(mContext, msg);
+                        //String msg = jsonObject.getString("message");
+//                        ToastUtils.show(getActivity(), "网络连接异常");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -186,5 +188,15 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         String url = Urls.NEARBY_URL+sWhere;
         RequestUtils.createRequest(getActivity(), url, "", true, map, true, listener, errorListener);
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(getActivity());
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(getActivity());
+    }
 }

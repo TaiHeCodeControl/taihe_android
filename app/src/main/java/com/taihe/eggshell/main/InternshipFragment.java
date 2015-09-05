@@ -31,6 +31,7 @@ import com.taihe.eggshell.main.mode.PlayInfoMode;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.taihe.eggshell.main.adapter.VideoAdapterGride;
 import com.taihe.eggshell.widget.MyGridView;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -145,8 +146,9 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
-                            JSONArray j1 = jsonObject.getJSONArray("data");
-                            JSONArray jt = jsonObject.getJSONArray("teacher");
+                            JSONObject jo = jsonObject.getJSONObject("data");
+                            JSONArray j1 = jo.getJSONArray("list");
+                            JSONArray jt = jo.getJSONArray("teacher");
                             JSONObject j2;
                             VideoInfoMode vMode;
                             for (int i = 0; i < jt.length(); i++) {
@@ -254,5 +256,15 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                 break;
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(getActivity());
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(getActivity());
+    }
 }

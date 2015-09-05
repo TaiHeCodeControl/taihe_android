@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by wang on 2015/8/15.
@@ -72,5 +73,16 @@ public class ResumeWorkScanActivity extends BaseActivity{
                 finish();
                 break;
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

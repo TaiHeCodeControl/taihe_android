@@ -16,6 +16,7 @@ import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -159,5 +160,16 @@ public class ResumeBookActivity extends BaseActivity{
         map.put("title",techType);
         map.put("content",contextWord);
         RequestUtils.createRequest(mContext, Urls.RESUME_BOOK_URL, "", true, map, true, listener, errorListener);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

@@ -282,6 +282,10 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="VGhZOotiRWGkZjsiosu0wyI4" />
 
+        <meta-data android:value="55ea7c92e0f55a517c00239a" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="guanfang" android:name="UMENG_CHANNEL"/>
+
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

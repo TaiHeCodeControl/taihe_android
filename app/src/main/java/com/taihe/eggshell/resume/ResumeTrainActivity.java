@@ -17,6 +17,7 @@ import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -196,5 +197,16 @@ public class ResumeTrainActivity extends BaseActivity{
         map.put("content",contextWord);
 
         RequestUtils.createRequest(mContext, Urls.RESUME_TRAIN_URL, "", true, map, true, listener, errorListener);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

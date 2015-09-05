@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import net.tsz.afinal.FinalBitmap;
 
@@ -50,5 +51,16 @@ public class InfoDetailActivity extends BaseActivity{
         jobBrief.setText(intent.getStringExtra("content"));
         FinalBitmap bitmap = FinalBitmap.create(mContext);
         bitmap.display(imgLog,intent.getStringExtra("logo"));
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

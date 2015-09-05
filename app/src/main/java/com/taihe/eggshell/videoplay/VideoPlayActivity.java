@@ -31,6 +31,7 @@ import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.main.adapter.VideoInfoAdapter;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -316,5 +317,13 @@ public class VideoPlayActivity extends BaseActivity {
     protected void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
+        MobclickAgent.onPause(getApplication());
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(getApplication());
+    }
+
 }

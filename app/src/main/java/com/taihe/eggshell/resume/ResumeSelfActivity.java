@@ -15,6 +15,7 @@ import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -118,5 +119,16 @@ public class ResumeSelfActivity extends BaseActivity{
         map.put("content",content);
 
         RequestUtils.createRequest(mContext, Urls.RESUME_OTHER_URL, "", true, map, true, listener, errorListener);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

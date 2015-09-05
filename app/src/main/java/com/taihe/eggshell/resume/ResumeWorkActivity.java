@@ -20,6 +20,7 @@ import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.main.mode.PlayInfoMode;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -218,5 +219,16 @@ public class ResumeWorkActivity extends BaseActivity{
         map.put("content",contextWord);
 
         RequestUtils.createRequest(mContext, Urls.RESUME_WORK_URL, "", true, map, true, listener, errorListener);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

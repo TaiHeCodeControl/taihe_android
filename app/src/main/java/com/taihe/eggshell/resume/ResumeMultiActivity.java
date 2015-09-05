@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by wang on 2015/8/13.
@@ -93,5 +94,16 @@ public class ResumeMultiActivity extends BaseActivity{
                 startActivity(intent);
                 break;
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }
