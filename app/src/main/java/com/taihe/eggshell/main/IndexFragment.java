@@ -35,11 +35,13 @@ import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
 import com.taihe.eggshell.main.adapter.IndustryAdapter;
 import com.taihe.eggshell.main.adapter.RecommendAdapter;
+import com.taihe.eggshell.main.adapter.VideoAdapterHead;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
 import com.taihe.eggshell.meetinginfo.Act_MeetingInfo;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
+import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.ImagesGallery;
 import com.taihe.eggshell.widget.MyListView;
@@ -47,6 +49,7 @@ import com.taihe.eggshell.widget.MyScrollView;
 import com.taihe.eggshell.widget.ProgressDialog;
 import com.taihe.eggshell.widget.UpdateDialog;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -82,7 +85,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private static final int ALPHA_START=0;
     private static final int ALPHA_END=180;
     private static final int ALPHA_MESSAGE = 1;
-
+    List<VideoInfoMode> listInfo;
     private ChangeViewPagerListener changeViewPagerListener;
 
     public interface ChangeViewPagerListener{
@@ -143,7 +146,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         playMode = (TextView)rootView.findViewById(R.id.id_play_mode);
         weChat = (TextView)rootView.findViewById(R.id.id_we_chat);
         publicClass = (TextView)rootView.findViewById(R.id.id_public_class);
-
+        listInfo = new ArrayList<VideoInfoMode>();
         companyGridView = (GridView)rootView.findViewById(R.id.id_company_list);
         positionListView = (MyListView)rootView.findViewById(R.id.id_position_listview);
         lookJob.setOnClickListener(this);
@@ -188,18 +191,18 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         });
 
         getCompanyLogo();
-        RecommendAdapter recommendAdapter = new RecommendAdapter(mContext,companylogolist);
-        companyGridView.setAdapter(recommendAdapter);
-        recommendAdapter.notifyDataSetChanged();
-        companyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        ToastUtils.show(mContext,position+"");
-                        Intent intent = new Intent(mContext,CompanyDetailActivity.class);
-                        intent.putExtra("companyId",position);
-                        startActivity(intent);
-            }
-        });
+//        RecommendAdapter recommendAdapter = new RecommendAdapter(mContext,companylogolist);
+//        companyGridView.setAdapter(recommendAdapter);
+//        recommendAdapter.notifyDataSetChanged();
+//        companyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        ToastUtils.show(mContext,position+"");
+//                        Intent intent = new Intent(mContext,CompanyDetailActivity.class);
+//                        intent.putExtra("companyId",position);
+//                        startActivity(intent);
+//            }
+//        });
 
         getIndustrys();
         IndustryAdapter industryAdapter = new IndustryAdapter(mContext,industryList);
@@ -296,17 +299,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             localImageView.setImageResource(R.drawable.ic_focus);
             portImg.add(localImageView);
             linearLayoutFos.addView(localImageView);
-        }
-    }
-
-    private void getCompanyLogo(){
-        companylogolist = new ArrayList<RecommendCompany>();
-        int[] logo = new int[] { R.drawable.yahu, R.drawable.nike, R.drawable.zendesk,R.drawable.hp,R.drawable.mobify,R.drawable.holastic};
-        for(int i=0;i<6;i++){
-            RecommendCompany company = new RecommendCompany();
-            company.setId(i);
-            company.setImgsrc(logo[i]);
-            companylogolist.add(company);
         }
     }
 
@@ -409,6 +401,55 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 ToastUtils.show(mContext,"错误");
             }
         }).downloadInBackground(Constants.UPDATE_APK_URL);
+    }
+
+    private void getCompanyLogo(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object obj) {//返回值
+                try {
+                    JSONObject jsonObject = new JSONObject((String) obj);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        try{
+                            JSONArray j1 = jsonObject.getJSONArray("data");
+                            JSONObject j2;
+                            VideoInfoMode vMode;
+                            for(int i=0;i<j1.length();i++){
+                                vMode = new VideoInfoMode();
+                                j2 = j1.getJSONObject(i);
+                                vMode.setId(j2.optString("id").toString());
+                                vMode.setC_id(j2.optString("uid").toString());
+                                vMode.setVimage(j2.optString("hot_pic").toString());
+                                listInfo.add(vMode);
+                            }
+
+                            RecommendAdapter recommendAdapter = new RecommendAdapter(mContext,listInfo);
+                            companyGridView.setAdapter(recommendAdapter);
+                            recommendAdapter.notifyDataSetChanged();
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                        // Log.e("data",data);
+                    } else {
+                        //String msg = jsonObject.getString("msg");
+//                        ToastUtils.show(mContext, msg);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {//返回值
+            }
+        };
+
+        Map<String,String> map = new HashMap<String,String>();
+        String url = Urls.COMPY_LIST_URL;
+        RequestUtils.createRequest(getActivity(), url, "", true, map, true, listener, errorListener);
     }
 
 }

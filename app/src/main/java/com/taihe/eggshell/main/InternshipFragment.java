@@ -104,7 +104,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        System.out.print("ACTION_DOWN:"+index);
+//                        System.out.print("ACTION_DOWN:"+index);
                         break;
                     case MotionEvent.ACTION_MOVE:
                         index++;
@@ -119,7 +119,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                             + v.getHeight()) {
                         // 加载数据代码
                         if (listInfo.size() <= 3) {
-                            listInfo = new ArrayList<VideoInfoMode>();
+                            listInfo.clear();
                             page = 1;
                         } else {
                             page++;
