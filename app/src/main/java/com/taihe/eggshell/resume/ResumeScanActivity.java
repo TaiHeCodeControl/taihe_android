@@ -9,16 +9,23 @@ import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,7 +40,7 @@ public class ResumeScanActivity extends BaseActivity{
     private TextView hopeposition,hopeindustry,hopemoney,hopeaddress,hopetime,staus,positiontype;
     private TextView worktime,workposition,workcompany,workcontent;
     private TextView edutime,eduindusty,eduschool,eduposition,edubrief;
-    private TextView techname,techyears,techlevel;
+    private TextView techname,techyears,techlevel,techn;
     private TextView projecttime,projectpostion,projectname,projectbrief;
     private TextView bookname,booktime,bookcompany,bookbrief;
     private TextView traintime,traindirection,traincompnay,trainbrief;
@@ -79,6 +86,7 @@ public class ResumeScanActivity extends BaseActivity{
         techname = (TextView)findViewById(R.id.id_tech_name);
         techyears = (TextView)findViewById(R.id.id_contron_time);
         techlevel = (TextView)findViewById(R.id.id_hot_level);
+        techn = (TextView)findViewById(R.id.id_tech);
         //项目经验
         projecttime = (TextView)findViewById(R.id.id_time_project);
         projectpostion = (TextView)findViewById(R.id.id_own_posion);
@@ -155,6 +163,68 @@ public class ResumeScanActivity extends BaseActivity{
                         JSONObject dgtime = expect.getJSONObject("dgtime");//到岗时间
                         hopetime.setText(dgtime.getString("name"));
 
+                        Gson gson = new Gson();
+                        String worklist = data.getString("work");//工作经验
+                        if(!worklist.equals("[]")){
+                            List<ResumeData> worklists = gson.fromJson(worklist,new TypeToken<List<ResumeData>>(){}.getType());
+                            ResumeData work = worklists.get(0);
+                            worktime.setText(FormatUtils.timestampToDatetime(work.getSdate())+"——"+FormatUtils.timestampToDatetime(work.getEdate()));
+                            workposition.setText(work.getName());
+                            workcompany.setText(work.getDepartment());
+                            workcontent.setText(work.getContent());
+                        }
+                        String jylist = data.getString("jy");//教育
+                        if(!jylist.equals("[]")){
+                            List<ResumeData> jylists = gson.fromJson(jylist,new TypeToken<List<ResumeData>>(){}.getType());
+                            ResumeData jy = jylists.get(0);
+                            edutime.setText(FormatUtils.timestampToDatetime(jy.getSdate())+"——"+FormatUtils.timestampToDatetime(jy.getEdate()));
+                            eduindusty.setText(jy.getSpecialty());
+                            eduposition.setText(jy.getTitle());
+                            eduschool.setText(jy.getName());
+                            edubrief.setText(jy.getContent());
+                        }
+                        String skilllist = data.getString("skill");//技能
+                        if(!skilllist.equals("[]")){
+                            List<ResumeData> skilllists = gson.fromJson(skilllist,new TypeToken<List<ResumeData>>(){}.getType());
+                            ResumeData skill = skilllists.get(0);
+                            techlevel.setText(skill.getIng());
+                            techyears.setText(skill.getLongtime()+"年");
+                            techname.setText(skill.getSkill());
+                            techn.setText(skill.getSkill());
+                        }
+                        String projectlist = data.getString("project");//项目
+                        if(!projectlist.equals("[]")){
+                            List<ResumeData> projectlists = gson.fromJson(projectlist,new TypeToken<List<ResumeData>>(){}.getType());
+                            ResumeData project = projectlists.get(0);
+                            projecttime.setText(FormatUtils.timestampToDatetime(project.getSdate())+"——"+FormatUtils.timestampToDatetime(project.getEdate()));
+                            projectname.setText(project.getName());
+                            projectbrief.setText(project.getContent());
+                            projectpostion.setText(project.getTitle());
+                        }
+                        String trainlist = data.getString("training");//培训
+                        if(!trainlist.equals("[]")){
+                            List<ResumeData> trainlists = gson.fromJson(trainlist,new TypeToken<List<ResumeData>>(){}.getType());
+                            ResumeData train = trainlists.get(0);
+                            traintime.setText(FormatUtils.timestampToDatetime(train.getSdate())+"——"+FormatUtils.timestampToDatetime(train.getEdate()));
+                            traincompnay.setText(train.getName());
+                            traindirection.setText(train.getTitle());
+                            trainbrief.setText(train.getContent());
+                        }
+                        String booklist = data.getString("cert");//证书
+                        if(!booklist.equals("[]")){
+                            List<ResumeData> booklists = gson.fromJson(booklist,new TypeToken<List<ResumeData>>(){}.getType());
+                            ResumeData book = booklists.get(0);
+                            booktime.setText(FormatUtils.timestampToDatetime(book.getSdate()));
+                            bookcompany.setText(book.getTitle());
+                            bookname.setText(book.getName());
+                            bookbrief.setText(book.getContent());
+                        }
+                        String ohter = data.getString("other");//自我评价
+                        if(!ohter.equals("[]")){
+                            JSONObject other = data.getJSONObject("other");
+                            selfbrief.setText(other.getString("content"));
+                        }
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -165,12 +235,12 @@ public class ResumeScanActivity extends BaseActivity{
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"服务器错误");
             }
         };
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("eid",id);
+        map.put("eid","20");
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_RESUME_SCAN, false, map, true, listener, errorListener);
     }

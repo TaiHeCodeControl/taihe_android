@@ -10,6 +10,9 @@ import com.chinaway.framework.swordfish.util.MD5Utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by bei on 2015/7/15.
@@ -75,6 +78,17 @@ public class FormatUtils {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String timestampToDatetime(String seconds){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String time = "";
+        try {
+            time = simpleDateFormat.format(new Date(Long.valueOf(seconds+"000")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return time;
     }
 
 }

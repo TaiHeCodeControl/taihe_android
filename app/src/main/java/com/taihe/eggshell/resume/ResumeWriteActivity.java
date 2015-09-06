@@ -54,7 +54,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     private StaticData result;
     private String city;
     private String sex = "6";
-    private int id_industry,id_positon,id_money,id_type,id_status,id_school,id_workex;
+    private int id_industry,id_positon,id_money,id_type,id_status,id_school,id_workex,id_time;
 
     private static final int RESULT_INDUSTRY = 10;
     private static final int RESULT_POSITION = 11;
@@ -180,8 +180,9 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                 startActivityForResult(intent, RESULT_WORK);
                 break;
             case R.id.id_time_for:
-                isBirthday = false;
-                timeDialog.show();
+                intent = new Intent(mContext, IndustryActivity.class);
+                intent.putExtra("Filter", "dgtime");
+                startActivityForResult(intent, RESULT_TIME);
                 break;
             case R.id.id_status_for:
                 intent = new Intent(mContext, IndustryActivity.class);
@@ -230,14 +231,14 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     startActivity(intent);
                     return;
                 }else{
-                    params.put("uid", "65");
+                    params.put("uid", "43");
                     params.put("name", resumname);
                     params.put("hy", id_industry+"");
                     params.put("job_classid", id_positon+"");
                     params.put("salary", id_money+"");
                     params.put("provinceid", "2");
                     params.put("type", id_type+"");
-                    params.put("report", time);
+                    params.put("report", id_time+"");
                     params.put("jobstatus", id_status+"");
                     params.put("uname", uname);
                     params.put("birthday", birthday);
@@ -294,6 +295,10 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                 case RESULT_EXPERICE:
                     forWorkExper.setText(result.getName());
                     id_workex = result.getId();
+                    break;
+                case RESULT_TIME:
+                    forTime.setText(result.getName());
+                    id_time = result.getId();
                     break;
             }
         }
@@ -375,7 +380,6 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         JSONObject dgtime = expect.getJSONObject("dgtime");
                         forTime.setText(dgtime.getString("name"));
 
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -391,7 +395,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         };
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("eid",id);
+        map.put("eid","20");
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_RESUME_SCAN, false, map, true, listener, errorListener);
 

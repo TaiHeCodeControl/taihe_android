@@ -110,7 +110,7 @@ public class IndustryActivity extends BaseActivity {
         }else if(filterString.equals("pubtime")){
             title = "发布时间";
             selectString = "请选择职位发布时间";
-            selectedDataList.addAll(MainActivity.hylist);
+            selectedDataList.addAll(MainActivity.pubtimelist);
         }else if(filterString.equals("edu")){
             title = "学历要求";
             selectString = "请选择学历要求";
@@ -132,6 +132,10 @@ public class IndustryActivity extends BaseActivity {
             title = "技能类别";
             selectString = "请选择";
             selectedDataList.addAll(MainActivity.skilllist);
+        }else if(filterString.equals("dgtime")){
+            title = "到岗时间";
+            selectString = "请选择";
+            selectedDataList.addAll(MainActivity.dgtimelist);
         }
         initTitle(title);
         tv_select.setText(selectString);

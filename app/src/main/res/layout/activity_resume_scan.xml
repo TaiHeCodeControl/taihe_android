@@ -374,7 +374,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="运营专员运营专员"
+                        android:text=""
                         android:textColor="@color/black"/>
 
                 </LinearLayout>
@@ -452,7 +452,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="8dp"
                             android:layout_marginLeft="10dp"
-                            android:text="华丽的看见了"
+                            android:text=""
                             android:textColor="@color/black"/>
                         </LinearLayout>
 
@@ -468,7 +468,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="运营专员运营专员"
+                        android:text=""
                         android:textColor="@color/black"/>
 
                 </LinearLayout>
@@ -519,7 +519,7 @@
                     <TextView
                         android:id="@+id/id_contron_time"
                         style="@style/ResumeTextStyle"
-                        android:text="12年"/>
+                        android:text=""/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -535,7 +535,7 @@
                     <TextView
                         android:id="@+id/id_hot_level"
                         style="@style/ResumeTextStyle"
-                        android:text="一般"/>
+                        android:text=""/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -551,7 +551,7 @@
                     <TextView
                         android:id="@+id/id_tech"
                         style="@style/ResumeTextStyle"
-                        android:text="英明" />
+                        android:text="" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -620,7 +620,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="运营专员运营专员"
+                        android:text=""
                         android:textColor="@color/black"/>
 
                 </LinearLayout>
@@ -692,7 +692,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="运营专员运营专员"
+                        android:text=""
                         android:textColor="@color/black"/>
 
                 </LinearLayout>
@@ -764,7 +764,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="运营专员运营专员"
+                        android:text=""
                         android:textColor="@color/black"/>
 
                 </LinearLayout>
@@ -801,7 +801,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:paddingLeft="15dp"
-                    android:text="速度来看你的上了飞机数量是几点了开始的福利时间法律"
+                    android:text=""
                     android:textColor="@color/black"/>
             </LinearLayout>
 

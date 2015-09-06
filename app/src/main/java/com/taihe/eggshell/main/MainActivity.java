@@ -58,7 +58,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     public static List<StaticData> educationlist = new ArrayList<StaticData>();
     public static List<StaticData> skilllist = new ArrayList<StaticData>();
     public static List<StaticData> inglists = new ArrayList<StaticData>();
-//    public static List<StaticData> three_cityidlist = new ArrayList<StaticData>();
+    public static List<StaticData> pubtimelist = new ArrayList<StaticData>();
 //    public static List<StaticData> industrylist = new ArrayList<StaticData>();
 //    public static List<StaticData> industrylist = new ArrayList<StaticData>();
 
@@ -188,6 +188,14 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         inglists.clear();
                         inglists.addAll(inglist);
 //                        db.saveOrUpdateAll(inglist);
+
+                        String pubtime = data.getString("fbtime");//熟练程度
+                        List<StaticData> publist = gson.fromJson(pubtime,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<publist.size();i++){
+                            publist.get(i).setTypese("pubtime");
+                        }
+                        pubtimelist.clear();
+                        pubtimelist.addAll(inglist);
 
                         String citys = data.getString("three_cityid");//北京市
                         List<CityBJ> cityBJList = gson.fromJson(citys,new TypeToken<List<CityBJ>>(){}.getType());
