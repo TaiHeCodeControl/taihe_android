@@ -392,7 +392,7 @@
                             android:id="@+id/id_gender_boy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="true"
+                            android:checked="false"
                             style="@style/CustomRadioButton"
                             android:text="男"/>
                         <RadioButton
@@ -400,7 +400,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/CustomRadioButton"
-                            android:text="女"/>
+                            android:text="女"
+                            android:checked="true"/>
                         </RadioGroup>
 
                 </LinearLayout>

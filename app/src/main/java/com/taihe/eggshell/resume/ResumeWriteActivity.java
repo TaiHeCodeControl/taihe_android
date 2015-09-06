@@ -52,7 +52,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     private boolean isBirthday = false;
     private Map<String,String> params = new HashMap<String, String>();
     private StaticData result;
-    private CityBJ city;
+    private String city;
     private String sex = "6";
     private int id_industry,id_positon,id_money,id_type,id_status,id_school,id_workex;
 
@@ -168,7 +168,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     @Override
                     public void city(CityBJ c) {
                         forCounty.setText(c.getName());
-                        city = c;
+                        city = c.getId()+"";
                         cityDialog.dismiss();
                     }
                 });
@@ -247,7 +247,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     params.put("email", emails);
                     params.put("address", addr);
                     params.put("sex",sex);
-                    params.put("three_cityid",city.getId()+"");
+                    params.put("three_cityid",city);
                     params.put("cityid","52");
 
                     loading.show();
@@ -323,34 +323,58 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     int code = jsonObject.getInt("code");
                     if(code == 0){
                         JSONObject data = jsonObject.getJSONObject("data");
-                        JSONObject area = data.getJSONObject("area");
-                        String addres = area.getString("name");
-                        address.setText(addres);
-                        address.setText(addres);
+
                         JSONObject info = data.getJSONObject("info");
-                        String name = info.getString("name");
+                        String name = info.getString("name");//姓名
                         userName.setText(name);
-                        String emails = info.getString("email");
+                        String emails = info.getString("email");//邮箱
                         email.setText(emails);
-                        String edu = info.getString("edu");
-                        forTopSchool.setText(edu);
-                        String experince = info.getString("exp");
-                        forWorkExper.setText(experince);
-                        String sexs = info.getString("sex");
-//                        gender.setText(sexs);
+                        JSONObject edu = info.getJSONObject("edu");//学历
+                        forTopSchool.setText(edu.getString("name"));
+                        id_school = edu.getInt("id");
+                        JSONObject experince = info.getJSONObject("exp");//工作经验
+                        forWorkExper.setText(experince.getString("name"));
+                        id_workex = experince.getInt("id");
+                        JSONObject sexs = info.getJSONObject("sex");
+                        if("男".equals(sexs.getString("name"))){
+                            boyRadio.setChecked(true);
+                            girlRadio.setChecked(false);
+                        }else{
+                            boyRadio.setChecked(false);
+                            girlRadio.setChecked(true);
+                        }
+                        sex = sexs.getString("id");
+                        String addre = info.getString("address");
+                        address.setText(addre);
+                        String tel = info.getString("telphone");//电话
+                        phoneNum.setText(tel);
 
-                        String hy = data.getString("hy");
-                        forIndusty.setText(hy);
-                        JSONObject job = data.getJSONObject("job");
-                        String hopeposiont = job.getString("name");
-                        forPosition.setText(hopeposiont);
+                        JSONObject expect = data.getJSONObject("expect");
+                        String rename = expect.getString("name");//简历名称
+                        resumeName.setText(rename);
+                        JSONObject addres = expect.getJSONObject("area");//地区
+                        forCounty.setText(addres.getString("name"));
+                        city = addres.getString("id");
+                        JSONObject hy = expect.getJSONObject("hy");//期望行业
+                        forIndusty.setText(hy.getString("name"));
+                        id_industry = hy.getInt("id");
+                        JSONObject hopeposiont = expect.getJSONObject("job");//职位
+                        forPosition.setText(hopeposiont.getString("name"));
+                        id_positon = hopeposiont.getInt("id");
+                        JSONObject salary = expect.getJSONObject("salary");//薪资
+                        forMoney.setText(salary.getString("name"));
+                        id_money = salary.getInt("id");
+                        JSONObject status = expect.getJSONObject("jobst");//求职状态
+                        forStatus.setText(status.getString("name"));
+                        id_status = status.getInt("id");
+                        JSONObject worktype = expect.getJSONObject("ctype");//职位性质
+                        forWorkType.setText(worktype.getString("name"));
+                        id_type = worktype.getInt("id");
+                        String bir = expect.getString("birthday");//职位性质
+                        forBirthday.setText(bir);
+                        JSONObject dgtime = expect.getJSONObject("dgtime");
+                        forTime.setText(dgtime.getString("name"));
 
-                        String salary = data.getString("salary");
-                        forMoney.setText(salary);
-                        String status = data.getString("jobst");
-                        forStatus.setText(status);
-                        String worktype = data.getString("ctype");
-                        forWorkType.setText(worktype);
 
                     }
                 } catch (JSONException e) {
@@ -367,7 +391,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         };
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("id",id);
+        map.put("eid",id);
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_RESUME_SCAN, false, map, true, listener, errorListener);
 

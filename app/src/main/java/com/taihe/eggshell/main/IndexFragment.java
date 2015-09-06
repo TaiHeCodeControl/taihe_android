@@ -42,7 +42,6 @@ import com.taihe.eggshell.main.entity.RecommendCompany;
 import com.taihe.eggshell.meetinginfo.Act_MeetingInfo;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
-import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.ImagesGallery;
 import com.taihe.eggshell.widget.MyListView;
 import com.taihe.eggshell.widget.MyScrollView;
@@ -222,6 +221,12 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             }
         });
 
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0,0);
+            }
+        });
         getVersionCode();
 
 //        FormatUtils.getMD5("你妹");

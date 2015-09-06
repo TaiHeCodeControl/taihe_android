@@ -118,35 +118,42 @@ public class ResumeScanActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if(code == 0){
                         JSONObject data = jsonObject.getJSONObject("data");
-                        JSONObject area = data.getJSONObject("area");
-                        String addres = area.getString("name");//地区
-                        hopeaddress.setText(addres);
+
                         JSONObject info = data.getJSONObject("info");
                         String name = info.getString("name");//姓名
                         userName.setText(name);
                         String emails = info.getString("email");//邮箱
                         email.setText(emails);
-                        String edu = info.getString("edu");//学历
-                        schoolLevel.setText(edu);
-                        String experince = info.getString("exp");//工作经验
-                        experice.setText(experince);
-                        String sexs = info.getString("sex");
-                        gender.setText(sexs);
+                        JSONObject edu = info.getJSONObject("edu");//学历
+                        schoolLevel.setText(edu.getString("name"));
+                        JSONObject experince = info.getJSONObject("exp");//工作经验
+                        experice.setText(experince.getString("name"));
+                        JSONObject sexs = info.getJSONObject("sex");//性别
+                        gender.setText(sexs.getString("name"));
+                        String birthday = info.getString("birthday");//年龄
+                        age.setText(birthday);
                         String addre = info.getString("address");
                         address.setText(addre);
+                        String tel = info.getString("telphone");//电话
+                        telphone.setText(tel);
 
-                        String hy = data.getString("hy");//期望行业
-                        hopeindustry.setText(hy);
-                        JSONObject job = data.getJSONObject("job");//期望职位
-                        String hopeposiont = job.getString("name");
-                        hopeposition.setText(hopeposiont);
-
-                        String salary = data.getString("salary");//薪资
-                        hopemoney.setText(salary);
-                        String status = data.getString("jobst");//求职状态
-                        staus.setText(status);
-                        String worktype = data.getString("ctype");//职位性质
-                        positiontype.setText(worktype);
+                        JSONObject expect = data.getJSONObject("expect");
+                        String rename = expect.getString("name");//简历名称
+                        resumename.setText(rename);
+                        JSONObject addres = expect.getJSONObject("area");//地区
+                        hopeaddress.setText(addres.getString("name"));
+                        JSONObject hy = expect.getJSONObject("hy");//期望行业
+                        hopeindustry.setText(hy.getString("name"));
+                        JSONObject hopeposiont = expect.getJSONObject("job");//职位
+                        hopeposition.setText(hopeposiont.getString("name"));
+                        JSONObject salary = expect.getJSONObject("salary");//薪资
+                        hopemoney.setText(salary.getString("name"));
+                        JSONObject status = expect.getJSONObject("jobst");//求职状态
+                        staus.setText(status.getString("name"));
+                        JSONObject worktype = expect.getJSONObject("ctype");//职位性质
+                        positiontype.setText(worktype.getString("name"));
+                        JSONObject dgtime = expect.getJSONObject("dgtime");//到岗时间
+                        hopetime.setText(dgtime.getString("name"));
 
                     }
                 } catch (JSONException e) {
@@ -163,7 +170,7 @@ public class ResumeScanActivity extends BaseActivity{
         };
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("id",id);
+        map.put("eid",id);
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_RESUME_SCAN, false, map, true, listener, errorListener);
     }
