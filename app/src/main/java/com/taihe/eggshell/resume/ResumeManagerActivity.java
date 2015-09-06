@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
@@ -81,9 +82,9 @@ public class ResumeManagerActivity extends BaseActivity{
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isSelected = isChecked;
                 if(isSelected){
-//                    EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
+                    EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
                 }else{
-//                    EggshellApplication.getApplication().getUser().setResumeid("");
+                    EggshellApplication.getApplication().getUser().setResumeid("");
                 }
             }
         });
@@ -198,7 +199,7 @@ public class ResumeManagerActivity extends BaseActivity{
             }
         };
         Map<String,String> params = new HashMap<String, String>();
-        params.put("uid","43");
+        params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_GET_RESUME,false,params,true,listener,errorListener);
     }
@@ -217,7 +218,7 @@ public class ResumeManagerActivity extends BaseActivity{
                         line.setVisibility(View.GONE);
                         createResume.setEnabled(true);
                         createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.msg_vercode_background));
-//                        EggshellApplication.getApplication().getUser().setResumeid("");
+                        EggshellApplication.getApplication().getUser().setResumeid("");
                         ToastUtils.show(mContext,"删除成功");
                     }
                 } catch (JSONException e) {

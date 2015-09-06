@@ -260,15 +260,13 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_write_resume:
-                intent = new Intent(mContext,ResumeManagerActivity.class);
-                startActivity(intent);
-                /*if(null!= EggshellApplication.getApplication().getUser()){
+                if(null!= EggshellApplication.getApplication().getUser()){
                     intent = new Intent(mContext,ResumeManagerActivity.class);
                     startActivity(intent);
                 }else{
                     intent = new Intent(mContext,LoginActivity.class);
                     startActivity(intent);
-                }*/
+                }
                 break;
             case R.id.id_play_mode:
                 changeViewPagerListener.changeViewPager(1);

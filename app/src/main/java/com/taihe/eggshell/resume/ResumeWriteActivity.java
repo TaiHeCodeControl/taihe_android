@@ -14,6 +14,7 @@ import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
@@ -133,6 +134,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
         loading = new LoadingProgressDialog(mContext,"正在提交...");
 
+        //点击编辑简历执行该方法
         if(null!=getIntent().getStringExtra("eid")){
             getInfo(getIntent().getStringExtra("eid"));
         }
@@ -230,7 +232,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     startActivity(intent);
                     return;
                 }else{
-                    params.put("uid", "43");
+                    params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
                     params.put("name", resumname);
                     params.put("hy", id_industry+"");
                     params.put("job_classid", id_positon+"");
@@ -318,6 +320,8 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     }
 
     private void getInfo(String id){
+        //编辑后提交需要简历id
+        params.put("eid",id);
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
@@ -379,7 +383,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         JSONObject dgtime = expect.getJSONObject("dgtime");
                         forTime.setText(dgtime.getString("name"));
                         id_time = dgtime.getInt("id");
-                        params.put("eid","73");
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -395,7 +399,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         };
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("eid","73");
+        map.put("eid",id);
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_RESUME_SCAN, false, map, true, listener, errorListener);
 

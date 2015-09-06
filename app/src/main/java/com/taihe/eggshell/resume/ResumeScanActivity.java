@@ -236,7 +236,7 @@ public class ResumeScanActivity extends BaseActivity{
         };
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("eid","73");
+        map.put("eid",id);
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_RESUME_SCAN, false, map, true, listener, errorListener);
     }
