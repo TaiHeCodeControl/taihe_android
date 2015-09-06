@@ -53,7 +53,7 @@ import org.json.JSONObject;
  * 基本资料界面，个人基本信息的查看和编辑
  * Created by huan on 2015/8/11.
  */
-public class MyBasicActivity extends Activity implements View.OnClickListener, TextWatcher {
+public class MyBasicActivity extends Activity implements View.OnClickListener{
 
 
     private static final int REQUEST_CODE_CITY = 10;
@@ -84,13 +84,40 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
                     MyBasicInfo.BasicBean basicBean = (MyBasicInfo.BasicBean) msg.obj;
                     tv_phone.setText(basicBean.telphone);
 //                    tv_birthdate.setText(basicBean.);
-                    tv_mybasic_sex.setText(basicBean.sex);
+                    if(basicBean.sex.equals("0") || basicBean.sex.equals("6")){
+                        oldsex = "男";
+                    }else{
+                        oldsex = "女";
+                    }
+                    tv_mybasic_sex.setText(oldsex);
                     tv_address.setText(basicBean.address);
                     tv_mybasic_jianjie.setText(basicBean.description);
                     et_nickname.setText(basicBean.name);
 //                    et_qq;
                     et_email.setText(basicBean.email);
                     tv_mybasic_registime.setText(basicBean.reg_date);
+
+                    oldphone = tv_phone.getText().toString().trim();
+                    oldaddress = tv_address.getText().toString().trim();
+                    oldnickname = et_nickname.getText().toString().trim();
+                    oldqq = et_qq.getText().toString().trim();
+                    oldemail = et_email.getText().toString().trim();
+                    oldbirthday = tv_birthdate.getText().toString().trim();
+                    oldjianjie = tv_mybasic_jianjie.getText().toString().trim();
+                    oldsex = tv_mybasic_sex.getText().toString().trim();
+
+
+                    tv_address.addTextChangedListener(new MyTextWhatch());
+                    tv_birthdate.addTextChangedListener(new MyTextWhatch());
+
+                    tv_mybasic_sex.addTextChangedListener(new MyTextWhatch());
+
+                    tv_mybasic_jianjie.addTextChangedListener(new MyTextWhatch());
+                    et_email.addTextChangedListener(new MyTextWhatch());
+
+                    et_qq.addTextChangedListener(new MyTextWhatch());
+
+                    et_nickname.addTextChangedListener(new MyTextWhatch());
 
 
                     break;
@@ -162,27 +189,6 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
             LoadingDialog.show();
             getViewDate();
 
-            oldphone = tv_phone.getText().toString().trim();
-            oldaddress = tv_address.getText().toString().trim();
-            oldnickname = et_nickname.getText().toString().trim();
-            oldqq = et_qq.getText().toString().trim();
-            oldemail = et_email.getText().toString().trim();
-            oldbirthday = tv_birthdate.getText().toString().trim();
-            oldjianjie = tv_mybasic_jianjie.getText().toString().trim();
-            oldsex = tv_mybasic_sex.getText().toString().trim();
-            tv_address.addTextChangedListener(this);
-
-
-            tv_birthdate.addTextChangedListener(this);
-
-            tv_mybasic_sex.addTextChangedListener(this);
-
-            tv_mybasic_jianjie.addTextChangedListener(this);
-            et_email.addTextChangedListener(this);
-
-            et_qq.addTextChangedListener(this);
-
-            et_nickname.addTextChangedListener(this);
         } else {
             ToastUtils.show(mContext, R.string.check_network);
         }
@@ -242,6 +248,8 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
         param.put("uid", UserId + "");
 
         RequestUtils.createRequest(mContext, "", Urls.METHOD_BASIC, true, param, true, listener, errorListener);
+
+
 
     }
 
@@ -329,6 +337,11 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
         param.put("uid", UserId + "");
         param.put("telphone",oldphone);
         param.put("name",newnickname);
+        if(newsex.equals("男")){
+            newsex = "6";
+        }else{
+            newsex = "7";
+        }
         param.put("sex",newsex);
         param.put("address",newaddress);
         param.put("description",newjianjie);
@@ -531,23 +544,26 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
     }
 
 
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    class MyTextWhatch implements TextWatcher{
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
 
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+            setButtonState();
+
+        }
     }
 
-    @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable editable) {
-
-        setButtonState();
-
-    }
 
     /**
      * 设置编辑&完成按钮的点击状态
