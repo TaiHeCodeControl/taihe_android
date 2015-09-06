@@ -1,7 +1,5 @@
 package com.taihe.eggshell.base;
 
-import com.taihe.eggshell.resume.Resumes;
-
 /**
  * Created by Thinkpad on 2015/7/21.
  */

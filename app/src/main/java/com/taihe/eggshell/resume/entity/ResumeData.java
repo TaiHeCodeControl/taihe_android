@@ -1,4 +1,4 @@
-package com.taihe.eggshell.resume;
+package com.taihe.eggshell.resume.entity;
 
 /**
  * Created by wang on 2015/9/6.

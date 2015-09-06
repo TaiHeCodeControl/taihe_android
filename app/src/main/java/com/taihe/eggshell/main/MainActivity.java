@@ -189,7 +189,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         inglists.addAll(inglist);
 //                        db.saveOrUpdateAll(inglist);
 
-                        String pubtime = data.getString("fbtime");//熟练程度
+                        String pubtime = data.getString("fbtime");//发布时间
                         List<StaticData> publist = gson.fromJson(pubtime,new TypeToken<List<StaticData>>(){}.getType());
                         for(int i=0;i<publist.size();i++){
                             publist.get(i).setTypese("pubtime");

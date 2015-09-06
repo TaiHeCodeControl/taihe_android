@@ -208,7 +208,7 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_size_15"
                         android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/xiala"/>
+                        android:visibility="gone"/>
 
                     <View
                         android:layout_width="0.5dp"
@@ -216,7 +216,8 @@
                         android:background="@color/line_gray"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
-                        android:layout_marginLeft="10dp" />
+                        android:layout_marginLeft="10dp"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/id_city"
@@ -228,8 +229,7 @@
                         android:textColorHint="@color/hint_color"
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_size_15"
-                        android:drawablePadding="5dp"
-                        android:drawableRight="@drawable/xiala"/>
+                        android:drawablePadding="5dp"/>
 
                     <View
                         android:layout_width="0.5dp"
@@ -376,6 +376,7 @@
                         android:layout_marginLeft="10dp"
                         android:hint="请填写您的真实姓名"
                         android:textSize="15sp"
+                        android:singleLine="true"
                         android:textColor="@color/font_color_black"
                         android:textColorHint="@color/hint_color"
                         android:layout_weight="1"
@@ -392,7 +393,7 @@
                             android:id="@+id/id_gender_boy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="false"
+                            android:checked="true"
                             style="@style/CustomRadioButton"
                             android:text="男"/>
                         <RadioButton
@@ -400,8 +401,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/CustomRadioButton"
-                            android:text="女"
-                            android:checked="true"/>
+                            android:text="女"/>
                         </RadioGroup>
 
                 </LinearLayout>
@@ -541,6 +541,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:hint="请输入您的联系邮箱"
+                        android:inputType="textEmailAddress"
                         android:textSize="15sp"
                         android:textColor="@color/font_color_black"
                         android:textColorHint="@color/hint_color"
@@ -574,6 +575,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:hint="请输入您的现居地址"
+                        android:singleLine="true"
                         android:textSize="15sp"
                         android:textColor="@color/font_color_black"
                         android:textColorHint="@color/hint_color"

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.resume.entity.Resumes;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -21,9 +22,10 @@ public class ResumeWorkScanActivity extends BaseActivity{
 
     private Context mContext;
 
-    private TextView commitText;
+    private TextView commitText,resume_name;
     private TextView companyTextView,departTextView,positionTextView,contextTextView,workTimeStart;
-    private String eid,companyName,startTime,endTime,departName,positionName,contextWord;
+    private String companyName,startTime,endTime,departName,positionName,contextWord;
+    private Resumes eid;
     @Override
     public void initView() {
         setContentView(R.layout.activity_resume_work_scan);
@@ -31,6 +33,7 @@ public class ResumeWorkScanActivity extends BaseActivity{
 
         mContext = this;
 
+        resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_go_on);
         companyTextView = (TextView)findViewById(R.id.id_company_name);
         departTextView = (TextView)findViewById(R.id.id_department);
@@ -47,7 +50,8 @@ public class ResumeWorkScanActivity extends BaseActivity{
         super.initData();
         initTitle("写简历");
         Intent intent = getIntent();
-        eid = intent.getStringExtra("eid");
+        eid = intent.getParcelableExtra("eid");
+        resume_name.setText(eid.getName()+"-工作经历");
         companyName = intent.getStringExtra("name");
         startTime = intent.getStringExtra("sdate");
         endTime = intent.getStringExtra("edate");

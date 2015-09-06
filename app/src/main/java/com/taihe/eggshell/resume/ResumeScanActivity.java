@@ -1,29 +1,25 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.lidroid.xutils.view.annotation.ViewInject;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.resume.entity.ResumeData;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -128,7 +124,7 @@ public class ResumeScanActivity extends BaseActivity{
                         JSONObject data = jsonObject.getJSONObject("data");
 
                         JSONObject info = data.getJSONObject("info");
-                        String name = info.getString("name");//姓名
+                        String name = info.getString("uname");//姓名
                         userName.setText(name);
                         String emails = info.getString("email");//邮箱
                         email.setText(emails);
@@ -148,7 +144,7 @@ public class ResumeScanActivity extends BaseActivity{
                         JSONObject expect = data.getJSONObject("expect");
                         String rename = expect.getString("name");//简历名称
                         resumename.setText(rename);
-                        JSONObject addres = expect.getJSONObject("area");//地区
+                        JSONObject addres = expect.getJSONObject("three_cityid");//地区
                         hopeaddress.setText(addres.getString("name"));
                         JSONObject hy = expect.getJSONObject("hy");//期望行业
                         hopeindustry.setText(hy.getString("name"));
@@ -240,8 +236,20 @@ public class ResumeScanActivity extends BaseActivity{
         };
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("eid","20");
+        map.put("eid","73");
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_RESUME_SCAN, false, map, true, listener, errorListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

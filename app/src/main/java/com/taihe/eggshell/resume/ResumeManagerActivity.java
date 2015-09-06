@@ -17,12 +17,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
-import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
+import com.taihe.eggshell.resume.entity.Resumes;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,13 +95,19 @@ public class ResumeManagerActivity extends BaseActivity{
 
         initTitle("简历管理");
         loading = new LoadingProgressDialog(mContext,"正在请求...");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             loading.show();
             getUserResumeList();
         }else{
             ToastUtils.show(mContext,R.string.check_network);
         }
-
     }
 
     @Override
@@ -191,7 +198,7 @@ public class ResumeManagerActivity extends BaseActivity{
             }
         };
         Map<String,String> params = new HashMap<String, String>();
-        params.put("uid","65");
+        params.put("uid","43");
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_GET_RESUME,false,params,true,listener,errorListener);
     }
@@ -243,5 +250,11 @@ public class ResumeManagerActivity extends BaseActivity{
     @Override
     public void onBackPressed() {
         goBack();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

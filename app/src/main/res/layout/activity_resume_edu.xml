@@ -71,6 +71,7 @@
                 android:textColor="@color/font_color_black"
                 android:textColorHint="@color/hint_color"
                 android:textSize="15sp"
+                android:singleLine="true"
                 android:layout_weight="1"
                 android:background="@null" />
 
@@ -195,6 +196,7 @@
                 android:textColor="@color/font_color_black"
                 android:textColorHint="@color/hint_color"
                 android:textSize="15sp"
+                android:singleLine="true"
                 android:layout_weight="1"
                 android:background="@null" />
         </LinearLayout>
@@ -230,6 +232,7 @@
                 android:textColor="@color/font_color_black"
                 android:textColorHint="@color/hint_color"
                 android:textSize="15sp"
+                android:singleLine="true"
                 android:layout_weight="1"
                 android:background="@null" />
         </LinearLayout>

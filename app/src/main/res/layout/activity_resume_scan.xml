@@ -117,7 +117,7 @@
                     <TextView
                         android:id="@+id/id_level"
                         style="@style/ResumeTextStyle"
-                        android:text="本科"/>
+                        android:text=""/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -132,7 +132,7 @@
                     <TextView
                         android:id="@+id/id_experince"
                         style="@style/ResumeTextStyle"
-                        android:text="1-3年"/>
+                        android:text=""/>
 
                 </LinearLayout>
                 <LinearLayout
@@ -147,7 +147,7 @@
                     <TextView
                         android:id="@+id/id_address"
                         style="@style/ResumeTextStyle"
-                        android:text="请填写所在地" />
+                        android:text="" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -161,7 +161,7 @@
                     <TextView
                         android:id="@+id/id_telphone"
                         style="@style/ResumeTextStyle"
-                        android:text="1893332" />
+                        android:text="" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -175,7 +175,7 @@
                     <TextView
                         android:id="@+id/id_email"
                         style="@style/ResumeTextStyle"
-                        android:text="122sdfd@qq.com" />
+                        android:text="" />
                 </LinearLayout>
             </LinearLayout>
 

@@ -1,7 +1,6 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -12,16 +11,19 @@ import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.resume.entity.Resumes;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -39,6 +41,7 @@ public class ResumeTrainActivity extends BaseActivity{
     private EditText trainEdit,positionEdit,contextEdit;
     private CheckBox radioButton;
     private TimeDialog timeDialog;
+    private LoadingProgressDialog loading;
 
     private String companyName,startTime,endTime,positionName,contextWord;
     private boolean isStart = false;
@@ -98,6 +101,7 @@ public class ResumeTrainActivity extends BaseActivity{
         eid=getIntent().getParcelableExtra("eid");
         resume_name.setText(eid.getName()+"-培训经历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
+        loading = new LoadingProgressDialog(mContext,"正在提交...");
     }
 
     @Override
@@ -119,7 +123,13 @@ public class ResumeTrainActivity extends BaseActivity{
                 positionName = positionEdit.getText().toString();
                 contextWord = contextEdit.getText().toString();
                 if(isCheck()){
-                    getInsertData();
+                    if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                        loading.show();
+                        getInsertData();
+                    }else{
+                        ToastUtils.show(mContext, R.string.check_network);
+                    }
+
                 }
                 break;
             case R.id.id_reset:
@@ -162,6 +172,7 @@ public class ResumeTrainActivity extends BaseActivity{
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object obj) {//返回值
+                loading.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
                     Log.d("train", jsonObject.toString());
@@ -175,7 +186,7 @@ public class ResumeTrainActivity extends BaseActivity{
                         }
                     } else {
                         String msg = jsonObject.getString("message");
-                        Toast.makeText(mContext,"提交失败，网络异常!"+msg.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext,msg.toString(),Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -186,6 +197,8 @@ public class ResumeTrainActivity extends BaseActivity{
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
+                loading.dismiss();
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"网络错误");
             }
         };
 

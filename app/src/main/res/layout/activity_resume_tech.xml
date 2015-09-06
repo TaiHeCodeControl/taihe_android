@@ -185,6 +185,7 @@
                 android:textColor="@color/font_color_black"
                 android:textColorHint="@color/hint_color"
                 android:textSize="15sp"
+                android:singleLine="true"
                 android:inputType="number"
                 android:background="@null"/>
 

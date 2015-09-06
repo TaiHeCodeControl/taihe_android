@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -22,10 +20,11 @@ import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.IndustryActivity;
 import com.taihe.eggshell.main.entity.CityBJ;
 import com.taihe.eggshell.main.entity.StaticData;
+import com.taihe.eggshell.resume.entity.Resumes;
 import com.taihe.eggshell.widget.CityDialog;
-import com.taihe.eggshell.widget.CityPopWindow;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -330,7 +329,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         JSONObject data = jsonObject.getJSONObject("data");
 
                         JSONObject info = data.getJSONObject("info");
-                        String name = info.getString("name");//姓名
+                        String name = info.getString("uname");//姓名
                         userName.setText(name);
                         String emails = info.getString("email");//邮箱
                         email.setText(emails);
@@ -357,7 +356,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         JSONObject expect = data.getJSONObject("expect");
                         String rename = expect.getString("name");//简历名称
                         resumeName.setText(rename);
-                        JSONObject addres = expect.getJSONObject("area");//地区
+                        JSONObject addres = expect.getJSONObject("three_cityid");//地区
                         forCounty.setText(addres.getString("name"));
                         city = addres.getString("id");
                         JSONObject hy = expect.getJSONObject("hy");//期望行业
@@ -379,7 +378,8 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         forBirthday.setText(bir);
                         JSONObject dgtime = expect.getJSONObject("dgtime");
                         forTime.setText(dgtime.getString("name"));
-
+                        id_time = dgtime.getInt("id");
+                        params.put("eid","73");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -395,7 +395,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         };
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("eid","20");
+        map.put("eid","73");
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_RESUME_SCAN, false, map, true, listener, errorListener);
 
@@ -417,7 +417,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         Resumes resume = new Resumes();
                         resume.setRid(Integer.valueOf(resumeId));
                         resume.setName(resumeName.getText().toString());
-                        intent.putExtra("resume",resume);
+                        intent.putExtra("resume", resume);
                         startActivity(intent);
                     }
                 } catch (JSONException e) {
@@ -433,8 +433,19 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                 ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
             }
         };
-//        Log.v("PAR:",params.toString());
+        Log.v("PAR:",params.toString());
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_CREATE_RESUME, false, params, true, listener, errorListener);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

@@ -12,10 +12,14 @@ import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.resume.entity.Resumes;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -38,6 +42,7 @@ public class ResumeEduActivity extends BaseActivity{
     private EditText schoolEdit,industyEdit,positionEdit,contextEdit;
     private CheckBox radioButton;
     private TimeDialog timeDialog;
+    private LoadingProgressDialog loading;
 
     private String schoolName,startTime,endTime,industyName,positionName,contextWord;
     private boolean isStart = false;
@@ -98,6 +103,8 @@ public class ResumeEduActivity extends BaseActivity{
         eid=getIntent().getParcelableExtra("eid");
         resume_name.setText(eid.getName()+"-教育经历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
+
+        loading = new LoadingProgressDialog(mContext,"正在请求...");
     }
 
     @Override
@@ -120,7 +127,13 @@ public class ResumeEduActivity extends BaseActivity{
                 positionName = positionEdit.getText().toString();
                 contextWord = contextEdit.getText().toString();
                 if(isCheck()){
-                    getInsertData();
+                    if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                        loading.show();
+                        getInsertData();
+                    }else{
+                        ToastUtils.show(mContext, R.string.check_network);
+                    }
+
                 }
                 break;
             case R.id.id_reset:
@@ -169,6 +182,7 @@ public class ResumeEduActivity extends BaseActivity{
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object obj) {//返回值
+                loading.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
                     Log.d("edu",jsonObject.toString());
@@ -176,7 +190,7 @@ public class ResumeEduActivity extends BaseActivity{
                     if (code == 0) {
                         try{
                             Intent intent = new Intent(mContext,ResumeEduScanActivity.class);
-                            intent.putExtra("eid",eid.getRid()+"");
+                            intent.putExtra("eid",eid);
                             intent.putExtra("name",schoolName);
                             intent.putExtra("sdate",startTime);
                             intent.putExtra("edate",endTime);
@@ -190,7 +204,7 @@ public class ResumeEduActivity extends BaseActivity{
                         }
                     } else {
                         String msg = jsonObject.getString("message");
-                        Toast.makeText(mContext,"提交失败，网络异常!"+msg.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext,msg.toString(),Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -201,6 +215,8 @@ public class ResumeEduActivity extends BaseActivity{
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
+                loading.dismiss();
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"网络错误");
             }
         };
 

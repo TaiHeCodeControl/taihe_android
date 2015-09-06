@@ -1,4 +1,4 @@
-package com.taihe.eggshell.resume;
+package com.taihe.eggshell.resume.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;

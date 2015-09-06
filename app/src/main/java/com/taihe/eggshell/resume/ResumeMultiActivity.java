@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
-import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.resume.entity.Resumes;
 import com.umeng.analytics.MobclickAgent;
 
 /**
