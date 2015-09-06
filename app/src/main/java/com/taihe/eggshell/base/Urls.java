@@ -35,9 +35,12 @@ public class Urls {
 
     public static final String METHOD_JOB_LIST = "http://195.198.1.84/eggker/interface/Position/nearbycompany";//职位列表
     public static final String METHOD_JOB_LIST_COLLECT = "http://195.198.1.84/eggker/interface/Position/collectlist";//收藏职位列表
-    public static final String METHOD_JOB_LIST_COLLECT_DELETE = "http://195.198.1.84/eggker/interface/Position/delcollectlist";//收藏职位列表
+    public static final String METHOD_JOB_LIST_POST = "http://195.198.1.84/eggker/interface/Position/getPositionlist";//申请职位列表
+    public static final String METHOD_JOB_LIST_COLLECT_DELETE = "http://195.198.1.84/eggker/interface/Position/delcollectlist";//删除收藏职位
+    public static final String METHOD_JOB_LIST_POST_DELETE = "http://195.198.1.84/eggker/interface/Position/delgetPosition";//删除申请职位
     public static final String METHOD_JOB_DETAIL = "http://195.198.1.84/eggker/interface/Position/details";//职位详情
     public static final String METHOD_JOB_COLLECT = "http://195.198.1.84/eggker/interface/Position/collect";//职位收藏
+    public static final String METHOD_JOB_POST = "http://195.198.1.84/eggker/interface/Position/getPosition";//申请职位
 
 
     public static final String METHOD_STATIC_DATA = "/Except/except_select";//静态数据

@@ -143,7 +143,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         for (int i = 0; i < size; i++) {
                             JobInfo jobInfo = new JobInfo();
 
-                            jobInfo.setId(jobDetaiInfo.data.lists.get(i).id);
+                            jobInfo.setJob_Id(jobDetaiInfo.data.lists.get(i).id);
                             jobInfo.setCom_name(jobDetaiInfo.data.lists.get(i).com_name);
                             jobInfo.setEdu(jobDetaiInfo.data.lists.get(i).edu);
                             jobInfo.setName(jobDetaiInfo.data.lists.get(i).name);
@@ -236,7 +236,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
                 if (position < jobInfos.size()) {
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
-                    intent.putExtra("ID", jobInfos.get(position).getId());
+                    intent.putExtra("ID", jobInfos.get(position).getJob_Id());
                     intent.putExtra("UID", jobInfos.get(position).getUid());
                     startActivity(intent);
                 }
@@ -433,7 +433,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         };
 
         Map<String, String> param = new HashMap<String, String>();
-        param.put("id", uid + "");///id/23/pid/7
+        param.put("id", uid + "");
         param.put("pid", jobId + "");
         Log.i("ID", jobId + "");
         Log.i("UID", uid);//职位列表中的uid

@@ -30,14 +30,19 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.GsonUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
+import com.taihe.eggshell.job.bean.JobDetailInfo;
 import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.job.fragment.AllJobFragment;
 import com.taihe.eggshell.job.fragment.FujinFragment;
+import com.taihe.eggshell.login.LoginActivity;
+import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.widget.CustomViewPager;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
@@ -56,6 +61,7 @@ import java.util.Map;
  */
 public class FindJobActivity extends Activity implements View.OnClickListener {
 
+    private static final String TAG = "FINDJOBACTIVITY";
     private Intent intent;
 
     private TextView tv_allJob, tv_fujin;
@@ -73,14 +79,18 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     private Context mContext;
     private LoadingProgressDialog dialog;
     private int page = 1;
-    private int pageSize = 10;
+//    private int pageSize = 10;
     //选中条数的统计
     private int selectSize = 0;
     private int postednum = 0;
 
-    private String Longitude;
-    private String Latitude;
-    private String keyword;
+    private String Longitude = "";
+    private String Latitude = "";
+    private String keyword = "";
+    private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "";
+
+    private User user;
+    private int userId;
 
     private Handler jobListHandler = new Handler() {
         @Override
@@ -131,6 +141,15 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
     private void initView() {
 
+        keyword = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "keyword", "");
+        hy = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "hy", "");
+        job_post = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job_post", "");
+        salary = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "salary", "");
+        edu = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "edu", "");
+        exp = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "exp", "");
+        type = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "type", "");
+
+        user = EggshellApplication.getApplication().getUser();
 
         rl_fujin = (RelativeLayout) findViewById(R.id.rl_findjob_fujin);
         rl_qc = (RelativeLayout) findViewById(R.id.rl_findjob_qc);
@@ -180,9 +199,9 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 if (position < jobInfos.size()) {
                     JobInfo job = jobInfos.get(position);
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
-                    intent.putExtra("ID", job.getId());
+                    intent.putExtra("ID", job.getJob_Id());
                     intent.putExtra("UID", job.getUid());
-                    Log.i("ID", job.getId() + "");
+                    Log.i("ID", job.getJob_Id() + "");
                     startActivity(intent);
                 }
 
@@ -254,6 +273,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                         msg.what = 1001;
                         jobListHandler.sendMessage(msg);
 
+                    } else if (code == 4001) {
+                        ToastUtils.show(mContext, "没有职位了");
                     } else {
                         ToastUtils.show(mContext, "获取失败");
                     }
@@ -291,16 +312,16 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("dimensionality", Latitude);
         param.put("keyword", keyword);//关键字
         param.put("page", page + "");
-        param.put("hy", "");//工作行业
-        param.put("job_post", "");//职位类别
-        param.put("salary", "");
-        param.put("edu", "");
-        param.put("exp", "");//工作年限
-        param.put("type", "");//工作性质
+        param.put("hy", hy);//工作行业
+        param.put("job_post", job_post);//职位类别
+        param.put("salary", salary);
+        param.put("edu", edu);
+        param.put("exp", exp);//工作年限
+        param.put("type", type);//工作性质
 
-        RequestUtils.createRequest_GET(mContext, "", Urls.METHOD_JOB_LIST, true, "", "", listener, errorListener);
 
-//        RequestUtils.createRequest(mContext, "http://195.198.1.84/eggker/interface", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
+
 
     }
 
@@ -313,6 +334,10 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.rl_findjob_qc://全城
                 jobInfos.clear();
+                page = 1;
+                Longitude = "";
+                Latitude = "";
+
                 getList();
                 iv_quancheng.setImageResource(R.drawable.quancheng01);
                 iv_fujin.setImageResource(R.drawable.fujin01);
@@ -323,9 +348,9 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             case R.id.rl_findjob_fujin://附近
                 jobInfos.clear();
                 page = 1;
-                Longitude = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"Longitude","");
-                Latitude = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"Latitude","");
-                Log.i("job--Longitude " , Longitude + "Latitude====" + Latitude);
+                Longitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Longitude", "");
+                Latitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Latitude", "");
+                Log.i("job--Longitude ", Longitude + "Latitude====" + Latitude);
                 getList();
                 iv_quancheng.setImageResource(R.drawable.quancheng02);
                 iv_fujin.setImageResource(R.drawable.fujin02);
@@ -333,31 +358,123 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 tv_allJob.setTextColor(getResources().getColor(R.color.font_color_black));
                 tv_fujin.setTextColor(getResources().getColor(R.color.font_color_red));
                 break;
-            case R.id.iv_findjob_search:
+            case R.id.iv_findjob_search://关键字搜索
+
                 intent = new Intent(FindJobActivity.this, JobSearchActivity.class);
                 startActivity(intent);
                 break;
 
-            case R.id.iv_findjob_filter:
+            case R.id.iv_findjob_filter://职位筛选
+
                 intent = new Intent(FindJobActivity.this, JobFilterActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.btn_alljob_shenqing:
-                JobApplyDialogUtil.isApplyJob(mContext, selectSize, postednum);
-                postJob();//申请职位
+
+
+                //判断登录状态，
+
+                if (null == user) {//登录
+                    intent = new Intent(mContext, LoginActivity.class);
+                    intent.putExtra("LoginTag", "findJob");
+                    startActivity(intent);
+                } else {
+                    userId = EggshellApplication.getApplication().getUser().getId();
+
+                    if (selectSize > 0) {
+
+                        postJob();//申请职位
+                    } else {
+                        ToastUtils.show(mContext, "请选择您想要申请的职位");
+                    }
+                }
                 break;
 
         }
     }
 
 
+    //申请职位
     public void postJob() {
-        for (JobInfo jobInfo : jobInfos) {
-            System.out.println(jobInfo.getId() + "======" + jobInfo.isChecked());
 
+
+        StringBuilder sb = new StringBuilder();//选择的职位
+        for (JobInfo jobInfo : jobInfos) {
+            System.out.println(jobInfo.getJob_Id() + "======" + jobInfo.isChecked());
+            if (jobInfo.isChecked()) {
+                sb.append(jobInfo.getJob_Id());
+                sb.append(",");
+            }
         }
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                dialog.dismiss();
+                try {
+                    Log.v(TAG, (String) o);
+
+                    JSONObject jsonObject = new JSONObject((String) o);
+
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if (code == 0) {//申请成功
+
+                        int sucNum = Integer.valueOf(jsonObject.getString("data"));
+                        postednum = selectSize - sucNum;
+
+                        JobApplyDialogUtil.isApplyJob(mContext, selectSize, postednum);
+
+                    } else if (code == 1) {//请先创建简历
+                        ToastUtils.show(mContext, "请先创建简历");
+
+                    } else if (code == 2) {//不能重复申请
+
+                        ToastUtils.show(mContext, "你选的职位已申请过，一周内不能重复申请");
+                    } else {
+                        ToastUtils.show(mContext, "申请失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("jobPost:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
+            }
+        };
+
+        String jobIds = sb.toString();
+        Map<String, String> param = new HashMap<String, String>();
+        //TODO
+        param.put("uid", 6 + "");//UserID       userId
+        param.put("job_id", jobIds);
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
+
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
 
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword","");
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post","");
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "salary", "");
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "edu", "");
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", "");
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "");
+    }
 }

@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
 import com.taihe.eggshell.main.entity.User;
@@ -220,6 +221,9 @@ public class LoginActivity extends BaseActivity {
             startActivity(intent);
         } else if (loginTag.equals("myResume")) {
             intent = new Intent(LoginActivity.this, ResumeManagerActivity.class);
+            startActivity(intent);
+        }else if(loginTag.equals("findJob")){
+            intent = new Intent(LoginActivity.this, FindJobActivity.class);
             startActivity(intent);
         }
         LoginActivity.this.finish();

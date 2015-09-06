@@ -147,9 +147,9 @@ public class MyCollectActivity extends BaseActivity {
 
                 JobInfo job = jobInfos.get(position);
                 Intent intent = new Intent(mContext, JobDetailActivity.class);
-                intent.putExtra("ID", job.getId());
+                intent.putExtra("ID", job.getJob_Id());
                 intent.putExtra("UID", job.getUid());
-                Log.i("ID", job.getId() + "");
+                Log.i("ID", job.getJob_Id() + "");
                 startActivity(intent);
             }
         });
@@ -286,7 +286,7 @@ public class MyCollectActivity extends BaseActivity {
                 while (it.hasNext()) {
                     JobInfo jobinfo = it.next();
                     if (jobinfo.isChecked()) {
-                        sb.append(jobinfo.getId());
+                        sb.append(jobinfo.getJob_Id());
                         sb.append(",");
                         it.remove();
                     }
@@ -363,7 +363,7 @@ public class MyCollectActivity extends BaseActivity {
 
     public void postJob() {
         for (JobInfo jobInfo : jobInfos) {
-            System.out.println(jobInfo.getId() + "======" + jobInfo.isChecked());
+            System.out.println(jobInfo.getJob_Id() + "======" + jobInfo.isChecked());
 
         }
     }

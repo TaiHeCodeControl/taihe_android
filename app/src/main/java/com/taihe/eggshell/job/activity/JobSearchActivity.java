@@ -124,8 +124,8 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                     String word = searchWork.getText().toString();
                     if (!TextUtils.isEmpty(word)) {
                         //搜索职位
+                        PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"keyword",word);
                         Intent intent = new Intent(JobSearchActivity.this,FindJobActivity.class);
-                        intent.putExtra("keyWord",word);
                         startActivity(intent);
                         SearchHistory history = new SearchHistory();
                         history.setName(word);

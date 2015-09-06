@@ -7,8 +7,9 @@ package com.taihe.eggshell.job.bean;
 public class JobInfo {
 
     private boolean isChecked;
-    private int id;
-    private String name;
+
+    private int job_id;
+    private String job_name;
     private String provinceid;
     private String salary;
     private String edu;
@@ -19,9 +20,9 @@ public class JobInfo {
     public JobInfo() {
     }
 
-    public JobInfo(boolean isChecked, int id) {
+    public JobInfo(boolean isChecked, int job_id) {
         this.isChecked = isChecked;
-        this.id = id;
+        this.job_id = job_id;
     }
 
     public String getUid() {
@@ -40,12 +41,12 @@ public class JobInfo {
         this.isChecked = isChecked;
     }
 
-    public int getId() {
-        return id;
+    public int getJob_Id() {
+        return job_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setJob_Id(int job_id) {
+        this.job_id = job_id;
     }
 
     public void setChecked(boolean isChecked) {
@@ -53,11 +54,11 @@ public class JobInfo {
     }
 
     public String getName() {
-        return name;
+        return job_name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.job_name = name;
     }
 
     public String getProvinceid() {

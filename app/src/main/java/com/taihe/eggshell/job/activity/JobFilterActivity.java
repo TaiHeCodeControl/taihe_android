@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.main.entity.Industry;
 
 /**
@@ -41,6 +42,8 @@ public class JobFilterActivity extends BaseActivity {
     private static final int REQUEST_CODE_SALARY = 105;
     private static final int REQUEST_CODE_JOBTYPE = 106;
     private static final int REQUEST_CODE_PUBTIME = 107;
+
+    private String keyword,hy,job_post,salary,edu,exp,type;
 
     @Override
     public void initView() {
@@ -156,6 +159,29 @@ public class JobFilterActivity extends BaseActivity {
 
             case R.id.btn_jobfilter_chaxun://查询职位
 
+                //keyword=>关键字 page=>页数 hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp 工作性质=>type
+
+                keyword = et_keyWord.getText().toString().trim();
+                hy = tv_industry.getText().toString().trim();//工作行业
+                job_post = tv_position.getText().toString().trim();//职位类别
+                salary = tv_salary.getText().toString().trim();
+                edu = tv_edu.getText().toString().trim();
+                exp = tv_jobyears.getText().toString().trim();//工作年限
+                type = tv_jobtype.getText().toString().trim();//工作类型
+                //发布时间，工作地点
+
+                //保存职位筛选的字段
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword",keyword);
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", hy);
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post",job_post);
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "salary", salary);
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "edu", edu);
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", exp);
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", type);
+
+                intent = new Intent(mContext,FindJobActivity.class);
+                startActivity(intent);
+                this.finish();
                 break;
         }
     }
