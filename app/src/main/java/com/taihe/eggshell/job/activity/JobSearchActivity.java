@@ -95,7 +95,9 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         gv_hotjob.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtils.show(mContext, prolist.get(position).getName());
+                PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"keyword",prolist.get(position).getName());
+                Intent intent = new Intent(JobSearchActivity.this,FindJobActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -105,7 +107,9 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         lv_searchHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtils.show(mContext, historyList.get(position).getName());
+                PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"keyword",historyList.get(position).getName());
+                Intent intent = new Intent(JobSearchActivity.this,FindJobActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -117,16 +121,12 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         super.onClick(v);
         switch (v.getId()) {
             case R.id.tv_jobsearch_city:
-                ToastUtils.show(mContext, "地址");
+//                ToastUtils.show(mContext, "地址");
                 break;
             case R.id.btn_jobsearch_search:
                 if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
                     String word = searchWork.getText().toString();
                     if (!TextUtils.isEmpty(word)) {
-                        //搜索职位
-                        PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"keyword",word);
-                        Intent intent = new Intent(JobSearchActivity.this,FindJobActivity.class);
-                        startActivity(intent);
                         SearchHistory history = new SearchHistory();
                         history.setName(word);
                         history.setTime(new Date().toString());
@@ -135,8 +135,11 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                         } catch (DbException e) {
                             e.printStackTrace();
                         }
-
                         getDataFromDatabase();
+                        //搜索职位
+                        PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"keyword",word);
+                        Intent intent = new Intent(JobSearchActivity.this,FindJobActivity.class);
+                        startActivity(intent);
                     } else {
                         ToastUtils.show(mContext, "请输入内容");
                     }
@@ -150,7 +153,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
 
 
     private void getHotSearch() {
-        String[] media = new String[]{"客户专员哈哈哈", "创意专员", "企业策划水电费", "规划设计", "地产销售水电费", "测绘测量", "清算哥哥员", "操盘手", "会计", "出纳员"};
+        String[] media = new String[]{"网站编辑", "运营专员", "美工", "银行柜员", "会计", "出纳员", "文案策划", "媒介专员"};
         for (int j = 0; j < media.length; j++) {
             Professional professional = new Professional();
             professional.setId(j);

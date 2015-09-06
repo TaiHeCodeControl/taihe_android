@@ -26,9 +26,7 @@
             android:layout_centerVertical="true"
             android:text="北京"
             android:textSize="@dimen/font_size_32"
-            android:textColor="@color/font_color_black"
-            android:drawableRight="@drawable/jiantou"
-            android:drawablePadding="5dp"/>
+            android:textColor="@color/font_color_black"/>
 
         <EditText
             android:id="@+id/et_jobsearch_position"
