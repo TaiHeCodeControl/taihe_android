@@ -421,7 +421,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                             for(int i=0;i<j1.length();i++){
                                 vMode = new VideoInfoMode();
                                 j2 = j1.getJSONObject(i);
-                                vMode.setId(j2.optString("id").toString());
+                                vMode.setId(j2.optString("mid").toString());
                                 vMode.setC_id(j2.optString("uid").toString());
                                 vMode.setVimage(j2.optString("hot_pic").toString());
                                 listInfo.add(vMode);

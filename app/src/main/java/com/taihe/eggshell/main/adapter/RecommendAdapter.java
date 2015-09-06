@@ -68,7 +68,7 @@ public class RecommendAdapter extends BaseAdapter{
             holder = (LogoViewHolder)convertView.getTag();
         }
         String img=companyList.get(position).getVimage().toString();
-        if(!img.contains("http://www.")){
+        if(!img.contains("http://")){
             img="http://test2.tiahel.com//data/upload/hotpic/20150825/14459328941.PNG";
         }
         FinalBitmap bitmap = FinalBitmap.create(context);
@@ -79,7 +79,8 @@ public class RecommendAdapter extends BaseAdapter{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context,CompanyDetailActivity.class);
-                intent.putExtra("companyId",position);
+                intent.putExtra("id",companyList.get(position).getId().toString());
+                intent.putExtra("uid",companyList.get(position).getC_id().toString());
                 context.startActivity(intent);
             }
         });
