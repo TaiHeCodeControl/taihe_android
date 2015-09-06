@@ -18,18 +18,28 @@ public class Urls {
 
 	/*********************************************************************/
 
-    public static final String METHOD_LOGIN = "/login";//登录
-    public static final String METHOD_REGIST = "/register";//注册
-    public static final String METHOD_REGIST_GETCODE = "/register/chTelphone";//注册获取验证码
+    public static final String METHOD_LOGIN = "http://195.198.1.211/eggker/interface/login";//登录
+    public static final String METHOD_REGIST = "http://195.198.1.211/eggker/interface/register";//注册
+    public static final String METHOD_REGIST_GETCODE = "http://195.198.1.211/eggker/interface/register/chTelphone";//注册获取验证码
+
+
+    public static final String METHOD_BASIC = "http://195.198.1.211/eggker/interface/basicdata";//基本资料
+    public static final String METHOD_BASIC_SAVE = "http://195.198.1.211/eggker/interface/basicdata/add_basicdata";//保存修改的基本资料
+    public static final String METHOD_UPLOAD_IMAGE = "http://195.198.1.211/eggker/interface/basicdata/head";//上传头像
+
 
     public static final String METHOD_GET_CODE = "/login/send_code";//获取验证码
     public static final String METHOD_RESET_PASSWORD = "/login/update_pwd";//重置密码
     public static final String METHOD_CHECK_CODE = "/login/next";//判断验证码
+
+
     public static final String METHOD_JOB_LIST = "http://195.198.1.84/eggker/interface/Position/nearbycompany";//职位列表
     public static final String METHOD_JOB_LIST_COLLECT = "http://195.198.1.84/eggker/interface/Position/collectlist";//收藏职位列表
     public static final String METHOD_JOB_LIST_COLLECT_DELETE = "http://195.198.1.84/eggker/interface/Position/delcollectlist";//收藏职位列表
     public static final String METHOD_JOB_DETAIL = "http://195.198.1.84/eggker/interface/Position/details";//职位详情
     public static final String METHOD_JOB_COLLECT = "http://195.198.1.84/eggker/interface/Position/collect";//职位收藏
+
+
     public static final String METHOD_STATIC_DATA = "/Except/except_select";//静态数据
     public static final String METHOD_CREATE_RESUME = "/Except/except";//创建简历
     public static final String METHOD_UPDATE = "/update";//版本更新

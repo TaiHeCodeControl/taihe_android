@@ -19,6 +19,7 @@ import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
+import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.GsonUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
@@ -240,7 +241,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", UserId + "");
 
-        RequestUtils.createRequest(mContext, "http://195.198.1.211/eggker/interface/basicdata", "", true, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_BASIC, true, param, true, listener, errorListener);
 
     }
 
@@ -334,7 +335,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
         param.put("birthday",newbirthday);
         param.put("email",newemail);
 //
-        RequestUtils.createRequest(mContext, "http://195.198.1.211/eggker/interface/basicdata/add_basicdata", "", true, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, Urls.METHOD_BASIC_SAVE, "", true, param, true, listener, errorListener);
 
     }
 

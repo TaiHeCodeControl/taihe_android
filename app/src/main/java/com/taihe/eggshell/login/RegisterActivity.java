@@ -166,7 +166,7 @@ public class RegisterActivity extends BaseActivity {
         };
 
 
-        RequestUtils.createRequest(mContext, "http://195.198.1.211/eggker/interface",Urls.METHOD_REGIST_GETCODE, false, dataParams, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "",Urls.METHOD_REGIST_GETCODE, false, dataParams, true, listener, errorListener);
     }
 
 
@@ -234,7 +234,7 @@ public class RegisterActivity extends BaseActivity {
             }
         };
 //        String method = "http://195.198.1.197/eggker/interface/register?telphone=" + p_num + "&password=" + pwd + "&code" + p_code;
-        RequestUtils.createRequest(mContext, "http://195.198.1.211/eggker/interface", Urls.METHOD_REGIST, false, dataParams, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_REGIST, false, dataParams, true, listener, errorListener);
     }
 
     private void getCodeFromNet() {

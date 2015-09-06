@@ -187,7 +187,7 @@ public class LoginActivity extends BaseActivity {
             }
         };
 
-        RequestUtils.createRequest(mContext, "http://195.198.1.211/eggker/interface", Urls.METHOD_LOGIN, false, dataParams, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_LOGIN, false, dataParams, true, listener, errorListener);
 
     }
 

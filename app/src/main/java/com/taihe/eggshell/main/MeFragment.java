@@ -162,7 +162,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView() {
-        UserId = EggshellApplication.getApplication().getUser().getId();
+
         //初始化选择图片popWindow
         initImageSelect();
         user = EggshellApplication.getApplication().getUser();
@@ -276,6 +276,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     intent.putExtra("LoginTag", "meFragment");
                     startActivity(intent);
                 } else {
+                    UserId = EggshellApplication.getApplication().getUser().getId();
                     showCameraPopWindow();
                 }
 
@@ -614,7 +615,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         param.put("uid", UserId + "");
         param.put("photo", ImageString);
 //http://localhost/eggker/interface/basicdata/head  比传参数  uid =>uid   photo=>photo
-        RequestUtils.createRequest(mContext, "http://195.198.1.211/eggker/interface/basicdata/head", "", true, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, Urls.METHOD_UPLOAD_IMAGE, "", true, param, true, listener, errorListener);
 
     }
 
