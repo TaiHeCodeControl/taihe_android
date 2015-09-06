@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -29,6 +31,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
@@ -57,7 +60,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
     private TextView tv_allJob, tv_fujin;
     private ImageView iv_quancheng, iv_fujin, iv_filter, iv_search;
-    private RelativeLayout rl_qc,rl_fujin, iv_back;
+    private RelativeLayout rl_qc, rl_fujin, iv_back;
 
 
     private AllJobAdapter adapter;
@@ -75,6 +78,45 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     private int selectSize = 0;
     private int postednum = 0;
 
+    private String Longitude;
+    private String Latitude;
+    private String keyword;
+
+    private Handler jobListHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1001:
+                    List<JobInfo> joblist = (List<JobInfo>) msg.obj;
+                    jobInfos.addAll(joblist);
+                    adapter = new AllJobAdapter(mContext, jobInfos, true);
+                    adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
+                        @Override
+                        public void checkedPosition(int position, boolean isChecked) {
+                            jobInfos.get(position).setIsChecked(isChecked);
+                            //如果有listview没有被选中，全选按钮状态为false
+                            if (jobInfos.get(position).isChecked()) {
+                                selectSize += 1;
+                                if (selectSize == jobInfos.size()) {
+                                    cb_selectAll.setChecked(true);
+                                }
+                            } else {
+                                selectSize -= 1;
+                                cb_selectAll.setChecked(false);
+                            }
+
+
+                        }
+                    });
+
+                    list_job_all.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +130,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
+
 
         rl_fujin = (RelativeLayout) findViewById(R.id.rl_findjob_fujin);
         rl_qc = (RelativeLayout) findViewById(R.id.rl_findjob_qc);
@@ -110,7 +153,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
         jobInfos = new ArrayList<JobInfo>();
 
-        list_job_all = (PullToRefreshGridView)findViewById(R.id.list_alljob_all);
+        list_job_all = (PullToRefreshGridView) findViewById(R.id.list_alljob_all);
 
         list_job_all.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
@@ -137,8 +180,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 if (position < jobInfos.size()) {
                     JobInfo job = jobInfos.get(position);
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
-                    intent.putExtra("ID",job.getId());
-                    intent.putExtra("UID",job.getUid());
+                    intent.putExtra("ID", job.getId());
+                    intent.putExtra("UID", job.getUid());
                     Log.i("ID", job.getId() + "");
                     startActivity(intent);
                 }
@@ -146,9 +189,9 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             }
         });
 
-        Button btn_shenqing = (Button)findViewById(R.id.btn_alljob_shenqing);
+        Button btn_shenqing = (Button) findViewById(R.id.btn_alljob_shenqing);
         btn_shenqing.setOnClickListener(this);
-        cb_selectAll = (CheckBox)findViewById(R.id.cb_findjob_selectall);
+        cb_selectAll = (CheckBox) findViewById(R.id.cb_findjob_selectall);
 
         cb_selectAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,63 +213,49 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         });
 
 
-
     }
 
     private void initData() {
-        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             dialog = new LoadingProgressDialog(mContext, getResources().getString(
                     R.string.submitcertificate_string_wait_dialog));
             dialog.show();
             getList();
-        }else{
+        } else {
             ToastUtils.show(mContext, R.string.check_network);
         }
 
 
     }
 
-    private void getList(){
+
+    //全城职位列表
+    private void getList() {
 
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v("HHH:",(String)o);
+                    Log.v("Job:", (String) o);
 
-                    JSONObject jsonObject = new JSONObject((String)o);
+                    JSONObject jsonObject = new JSONObject((String) o);
 
                     int code = Integer.valueOf(jsonObject.getString("code"));
-                    if(code ==0){
+                    if (code == 0) {
+
                         String data = jsonObject.getString("data");
                         Gson gson = new Gson();
-                        List<JobInfo> joblist =  gson.fromJson(data,new TypeToken<List<JobInfo>>(){}.getType());
-                        jobInfos.addAll(joblist);
-                        adapter = new AllJobAdapter(mContext, jobInfos, true);
-                        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
-                            @Override
-                            public void checkedPosition(int position, boolean isChecked) {
-                                jobInfos.get(position).setIsChecked(isChecked);
-                                //如果有listview没有被选中，全选按钮状态为false
-                                if (jobInfos.get(position).isChecked()) {
-                                    selectSize += 1;
-                                    if (selectSize == jobInfos.size()) {
-                                        cb_selectAll.setChecked(true);
-                                    }
-                                } else {
-                                    selectSize -= 1;
-                                    cb_selectAll.setChecked(false);
-                                }
+                        List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
+                        }.getType());
 
+                        Message msg = new Message();
+                        msg.obj = joblist;
+                        msg.what = 1001;
+                        jobListHandler.sendMessage(msg);
 
-                            }
-                        });
-
-                        list_job_all.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                    }else{
-                        ToastUtils.show(mContext,"获取失败");
+                    } else {
+                        ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -238,27 +267,42 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                try{
-                    if(null!=volleyError.networkResponse.data){
-                        Log.v("Forget:", new String(volleyError.networkResponse.data));
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("Job:", new String(volleyError.networkResponse.data));
                     }
-                    ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"");
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
 
-                }catch(Exception e){
-                    ToastUtils.show(mContext,"联网失败");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
                 }
 
             }
         };
 
-        Map<String,String> param = new HashMap<String, String>();
-        param.put("page",page+"");
-        param.put("limit",pageSize+"");
+        //http://195.198.1.83/eggker/interface/Position/nearbycompany?
+        // longitude=116.404916&dimensionality=39.927471&keyword=工程师&page=1
+        //    传值项： longitude=>经度  dimensionality=>纬度 keyword=>关键字
+        //    page=>页数 hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp
+        // 工作性质=>type
 
-        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("longitude", Longitude);
+        param.put("dimensionality", Latitude);
+        param.put("keyword", keyword);//关键字
+        param.put("page", page + "");
+        param.put("hy", "");//工作行业
+        param.put("job_post", "");//职位类别
+        param.put("salary", "");
+        param.put("edu", "");
+        param.put("exp", "");//工作年限
+        param.put("type", "");//工作性质
+
+        RequestUtils.createRequest_GET(mContext, "", Urls.METHOD_JOB_LIST, true, "", "", listener, errorListener);
+
+//        RequestUtils.createRequest(mContext, "http://195.198.1.84/eggker/interface", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
 
     }
-
 
 
     @Override
@@ -267,7 +311,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             case R.id.iv_findjob_back:
                 FindJobActivity.this.finish();
                 break;
-            case R.id.rl_findjob_qc:
+            case R.id.rl_findjob_qc://全城
                 jobInfos.clear();
                 getList();
                 iv_quancheng.setImageResource(R.drawable.quancheng01);
@@ -276,9 +320,12 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 tv_allJob.setTextColor(getResources().getColor(R.color.font_color_red));
                 tv_fujin.setTextColor(getResources().getColor(R.color.font_color_black));
                 break;
-            case R.id.rl_findjob_fujin:
+            case R.id.rl_findjob_fujin://附近
                 jobInfos.clear();
                 page = 1;
+                Longitude = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"Longitude","");
+                Latitude = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"Latitude","");
+                Log.i("job--Longitude " , Longitude + "Latitude====" + Latitude);
                 getList();
                 iv_quancheng.setImageResource(R.drawable.quancheng02);
                 iv_fujin.setImageResource(R.drawable.fujin02);
@@ -287,7 +334,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 tv_fujin.setTextColor(getResources().getColor(R.color.font_color_red));
                 break;
             case R.id.iv_findjob_search:
-                intent = new Intent(FindJobActivity.this,JobSearchActivity.class);
+                intent = new Intent(FindJobActivity.this, JobSearchActivity.class);
                 startActivity(intent);
                 break;
 

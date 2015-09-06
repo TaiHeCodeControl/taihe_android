@@ -3,6 +3,8 @@ package com.taihe.eggshell.job.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
@@ -71,6 +73,104 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
     private int UserId;
 
+    private Handler jobDetailHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 101://职位详情
+                    try {
+                        JobDetailInfo jobDetaiInfo = (JobDetailInfo) msg.obj;
+                        address = jobDetaiInfo.data.address;
+                        if (address.length() > 6) {
+
+                            address = address.substring(0, 6);
+                        }
+//                        address = jobDetaiInfo.data.address.split("区")[0].toString();
+                        cj_name = jobDetaiInfo.data.cj_name;
+                        com_name = jobDetaiInfo.data.com_name;
+                        content = jobDetaiInfo.data.content;
+                        description = jobDetaiInfo.data.cj_description;
+                        Log.i("desctiption", description);
+                        edu = jobDetaiInfo.data.edu;
+                        exp = jobDetaiInfo.data.exp;
+                        hy = jobDetaiInfo.data.hy;
+                        id = jobDetaiInfo.data.id;
+                        lastupdate = jobDetaiInfo.data.lastupdate;
+                        linkmail = jobDetaiInfo.data.linkmail;
+                        linktel = jobDetaiInfo.data.linktel;
+                        mun = jobDetaiInfo.data.mun;
+                        name = jobDetaiInfo.data.name;
+                        provinceid = jobDetaiInfo.data.provinceid;
+                        salary = jobDetaiInfo.data.salary;
+                        type = jobDetaiInfo.data.type;
+                        //54不限 55全职 56兼职
+                        if (type.equals("55")) {
+                            type = "全职";
+                        } else if (type.equals("56")) {
+                            type = "兼职";
+                        } else {
+                            type = "不限";
+                        }
+
+                        //职位详情信息填充
+                        jobtitle.setText(cj_name);
+                        jobcompany.setText(com_name);
+                        jobstart.setText(lastupdate);//发布时间
+                        jobend.setText(lastupdate);//有效时间
+                        jobtype.setText(type);//工作性质
+                        joblevel.setText(edu);//学历要求
+                        jobyears.setText(exp);//工作年限
+                        jobaddress.setText(address);
+                        jobmoney.setText(salary);
+                        jobnum.setText(hy);//招聘人数
+
+
+                        byte[] bytes = Base64.decode(content, Base64.DEFAULT);
+                        content = new String(bytes, "UTF-8");
+                        company_jieshao.setText(Html.fromHtml(content));//公司介绍
+
+                        byte[] descriptionbytes = Base64.decode(description, Base64.DEFAULT);
+                        description = new String(descriptionbytes, "UTF-8");
+                        tv_jobdetail_description.setText(Html.fromHtml(description));//职责描述
+
+
+                        int size = jobDetaiInfo.data.lists.size();
+                        if (size < 1) {//如果没有更多职位，隐藏更多职位
+                            ll_moreposition.setVisibility(View.GONE);
+                        }
+                        //该公司其他职位信息
+                        for (int i = 0; i < size; i++) {
+                            JobInfo jobInfo = new JobInfo();
+
+                            jobInfo.setId(jobDetaiInfo.data.lists.get(i).id);
+                            jobInfo.setCom_name(jobDetaiInfo.data.lists.get(i).com_name);
+                            jobInfo.setEdu(jobDetaiInfo.data.lists.get(i).edu);
+                            jobInfo.setName(jobDetaiInfo.data.lists.get(i).name);
+                            jobInfo.setLastupdate(jobDetaiInfo.data.lists.get(i).lastupdate);
+                            jobInfo.setProvinceid(jobDetaiInfo.data.lists.get(i).provinceid);
+                            jobInfo.setSalary(jobDetaiInfo.data.lists.get(i).salary);
+                            jobInfo.setUid(jobDetaiInfo.data.lists.get(i).uid);
+
+
+                            jobInfos.add(jobInfo);
+                        }
+
+
+                        //填充listview
+                        AllJobAdapter jobAdapter = new AllJobAdapter(mContext, jobInfos, false);
+                        moreJobListView.setAdapter(jobAdapter);
+
+                        new GetLinesAsyncTask().execute();
+                    } catch (Exception e) {
+
+                    }
+                    break;
+            }
+
+        }
+    };
+
     @Override
     public void initView() {
 
@@ -79,12 +179,11 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         mContext = this;
         jobInfos = new ArrayList<JobInfo>();
         UserId = EggshellApplication.getApplication().getUser().getId();
-        Log.i("USERID",UserId + "");
+        Log.i("USERID", UserId + "");
 
         intent = getIntent();
         jobId = intent.getIntExtra("ID", 1);
         uid = intent.getStringExtra("UID");
-        Log.i("ID", jobId + "");
         titleView = (TextView) findViewById(R.id.id_title);
         collectionImg = (ImageView) findViewById(R.id.id_other);
         jobtitle = (TextView) findViewById(R.id.id_job_name);
@@ -119,7 +218,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         ll_moreposition = (LinearLayout) findViewById(R.id.ll_jobdetail_moreposition);
 
         sc_detail = (ScrollView) findViewById(R.id.sv_detail);
-        sc_detail.smoothScrollTo(0,20);
+        sc_detail.smoothScrollTo(0, 20);
     }
 
     @Override
@@ -223,15 +322,16 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 tv_shouqizhiwei.setVisibility(View.GONE);
                 break;
             case R.id.id_other:
-                if (isCollect) {
-                    collectionImg.setImageResource(R.drawable.shoucang);
-                    ToastUtils.show(mContext, "取消收藏");
-                    isCollect = false;
-                } else {
-                    //收藏职位
-                    collectPosition();
-
-                }
+//                if (isCollect) {
+//                    collectionImg.setImageResource(R.drawable.shoucang);
+//                    ToastUtils.show(mContext, "取消收藏");
+//                    isCollect = false;
+//                } else {
+//                    //收藏职位
+//                    collectPosition();
+//
+//                }
+                collectPosition();
                 break;
         }
     }
@@ -251,7 +351,11 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         ToastUtils.show(mContext, "职位收藏成功");
                         collectionImg.setImageResource(R.drawable.shoucang2);//已收藏图标
                         isCollect = true;
-                    } else {
+                    }else if(code == 1){
+                        collectionImg.setImageResource(R.drawable.shoucang);
+                        ToastUtils.show(mContext, "取消收藏");
+                        isCollect = false;
+                    }else {
                         ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (Exception e) {
@@ -279,7 +383,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         param.put("uid", UserId + "");
         param.put("job_id", jobId + "");
 
-        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_COLLECT, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_COLLECT, false, param, true, listener, errorListener);
 
     }
 
@@ -298,88 +402,13 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                     int code = jobDetaiInfo.code;
                     if (code == 0) {
 
-                        address = jobDetaiInfo.data.address;
-                        if(address.length() >6){
-
-                        address =  address.substring(0, 6);
-                        }
-//                        address = jobDetaiInfo.data.address.split("区")[0].toString();
-                        cj_name = jobDetaiInfo.data.cj_name;
-                        com_name = jobDetaiInfo.data.com_name;
-                        content = jobDetaiInfo.data.content;
-                        description = jobDetaiInfo.data.cj_description;
-                        Log.i("desctiption", description);
-                        edu = jobDetaiInfo.data.edu;
-                        exp = jobDetaiInfo.data.exp;
-                        hy = jobDetaiInfo.data.hy;
-                        id = jobDetaiInfo.data.id;
-                        lastupdate = jobDetaiInfo.data.lastupdate;
-                        linkmail = jobDetaiInfo.data.linkmail;
-                        linktel = jobDetaiInfo.data.linktel;
-                        mun = jobDetaiInfo.data.mun;
-                        name = jobDetaiInfo.data.name;
-                        provinceid = jobDetaiInfo.data.provinceid;
-                        salary = jobDetaiInfo.data.salary;
-                        type = jobDetaiInfo.data.type;
-                        //54不限 55全职 56兼职
-                        if (type.equals("55")) {
-                            type = "全职";
-                        } else if (type.equals("56")) {
-                            type = "兼职";
-                        } else {
-                            type = "不限";
-                        }
-
-                        //职位详情信息填充
-                        jobtitle.setText(cj_name);
-                        jobcompany.setText(com_name);
-                        jobstart.setText(lastupdate);//发布时间
-                        jobend.setText(lastupdate);//有效时间
-                        jobtype.setText(type);//工作性质
-                        joblevel.setText(edu);//学历要求
-                        jobyears.setText(exp);//工作年限
-                        jobaddress.setText(address);
-                        jobmoney.setText(salary);
-                        jobnum.setText(hy);//招聘人数
-
-                        byte[] bytes= Base64.decode(content, Base64.DEFAULT);
-                        content = new String(bytes,"UTF-8");
-                        company_jieshao.setText(Html.fromHtml(content));//公司介绍
-
-                        byte[] descriptionbytes= Base64.decode(description, Base64.DEFAULT);
-                        description = new String(descriptionbytes,"UTF-8");
-                        tv_jobdetail_description.setText(Html.fromHtml(description));//职责描述
-
-                        int size = jobDetaiInfo.data.lists.size();
-                        if (size < 1) {//如果没有更多职位，隐藏更多职位
-                            ll_moreposition.setVisibility(View.GONE);
-                        }
-                        //该公司其他职位信息
-                        for (int i = 0; i < size; i++) {
-                            JobInfo jobInfo = new JobInfo();
-
-                            jobInfo.setId(jobDetaiInfo.data.lists.get(i).id);
-                            jobInfo.setCom_name(jobDetaiInfo.data.lists.get(i).com_name);
-                            jobInfo.setEdu(jobDetaiInfo.data.lists.get(i).edu);
-                            jobInfo.setName(jobDetaiInfo.data.lists.get(i).name);
-                            jobInfo.setLastupdate(jobDetaiInfo.data.lists.get(i).lastupdate);
-                            jobInfo.setProvinceid(jobDetaiInfo.data.lists.get(i).provinceid);
-                            jobInfo.setSalary(jobDetaiInfo.data.lists.get(i).salary);
-                            jobInfo.setUid(jobDetaiInfo.data.lists.get(i).uid);
-
-
-                            jobInfos.add(jobInfo);
-                        }
-
-
-                        //填充listview
-                        AllJobAdapter jobAdapter = new AllJobAdapter(mContext, jobInfos, false);
-                        moreJobListView.setAdapter(jobAdapter);
-
-                        new GetLinesAsyncTask().execute();
+                        Message msg = new Message();
+                        msg.obj = jobDetaiInfo;
+                        msg.what = 101;
+                        jobDetailHandler.sendMessage(msg);
 
                     } else {
-                        ToastUtils.show(mContext, "获取失败");
+                        ToastUtils.show(mContext, "获取详情信息失败");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -406,11 +435,13 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         Map<String, String> param = new HashMap<String, String>();
         param.put("id", uid + "");///id/23/pid/7
         param.put("pid", jobId + "");
-
-        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
+        Log.i("ID", jobId + "");
+        Log.i("UID", uid);//职位列表中的uid
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
 
     }
 
+    //获取职位职责和公司介绍的总行数
     private class GetLinesAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPostExecute(final Void result) {

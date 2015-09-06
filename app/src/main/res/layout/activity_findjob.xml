@@ -152,7 +152,7 @@
             android:listSelector="@color/white"
             android:numColumns="1"
             android:smoothScrollbar="true"
-            ptr:ptrAnimationStyle="flip"></com.handmark.pulltorefresh.library.PullToRefreshGridView>
+            ptr:ptrAnimationStyle="flip" />
 
     </LinearLayout>
 

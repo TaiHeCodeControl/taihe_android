@@ -98,32 +98,36 @@ public class AllJobAdapter extends BaseAdapter {
 
             view.setTag(holder);
         }
+        try{
+            String jobName = jobInfo.getName();
+            if(!TextUtils.isEmpty(jobName)){
 
-        String jobName = jobInfo.getName();
-        if(!TextUtils.isEmpty(jobName)){
+                holder.tv_jobName.setText(jobName);
+            }
+            if(!TextUtils.isEmpty(jobInfo.getCom_name())){
 
-            holder.tv_jobName.setText(jobName);
+                holder.tv_businessName.setText(jobInfo.getCom_name());
+            }
+            if(!TextUtils.isEmpty(jobInfo.getProvinceid())){
+
+                holder.tv_city.setText(jobInfo.getProvinceid());
+            }
+            if(!TextUtils.isEmpty(jobInfo.getEdu())){
+                holder.tv_edu.setText(jobInfo.getEdu());
+            }
+            if(!TextUtils.isEmpty(jobInfo.getLastupdate())){
+
+                holder.tv_pubTiem.setText(jobInfo.getLastupdate().substring(5));
+            }
+
+            if(!TextUtils.isEmpty(jobInfo.getSalary())){
+
+                holder.tv_salaryRange.setText(jobInfo.getSalary());
+            }
+        }catch (Exception e){
+
         }
-        if(!TextUtils.isEmpty(jobInfo.getCom_name())){
 
-            holder.tv_businessName.setText(jobInfo.getCom_name());
-        }
-        if(!TextUtils.isEmpty(jobInfo.getProvinceid())){
-
-            holder.tv_city.setText(jobInfo.getProvinceid());
-        }
-        if(!TextUtils.isEmpty(jobInfo.getEdu())){
-            holder.tv_edu.setText(jobInfo.getEdu());
-        }
-      if(!TextUtils.isEmpty(jobInfo.getLastupdate())){
-
-          holder.tv_pubTiem.setText(jobInfo.getLastupdate().substring(5));
-      }
-
-        if(!TextUtils.isEmpty(jobInfo.getSalary())){
-
-            holder.tv_salaryRange.setText(jobInfo.getSalary());
-        }
 
 
         if (list.get(position).isChecked()) {

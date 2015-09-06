@@ -4,16 +4,27 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.EggshellApplication;
+import com.taihe.eggshell.base.utils.GsonUtils;
+import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.job.bean.MyBasicInfo;
 import com.taihe.eggshell.main.MainActivity;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.MyDialog;
 import com.taihe.eggshell.widget.addressselect.AddressSelectActivity;
 import com.taihe.eggshell.widget.datepicker.JudgeDate;
@@ -24,6 +35,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -31,6 +44,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 基本资料界面，个人基本信息的查看和编辑
@@ -41,8 +57,9 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
 
     private static final int REQUEST_CODE_CITY = 10;
     private Context mContext;
-    private TextView tv_birthdate, tv_mybasic_sex, tv_address, tv_mybasic_jianjie, tv_save;
+    private TextView tv_phone,tv_birthdate, tv_mybasic_sex, tv_address, tv_mybasic_jianjie, tv_save;
     private EditText et_nickname, et_qq, et_email;
+    private TextView tv_mybasic_registime;
 
     private String verTime, jianjie, jianjiehint;
 
@@ -52,8 +69,33 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
 
     WheelMain wheelMain;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private String oldnickname,oldsex,oldaddress,oldjianjie,oldbirthday,oldemail,oldqq;
-    private String newnickname,newsex,newaddress,newjianjie,newbirthday,newemail,newqq;
+    private String oldphone,oldnickname,oldsex,oldaddress,oldjianjie,oldbirthday,oldemail,oldqq;
+    private String newphone,newnickname,newsex,newaddress,newjianjie,newbirthday,newemail,newqq;
+    private LoadingProgressDialog LoadingDialog;
+    private int UserId;
+
+    private Handler basicHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 10://填充基本资料
+                    MyBasicInfo.BasicBean basicBean = (MyBasicInfo.BasicBean) msg.obj;
+                    tv_phone.setText(basicBean.telphone);
+//                    tv_birthdate.setText(basicBean.);
+                    tv_mybasic_sex.setText(basicBean.sex);
+                    tv_address.setText(basicBean.address);
+                    tv_mybasic_jianjie.setText(basicBean.description);
+                    et_nickname.setText(basicBean.name);
+//                    et_qq;
+                    et_email.setText(basicBean.email);
+                    tv_mybasic_registime.setText(basicBean.reg_date);
+
+
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +108,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
 
     public void initView() {
 
-
+        UserId = EggshellApplication.getApplication().getUser().getId();
         iv_back = (RelativeLayout) findViewById(R.id.iv_mybasic_back);
         tv_mybasic_jianjie = (TextView) findViewById(R.id.tv_mybasic_jianjie);
         tv_birthdate = (TextView) findViewById(R.id.tv_mybasic_birthdate);
@@ -75,7 +117,8 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
         tv_save = (TextView) findViewById(R.id.tv_mybasic_save);
         tv_save.setOnClickListener(this);
         tv_save.setClickable(false);
-
+        tv_phone = (TextView) findViewById(R.id.tv_mybasic_userno);
+        tv_mybasic_registime = (TextView) findViewById(R.id.tv_mybasic_registime);
 
         et_nickname = (EditText) findViewById(R.id.et_mybasic_nickname);
         et_qq = (EditText) findViewById(R.id.et_mybasic_qq);
@@ -105,26 +148,100 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
         iv_back.setOnClickListener(this);
         tv_birthdate.setOnClickListener(this);
 
-        tv_address.addTextChangedListener(this);
 
-        tv_birthdate.addTextChangedListener(this);
+        initData();
 
-        tv_mybasic_sex.addTextChangedListener(this);
 
-        tv_mybasic_jianjie.addTextChangedListener(this);
-        et_email.addTextChangedListener(this);
+    }
 
-        et_qq.addTextChangedListener(this);
+    private void initData() {
+        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+            LoadingDialog = new LoadingProgressDialog(mContext, getResources().getString(
+                    R.string.submitcertificate_string_wait_dialog));
+            LoadingDialog.show();
+            getViewDate();
 
-        et_nickname.addTextChangedListener(this);
+            oldphone = tv_phone.getText().toString().trim();
+            oldaddress = tv_address.getText().toString().trim();
+            oldnickname = et_nickname.getText().toString().trim();
+            oldqq = et_qq.getText().toString().trim();
+            oldemail = et_email.getText().toString().trim();
+            oldbirthday = tv_birthdate.getText().toString().trim();
+            oldjianjie = tv_mybasic_jianjie.getText().toString().trim();
+            oldsex = tv_mybasic_sex.getText().toString().trim();
+            tv_address.addTextChangedListener(this);
 
-        oldaddress = tv_address.getText().toString().trim();
-        oldnickname = et_nickname.getText().toString().trim();
-        oldqq = et_qq.getText().toString().trim();
-        oldemail = et_email.getText().toString().trim();
-        oldbirthday = tv_birthdate.getText().toString().trim();
-        oldjianjie = tv_mybasic_jianjie.getText().toString().trim();
-        oldsex = tv_mybasic_sex.getText().toString().trim();
+
+            tv_birthdate.addTextChangedListener(this);
+
+            tv_mybasic_sex.addTextChangedListener(this);
+
+            tv_mybasic_jianjie.addTextChangedListener(this);
+            et_email.addTextChangedListener(this);
+
+            et_qq.addTextChangedListener(this);
+
+            et_nickname.addTextChangedListener(this);
+        } else {
+            ToastUtils.show(mContext, R.string.check_network);
+        }
+
+
+    }
+
+    //获取用户的基本资料
+    private void getViewDate() {
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                LoadingDialog.dismiss();
+                try {
+                    Log.v("HHH:", (String) o);
+                    MyBasicInfo myBasicInfo = GsonUtils
+                            .changeGsonToBean(o.toString(),
+                                    MyBasicInfo.class);
+
+                    String code = myBasicInfo.code;
+                    if (code.equals("0")) {
+                        MyBasicInfo.BasicBean basicBean = myBasicInfo.data;
+                        Message msg = new Message();
+                        msg.what = 10;
+                        msg.obj = basicBean;
+                        basicHandler.sendMessage(msg);
+
+                        ToastUtils.show(mContext, "获取基本资料成功");
+                    } else {
+                        ToastUtils.show(mContext, "获取失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                LoadingDialog.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("Image:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
+            }
+        };
+
+
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("uid", UserId + "");
+
+        RequestUtils.createRequest(mContext, "http://195.198.1.211/eggker/interface/basicdata", "", true, param, true, listener, errorListener);
+
     }
 
 
@@ -157,9 +274,68 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
                 break;
 
             case R.id.tv_mybasic_save://保存修改信息
-                ToastUtils.show(mContext, "资料修改成功");
+                saveBasic();
                 break;
         }
+    }
+
+    //提交用户基本资料的修改
+    private void saveBasic() {
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                LoadingDialog.dismiss();
+                try {
+                    Log.v("HHH:", (String) o);
+
+                    JSONObject jsonObject = new JSONObject((String) o);
+
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if (code == 0) {
+                        ToastUtils.show(mContext, "资料修改成功");
+                    } else {
+                        ToastUtils.show(mContext, "获取失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                LoadingDialog.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("Image:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
+            }
+        };
+
+        //http://localhost/eggker/interface/basicdata/add_basicdata  基本资料添加
+        // 参数必传项    用户id=>uid  ，  选传项    手机号=>telphone,昵称=>name,性别=>sex,地址=>address,
+        // 简介=>description，生日=>birthday,邮箱=>email
+
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("uid", UserId + "");
+        param.put("telphone",oldphone);
+        param.put("name",newnickname);
+        param.put("sex",newsex);
+        param.put("address",newaddress);
+        param.put("description",newjianjie);
+        param.put("birthday",newbirthday);
+        param.put("email",newemail);
+//
+        RequestUtils.createRequest(mContext, "http://195.198.1.211/eggker/interface/basicdata/add_basicdata", "", true, param, true, listener, errorListener);
+
     }
 
     private void goBack() {
@@ -373,7 +549,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener, T
     }
 
     /**
-     * 设置按钮的点击状态
+     * 设置编辑&完成按钮的点击状态
      */
     private void setButtonState() {
         newaddress = tv_address.getText().toString().trim();

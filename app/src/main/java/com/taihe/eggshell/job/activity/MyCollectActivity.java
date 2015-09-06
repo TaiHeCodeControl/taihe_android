@@ -66,12 +66,10 @@ public class MyCollectActivity extends BaseActivity {
     private static final String TAG = "MyCollectActivity";
 
     private int page = 1;
-    private int pageSize = 10;
+    private int pageSize = 2;
     //选中条数的统计
     private int selectSize = 0;
     private int postednum = 0;
-    private int[] deletePositionNum;
-    private List<Integer> delPositionNum = null;
     private TextView tv_collect_num;
     private StringBuilder sb = new StringBuilder();
 
@@ -80,75 +78,43 @@ public class MyCollectActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 100://删除职位
+                case 101://删除职位成功
+                    adapter.notifyDataSetChanged();
+                    cb_selectAll.setChecked(false);
+                    ToastUtils.show(mContext,"删除成功");
+                    break;
+                case 201://收藏职位列表
+                    List<JobInfo> joblist = (List<JobInfo>) msg.obj;
+                    jobInfos.addAll(joblist);
+                    int size = jobInfos.size();
 
-                    Iterator<JobInfo> it = jobInfos.iterator();
-                    while (it.hasNext()) {
-                        JobInfo jobinfo = it.next();
-                        if (jobinfo.isChecked()) {
-                            sb.append(jobinfo.getId());
-                            sb.append(",");
-                            it.remove();
+                    tv_collect_num.setText(size + "条记录");
+                    adapter = new AllJobAdapter(mContext, jobInfos, true);
+                    adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
+                        @Override
+                        public void checkedPosition(int position, boolean isChecked) {
+                            jobInfos.get(position).setIsChecked(isChecked);
+                            //如果有listview没有被选中，全选按钮状态为false
+                            if (jobInfos.get(position).isChecked()) {
+                                selectSize += 1;
+                                if (selectSize == jobInfos.size()) {
+                                    cb_selectAll.setChecked(true);
+                                }
+                            } else {
+                                selectSize -= 1;
+                                cb_selectAll.setChecked(false);
+                            }
+
+
                         }
-                    }
-                    deletePositin();
+                    });
 
+                    list_job_all.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                     break;
             }
         }
     };
-
-    private void deletePositin() {
-        Response.Listener listener = new Response.Listener() {
-            @Override
-            public void onResponse(Object o) {
-                dialog.dismiss();
-                try {
-                    Log.v("HHH:", (String) o);
-
-                    JSONObject jsonObject = new JSONObject((String) o);
-
-
-                    int code = Integer.valueOf(jsonObject.getString("code"));
-                    if (code == 0) {
-
-                        adapter.notifyDataSetChanged();
-                        cb_selectAll.setChecked(false);
-                    } else {
-                        ToastUtils.show(mContext, "获取失败");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                dialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("MYCOLLECTDELETE:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
-
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
-            }
-        };
-
-        Map<String, String> param = new HashMap<String, String>();
-
-        String ss = sb.toString();
-
-        param.put("id", ss);
-        param.put("uid", 141 + "");
-        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_LIST_COLLECT_DELETE, false, param, true, listener, errorListener);
-
-    }
 
     @Override
     public void initView() {
@@ -246,6 +212,7 @@ public class MyCollectActivity extends BaseActivity {
 
     }
 
+    //我的收藏职位列表
     private void getList() {
 
         Response.Listener listener = new Response.Listener() {
@@ -264,32 +231,12 @@ public class MyCollectActivity extends BaseActivity {
                         List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
                         }.getType());
 
-                        jobInfos.addAll(joblist);
-                        int size = jobInfos.size();
-
-                        tv_collect_num.setText(size + "条记录");
-                        adapter = new AllJobAdapter(mContext, jobInfos, true);
-                        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
-                            @Override
-                            public void checkedPosition(int position, boolean isChecked) {
-                                jobInfos.get(position).setIsChecked(isChecked);
-                                //如果有listview没有被选中，全选按钮状态为false
-                                if (jobInfos.get(position).isChecked()) {
-                                    selectSize += 1;
-                                    if (selectSize == jobInfos.size()) {
-                                        cb_selectAll.setChecked(true);
-                                    }
-                                } else {
-                                    selectSize -= 1;
-                                    cb_selectAll.setChecked(false);
-                                }
+                        Message msg = Message.obtain();
+                        msg.what = 201;
+                        msg.obj = joblist;
+                        mHandler.sendMessage(msg);
 
 
-                            }
-                        });
-
-                        list_job_all.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
                     } else {
                         ToastUtils.show(mContext, "获取失败");
                     }
@@ -319,8 +266,8 @@ public class MyCollectActivity extends BaseActivity {
         Map<String, String> param = new HashMap<String, String>();
         param.put("page", page + "");
         param.put("limit", pageSize + "");
-        param.put("uid", 141 + "");
-        RequestUtils.createRequest(mContext, "http://195.198.1.83/eggker/interface", Urls.METHOD_JOB_LIST_COLLECT, false, param, true, listener, errorListener);
+        param.put("uid", 141 + "");//UserID
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_COLLECT, false, param, true, listener, errorListener);
 
     }
 
@@ -335,7 +282,16 @@ public class MyCollectActivity extends BaseActivity {
                 break;
             case R.id.btn_collectjob_delete://删除职位
 
-                mHandler.sendEmptyMessage(100);
+                Iterator<JobInfo> it = jobInfos.iterator();
+                while (it.hasNext()) {
+                    JobInfo jobinfo = it.next();
+                    if (jobinfo.isChecked()) {
+                        sb.append(jobinfo.getId());
+                        sb.append(",");
+                        it.remove();
+                    }
+                }
+                deletePositin();
 
                 break;
             case R.id.btn_alljob_shenqing://投递selectSize条职位，其中已投递条数需要从服务器获取
@@ -344,6 +300,59 @@ public class MyCollectActivity extends BaseActivity {
                 break;
         }
     }
+
+    //删除职位
+    private void deletePositin() {
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                dialog.dismiss();
+                try {
+                    Log.v("HHH:", (String) o);
+
+                    JSONObject jsonObject = new JSONObject((String) o);
+
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if (code == 0) {
+                        mHandler.sendEmptyMessage(101);
+
+                    } else {
+                        ToastUtils.show(mContext, "删除失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("MYCOLLECTDELETE:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
+            }
+        };
+
+        Map<String, String> param = new HashMap<String, String>();
+
+        String ss = sb.toString();
+
+        param.put("id", ss);
+        param.put("uid", 141 + "");
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_COLLECT_DELETE, false, param, true, listener, errorListener);
+
+    }
+
+
 
     private void goBack() {
         Intent intent = new Intent(MyCollectActivity.this, MainActivity.class);

@@ -1,6 +1,7 @@
 package com.taihe.eggshell.main;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,8 +10,10 @@ import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,6 +27,9 @@ import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
@@ -34,6 +40,7 @@ import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.base.utils.UpdateUtils;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
+import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.personalCenter.activity.TeamActivity;
@@ -44,8 +51,12 @@ import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.CircleImageView;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.ProgressDialog;
 import com.taihe.eggshell.widget.UpdateDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -53,6 +64,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,7 +73,7 @@ import java.util.Map;
 public class MeFragment extends Fragment implements View.OnClickListener {
 
 
-    private static final String TAG = "MeFragment" ;
+    private static final String TAG = "MeFragment";
     private Context mContext;
 
     private ChoiceDialog dialog;
@@ -75,6 +87,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private CircleImageView circleiv_mine_icon;
     private Intent intent;
     private User user;
+    private int UserId;
+    private LoadingProgressDialog LoadingDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -137,7 +151,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
                 Intent intent = new Intent(mContext, MainActivity.class);
                 startActivity(intent);
-                ((MainActivity)getActivity()).radio_index.performClick();
+                ((MainActivity) getActivity()).radio_index.performClick();
 
             }
         });
@@ -148,6 +162,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView() {
+        UserId = EggshellApplication.getApplication().getUser().getId();
         //初始化选择图片popWindow
         initImageSelect();
         user = EggshellApplication.getApplication().getUser();
@@ -160,7 +175,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             rl_logout.setVisibility(View.GONE);
         } else {
             String phoneNum = user.getPhoneNumber();
-            Log.i("PHONeNUM",phoneNum);
+            Log.i("PHONeNUM", phoneNum);
             String nick = user.getName();
             tv_logintxt.setVisibility(View.GONE);
             ll_userinfo.setVisibility(View.VISIBLE);
@@ -260,7 +275,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     intent = new Intent(mContext, LoginActivity.class);
                     intent.putExtra("LoginTag", "meFragment");
                     startActivity(intent);
-                }else{
+                } else {
                     showCameraPopWindow();
                 }
 
@@ -403,6 +418,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         camera_pop_window.setOnDismissListener(new poponDismissListener());
     }
 
+    //选择图片Pop
     private void initCameraPopWindow() {
         camera_pop_window = new PopupWindow(camera_pop_view,
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -421,7 +437,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
     /**
-     * 添加新笔记时弹出的popWin关闭的事件，主要是为了将背景透明度改回来
+     * 弹出的popWin关闭的事件，主要是为了将背景透明度改回来
      *
      * @author cg
      */
@@ -505,17 +521,17 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 extras.getParcelable("data");
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();// 字节数组输出
-                lastPhoto.compress(Bitmap.CompressFormat.JPEG, 75, stream);// (0
-                // -
-                // 100)
+                lastPhoto.compress(Bitmap.CompressFormat.JPEG, 75, stream);//
                 FileOutputStream fos = null;
                 BufferedOutputStream bos = null;
 
                 // **************将截取后的图片保存到SD卡的temp.jpg文件
                 byte[] byteArray = stream.toByteArray();// 字节数组输出流转换成字节数组
 
-                File file = new File(Environment.getDataDirectory()
-                        + "/data/com.taihe.eggshell/", "temp.jpg");
+                File file = new File(Environment.getExternalStorageDirectory()
+                        + "/eggkerImage.JPEG");
+                String filePath = Environment.getExternalStorageDirectory() + "/eggkerImage.JPEG";
+
                 // 将字节数组写入到刚创建的图片文件
                 try {
                     fos = new FileOutputStream(file);
@@ -535,8 +551,17 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
                 //门店图片显示==================================================
                 circleiv_mine_icon.setImageBitmap(lastPhoto);
-                //上传门店图片
-                //TODO
+                if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                    LoadingDialog = new LoadingProgressDialog(mContext, getResources().getString(
+                            R.string.submitcertificate_string_wait_dialog));
+                    dialog.show();
+                    String ImageString = getPstr(filePath);
+                    //上传门店图片
+                    upLoadImage(ImageString);
+                } else {
+                    ToastUtils.show(mContext, R.string.check_network);
+                }
+
 
             }
 
@@ -545,6 +570,80 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void upLoadImage(String ImageString) {
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                LoadingDialog.dismiss();
+                try {
+                    Log.v("HHH:", (String) o);
+
+                    JSONObject jsonObject = new JSONObject((String) o);
+
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if (code == 0) {//图片上传成功
+
+                    } else {
+                        ToastUtils.show(mContext, "获取失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                LoadingDialog.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("Image:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
+            }
+        };
+
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("uid", UserId + "");
+        param.put("photo", ImageString);
+//http://localhost/eggker/interface/basicdata/head  比传参数  uid =>uid   photo=>photo
+        RequestUtils.createRequest(mContext, "http://195.198.1.211/eggker/interface/basicdata/head", "", true, param, true, listener, errorListener);
+
+    }
+
+    public String getPstr(String pathname) {
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(pathname);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            int i;
+            // 转化为字节数组流
+            while ((i = fileInputStream.read()) != -1) {
+                byteArrayOutputStream.write(i);
+            }
+            fileInputStream.close();
+            // 把文件存在一个字节数组中
+            byte[] buff = byteArrayOutputStream.toByteArray();
+            byteArrayOutputStream.close();
+            // 将图片的字节数组进行BASE64编码
+
+            String pstr = new String(Base64.encodeToString(buff, Base64.DEFAULT));
+            return pstr;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    //图片裁剪
     public void startPhotoZoom(Uri uri) {
 
         Intent intent = new Intent("com.android.camera.action.CROP");
