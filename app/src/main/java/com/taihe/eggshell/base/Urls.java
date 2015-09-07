@@ -6,7 +6,6 @@ public class Urls {
 
     //正式
     public static final String BASE_HYR_MOBILE_URL = "http://ceshi.tiahel.com/eggker/interface/index.php";
-
     //测试
 //    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.120/eggker/interface";
 
