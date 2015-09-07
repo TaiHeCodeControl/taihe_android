@@ -14,14 +14,17 @@ import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.CompanyDetailAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.MyListView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -48,6 +51,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
     private ImageView img_company_detail_logo;
     private ScrollView scrollView;
     private MyListView jobsListView;
+    private LoadingProgressDialog loading;
     private boolean isMore = false;
     private List<JobInfo> jobInfos = new ArrayList<JobInfo>();
     private String mid,uid;
@@ -88,12 +92,6 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
         super.initData();
         initTitle("名企详情");
 
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.scrollTo(0,0);
-            }
-        });
         Intent intent = getIntent();
         mid = intent.getStringExtra("id");
         uid = intent.getStringExtra("uid");
@@ -110,11 +108,25 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
                 }
             }
         });
-        getData();
+        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+            getData();
+        }else{
+            ToastUtils.show(mContext,R.string.check_network);
+        }
+
         jobsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+            }
+        });
+
+        loading = new LoadingProgressDialog(mContext,"正在请求...");
+
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0,0);
             }
         });
 
@@ -166,6 +178,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object obj) {//返回值
+                loading.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
 //                    Log.e("data", jsonObject.toString());
@@ -214,6 +227,13 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
                             ex.printStackTrace();
                         }
                         // Log.e("data",data);
+
+                        scrollView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                scrollView.scrollTo(0,0);
+                            }
+                        });
                     } else {
                         //String msg = jsonObject.getString("message");
 //                        ToastUtils.show(getActivity(), "网络连接异常");
@@ -227,6 +247,8 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
+                loading.dismiss();
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"网络错误");
 //                    String err = new String(volleyError.networkResponse.data);
 //                    volleyError.networkResponse.statusCode;
             }
