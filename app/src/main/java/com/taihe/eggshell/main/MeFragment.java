@@ -160,6 +160,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
 
                 dialog.dismiss();
+
+                logout();//退出登录
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
                 Intent intent = new Intent(mContext, MainActivity.class);
                 startActivity(intent);
@@ -172,6 +174,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         dialog.getLeftButton().setText("以后再说");
         dialog.getRightButton().setText("确认退出");
     }
+
+
+
+
 
     private void initImageLoad() {
         mQueue = Volley.newRequestQueue(mContext);
@@ -191,19 +197,17 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
             rl_logout.setVisibility(View.GONE);
         } else {
-            //
+
+            // 加载头像
+            if (user.getImage() != null) {
+                imageLoader.get(user.getImage(), ImageLoader.getImageListener(
+                        circleiv_mine_icon, R.drawable.touxiang,
+                        R.drawable.touxiang));
+            }
 
             LoadingDialog = new LoadingProgressDialog(mContext, getResources().getString(
                     R.string.submitcertificate_string_wait_dialog));
 
-            if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-                LoadingDialog.show();
-
-                getHeadImage();
-
-            } else {
-                ToastUtils.show(mContext, R.string.check_network);
-            }
 
             String phoneNum = user.getPhoneNumber();
             Log.i("PHONeNUM", phoneNum);
@@ -216,67 +220,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             //
         }
 
-
-    }
-
-    //获取头像
-    private void getHeadImage() {
-
-        Response.Listener listener = new Response.Listener() {
-            @Override
-            public void onResponse(Object o) {
-                LoadingDialog.dismiss();
-                try {
-                    Log.v(TAG, (String) o);
-
-                    JSONObject jsonObject = new JSONObject((String) o);
-                    int code = jsonObject.getInt("code");
-                    System.out.println("code=========" + code);
-
-                    if (code == 0) {
-                        String imagePath = jsonObject.getString("data");
-                        if(imagePath != null){
-                            imageLoader.get(imagePath, ImageLoader.getImageListener(
-                                    circleiv_mine_icon, R.drawable.touxiang,
-                                    R.drawable.touxiang));
-                        }
-//
-//// 加载头像
-//                        if (user.getImage() != null) {
-//                            imageLoader.get(user.getImage(), ImageLoader.getImageListener(
-//                                    iv_head, R.drawable.head_default,
-//                                    R.drawable.head_default));
-//                        }
-
-                    } else {
-                        ToastUtils.show(mContext, "获取详情信息失败");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                LoadingDialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("GetImage:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
-            }
-        };
-
-        Map<String, String> param = new HashMap<String, String>();
-        int userId = user.getId();
-        param.put("uid", userId + "");
-        RequestUtils.createRequest(mContext, "", "http://195.198.1.211/eggker/interface/basicdata/gethead", true, param, true, listener, errorListener);
 
     }
 
@@ -531,7 +474,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
     /**
      * 弹出的popWin关闭的事件，主要是为了将背景透明度改回来
      *
@@ -764,6 +706,58 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         intent.putExtra("return-data", true);
 
         startActivityForResult(intent, PHOTORESOULT);
+
+    }
+
+
+
+
+    //退出登录
+    private void logout() {
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                LoadingDialog.dismiss();
+                try {
+                    Log.v(TAG, (String) o);
+
+                    JSONObject jsonObject = new JSONObject((String) o);
+                    int code = jsonObject.getInt("code");
+                    System.out.println("code=========" + code);
+
+                    if (code == 0) {
+
+
+                    } else {
+                        ToastUtils.show(mContext, "获取详情信息失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                LoadingDialog.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("LogOut:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
+            }
+        };
+
+        Map<String, String> param = new HashMap<String, String>();
+        int userId = user.getId();
+        param.put("uid", userId + "");
+        RequestUtils.createRequest(mContext, "", "http://195.198.1.211/eggker/interface/basicdata/gethead", true, param, true, listener, errorListener);
 
     }
 }
