@@ -144,6 +144,7 @@ public class Act_MeetingInfo extends BaseActivity {
                                 vMode.setEndtime(j2.optString("endtime").toString());
                                 list.add(vMode);
                             }
+                            meetingView.setVisibility(View.VISIBLE);
                             playAdapter.setPlayData(list,1);
                             meetingView.setAdapter(playAdapter);
                             if(list.size()==0){
@@ -154,6 +155,9 @@ public class Act_MeetingInfo extends BaseActivity {
                         }
                         // Log.e("data",data);
                     } else {
+                        if(list.size()==0) {
+                            meetingView.setVisibility(View.GONE);
+                        }
                         //String msg = jsonObject.getString("message");
 //                        ToastUtils.show(mContext, "网络连接异常");
                     }

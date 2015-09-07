@@ -152,16 +152,21 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                                 vMode.setEndtime(j2.optString("endtime").toString());
                                 list.add(vMode);
                             }
+                            playView.setVisibility(View.VISIBLE);
                             playAdapter.setPlayData(list,type);
                             playView.setAdapter(playAdapter);
                             if(list.size()==0){
                                 playView.removeAllViews();
                             }
+
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }
                        // Log.e("data",data);
                     } else {
+                        if(list.size()==0) {
+                            playView.setVisibility(View.GONE);
+                        }
                         //String msg = jsonObject.getString("message");
 //                        ToastUtils.show(getActivity(), "网络连接异常");
                     }
