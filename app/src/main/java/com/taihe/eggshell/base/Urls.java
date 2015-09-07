@@ -4,11 +4,9 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 
 public class Urls {
 
-    public static final String BaseURL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";
-    //测试
-    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.120/eggker/interface";//测试服务器
     //正式
 //    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";// 正式服务器
+    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.120/eggker/interface";//测试服务器
 
     public static final String getMopHostUrl() {
         return PrefUtils.getStringPreference(EggshellApplication.getApplication()
@@ -20,21 +18,21 @@ public class Urls {
      * *****************************************************************
      */
 //
-//    public static final String METHOD_LOGIN = "http://195.198.1.211/eggker/interface/login";//登录
+    public static final String METHOD_REGIST = BASE_HYR_MOBILE_URL+"/register";//注册
+    public static final String FEEDBACK_URL = "/Feedback/index";//意见反馈
+    public static final String METHOD_REGIST_GETCODE = BASE_HYR_MOBILE_URL+"/register/chTelphone";//注册获取验证码
+
 //    public static final String METHOD_REGIST_LOGOUT = "http://195.198.1.211/eggker/interface/login/loginout";//退出登录
 //    public static final String METHOD_BASIC = "http://195.198.1.211/eggker/interface/basicdata";//基本资料
 //    public static final String METHOD_UPLOAD_IMAGE = "http://195.198.1.211/eggker/interface/basicdata/head";//上传头像
 
     public static final String METHOD_LOGIN = BASE_HYR_MOBILE_URL + "/login";//登录
     public static final String METHOD_REGIST_LOGOUT = BASE_HYR_MOBILE_URL + "/login/loginout";//退出登录
-    public static final String METHOD_BASIC = BASE_HYR_MOBILE_URL + "/basicdata";//基本资料
-    public static final String METHOD_UPLOAD_IMAGE = BASE_HYR_MOBILE_URL + "/basicdata/head";//上传头像
 
-    public static final String METHOD_REGIST = BASE_HYR_MOBILE_URL + "/register";//注册
-    public static final String METHOD_REGIST_GETCODE = BASE_HYR_MOBILE_URL + "/register/chTelphone";//注册获取验证码
-
-    public static final String METHOD_BASIC_SAVE = BASE_HYR_MOBILE_URL + "/basicdata/add_basicdata";//保存修改的基本资料
-
+    public static final String METHOD_BASIC = BASE_HYR_MOBILE_URL+"/basicdata";//基本资料
+//    public static final String METHOD_BASIC = BASE_HYR_MOBILE_URL+"/basicdata";//基本资料
+    public static final String METHOD_BASIC_SAVE = BASE_HYR_MOBILE_URL+"/basicdata/add_basicdata";//保存修改的基本资料
+    public static final String METHOD_UPLOAD_IMAGE = BASE_HYR_MOBILE_URL+"/basicdata/head";//上传头像
 
     public static final String METHOD_GET_CODE = "/login/send_code";//获取验证码
     public static final String METHOD_RESET_PASSWORD = "/login/update_pwd";//重置密码
@@ -47,10 +45,12 @@ public class Urls {
     public static final String METHOD_JOB_LIST_COLLECT_DELETE = BASE_HYR_MOBILE_URL + "/Position/delcollectlist";//删除收藏职位
     public static final String METHOD_JOB_LIST_POST_DELETE = BASE_HYR_MOBILE_URL + "/Position/delgetPosition";//删除申请职位
 
-    public static final String METHOD_JOB_DETAIL = BASE_HYR_MOBILE_URL + "/Position/details";//职位详情
 
-    public static final String METHOD_JOB_COLLECT = BASE_HYR_MOBILE_URL + "/Position/collect";//职位收藏
-    public static final String METHOD_JOB_POST = BASE_HYR_MOBILE_URL + "/Position/getPosition";//申请职位
+//    public static final String METHOD_JOB_DETAIL = BASE_HYR_MOBILE_URL+"/Position/details";//职位详情
+    public static final String METHOD_JOB_DETAIL = BASE_HYR_MOBILE_URL+"/Position/details";//职位详情
+    public static final String METHOD_JOB_COLLECT = BASE_HYR_MOBILE_URL+"/Position/collect";//职位收藏
+//    public static final String METHOD_JOB_COLLECT = BASE_HYR_MOBILE_URL+"/Position/collect";//职位收藏
+    public static final String METHOD_JOB_POST = BASE_HYR_MOBILE_URL+"/Position/getPosition";//申请职位
 
     public static final String METHOD_STATIC_DATA_JOB = "/Position/except_select";//职位列表筛选
     public static final String METHOD_STATIC_DATA = "/Except/except_select";//静态数据

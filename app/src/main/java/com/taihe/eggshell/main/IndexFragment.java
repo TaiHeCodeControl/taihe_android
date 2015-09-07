@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Constants;
 import com.taihe.eggshell.base.EggshellApplication;
@@ -185,7 +187,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(mContext, (position % imageViews.size()) + "", Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, (position % imageViews.size()) + "", Toast.LENGTH_LONG).show();
             }
 
         });
@@ -355,28 +357,31 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
                     if(code == 0) {
-//                        JSONObject data = jsonObject.getJSONObject("data");
+                        final String url = jsonObject.getString("data");
+                        String message = jsonObject.getString("message");
+                        Gson gson = new Gson();
+                        List<String> meglist = gson.fromJson(message,new TypeToken<List<String>>(){}.getType());
+
+                        dialog = new UpdateDialog(mContext,meglist,new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        },new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ToastUtils.show(mContext,"更新");
+                                dialog.dismiss();
+                                updateAPK(url);
+                            }
+                        });
+
+                        dialog.getTitleText().setText("发现新版本");
+                        dialog.show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                dialog = new UpdateDialog(mContext,new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                },new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ToastUtils.show(mContext,"更新");
-                        dialog.dismiss();
-//                        updateAPK();
-                    }
-                });
-
-                dialog.getTitleText().setText("发现新版本"+APKUtils.getVersionName());
-//                dialog.show();
             }
         };
 
@@ -393,7 +398,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_UPDATE, true, params, true, listener, errorListener);
     }
 
-    private void updateAPK(){
+    private void updateAPK(String url){
 
         final ProgressDialog progressDialog = new ProgressDialog(mContext);
         progressDialog.show();
@@ -413,7 +418,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             public void error() {
                 ToastUtils.show(mContext,"错误");
             }
-        }).downloadInBackground(Constants.UPDATE_APK_URL);
+        }).downloadInBackground(url);
     }
 
     private void getCompanyLogo(){

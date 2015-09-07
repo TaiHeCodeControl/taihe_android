@@ -86,7 +86,7 @@ public class FeedbackActivity extends BaseActivity{
 
         content = et_feedcontext.getText().toString().trim();
         qq = et_qq.getText().toString().trim();
-        email = et_email.toString().trim();
+        email = et_email.getText().toString().trim();
         version = UpdateUtils.getVersion(getApplicationContext());
 
         if (TextUtils.isEmpty(content)) {
@@ -111,7 +111,7 @@ public class FeedbackActivity extends BaseActivity{
 
         Map<String,String> dataParams = new HashMap<String, String>();
         dataParams.put("uid","" + EggshellApplication.getApplication().getUser().getId());
-//        dataParams.put("source","3");
+        dataParams.put("source","3");
 //        dataParams.put("version",version);
         dataParams.put("opinion",content);
         dataParams.put("email",email);
@@ -158,8 +158,7 @@ public class FeedbackActivity extends BaseActivity{
             }
         };
 
-        String method = "/feedback";
-        RequestUtils.createRequest(mContext, "http://195.198.1.211/eggker/interface",method,true,dataParams,true,listener,errorListener);
+        RequestUtils.createRequest(mContext, Urls.BASE_HYR_MOBILE_URL,Urls.FEEDBACK_URL,true,dataParams,true,listener,errorListener);
     }
 
     TextWatcher tw = new TextWatcher() {

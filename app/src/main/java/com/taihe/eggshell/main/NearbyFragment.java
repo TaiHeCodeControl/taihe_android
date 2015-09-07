@@ -22,6 +22,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.adapter.PlayAdapter;
 import com.taihe.eggshell.main.mode.PlayInfoMode;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
@@ -42,7 +43,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
     private ImageView img_around_tag1,img_around_tag2;
     int limit=2,page=1,type=1;
     List<PlayInfoMode> list;
-
+    private LoadingProgressDialog loading;
 	@Override
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_around, null) ;
@@ -68,6 +69,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         list = new ArrayList<PlayInfoMode>();
         lin_around_tag1.setOnClickListener(this);
         lin_around_tag2.setOnClickListener(this);
+        loading = new LoadingProgressDialog(getActivity(),"正在请求...");
         playView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
@@ -127,6 +129,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Object obj) {//返回值
                 try {
+                    loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
@@ -179,11 +182,13 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
+                loading.dismiss();
+                ToastUtils.show(getActivity(), volleyError.networkResponse.statusCode + "网络错误");
 //                    String err = new String(volleyError.networkResponse.data);
 //                    volleyError.networkResponse.statusCode;
             }
         };
-
+        loading.show();
         Map<String,String> map = new HashMap<String,String>();
         map.put("type",""+type);
         map.put("limit",""+limit);

@@ -18,6 +18,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.adapter.PlayAdapter;
 import com.taihe.eggshell.main.mode.PlayInfoMode;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONArray;
@@ -41,7 +42,7 @@ public class Act_MeetingInfo extends BaseActivity {
     private PlayAdapter playAdapter;
     int limit=2,page=1,type=1;
     List<PlayInfoMode> list;
-
+    private LoadingProgressDialog loading;
     private Context mContext;
 
     @Override
@@ -63,6 +64,7 @@ public class Act_MeetingInfo extends BaseActivity {
     public void initData(){
         super.initData();
         initTitle("信息台");
+        loading = new LoadingProgressDialog(mContext,"正在请求...");
         meetingView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         playAdapter = new PlayAdapter(mContext);
         list = new ArrayList<PlayInfoMode>();
@@ -120,6 +122,7 @@ public class Act_MeetingInfo extends BaseActivity {
             @Override
             public void onResponse(Object obj) {//返回值
                 try {
+                    loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
@@ -170,9 +173,12 @@ public class Act_MeetingInfo extends BaseActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
+                loading.dismiss();
+                ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "网络错误");
             }
         };
 
+        loading.show();
         Map<String,String> map = new HashMap<String,String>();
         map.put("type",""+type);
         map.put("limit",""+limit);
