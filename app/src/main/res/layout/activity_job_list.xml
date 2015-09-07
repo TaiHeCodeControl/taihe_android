@@ -18,7 +18,7 @@
         android:layout_height="40dp"
         android:layout_marginRight="10dp"
         android:gravity="center_vertical|end"
-        android:text="15条记录"
+        android:text="0条记录"
         android:textColor="@color/font_color_black"
         android:textSize="@dimen/font_size_26" />
 

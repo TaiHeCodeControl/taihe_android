@@ -72,7 +72,7 @@ public class MyCollectActivity extends BaseActivity {
     //选中条数的统计
     private int selectSize = 0;
     private int postednum = 0;
-    private TextView tv_collect_num;
+    private TextView tv_collect_num;//收藏个数
     private StringBuilder sb = new StringBuilder();
 
     private User user;
@@ -245,7 +245,9 @@ public class MyCollectActivity extends BaseActivity {
                         mHandler.sendMessage(msg);
 
 
-                    } else {
+                    }else if (code == 1){
+                        ToastUtils.show(mContext,"没有收藏的职位");
+                    }else{
                         ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {

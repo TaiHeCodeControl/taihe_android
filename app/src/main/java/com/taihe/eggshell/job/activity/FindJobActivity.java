@@ -97,6 +97,12 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
+                case 1002:
+                    ToastUtils.show(mContext, "没有职位");
+                    adapter = new AllJobAdapter(mContext, jobInfos, true);
+                    list_job_all.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    break;
                 case 1001:
                     List<JobInfo> joblist = (List<JobInfo>) msg.obj;
                     jobInfos.addAll(joblist);
@@ -276,7 +282,10 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                         jobListHandler.sendMessage(msg);
 
                     } else if (code == 4001) {
-                        ToastUtils.show(mContext, "没有职位了");
+                        Message msg = new Message();
+                        msg.what = 1002;
+                        jobListHandler.sendMessage(msg);
+
                     } else {
                         ToastUtils.show(mContext, "获取失败");
                     }

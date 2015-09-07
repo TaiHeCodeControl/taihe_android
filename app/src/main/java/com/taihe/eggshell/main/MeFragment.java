@@ -192,6 +192,13 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         //初始化选择图片popWindow
         initImageSelect();
         user = EggshellApplication.getApplication().getUser();
+        String userImagePath = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "ImagePath", "");
+        // 加载头像
+
+        imageLoader.get(userImagePath, ImageLoader.getImageListener(
+                circleiv_mine_icon, R.drawable.touxiang,
+                R.drawable.touxiang));
+
 
         if (null == user) {
 
@@ -201,15 +208,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             rl_logout.setVisibility(View.GONE);
         } else {
 
-            String userImagePath = user.getResume_photo();
-            // 加载头像
-            if (user.getResume_photo() != null) {
-                imageLoader.get(user.getResume_photo(), ImageLoader.getImageListener(
-                        circleiv_mine_icon, R.drawable.touxiang,
-                        R.drawable.touxiang));
+
+            if (!TextUtils.isEmpty(user.getResume_photo())) {
+
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "ImagePath", user.getResume_photo());
             }
-
-
             //手机号
             String phoneNum = user.getPhoneNumber();
             Log.i("PHONeNUM", phoneNum);
@@ -223,9 +226,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
 
             String qianming = user.getDescription();
-            if(TextUtils.isEmpty(qianming)){
+            if (TextUtils.isEmpty(qianming)) {
                 tv_qianming.setText("学习是一种信仰！");
-            }else{
+            } else {
 
                 tv_qianming.setText(qianming);
             }
@@ -233,22 +236,22 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             String postNum = user.getFavjob();
             String collectNum = user.getUsejob();
             String resumeNun = user.getExpect();
-            if(TextUtils.isEmpty(postNum)){
+            if (TextUtils.isEmpty(postNum)) {
 
                 tv_mine_postnum.setText("(" + 0 + ")");
-            }else{
+            } else {
                 tv_mine_postnum.setText("(" + postNum + ")");
             }
 
-            if(TextUtils.isEmpty(collectNum)){
-                tv_mine_collectnum.setText("(" +0+ ")");
-            }else{
-                tv_mine_collectnum.setText("(" +collectNum+ ")");
+            if (TextUtils.isEmpty(collectNum)) {
+                tv_mine_collectnum.setText("(" + 0 + ")");
+            } else {
+                tv_mine_collectnum.setText("(" + collectNum + ")");
             }
 
-            if(TextUtils.isEmpty(resumeNun)){
+            if (TextUtils.isEmpty(resumeNun)) {
                 tv_mine_jianlinum.setText("(" + 0 + ")");
-            }else{
+            } else {
                 tv_mine_jianlinum.setText("(" + resumeNun + ")");
             }
 
@@ -390,25 +393,26 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Object o) {
 
-                Log.v(TAG,(String)o);
+                Log.v(TAG, (String) o);
                 try {
-                    JSONObject jsonObject = new JSONObject((String)o);
+                    JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");
-                    if(code == 0) {
+                    if (code == 0) {
                         final String url = jsonObject.getString("data");
                         String message = jsonObject.getString("message");
                         Gson gson = new Gson();
-                        List<String> meglist = gson.fromJson(message,new TypeToken<List<String>>(){}.getType());
+                        List<String> meglist = gson.fromJson(message, new TypeToken<List<String>>() {
+                        }.getType());
 
-                        updateDialog = new UpdateDialog(mContext,meglist,new View.OnClickListener() {
+                        updateDialog = new UpdateDialog(mContext, meglist, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 updateDialog.dismiss();
                             }
-                        },new View.OnClickListener() {
+                        }, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.show(mContext,"更新");
+                                ToastUtils.show(mContext, "更新");
                                 updateDialog.dismiss();
                                 updateAPK(url);
                             }
@@ -682,7 +686,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         ToastUtils.show(mContext, "头像上传成功");
                         user.setResume_photo(imagePath);
                         String ss = user.getResume_photo();
-                        Log.i("ss",ss);
+                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "ImagePath", imagePath);
+                        Log.i("ss", ss);
                         imageLoader.get(imagePath, ImageLoader.getImageListener(
                                 circleiv_mine_icon, R.drawable.touxiang,
                                 R.drawable.touxiang));
@@ -790,6 +795,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     if (code == 0) {//退出成功
 
                         ToastUtils.show(mContext, "成功退出");
+                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "ImagePath", "");
                         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
                         Intent intent = new Intent(mContext, MainActivity.class);
                         startActivity(intent);

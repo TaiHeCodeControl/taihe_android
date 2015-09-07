@@ -250,8 +250,9 @@ public class MyPostActivity extends BaseActivity {
                         msg.obj = joblist;
                         mHandler.sendMessage(msg);
 
-
-                    } else {
+                    } else if (code == 1){
+                        ToastUtils.show(mContext,"没有已投递的职位");
+                    }else{
                         ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {

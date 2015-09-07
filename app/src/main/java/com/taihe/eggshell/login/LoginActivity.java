@@ -173,7 +173,7 @@ public class LoginActivity extends BaseActivity {
                         resume_photo = data.optString("resume_photo");
                         usejob = data.optString("usejob");
                         uid = data.optString("uid");
-
+                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "ImagePath", resume_photo);
                         //登录成功保存用户登录信息
                         loginSuccess();
 
