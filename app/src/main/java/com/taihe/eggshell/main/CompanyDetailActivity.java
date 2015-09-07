@@ -109,6 +109,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
             }
         });
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+            loading.show();
             getData();
         }else{
             ToastUtils.show(mContext,R.string.check_network);

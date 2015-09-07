@@ -26,33 +26,15 @@
         android:textColor="@color/black"
         android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:id="@+id/id_biref_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:text="1、哈哈哈哈"
-        android:textSize="15sp"
-        android:textColor="@color/font_color_gray"
-        android:layout_gravity="center_horizontal"/>
-    <TextView
-        android:id="@+id/id_brief_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:text="2、年后收到"
-        android:textSize="15sp"
-        android:textColor="@color/font_color_gray"
-        android:layout_gravity="center_horizontal"/>
-    <TextView
-        android:id="@+id/id_brief_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:text="3、了深刻的肌肤"
-        android:textSize="15sp"
-        android:textColor="@color/font_color_gray"
-        android:layout_gravity="center_horizontal"/>
+        <ListView
+            android:id="@+id/id_version_list"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:scrollbars="none"
+            android:dividerHeight="0dp"
+            android:divider="@color/white"
+            android:background="@color/white"
+            android:listSelector="@color/white"></ListView>
 
     <View
         android:layout_width="match_parent"

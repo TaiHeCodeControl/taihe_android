@@ -341,8 +341,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.rl_mine_checkupdate://检查更新
-//                getVersionCode();
-                ToastUtils.show(mContext, "当前已是最新版本");
+                getVersionCode();
                 break;
 
             case R.id.circleiv_mine_icon:
@@ -390,22 +389,36 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Object o) {
 
-                updateDialog = new UpdateDialog(mContext, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        updateDialog.dismiss();
-                    }
-                }, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ToastUtils.show(mContext, "更新");
-                        updateDialog.dismiss();
-//                        updateAPK();
-                    }
-                });
+                Log.v(TAG,(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0) {
+                        final String url = jsonObject.getString("data");
+                        String message = jsonObject.getString("message");
+                        Gson gson = new Gson();
+                        List<String> meglist = gson.fromJson(message,new TypeToken<List<String>>(){}.getType());
 
-                updateDialog.getTitleText().setText("发现新版本" + APKUtils.getVersionName());
-                updateDialog.show();
+                        updateDialog = new UpdateDialog(mContext,meglist,new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                updateDialog.dismiss();
+                            }
+                        },new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ToastUtils.show(mContext,"更新");
+                                updateDialog.dismiss();
+                                updateAPK(url);
+                            }
+                        });
+
+                        updateDialog.getTitleText().setText("发现新版本");
+                        updateDialog.show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -419,10 +432,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Map<String, String> params = new HashMap<String, String>();
         params.put("vercode", APKUtils.getVersionCode() + "");
 
-        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), "method", true, params, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_UPDATE, true, params, true, listener, errorListener);
     }
 
-    private void updateAPK() {
+    private void updateAPK(String url) {
 
         final ProgressDialog progressDialog = new ProgressDialog(mContext);
         progressDialog.show();
@@ -442,7 +455,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             public void error() {
                 ToastUtils.show(mContext, "错误");
             }
-        }).downloadInBackground("");
+        }).downloadInBackground(url);
     }
 
 
