@@ -307,9 +307,9 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
 
     private void getIndustrys(){
         String[] type = new String[]{"互联网","金融行业","广告媒体"};
-        String[] internet = new String[]{"网站策划","网站编辑","运营专员","SEO专员","UI设计","美工",};
-        String[] bank = new String[]{"银行柜员","业务专员","清算员","操盘手","会计","出纳员",};
-        String[] media = new String[]{"客户专员","创意专员","企业策划","规划设计","地产销售","测绘测量",};
+        String[] internet = new String[]{"网站策划","网站编辑","运营专员","SEM专员","UI设计","美工",};
+        String[] bank = new String[]{"银行柜员","业务专员","清算员","资金专员","会计","出纳员",};
+        String[] media = new String[]{"文案策划","企业策划","活动策划","客户专员","创意专员","媒介专员",};
         int[] img = new int[]{R.drawable.hulianwang,R.drawable.bank,R.drawable.media};
         industryList = new ArrayList<Industry>();
         for(int i=0;i<3;i++){
