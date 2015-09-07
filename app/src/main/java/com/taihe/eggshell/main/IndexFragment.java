@@ -185,7 +185,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(mContext, (position % imageViews.size()) + "", Toast.LENGTH_LONG).show();
+//                Toast.makeText(mContext, (position % imageViews.size()) + "", Toast.LENGTH_LONG).show();
             }
 
         });

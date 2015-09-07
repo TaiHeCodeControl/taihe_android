@@ -38,6 +38,7 @@
             android:layout_toRightOf="@+id/tv_jobsearch_city"
             android:layout_toLeftOf="@+id/btn_jobsearch_search"
             android:hint="数据分析经理"
+            android:singleLine="true"
             android:textSize="15dp"
             android:textColor="@color/black"
             android:textColorHint="#C8C8C8"
