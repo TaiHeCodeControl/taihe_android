@@ -162,10 +162,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 dialog.dismiss();
 
                 logout();//退出登录
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
-                Intent intent = new Intent(mContext, MainActivity.class);
-                startActivity(intent);
-                ((MainActivity) getActivity()).radio_index.performClick();
+
 
             }
         });
@@ -228,8 +225,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.tv_mine_logintxt://登录
 
+                EggshellApplication.getApplication().setLoginTag("meFragment");
                 intent = new Intent(mContext, LoginActivity.class);
-                intent.putExtra("LoginTag", "meFragment");
                 startActivity(intent);
                 break;
             case R.id.rl_mine_editziliao://基本资料
@@ -238,8 +235,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     intent = new Intent(mContext, MyBasicActivity.class);
                     startActivity(intent);
                 } else {
+                    EggshellApplication.getApplication().setLoginTag("myBasic");
                     intent = new Intent(mContext, LoginActivity.class);
-                    intent.putExtra("LoginTag", "myBasic");
                     startActivity(intent);
                 }
 
@@ -250,7 +247,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent);
                 } else {
                     intent = new Intent(mContext, LoginActivity.class);
-                    intent.putExtra("LoginTag", "myPost");
+                    EggshellApplication.getApplication().setLoginTag("myPost");
                     startActivity(intent);
                 }
 
@@ -262,7 +259,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent);
                 } else {
                     intent = new Intent(mContext, LoginActivity.class);
-                    intent.putExtra("LoginTag", "myCollect");
+                    EggshellApplication.getApplication().setLoginTag("myCollect");
                     startActivity(intent);
                 }
 
@@ -274,7 +271,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent);
                 } else {
                     intent = new Intent(mContext, LoginActivity.class);
-                    intent.putExtra("LoginTag", "myResume");
+                    EggshellApplication.getApplication().setLoginTag("myResume");
                     startActivity(intent);
                 }
                 break;
@@ -718,7 +715,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-                LoadingDialog.dismiss();
+//                LoadingDialog.dismiss();
                 try {
                     Log.v(TAG, (String) o);
 
@@ -726,11 +723,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     int code = jsonObject.getInt("code");
                     System.out.println("code=========" + code);
 
-                    if (code == 0) {
+                    if (code == 0) {//退出成功
 
-
+                        ToastUtils.show(mContext,"成功退出");
+                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
+                        Intent intent = new Intent(mContext, MainActivity.class);
+                        startActivity(intent);
+                        ((MainActivity) getActivity()).radio_index.performClick();
                     } else {
-                        ToastUtils.show(mContext, "获取详情信息失败");
+                        ToastUtils.show(mContext, "退出失败");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -741,7 +742,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                LoadingDialog.dismiss();
+//                LoadingDialog.dismiss();
                 try {
                     if (null != volleyError.networkResponse.data) {
                         Log.v("LogOut:", new String(volleyError.networkResponse.data));
@@ -757,7 +758,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Map<String, String> param = new HashMap<String, String>();
         int userId = user.getId();
         param.put("uid", userId + "");
-        RequestUtils.createRequest(mContext, "", "http://195.198.1.211/eggker/interface/basicdata/gethead", true, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, Urls.METHOD_REGIST_LOGOUT, "", true, param, true, listener, errorListener);
 
     }
 }

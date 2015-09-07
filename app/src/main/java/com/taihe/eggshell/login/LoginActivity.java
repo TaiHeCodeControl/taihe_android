@@ -13,6 +13,7 @@ import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.google.gson.Gson;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.FormatUtils;
 
@@ -24,6 +25,7 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.FindJobActivity;
+import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
 import com.taihe.eggshell.main.entity.User;
@@ -55,6 +57,11 @@ public class LoginActivity extends BaseActivity {
     private String userphone;
     private String password;
     private String telphone;
+    //expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
+    private String expect;
+    private String favjob;
+    private String resume_photo;
+    private String usejob;
     private String uid;
     private Intent intent;
     private String loginTag;
@@ -111,14 +118,6 @@ public class LoginActivity extends BaseActivity {
 
     private void goBack() {
 
-//        Intent intents = getIntent();
-//        loginTag = intents.getStringExtra("LoginTag");
-//        if (loginTag.equals("logout")) {
-//            intent = new Intent(LoginActivity.this, MainActivity.class);
-//            intent.putExtra("MeFragment", "MeFragment");
-//            startActivity(intent);
-//        }
-
         LoginActivity.this.finish();
 
         //overridePendingTransition(int enterAnim, int exitAnim)
@@ -162,8 +161,12 @@ public class LoginActivity extends BaseActivity {
                         ToastUtils.show(mContext, "登录成功");
                         JSONObject data = jsonObject.getJSONObject("data");
 
-                        telphone = data.getString("telphone");
-                        uid = data.getString("uid");
+                        telphone = data.optString("telphone");
+                        expect = data.optString("expect");
+                        favjob = data.optString("favjob");
+                        resume_photo = data.optString("resume_photo");
+                        usejob = data.optString("usejob");
+                        uid = data.optString("uid");
 
                         //登录成功保存用户登录信息
                         loginSuccess();
@@ -197,14 +200,18 @@ public class LoginActivity extends BaseActivity {
         Map<String, String> datas = new HashMap<String, String>();
         datas.put("id", uid);
         datas.put("phoneNumber", telphone);
+
         Gson gson = new Gson();
         // 将对象转换为JSON数据
         String data = gson.toJson(datas);
         PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, data);
 
         //登录成功后显示界面的判断
-        Intent intents = getIntent();
-        loginTag = intents.getStringExtra("LoginTag");
+
+       loginTag = EggshellApplication.getApplication().getLoginTag();
+//
+
+//        loginTag = intents.getStringExtra("LoginTag");
         if (loginTag.equals("meFragment")) {
 
             intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -224,6 +231,14 @@ public class LoginActivity extends BaseActivity {
             startActivity(intent);
         }else if(loginTag.equals("findJob")){
             intent = new Intent(LoginActivity.this, FindJobActivity.class);
+            startActivity(intent);
+        }else if(loginTag.equals("jobDetail")){
+            Intent intents = getIntent();
+            int  jobId = intents.getIntExtra("ID", 1);
+            String uid = intents.getStringExtra("UID");
+            intent = new Intent(LoginActivity.this, JobDetailActivity.class);
+            intent.putExtra("ID",jobId);
+            intent.putExtra("UID",uid);
             startActivity(intent);
         }
         LoginActivity.this.finish();

@@ -22,6 +22,9 @@ public class Urls {
     public static final String METHOD_REGIST = BASE_HYR_MOBILE_URL+"/register";//注册
     public static final String METHOD_REGIST_GETCODE = BASE_HYR_MOBILE_URL+"/register/chTelphone";//注册获取验证码
 
+    public static final String METHOD_REGIST_LOGOUT = "http://195.198.1.211/eggker/interface/login/loginout";//退出登录
+
+
 
     public static final String METHOD_BASIC = BASE_HYR_MOBILE_URL+"/basicdata";//基本资料
     public static final String METHOD_BASIC_SAVE = BASE_HYR_MOBILE_URL+"/basicdata/add_basicdata";//保存修改的基本资料
@@ -38,7 +41,10 @@ public class Urls {
     public static final String METHOD_JOB_LIST_POST = BASE_HYR_MOBILE_URL+"/Position/getPositionlist";//申请职位列表
     public static final String METHOD_JOB_LIST_COLLECT_DELETE = BASE_HYR_MOBILE_URL+"/Position/delcollectlist";//删除收藏职位
     public static final String METHOD_JOB_LIST_POST_DELETE = BASE_HYR_MOBILE_URL+"/Position/delgetPosition";//删除申请职位
-    public static final String METHOD_JOB_DETAIL = BASE_HYR_MOBILE_URL+"/Position/details";//职位详情
+
+//    public static final String METHOD_JOB_DETAIL = BASE_HYR_MOBILE_URL+"/Position/details";//职位详情
+    public static final String METHOD_JOB_DETAIL = "http://195.198.1.84/eggker/interface/Position/details";//职位详情
+
     public static final String METHOD_JOB_COLLECT = BASE_HYR_MOBILE_URL+"/Position/collect";//职位收藏
     public static final String METHOD_JOB_POST = BASE_HYR_MOBILE_URL+"/Position/getPosition";//申请职位
 
