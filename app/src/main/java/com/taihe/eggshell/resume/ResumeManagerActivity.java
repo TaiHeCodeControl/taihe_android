@@ -139,6 +139,7 @@ public class ResumeManagerActivity extends BaseActivity{
                 break;
             case R.id.id_use:
                 if(isSelected){
+                    EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
                     ToastUtils.show(mContext,"你使用了简历:"+resume.getName());
                 }else{
                     ToastUtils.show(mContext,"请选择简历");

@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.google.gson.Gson;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
@@ -32,6 +33,7 @@ import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,6 +55,7 @@ public class LoginActivity extends BaseActivity {
     private TextView tv_forgetPassword;
     private TextView tv_regist;
     private LinearLayout lin_back;
+    private LoadingProgressDialog loading;
 
     private String userphone;
     private String password;
@@ -92,7 +95,7 @@ public class LoginActivity extends BaseActivity {
         super.initData();
 
         initTitle("登录");
-
+        loading = new LoadingProgressDialog(mContext,"正在请求...");
     }
 
     @Override
@@ -102,7 +105,13 @@ public class LoginActivity extends BaseActivity {
                 goBack();
                 break;
             case R.id.btn_login_login:
-                login();
+                if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+                    loading.show();
+                    login();
+                }else{
+                    ToastUtils.show(mContext,R.string.check_network);
+                }
+
                 break;
             case R.id.tv_login_forgetpassword:
                 intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
@@ -148,6 +157,7 @@ public class LoginActivity extends BaseActivity {
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object obj) {//返回值
+                loading.dismiss();
                 try {
                     Log.v(TAG, (String) obj);
                     JSONObject jsonObject = new JSONObject((String) obj);
@@ -182,6 +192,8 @@ public class LoginActivity extends BaseActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
+                loading.dismiss();
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"网络错误");
 //                    String err = new String(volleyError.networkResponse.data);
 //                    volleyError.networkResponse.statusCode;
             }
