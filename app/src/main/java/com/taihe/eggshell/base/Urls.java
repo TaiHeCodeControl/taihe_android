@@ -6,7 +6,7 @@ public class Urls {
 
     //正式
 //    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.122:8066/eggker/phpyun/api/admin/index.php?";// 正式服务器
-    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.120/eggker/interface";//测试服务器
+    public static final String BASE_HYR_MOBILE_URL = "http://ceshi.tiahel.com/eggker/interface/index.php";//测试服务器
 
     public static final String getMopHostUrl() {
 		return PrefUtils.getStringPreference(EggshellApplication.getApplication()
