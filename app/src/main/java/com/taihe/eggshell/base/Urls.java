@@ -21,6 +21,7 @@ public class Urls {
 //    public static final String METHOD_LOGIN = "http://195.198.1.211/eggker/interface/login";//登录
     public static final String METHOD_LOGIN = BASE_HYR_MOBILE_URL+"/login";//登录
     public static final String METHOD_REGIST = BASE_HYR_MOBILE_URL+"/register";//注册
+    public static final String FEEDBACK_URL = "/Feedback/index";//意见反馈
     public static final String METHOD_REGIST_GETCODE = BASE_HYR_MOBILE_URL+"/register/chTelphone";//注册获取验证码
 
     public static final String METHOD_REGIST_LOGOUT = BASE_HYR_MOBILE_URL+"/login/loginout";//退出登录
