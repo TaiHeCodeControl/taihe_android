@@ -203,7 +203,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
             public void onResponse(Object o) {
                 LoadingDialog.dismiss();
                 try {
-                    Log.v("HHH:", (String) o);
+                    Log.v("MyBasicActivity:", (String) o);
                     MyBasicInfo myBasicInfo = GsonUtils
                             .changeGsonToBean(o.toString(),
                                     MyBasicInfo.class);

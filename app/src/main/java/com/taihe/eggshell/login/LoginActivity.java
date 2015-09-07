@@ -135,11 +135,7 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.show(getApplicationContext(), R.string.login_login_phone_toast);
             return;
         }
-
-//        loginSuccess();
         loginFromNet();
-
-
     }
 
     private void loginFromNet() {
@@ -200,6 +196,10 @@ public class LoginActivity extends BaseActivity {
         Map<String, String> datas = new HashMap<String, String>();
         datas.put("id", uid);
         datas.put("phoneNumber", telphone);
+        datas.put("expect",expect);
+        datas.put("favjob",favjob);
+        datas.put("resume_photo",resume_photo);
+        datas.put("usejob",usejob);
 
         Gson gson = new Gson();
         // 将对象转换为JSON数据

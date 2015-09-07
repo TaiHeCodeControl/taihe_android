@@ -11,15 +11,15 @@ public class MyBasicInfo {
 
     public BasicBean data;
 
-    public class BasicBean{
-        public String address;
-        public String description;
-        public String email;
-        public String name;
-        public String reg_date;
-        public String sex;
-        public String telphone;
-        public String uid;
+        public class BasicBean{
+            public String address;
+            public String description;
+            public String email;
+            public String name;
+            public String reg_date;
+            public String sex;
+            public String telphone;
+            public String uid;
     }
 
 

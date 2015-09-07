@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -63,6 +64,7 @@ import com.taihe.eggshell.widget.UpdateDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -89,12 +91,13 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout rl_mine_checkupdate, rl_mine_feedback, rl_setting, rl_editZiliao, rl_post, rl_collect, rl_jianli, rl_about, rl_hezuo, rl_logout;
     private TextView tv_logintxt, tv_version, tv_username, tv_qianming, tv_postNum, tv_collectNum, jianliNum;
     private LinearLayout ll_userinfo;
+    private TextView tv_mine_postnum, tv_mine_collectnum, tv_mine_jianlinum;
 
     private CircleImageView circleiv_mine_icon;
     private Intent intent;
     private User user;
     private int UserId;
-    private LoadingProgressDialog LoadingDialog;
+    private LoadingProgressDialog uploadImageDialog;
 
     // Image-Load配置
     private RequestQueue mQueue;
@@ -136,6 +139,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         tv_username = (TextView) rootView.findViewById(R.id.tv_mine_username);
 
 
+        tv_qianming = (TextView) rootView.findViewById(R.id.tv_mine_qianming);
+        tv_mine_postnum = (TextView) rootView.findViewById(R.id.tv_mine_postnum);
+        tv_mine_collectnum = (TextView) rootView.findViewById(R.id.tv_mine_collectnum);
+        tv_mine_jianlinum = (TextView) rootView.findViewById(R.id.tv_mine_jianlinum);
+
+
         rl_mine_checkupdate.setOnClickListener(this);
         rl_mine_feedback.setOnClickListener(this);
         tv_logintxt.setOnClickListener(this);
@@ -173,9 +182,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
-
-
     private void initImageLoad() {
         mQueue = Volley.newRequestQueue(mContext);
         imageLoader = new ImageLoader(mQueue, new BitmapCache());
@@ -196,24 +202,61 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         } else {
 
             // 加载头像
-            if (user.getImage() != null) {
-                imageLoader.get(user.getImage(), ImageLoader.getImageListener(
+            if (user.getResume_photo() != null) {
+                imageLoader.get(user.getResume_photo(), ImageLoader.getImageListener(
                         circleiv_mine_icon, R.drawable.touxiang,
                         R.drawable.touxiang));
             }
 
-            LoadingDialog = new LoadingProgressDialog(mContext, getResources().getString(
-                    R.string.submitcertificate_string_wait_dialog));
 
-
+            //手机号
             String phoneNum = user.getPhoneNumber();
             Log.i("PHONeNUM", phoneNum);
+
             String nick = user.getName();
+            if (nick != null) {//昵称
+                tv_username.setText(nick);
+            } else {
+                tv_username.setText(phoneNum);
+            }
+
+
+            String qianming = user.getDescription();
+            if(TextUtils.isEmpty(qianming)){
+                tv_qianming.setText("学习是一种信仰！");
+            }else{
+
+                tv_qianming.setText(qianming);
+            }
+            //expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
+            String postNum = user.getFavjob();
+            String collectNum = user.getUsejob();
+            String resumeNun = user.getExpect();
+            if(TextUtils.isEmpty(postNum)){
+
+                tv_mine_postnum.setText("(" + 0 + ")");
+            }else{
+                tv_mine_postnum.setText("(" + postNum + ")");
+            }
+
+            if(TextUtils.isEmpty(collectNum)){
+                tv_mine_collectnum.setText("(" +0+ ")");
+            }else{
+                tv_mine_collectnum.setText("(" +collectNum+ ")");
+            }
+
+            if(TextUtils.isEmpty(resumeNun)){
+                tv_mine_jianlinum.setText("(" + 0 + ")");
+            }else{
+                tv_mine_jianlinum.setText("(" + resumeNun + ")");
+            }
+
+
             tv_logintxt.setVisibility(View.GONE);
             ll_userinfo.setVisibility(View.VISIBLE);
 
             rl_logout.setVisibility(View.VISIBLE);
-            tv_username.setText(phoneNum);
+
             //
         }
 
@@ -587,9 +630,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 //门店图片显示==================================================
                 circleiv_mine_icon.setImageBitmap(lastPhoto);
                 if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-                    LoadingDialog = new LoadingProgressDialog(mContext, getResources().getString(
-                            R.string.submitcertificate_string_wait_dialog));
-                    dialog.show();
+                    uploadImageDialog = new LoadingProgressDialog(mContext, "头像上传中...");
+                    uploadImageDialog.show();
                     String ImageString = getPstr(filePath);
                     //上传门店图片
                     upLoadImage(ImageString);
@@ -611,15 +653,21 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-                LoadingDialog.dismiss();
+                uploadImageDialog.dismiss();
                 try {
-                    Log.v("HHH:", (String) o);
+                    Log.v("upLoadImage:", (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {//图片上传成功
                         ToastUtils.show(mContext, "头像上传成功");
+
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String imagePath = data.getString("resume_photo");
+                        user.setResume_photo(imagePath);
+                        String ss = user.getResume_photo();
+                        Log.i("ss",ss);
                     } else {
                         ToastUtils.show(mContext, "上传失败");
                     }
@@ -632,7 +680,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                LoadingDialog.dismiss();
+                uploadImageDialog.dismiss();
                 try {
                     if (null != volleyError.networkResponse.data) {
                         Log.v("Image:", new String(volleyError.networkResponse.data));
@@ -707,8 +755,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
-
     //退出登录
     private void logout() {
 
@@ -725,7 +771,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
                     if (code == 0) {//退出成功
 
-                        ToastUtils.show(mContext,"成功退出");
+                        ToastUtils.show(mContext, "成功退出");
                         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
                         Intent intent = new Intent(mContext, MainActivity.class);
                         startActivity(intent);

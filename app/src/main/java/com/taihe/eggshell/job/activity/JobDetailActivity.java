@@ -82,6 +82,15 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
+                case 201://收藏
+                    String data = (String) msg.obj;
+                    ToastUtils.show(mContext, data);
+                    if (data.equals("收藏成功")) {//收藏
+                        collectionImg.setImageResource(R.drawable.shoucang2);//已收藏图标
+                    } else {// 取消收藏
+                        collectionImg.setImageResource(R.drawable.shoucang);
+                    }
+                    break;
                 case 101://职位详情
                     try {
                         JobDetailInfo jobDetaiInfo = (JobDetailInfo) msg.obj;
@@ -118,10 +127,10 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         }
 
                         collect = jobDetaiInfo.data.iscollect;
-                        if(collect.equals(1)){//已收藏收藏
+                        if (collect.equals("1")) {//已收藏收藏
 
                             collectionImg.setImageResource(R.drawable.shoucang2);
-                        }else{//未收藏
+                        } else {//未收藏
                             collectionImg.setImageResource(R.drawable.shoucang);
                         }
                         //职位详情信息填充
@@ -218,6 +227,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
         jobDescListView = (MyListView) findViewById(R.id.id_job_desc);
         moreJobListView = (MyListView) findViewById(R.id.id_other_position);
+        moreJobListView.setFocusable(false);
         applyButton = (Button) findViewById(R.id.id_apply_button);
 
         applyButton.setOnClickListener(this);
@@ -339,14 +349,14 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 break;
             case R.id.id_other:
 
-                if(user == null){
+                if (user == null) {
                     EggshellApplication.getApplication().setLoginTag("jobDetail");
                     Intent intent = new Intent(JobDetailActivity.this, LoginActivity.class);
 //                    intent.putExtra("LoginTag","jobDetail");
-                    intent.putExtra("ID",jobId);
-                    intent.putExtra("UID",uid);
+                    intent.putExtra("ID", jobId);
+                    intent.putExtra("UID", uid);
                     startActivity(intent);
-                }else{
+                } else {
                     //收藏&取消收藏
                     collectPosition();
                 }
@@ -366,13 +376,12 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                     int code = jsonObject.getInt("code");
                     System.out.println("collectCode=========" + code);
                     if (code == 0) {
-                        ToastUtils.show(mContext, "职位收藏成功");
-                        collectionImg.setImageResource(R.drawable.shoucang2);//已收藏图标
-                        isCollect = true;
-                    } else if (code == 1) {
-                        collectionImg.setImageResource(R.drawable.shoucang);
-                        ToastUtils.show(mContext, "取消收藏");
-                        isCollect = false;
+                        String data = jsonObject.getString("data");
+                        Message msg = new Message();
+                        msg.obj = data;
+                        msg.what = 201;
+                        jobDetailHandler.sendMessage(msg);
+
                     } else {
                         ToastUtils.show(mContext, "获取失败");
                     }
@@ -453,7 +462,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         Map<String, String> param = new HashMap<String, String>();
         param.put("id", uid + "");//职位列表中的uid
         param.put("pid", jobId + "");
-        param.put("uid",UserId + "");
+        param.put("uid", UserId + "");
         Log.i("ID", jobId + "");
         Log.i("UID", uid);
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);

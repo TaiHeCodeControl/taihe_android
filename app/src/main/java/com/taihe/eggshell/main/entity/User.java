@@ -10,11 +10,11 @@ public class User {
     private String phoneNumber;
     private String token;
     private String resumeid;
-    private String image;//用户头像
+    private String description;
      //expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
     private String expect;
     private String favjob;
-    private String resume_photo;
+    private String resume_photo;//用户头像
     private String usejob;
 
     public User() {
@@ -24,6 +24,14 @@ public class User {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getExpect() {
@@ -58,13 +66,6 @@ public class User {
         this.usejob = usejob;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public int getId() {
         return id;
