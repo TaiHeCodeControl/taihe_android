@@ -10,8 +10,7 @@ public class Urls {
     public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.120/eggker/interface";//测试服务器
 
     public static final String getMopHostUrl() {
-		return PrefUtils.getStringPreference(EggshellApplication.getApplication()
-                        .getApplicationContext(), PrefUtils.CONFIG,
+		return PrefUtils.getStringPreference(EggshellApplication.getApplication().getApplicationContext(), PrefUtils.CONFIG,
                 PrefUtils.KEY_APP_REQUEST_URL, BASE_HYR_MOBILE_URL);
 	}
 
