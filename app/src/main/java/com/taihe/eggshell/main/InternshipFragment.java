@@ -22,6 +22,7 @@ import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.httprequest.MSCJSONObject;
 import com.taihe.eggshell.base.utils.httprequest.MSCOpenUrlRunnable;
 import com.taihe.eggshell.base.utils.httprequest.MSCPostUrlParam;
@@ -30,6 +31,7 @@ import com.taihe.eggshell.main.adapter.VideoAdapterHead;
 import com.taihe.eggshell.main.mode.PlayInfoMode;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.taihe.eggshell.main.adapter.VideoAdapterGride;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.MyGridView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -54,6 +56,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     List<VideoInfoMode> listInfo,listTopInfo;
     int pagesize=4,page=1;
     private ProgressBar progressBar;
+    private LoadingProgressDialog loading;
     Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -95,7 +98,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         lin_fragment_video.setVisibility(View.GONE);
         Display dw = getActivity().getWindowManager().getDefaultDisplay();
         viewwidth1 = dw.getWidth();
-
+        loading = new LoadingProgressDialog(getActivity(),"正在请求...");
         // 滑动加载
         scroll_hotnotes.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -142,6 +145,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
             @Override
             public void onResponse(Object obj) {//返回值
                 try {
+                    loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
@@ -210,11 +214,14 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
+                loading.dismiss();
+                ToastUtils.show(getActivity(), volleyError.networkResponse.statusCode + "网络错误");
 //                    String err = new String(volleyError.networkResponse.data);
 //                    volleyError.networkResponse.statusCode;
             }
         };
 
+        loading.show();
         Map<String,String> map = new HashMap<String,String>();
 //        map.put("pagesize",""+pagesize);
 //        map.put("page",""+page);
