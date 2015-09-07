@@ -10,6 +10,8 @@ public class User {
     private String phoneNumber;
     private String token;
     private String resumeid;
+    private String image;//用户头像
+
 
     public User() {
     }
@@ -18,6 +20,14 @@ public class User {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getId() {

@@ -28,6 +28,7 @@ import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.GsonUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.job.bean.JobDetailInfo;
+import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
@@ -72,6 +73,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private TextView tv_jobdetail_description;
 
     private int UserId;
+    private User user;
 
     private Handler jobDetailHandler = new Handler() {
         @Override
@@ -178,8 +180,13 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         super.initView();
         mContext = this;
         jobInfos = new ArrayList<JobInfo>();
-        UserId = EggshellApplication.getApplication().getUser().getId();
-        Log.i("USERID", UserId + "");
+
+        user = EggshellApplication.getApplication().getUser();
+        if (user != null) {
+            UserId = EggshellApplication.getApplication().getUser().getId();
+            Log.i("USERID", UserId + "");
+        }
+
 
         intent = getIntent();
         jobId = intent.getIntExtra("ID", 1);
@@ -351,11 +358,11 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         ToastUtils.show(mContext, "职位收藏成功");
                         collectionImg.setImageResource(R.drawable.shoucang2);//已收藏图标
                         isCollect = true;
-                    }else if(code == 1){
+                    } else if (code == 1) {
                         collectionImg.setImageResource(R.drawable.shoucang);
                         ToastUtils.show(mContext, "取消收藏");
                         isCollect = false;
-                    }else {
+                    } else {
                         ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (Exception e) {
