@@ -12,6 +12,7 @@ import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
@@ -97,7 +98,7 @@ public class ResumeBookActivity extends BaseActivity{
                         loading.show();
                         getInsertData();
                     }else{
-                        ToastUtils.show(mContext,R.string.check_network);
+                        ToastUtils.show(mContext, R.string.check_network);
                     }
 
                 }
@@ -168,7 +169,7 @@ public class ResumeBookActivity extends BaseActivity{
         };
 
         Map<String,String> map = new HashMap<String,String>();
-        map.put("uid", "65");//EggshellApplication.getApplication().getUser().getId()+""
+        map.put("uid", EggshellApplication.getApplication().getUser().getId()+"");//EggshellApplication.getApplication().getUser().getId()+""
         map.put("eid",eid.getRid()+"");
         map.put("name",techName);
         map.put("sdate",years);

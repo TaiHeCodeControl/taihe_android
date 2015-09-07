@@ -12,6 +12,7 @@ import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
@@ -102,7 +103,7 @@ public class ResumeTechActivity extends BaseActivity{
                         TextUtils.isEmpty(techType) || TextUtils.isEmpty(years)){
                     ToastUtils.show(mContext,"请填写完整");
                 }else{
-                    params.put("uid","65");
+                    params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
                     params.put("eid",resume.getRid()+"");
                     params.put("name",techName);
                     params.put("skill",id_skill+"");

@@ -211,6 +211,7 @@
                 android:listSelector="@color/white"
                 ptr:ptrAnimationStyle="flip"
                 android:divider="@color/white"
+                android:dividerHeight="0.5dp"
                 android:background="@color/white">
             </com.taihe.eggshell.widget.MyListView>
 
