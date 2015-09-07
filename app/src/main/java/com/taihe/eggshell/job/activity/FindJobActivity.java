@@ -87,7 +87,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     private String Longitude = "";
     private String Latitude = "";
     private String keyword = "";
-    private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "";
+    private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "",cityid = "",fbtime = "";
 
     private User user;
     private int userId;
@@ -97,6 +97,12 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
+                case 1002:
+                    ToastUtils.show(mContext, "没有职位");
+                    adapter = new AllJobAdapter(mContext, jobInfos, true);
+                    list_job_all.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    break;
                 case 1001:
                     List<JobInfo> joblist = (List<JobInfo>) msg.obj;
                     jobInfos.addAll(joblist);
@@ -148,6 +154,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         edu = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "edu", "");
         exp = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "exp", "");
         type = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "type", "");
+        cityid = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"cityid","");
+        fbtime = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"fbtime","");
 
         user = EggshellApplication.getApplication().getUser();
 
@@ -274,7 +282,10 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                         jobListHandler.sendMessage(msg);
 
                     } else if (code == 4001) {
-                        ToastUtils.show(mContext, "没有职位了");
+                        Message msg = new Message();
+                        msg.what = 1002;
+                        jobListHandler.sendMessage(msg);
+
                     } else {
                         ToastUtils.show(mContext, "获取失败");
                     }
@@ -318,6 +329,9 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("edu", edu);
         param.put("exp", exp);//工作年限
         param.put("type", type);//工作性质
+        param.put("fbtime ", fbtime);//工作性质
+        param.put("cityid", cityid);//工作性质
+
 
 
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
@@ -456,8 +470,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
         String jobIds = sb.toString();
         Map<String, String> param = new HashMap<String, String>();
-        //TODO
-        param.put("uid", 6 + "");//UserID       userId
+//        param.put("uid", 6 + "");//UserID       userId
+        param.put("uid", userId + "");//UserID       userId
         param.put("job_id", jobIds);
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
 
@@ -478,5 +492,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "edu", "");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", "");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "");
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "cityid", "");//工作城市
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", "");//发布时间
     }
 }

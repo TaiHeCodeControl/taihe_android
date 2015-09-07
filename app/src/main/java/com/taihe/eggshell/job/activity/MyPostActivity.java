@@ -26,6 +26,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
@@ -33,6 +34,7 @@ import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.MainActivity;
+import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 
@@ -73,6 +75,8 @@ public class MyPostActivity extends BaseActivity {
     public int selectSize = 0;
 
 
+    private int userId;
+    private User user;
 
     private TextView tv_collect_num;
     private StringBuilder sb = new StringBuilder();
@@ -140,6 +144,10 @@ public class MyPostActivity extends BaseActivity {
 
     public void initListView() {
 
+        user = EggshellApplication.getApplication().getUser();
+        if(user != null){
+            userId = user.getId();
+        }
         jobInfos = new ArrayList<JobInfo>();
         tv_collect_num = (TextView) findViewById(R.id.tv_collect_num);//申请职位记录
         list_job_all = (PullToRefreshGridView) findViewById(R.id.list_job);
@@ -154,7 +162,7 @@ public class MyPostActivity extends BaseActivity {
                 JobInfo job = jobInfos.get(position);
                 Intent intent = new Intent(mContext, JobDetailActivity.class);
                 intent.putExtra("ID", job.getJob_Id());
-                intent.putExtra("UID", job.getUid());
+                intent.putExtra("UID", job.getCom_id());
                 Log.i("ID", job.getJob_Id() + "");
                 startActivity(intent);
             }
@@ -226,7 +234,7 @@ public class MyPostActivity extends BaseActivity {
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v("HHH:", (String) o);
+                    Log.v("Post:", (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
@@ -242,8 +250,9 @@ public class MyPostActivity extends BaseActivity {
                         msg.obj = joblist;
                         mHandler.sendMessage(msg);
 
-
-                    } else {
+                    } else if (code == 1){
+                        ToastUtils.show(mContext,"没有已投递的职位");
+                    }else{
                         ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {
@@ -272,7 +281,8 @@ public class MyPostActivity extends BaseActivity {
         Map<String, String> param = new HashMap<String, String>();
         param.put("page", page + "");
         param.put("limit", pageSize + "");
-        param.put("uid", 6 + "");//UserID
+//        param.put("uid", 6 + "");//UserID
+        param.put("uid", userId + "");//UserID
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_POST, false, param, true, listener, errorListener);
 
     }
@@ -301,7 +311,8 @@ public class MyPostActivity extends BaseActivity {
 
                 break;
             case R.id.btn_alljob_shenqing://投递selectSize条职位，其中已投递条数需要从服务器获取
-                JobApplyDialogUtil.isApplyJob(mContext, selectSize, 2);
+//                JobApplyDialogUtil.isApplyJob(mContext, selectSize, 2);
+                //申请职位
                 postJob();
                 break;
         }
@@ -314,7 +325,7 @@ public class MyPostActivity extends BaseActivity {
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v("HHH:", (String) o);
+                    Log.v("DELETEPOST:", (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
@@ -368,12 +379,77 @@ public class MyPostActivity extends BaseActivity {
         this.finish();
     }
 
-    public void postJob() {
-        for (JobInfo jobInfo : jobInfos) {
-//            System.out.println(jobInfo.getId()+"======"+jobInfo.isChecked());
 
+    //申请职位
+    public void postJob() {
+
+
+        StringBuilder sb = new StringBuilder();//选择的职位
+        for (JobInfo jobInfo : jobInfos) {
+            System.out.println(jobInfo.getJob_Id() + "======" + jobInfo.isChecked());
+            if (jobInfo.isChecked()) {
+                sb.append(jobInfo.getJob_Id());
+                sb.append(",");
+            }
         }
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                dialog.dismiss();
+                try {
+                    Log.v(TAG, (String) o);
+
+                    JSONObject jsonObject = new JSONObject((String) o);
+
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if (code == 0) {//申请成功
+
+                        int sucNum = Integer.valueOf(jsonObject.getString("data"));
+                        postednum = selectSize - sucNum;
+
+                        JobApplyDialogUtil.isApplyJob(mContext, selectSize, postednum);
+
+                    } else if (code == 1) {//请先创建简历
+                        ToastUtils.show(mContext, "请先创建简历");
+
+                    } else if (code == 2) {//不能重复申请
+
+                        ToastUtils.show(mContext, "你选的职位已申请过，一周内不能重复申请");
+                    } else {
+                        ToastUtils.show(mContext, "申请失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("jobPost:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
+            }
+        };
+
+        String jobIds = sb.toString();
+        Map<String, String> param = new HashMap<String, String>();
+//        param.put("uid", 6 + "");//UserID       userId
+        param.put("uid", userId + "");//UserID       userId
+        param.put("job_id", jobIds);
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
+
     }
+
 
     //监听返回按钮
     @Override

@@ -3,6 +3,7 @@ package com.taihe.eggshell.main;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,7 +76,6 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
         upordown.setOnClickListener(this);
 //        jobsListView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         jobAdapter = new CompanyDetailAdapter(mContext);
-        loading = new LoadingProgressDialog(mContext,"正在请求...");
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_foot_bottom,null);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +91,8 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
     public void initData() {
         super.initData();
         initTitle("名企详情");
+
+        loading = new LoadingProgressDialog(mContext,"正在请求...");
 
         Intent intent = getIntent();
         mid = intent.getStringExtra("id");
@@ -121,8 +123,6 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
 
             }
         });
-
-        loading = new LoadingProgressDialog(mContext,"正在请求...");
 
         scrollView.post(new Runnable() {
             @Override
@@ -181,9 +181,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
             public void onResponse(Object obj) {//返回值
                 loading.dismiss();
                 try {
-                    loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
-//                    Log.e("data", jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         String data = jsonObject.getString("data");
@@ -205,7 +203,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
                             if(strTemp.contains("null")){
                                 companyBrief.setText("");
                             }else {
-                                companyBrief.setText(strTemp);
+                                companyBrief.setText(Html.fromHtml(strTemp));
                             }
                             JobInfo vMode;
                             for(int i=0;i<j1.length();i++){
@@ -255,7 +253,6 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
 //                    volleyError.networkResponse.statusCode;
             }
         };
-        loading.show();
         Map<String,String> map = new HashMap<String,String>();
         map.put("mid",mid);
         map.put("uid","128");//uid
