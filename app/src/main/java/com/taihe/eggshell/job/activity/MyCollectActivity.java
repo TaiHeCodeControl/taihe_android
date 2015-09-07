@@ -26,12 +26,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.main.MainActivity;
+import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 
@@ -72,6 +74,9 @@ public class MyCollectActivity extends BaseActivity {
     private int postednum = 0;
     private TextView tv_collect_num;
     private StringBuilder sb = new StringBuilder();
+
+    private User user;
+    private String userId = "";
 
     private Handler mHandler = new Handler() {
         @Override
@@ -133,7 +138,10 @@ public class MyCollectActivity extends BaseActivity {
 
 
     public void initListView() {
-
+        user = EggshellApplication.getApplication().getUser();
+        if(user!=null){
+            userId = user.getId() + "";
+        }
         jobInfos = new ArrayList<JobInfo>();
         tv_collect_num = (TextView) findViewById(R.id.tv_collect_num);//收藏职位记录
         list_job_all = (PullToRefreshGridView) findViewById(R.id.list_job);
@@ -148,7 +156,7 @@ public class MyCollectActivity extends BaseActivity {
                 JobInfo job = jobInfos.get(position);
                 Intent intent = new Intent(mContext, JobDetailActivity.class);
                 intent.putExtra("ID", job.getJob_Id());
-                intent.putExtra("UID", job.getUid());
+                intent.putExtra("UID", job.getCom_id());
                 Log.i("ID", job.getJob_Id() + "");
                 startActivity(intent);
             }
@@ -220,7 +228,7 @@ public class MyCollectActivity extends BaseActivity {
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v("HHH:", (String) o);
+                    Log.v("MyCollect:", (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
@@ -266,7 +274,8 @@ public class MyCollectActivity extends BaseActivity {
         Map<String, String> param = new HashMap<String, String>();
         param.put("page", page + "");
         param.put("limit", pageSize + "");
-        param.put("uid", 141 + "");//UserID
+//        param.put("uid", 141 + "");//UserID
+        param.put("uid",userId);
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_COLLECT, false, param, true, listener, errorListener);
 
     }

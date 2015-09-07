@@ -72,6 +72,8 @@
                     android:layout_marginLeft="5dp"
                     android:textColor="@color/font_color_black"
                     android:id="@+id/txt_meetinglist_mb_addr"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textSize="14sp" />
             </LinearLayout>
             <LinearLayout
@@ -92,6 +94,8 @@
                     android:layout_marginLeft="6dp"
                     android:textColor="@color/font_color_black"
                     android:id="@+id/txt_meetinglist_mb_zbf"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textSize="14sp" />
             </LinearLayout>
         </RelativeLayout>

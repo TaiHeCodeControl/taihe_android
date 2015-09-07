@@ -142,6 +142,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                         PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"keyword",word);
                         Intent intent = new Intent(JobSearchActivity.this,FindJobActivity.class);
                         startActivity(intent);
+                        this.finish();
                     } else {
                         ToastUtils.show(mContext, "请输入内容");
                     }
