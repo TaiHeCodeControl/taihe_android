@@ -94,7 +94,7 @@ public class CompanyDetailAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, JobDetailActivity.class);
-                intent.putExtra("ID",jobInfo.getId());
+                intent.putExtra("ID",jobInfo.getJob_Id());
                 intent.putExtra("UID",jobInfo.getUid().toString());
                 context.startActivity(intent);
             }
