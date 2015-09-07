@@ -15,14 +15,17 @@ public class JobDetailInfo {
 
         public String address;
         public String cj_description;
+        public String cj_id;
         public String cj_name;
         public String com_id;
         public String com_name;
         public String content;
         public String datetime;
+        public String edate;
         public String edu;
         public String exp;
         public String hy;
+        public String iscollect;
         public String id;
         public String job_id;
         public String job_name;

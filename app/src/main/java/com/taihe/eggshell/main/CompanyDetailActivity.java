@@ -3,6 +3,7 @@ package com.taihe.eggshell.main;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -167,9 +168,11 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
             public void onResponse(Object obj) {//返回值
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
+//                    Log.e("data", jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         String data = jsonObject.getString("data");
+                        data = data.replace("list\":null","list\":[]");
                         try{
                             JSONObject jso = new JSONObject(data);
                             JSONObject jo = jso.getJSONObject("details");

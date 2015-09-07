@@ -28,6 +28,8 @@ import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.GsonUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.job.bean.JobDetailInfo;
+import com.taihe.eggshell.login.LoginActivity;
+import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
@@ -68,10 +70,12 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private Intent intent;
 
     private String address, cj_name, com_name, content, description, edu, exp, hy, id, lastupdate, linkmail, linktel, mun, name, provinceid, salary, type;
+    private String collect;
 
     private TextView tv_jobdetail_description;
 
     private int UserId;
+    private User user;
 
     private Handler jobDetailHandler = new Handler() {
         @Override
@@ -113,11 +117,18 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                             type = "不限";
                         }
 
+                        collect = jobDetaiInfo.data.iscollect;
+                        if(collect.equals(1)){//已收藏收藏
+
+                            collectionImg.setImageResource(R.drawable.shoucang2);
+                        }else{//未收藏
+                            collectionImg.setImageResource(R.drawable.shoucang);
+                        }
                         //职位详情信息填充
                         jobtitle.setText(cj_name);
                         jobcompany.setText(com_name);
                         jobstart.setText(lastupdate);//发布时间
-                        jobend.setText(lastupdate);//有效时间
+                        jobend.setText(jobDetaiInfo.data.edate);//有效时间
                         jobtype.setText(type);//工作性质
                         joblevel.setText(edu);//学历要求
                         jobyears.setText(exp);//工作年限
@@ -178,8 +189,13 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         super.initView();
         mContext = this;
         jobInfos = new ArrayList<JobInfo>();
-        UserId = EggshellApplication.getApplication().getUser().getId();
-        Log.i("USERID", UserId + "");
+
+        user = EggshellApplication.getApplication().getUser();
+        if (user != null) {
+            UserId = EggshellApplication.getApplication().getUser().getId();
+            Log.i("USERID", UserId + "");
+        }
+
 
         intent = getIntent();
         jobId = intent.getIntExtra("ID", 1);
@@ -322,16 +338,18 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 tv_shouqizhiwei.setVisibility(View.GONE);
                 break;
             case R.id.id_other:
-//                if (isCollect) {
-//                    collectionImg.setImageResource(R.drawable.shoucang);
-//                    ToastUtils.show(mContext, "取消收藏");
-//                    isCollect = false;
-//                } else {
-//                    //收藏职位
-//                    collectPosition();
-//
-//                }
-                collectPosition();
+
+                if(user == null){
+                    EggshellApplication.getApplication().setLoginTag("jobDetail");
+                    Intent intent = new Intent(JobDetailActivity.this, LoginActivity.class);
+//                    intent.putExtra("LoginTag","jobDetail");
+                    intent.putExtra("ID",jobId);
+                    intent.putExtra("UID",uid);
+                    startActivity(intent);
+                }else{
+                    //收藏&取消收藏
+                    collectPosition();
+                }
                 break;
         }
     }
@@ -351,11 +369,11 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         ToastUtils.show(mContext, "职位收藏成功");
                         collectionImg.setImageResource(R.drawable.shoucang2);//已收藏图标
                         isCollect = true;
-                    }else if(code == 1){
+                    } else if (code == 1) {
                         collectionImg.setImageResource(R.drawable.shoucang);
                         ToastUtils.show(mContext, "取消收藏");
                         isCollect = false;
-                    }else {
+                    } else {
                         ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (Exception e) {
@@ -433,10 +451,11 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         };
 
         Map<String, String> param = new HashMap<String, String>();
-        param.put("id", uid + "");
+        param.put("id", uid + "");//职位列表中的uid
         param.put("pid", jobId + "");
+        param.put("uid",UserId + "");
         Log.i("ID", jobId + "");
-        Log.i("UID", uid);//职位列表中的uid
+        Log.i("UID", uid);
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
 
     }

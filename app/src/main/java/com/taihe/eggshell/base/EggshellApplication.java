@@ -31,6 +31,9 @@ public class EggshellApplication extends Application {
     private User user;
     private File saveDir;
 
+    //
+    private String loginTag;
+
     public void onCreate() {
         eggApplication = this;
         super.onCreate();
@@ -114,7 +117,11 @@ public class EggshellApplication extends Application {
     }
 
 
+    public String getLoginTag() {
+        return loginTag;
+    }
 
-
-
+    public void setLoginTag(String loginTag) {
+        this.loginTag = loginTag;
+    }
 }

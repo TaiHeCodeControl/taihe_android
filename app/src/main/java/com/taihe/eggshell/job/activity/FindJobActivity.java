@@ -371,13 +371,11 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 break;
 
             case R.id.btn_alljob_shenqing:
-
-
                 //判断登录状态，
 
                 if (null == user) {//登录
+                    EggshellApplication.getApplication().setLoginTag("findJob");
                     intent = new Intent(mContext, LoginActivity.class);
-                    intent.putExtra("LoginTag", "findJob");
                     startActivity(intent);
                 } else {
                     userId = EggshellApplication.getApplication().getUser().getId();
@@ -468,6 +466,10 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onStop() {
         super.onStop();
+
+
+        //hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp
+        // 工作性质=>type
 
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword","");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");

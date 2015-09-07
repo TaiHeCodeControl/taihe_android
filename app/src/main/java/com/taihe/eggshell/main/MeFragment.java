@@ -25,8 +25,11 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.RequestQueue;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.network.http.toolbox.ImageLoader;
+import com.chinaway.framework.swordfish.network.http.toolbox.Volley;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -34,12 +37,15 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.APKUtils;
+import com.taihe.eggshell.base.utils.BitmapCache;
+import com.taihe.eggshell.base.utils.GsonUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.base.utils.UpdateUtils;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
+import com.taihe.eggshell.job.bean.JobDetailInfo;
 import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.entity.User;
@@ -90,11 +96,17 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private int UserId;
     private LoadingProgressDialog LoadingDialog;
 
+    // Image-Load配置
+    private RequestQueue mQueue;
+    private ImageLoader imageLoader;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mContext = getActivity();
         rootView = inflater.inflate(R.layout.fragment_me, null);
+        // 初始化Image-load
+        initImageLoad();
         return rootView;
     }
 
@@ -148,10 +160,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
 
                 dialog.dismiss();
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
-                Intent intent = new Intent(mContext, MainActivity.class);
-                startActivity(intent);
-                ((MainActivity) getActivity()).radio_index.performClick();
+
+                logout();//退出登录
+
 
             }
         });
@@ -159,6 +170,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         dialog.getTitleText().setText("确定退出当前账号吗？");
         dialog.getLeftButton().setText("以后再说");
         dialog.getRightButton().setText("确认退出");
+    }
+
+
+
+
+
+    private void initImageLoad() {
+        mQueue = Volley.newRequestQueue(mContext);
+        imageLoader = new ImageLoader(mQueue, new BitmapCache());
     }
 
     private void initView() {
@@ -174,6 +194,18 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
             rl_logout.setVisibility(View.GONE);
         } else {
+
+            // 加载头像
+            if (user.getImage() != null) {
+                imageLoader.get(user.getImage(), ImageLoader.getImageListener(
+                        circleiv_mine_icon, R.drawable.touxiang,
+                        R.drawable.touxiang));
+            }
+
+            LoadingDialog = new LoadingProgressDialog(mContext, getResources().getString(
+                    R.string.submitcertificate_string_wait_dialog));
+
+
             String phoneNum = user.getPhoneNumber();
             Log.i("PHONeNUM", phoneNum);
             String nick = user.getName();
@@ -182,6 +214,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
             rl_logout.setVisibility(View.VISIBLE);
             tv_username.setText(phoneNum);
+            //
         }
 
 
@@ -192,8 +225,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.tv_mine_logintxt://登录
 
+                EggshellApplication.getApplication().setLoginTag("meFragment");
                 intent = new Intent(mContext, LoginActivity.class);
-                intent.putExtra("LoginTag", "meFragment");
                 startActivity(intent);
                 break;
             case R.id.rl_mine_editziliao://基本资料
@@ -202,8 +235,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     intent = new Intent(mContext, MyBasicActivity.class);
                     startActivity(intent);
                 } else {
+                    EggshellApplication.getApplication().setLoginTag("myBasic");
                     intent = new Intent(mContext, LoginActivity.class);
-                    intent.putExtra("LoginTag", "myBasic");
                     startActivity(intent);
                 }
 
@@ -214,7 +247,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent);
                 } else {
                     intent = new Intent(mContext, LoginActivity.class);
-                    intent.putExtra("LoginTag", "myPost");
+                    EggshellApplication.getApplication().setLoginTag("myPost");
                     startActivity(intent);
                 }
 
@@ -226,7 +259,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent);
                 } else {
                     intent = new Intent(mContext, LoginActivity.class);
-                    intent.putExtra("LoginTag", "myCollect");
+                    EggshellApplication.getApplication().setLoginTag("myCollect");
                     startActivity(intent);
                 }
 
@@ -238,7 +271,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent);
                 } else {
                     intent = new Intent(mContext, LoginActivity.class);
-                    intent.putExtra("LoginTag", "myResume");
+                    EggshellApplication.getApplication().setLoginTag("myResume");
                     startActivity(intent);
                 }
                 break;
@@ -437,6 +470,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     }
 
+
     /**
      * 弹出的popWin关闭的事件，主要是为了将背景透明度改回来
      *
@@ -571,6 +605,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    //上传头像
     private void upLoadImage(String ImageString) {
 
         Response.Listener listener = new Response.Listener() {
@@ -584,9 +619,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {//图片上传成功
-
+                        ToastUtils.show(mContext, "头像上传成功");
                     } else {
-                        ToastUtils.show(mContext, "获取失败");
+                        ToastUtils.show(mContext, "上传失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -614,7 +649,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", UserId + "");
         param.put("photo", ImageString);
-//http://localhost/eggker/interface/basicdata/head  比传参数  uid =>uid   photo=>photo
+        //http://localhost/eggker/interface/basicdata/head  比传参数  uid =>uid   photo=>photo
         RequestUtils.createRequest(mContext, Urls.METHOD_UPLOAD_IMAGE, "", true, param, true, listener, errorListener);
 
     }
@@ -668,6 +703,62 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         intent.putExtra("return-data", true);
 
         startActivityForResult(intent, PHOTORESOULT);
+
+    }
+
+
+
+
+    //退出登录
+    private void logout() {
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+//                LoadingDialog.dismiss();
+                try {
+                    Log.v(TAG, (String) o);
+
+                    JSONObject jsonObject = new JSONObject((String) o);
+                    int code = jsonObject.getInt("code");
+                    System.out.println("code=========" + code);
+
+                    if (code == 0) {//退出成功
+
+                        ToastUtils.show(mContext,"成功退出");
+                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
+                        Intent intent = new Intent(mContext, MainActivity.class);
+                        startActivity(intent);
+                        ((MainActivity) getActivity()).radio_index.performClick();
+                    } else {
+                        ToastUtils.show(mContext, "退出失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+//                LoadingDialog.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("LogOut:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
+            }
+        };
+
+        Map<String, String> param = new HashMap<String, String>();
+        int userId = user.getId();
+        param.put("uid", userId + "");
+        RequestUtils.createRequest(mContext, Urls.METHOD_REGIST_LOGOUT, "", true, param, true, listener, errorListener);
 
     }
 }
