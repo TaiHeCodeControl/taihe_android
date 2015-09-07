@@ -8,6 +8,7 @@ public class JobInfo {
 
     private boolean isChecked;
 
+    private String com_id;
     private int job_id;
     private String job_name;
     private String provinceid;
@@ -23,6 +24,14 @@ public class JobInfo {
     public JobInfo(boolean isChecked, int job_id) {
         this.isChecked = isChecked;
         this.job_id = job_id;
+    }
+
+    public String getCom_id() {
+        return com_id;
+    }
+
+    public void setCom_id(String com_id) {
+        this.com_id = com_id;
     }
 
     public String getUid() {

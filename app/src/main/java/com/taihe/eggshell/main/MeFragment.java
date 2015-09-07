@@ -201,6 +201,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             rl_logout.setVisibility(View.GONE);
         } else {
 
+            String userImagePath = user.getResume_photo();
             // 加载头像
             if (user.getResume_photo() != null) {
                 imageLoader.get(user.getResume_photo(), ImageLoader.getImageListener(
@@ -627,13 +628,14 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     e.printStackTrace();
                 }
 
-                //门店图片显示==================================================
-                circleiv_mine_icon.setImageBitmap(lastPhoto);
+                //用户头像图片显示==================================================
+//                circleiv_mine_icon.setImageBitmap(lastPhoto);
+
                 if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
                     uploadImageDialog = new LoadingProgressDialog(mContext, "头像上传中...");
                     uploadImageDialog.show();
                     String ImageString = getPstr(filePath);
-                    //上传门店图片
+                    //上传用户图片
                     upLoadImage(ImageString);
                 } else {
                     ToastUtils.show(mContext, R.string.check_network);
@@ -661,13 +663,16 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {//图片上传成功
-                        ToastUtils.show(mContext, "头像上传成功");
-
                         JSONObject data = jsonObject.getJSONObject("data");
                         String imagePath = data.getString("resume_photo");
+
+                        ToastUtils.show(mContext, "头像上传成功");
                         user.setResume_photo(imagePath);
                         String ss = user.getResume_photo();
                         Log.i("ss",ss);
+                        imageLoader.get(imagePath, ImageLoader.getImageListener(
+                                circleiv_mine_icon, R.drawable.touxiang,
+                                R.drawable.touxiang));
                     } else {
                         ToastUtils.show(mContext, "上传失败");
                     }
