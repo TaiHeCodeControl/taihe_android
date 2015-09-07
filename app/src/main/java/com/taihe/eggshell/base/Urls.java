@@ -48,7 +48,7 @@ public class Urls {
     public static final String METHOD_JOB_COLLECT = BASE_HYR_MOBILE_URL+"/Position/collect";//职位收藏
     public static final String METHOD_JOB_POST = BASE_HYR_MOBILE_URL+"/Position/getPosition";//申请职位
 
-
+    public static final String METHOD_STATIC_DATA_JOB = "/Position/except_select";//职位列表筛选
     public static final String METHOD_STATIC_DATA = "/Except/except_select";//静态数据
     public static final String METHOD_CREATE_RESUME = "/Except/except";//创建简历
     public static final String METHOD_UPDATE = "/update";//版本更新

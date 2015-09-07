@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +17,10 @@ import android.widget.TextView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.PrefUtils;
+import com.taihe.eggshell.main.entity.CityBJ;
 import com.taihe.eggshell.main.entity.Industry;
+import com.taihe.eggshell.main.entity.StaticData;
+import com.taihe.eggshell.widget.CityDialog;
 
 /**
  * Created by huan on 2015/8/11.
@@ -31,6 +35,8 @@ public class JobFilterActivity extends BaseActivity {
     private EditText et_keyWord;
     private TextView tv_industry, tv_position, tv_jobcity, tv_salary, tv_edu, tv_jobyears, tv_jobtype, tv_pubtime;
     private Button btn_jobfilter_chaxun;
+    private StaticData result;
+    private CityDialog cityDialog;
 
     private LinearLayout lin_back;
 
@@ -43,7 +49,15 @@ public class JobFilterActivity extends BaseActivity {
     private static final int REQUEST_CODE_JOBTYPE = 106;
     private static final int REQUEST_CODE_PUBTIME = 107;
 
-    private String keyword,hy,job_post,salary,edu,exp,type;
+    private String keyword = "";
+    private String hy = "";
+    private String job_post = "";
+    private String salary = "";
+    private String edu = "";
+    private String exp = "";
+    private String type = "";
+    private String pubtime = "";
+    private String city = "";
 
     @Override
     public void initView() {
@@ -113,72 +127,73 @@ public class JobFilterActivity extends BaseActivity {
                 et_keyWord.setText("");
                 break;
             case R.id.rl_jobfilter_edu://学历要求
-                intent = new Intent(mContext, IndustryActivity.class);
+                intent = new Intent(mContext, PositionActivity.class);
                 intent.putExtra("Filter", "edu");
                 startActivityForResult(intent, REQUEST_CODE_EDU);
                 break;
             case R.id.rl_jobfilter_industry://行业类别
-                intent = new Intent(mContext, IndustryActivity.class);
+                intent = new Intent(mContext, PositionActivity.class);
                 intent.putExtra("Filter", "industry");
                 startActivityForResult(intent, REQUEST_CODE_INDUSTRYTYPE);
                 break;
             case R.id.rl_jobfilter_jobcity://工作城市
-//                intent = new Intent(mContext,IndustryActivity.class);
-//                intent.putExtra("Filter", "jobcity");
-//                startActivityForResult(intent,REQUEST_CODE_JOBCITY);
+                cityDialog = new CityDialog(mContext,new CityDialog.CityClickListener() {
+                    @Override
+                    public void city(CityBJ c) {
+                        tv_jobcity.setText(c.getName());
+                        city = c.getId()+"";
+                        cityDialog.dismiss();
+                    }
+                });
+                cityDialog.show();
                 break;
             case R.id.rl_jobfilter_jobtype://工作类别
-                intent = new Intent(mContext, IndustryActivity.class);
+                intent = new Intent(mContext, PositionActivity.class);
                 intent.putExtra("Filter", "jobtype");
                 startActivityForResult(intent, REQUEST_CODE_JOBTYPE);
                 break;
             case R.id.rl_jobfilter_jobyears://工作经验、工作年限
 
-                intent = new Intent(mContext, IndustryActivity.class);
+                intent = new Intent(mContext, PositionActivity.class);
                 intent.putExtra("Filter", "jobyears");
                 startActivityForResult(intent, REQUEST_CODE_JOBYEAR);
                 break;
 
             case R.id.rl_jobfilter_position://职位类别
-                intent = new Intent(mContext, IndustryActivity.class);
+                intent = new Intent(mContext, PositionActivity.class);
                 intent.putExtra("Filter", "position");
+                intent.putExtra("flag","pos");
                 startActivityForResult(intent, REQUEST_CODE_POSITION);
                 break;
             case R.id.rl_jobfilter_pubtime://发布时间
-                intent = new Intent(mContext, IndustryActivity.class);
+                intent = new Intent(mContext, PositionActivity.class);
                 intent.putExtra("Filter", "pubtime");
                 startActivityForResult(intent, REQUEST_CODE_PUBTIME);
                 break;
             case R.id.rl_jobfilter_salary://薪资要求
 
-                intent = new Intent(mContext, IndustryActivity.class);
+                intent = new Intent(mContext, PositionActivity.class);
                 intent.putExtra("Filter", "salary");
                 startActivityForResult(intent, REQUEST_CODE_SALARY);
                 break;
-
 
             case R.id.btn_jobfilter_chaxun://查询职位
 
                 //keyword=>关键字 page=>页数 hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp 工作性质=>type
 
                 keyword = et_keyWord.getText().toString().trim();
-                hy = tv_industry.getText().toString().trim();//工作行业
-                job_post = tv_position.getText().toString().trim();//职位类别
-                salary = tv_salary.getText().toString().trim();
-                edu = tv_edu.getText().toString().trim();
-                exp = tv_jobyears.getText().toString().trim();//工作年限
-                type = tv_jobtype.getText().toString().trim();//工作类型
                 //发布时间，工作地点
 
                 //保存职位筛选的字段
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword",keyword);
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", hy);
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post",job_post);
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", hy);//工作行业
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post",job_post);//职位类别
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "salary", salary);
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "edu", edu);
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", exp);
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", type);
-
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", exp);//工作年限
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", type);//工作类型
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "cityid", city);//工作城市
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", pubtime);//发布时间
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 this.finish();
@@ -190,38 +205,42 @@ public class JobFilterActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if(resultCode == RESULT_OK){
-            String str="";
-            if(data != null){
-                str = data.getStringExtra("data");
-            }
-            if(str == null || TextUtils.isEmpty(str)){
+            result = data.getParcelableExtra("data");
+            if(null == result){
                 return;
             }
-
             switch (requestCode){
                 case REQUEST_CODE_INDUSTRYTYPE:
-                    tv_industry.setText(str); //行业类型
+                    tv_industry.setText(result.getName()); //行业类型
+                    hy = result.getId()+"";
                     break;
                 case REQUEST_CODE_POSITION:
-                    tv_position.setText(str);//职位类别
+                    tv_position.setText(result.getName());//职位类别
+                    job_post = result.getId()+"";
                     break;
                 case REQUEST_CODE_JOBYEAR:
-                    tv_jobyears.setText(str);//工作年限
+                    tv_jobyears.setText(result.getName());//工作年限
+                    exp = result.getId()+"";
                     break;
                 case REQUEST_CODE_SALARY:
-                    tv_salary.setText(str);//薪资要求
+                    tv_salary.setText(result.getName());//薪资要求
+                    salary = result.getId()+"";
                     break;
                 case REQUEST_CODE_EDU:
-                    tv_edu.setText(str);//学历要求
+                    tv_edu.setText(result.getName());//学历要求
+                    edu = result.getId()+"";
                     break;
                 case REQUEST_CODE_JOBCITY:
-                    tv_jobcity.setText(str);//工作城市
-                    break;
+//                    tv_jobcity.setText(result.getName());//工作城市
+//                    city = result.getId()+"";
+//                    break;
                 case REQUEST_CODE_JOBTYPE:
-                    tv_jobtype.setText(str); //工作类型
+                    tv_jobtype.setText(result.getName()); //工作类型
+                    type = result.getId()+"";
                     break;
                 case REQUEST_CODE_PUBTIME:
-                    tv_pubtime.setText(str);//发布时间
+                    tv_pubtime.setText(result.getName());//发布时间
+                    pubtime = result.getId()+"";
                     break;
             }
         }

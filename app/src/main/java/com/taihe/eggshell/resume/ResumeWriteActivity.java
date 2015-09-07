@@ -227,9 +227,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         TextUtils.isEmpty(cityname)||TextUtils.isEmpty(type)||TextUtils.isEmpty(time)||
                         TextUtils.isEmpty(status)||TextUtils.isEmpty(birthday)||
                         TextUtils.isEmpty(school)||TextUtils.isEmpty(workexper)){
-                    ToastUtils.show(mContext,"还有空着的");
-                    intent = new Intent(mContext,ResumeMultiActivity.class);
-                    startActivity(intent);
+                    ToastUtils.show(mContext,"每项必填");
                     return;
                 }else{
                     params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");

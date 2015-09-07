@@ -59,8 +59,18 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     public static List<StaticData> skilllist = new ArrayList<StaticData>();
     public static List<StaticData> inglists = new ArrayList<StaticData>();
     public static List<StaticData> pubtimelist = new ArrayList<StaticData>();
-//    public static List<StaticData> industrylist = new ArrayList<StaticData>();
-//    public static List<StaticData> industrylist = new ArrayList<StaticData>();
+
+    public static List<StaticData> job_hylist = new ArrayList<StaticData>();
+    public static List<StaticData> job_paylist = new ArrayList<StaticData>();
+    public static List<StaticData> job_typelist = new ArrayList<StaticData>();
+    public static List<StaticData> job_experiencelist = new ArrayList<StaticData>();
+    public static List<StaticData> job_dgtimelist = new ArrayList<StaticData>();
+    public static List<StaticData> job_jobstatuslist = new ArrayList<StaticData>();
+    public static List<StaticData> job_educationlist = new ArrayList<StaticData>();
+    public static List<StaticData> job_skilllist = new ArrayList<StaticData>();
+    public static List<StaticData> job_inglists = new ArrayList<StaticData>();
+    public static List<StaticData> job_pubtimelist = new ArrayList<StaticData>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +101,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         db = DbHelper.getDbUtils(DbHelper.DB_TYPE_USER);
 
         getStaticDataFromNet();
+        getJobStaticDataFromNet();
     }
 
     private void getStaticDataFromNet(){
@@ -195,7 +206,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                             publist.get(i).setTypese("pubtime");
                         }
                         pubtimelist.clear();
-                        pubtimelist.addAll(inglist);
+                        pubtimelist.addAll(publist);
 
                         String citys = data.getString("three_cityid");//北京市
                         List<CityBJ> cityBJList = gson.fromJson(citys,new TypeToken<List<CityBJ>>(){}.getType());
@@ -229,6 +240,107 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_STATIC_DATA, false, params, true, listener, errorListener);
 
+    }
+
+    private void getJobStaticDataFromNet(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+
+                Log.v(TAG,(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String hy = data.getString("hy");
+                        Gson gson = new Gson();
+                        List<StaticData> industryList = gson.fromJson(hy,new TypeToken<List<StaticData>>(){}.getType());
+
+                        for(int i=0;i<industryList.size();i++){
+                            industryList.get(i).setTypese("hy");
+                        }
+                        job_hylist.clear();
+                        job_hylist.addAll(industryList);
+//                        db.saveOrUpdateAll(industryList);
+
+                        String pay = data.getString("pay");
+                        List<StaticData> salaryList = gson.fromJson(pay,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<salaryList.size();i++){
+                            salaryList.get(i).setTypese("pay");
+                        }
+                        job_paylist.clear();
+                        job_paylist.addAll(salaryList);
+//                        db.saveOrUpdateAll(salaryList);
+
+                        String type = data.getString("type");
+                        if(!type.equals("false")){
+                            List<StaticData> workTypeList = gson.fromJson(type,new TypeToken<List<StaticData>>(){}.getType());
+                            for(int i=0;i<workTypeList.size();i++){
+                                workTypeList.get(i).setTypese("types");
+                            }
+                            job_typelist.clear();
+                            job_typelist.addAll(workTypeList);
+//                            db.saveOrUpdateAll(workTypeList);
+                        }
+
+                        String workexper = data.getString("experience");
+                        List<StaticData> workExperinceList = gson.fromJson(workexper,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<workExperinceList.size();i++){
+                            workExperinceList.get(i).setTypese("experience");
+                        }
+                        job_experiencelist.clear();
+                        job_experiencelist.addAll(workExperinceList);
+//                        db.saveOrUpdateAll(workExperinceList);
+
+                        String education = data.getString("education");
+                        List<StaticData> educationList = gson.fromJson(education,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<educationList.size();i++){
+                            educationList.get(i).setTypese("education");
+                        }
+                        job_educationlist.clear();
+                        job_educationlist.addAll(educationList);
+//                        db.saveOrUpdateAll(educationList);
+
+                        String pubtime = data.getString("fbtime");//发布时间
+                        List<StaticData> publist = gson.fromJson(pubtime,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<publist.size();i++){
+                            publist.get(i).setTypese("pubtime");
+                        }
+                        job_pubtimelist.clear();
+                        job_pubtimelist.addAll(publist);
+
+                        /*String citys = data.getString("three_cityid");//北京市
+                        List<CityBJ> cityBJList = gson.fromJson(citys,new TypeToken<List<CityBJ>>(){}.getType());
+                        db.saveOrUpdateAll(cityBJList);
+
+                        String job_classid = data.getString("job_classid");
+                        List<StaticData> joblist = gson.fromJson(job_classid,new TypeToken<List<StaticData>>(){}.getType());
+                        for(int i=0;i<joblist.size();i++){
+                            joblist.get(i).setTypese("job");
+                        }
+                        db.saveOrUpdateAll(joblist);*/
+
+                    }else{
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
+            }
+        };
+
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("", "");
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_STATIC_DATA_JOB, false, params, true, listener, errorListener);
     }
 
     public void initViewPager() {

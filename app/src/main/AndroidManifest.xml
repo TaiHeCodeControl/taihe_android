@@ -137,6 +137,11 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity
+            android:name=".job.activity.PositionActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".job.activity.JobSearchActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
