@@ -461,8 +461,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
         String jobIds = sb.toString();
         Map<String, String> param = new HashMap<String, String>();
-        //TODO
-        param.put("uid", 6 + "");//UserID       userId
+//        param.put("uid", 6 + "");//UserID       userId
+        param.put("uid", userId + "");//UserID       userId
         param.put("job_id", jobIds);
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
 

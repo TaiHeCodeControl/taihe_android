@@ -29,7 +29,6 @@ public class Urls {
     public static final String METHOD_REGIST_LOGOUT = BASE_HYR_MOBILE_URL + "/login/loginout";//退出登录
 
     public static final String METHOD_BASIC = BASE_HYR_MOBILE_URL+"/basicdata";//基本资料
-//    public static final String METHOD_BASIC = BASE_HYR_MOBILE_URL+"/basicdata";//基本资料
     public static final String METHOD_BASIC_SAVE = BASE_HYR_MOBILE_URL+"/basicdata/add_basicdata";//保存修改的基本资料
     public static final String METHOD_UPLOAD_IMAGE = BASE_HYR_MOBILE_URL+"/basicdata/head";//上传头像
 
@@ -45,10 +44,8 @@ public class Urls {
     public static final String METHOD_JOB_LIST_POST_DELETE = BASE_HYR_MOBILE_URL + "/Position/delgetPosition";//删除申请职位
 
 
-//    public static final String METHOD_JOB_DETAIL = BASE_HYR_MOBILE_URL+"/Position/details";//职位详情
     public static final String METHOD_JOB_DETAIL = BASE_HYR_MOBILE_URL+"/Position/details";//职位详情
     public static final String METHOD_JOB_COLLECT = BASE_HYR_MOBILE_URL+"/Position/collect";//职位收藏
-//    public static final String METHOD_JOB_COLLECT = BASE_HYR_MOBILE_URL+"/Position/collect";//职位收藏
     public static final String METHOD_JOB_POST = BASE_HYR_MOBILE_URL+"/Position/getPosition";//申请职位
 
     public static final String METHOD_STATIC_DATA_JOB = "/Position/except_select";//职位列表筛选
