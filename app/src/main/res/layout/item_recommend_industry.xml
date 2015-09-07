@@ -14,14 +14,16 @@
         <TextView
             android:id="@+id/id_industry"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="90dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
             android:gravity="center"
             android:text="金融银行"
             android:textSize="@dimen/font_size_14"
             android:textColor="@color/index_tab_color"
             android:drawableTop="@drawable/hulianwang"
             android:drawablePadding="8dp"
-            android:background="@color/white"/>
+            android:background="@drawable/index_select_background"/>
 
         <View
             android:layout_width="0.5dp"

@@ -144,7 +144,7 @@ public class RegisterActivity extends BaseActivity {
                     } else if (code == 1000) {
                         ToastUtils.show(mContext, "手机号为空");
                     } else if (code == 1002) {
-                        ToastUtils.show(mContext, "改手机号已经注册过了");
+                        ToastUtils.show(mContext, "该手机号已经注册过了");
                     } else {
                         String msg = jsonObject.getString("message");
                         ToastUtils.show(mContext, msg);

@@ -26,6 +26,7 @@ import com.taihe.eggshell.base.Constants;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.APKUtils;
+import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateHelper;
@@ -248,10 +249,12 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_look_jianzhi:
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "56");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_look_shixi:
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "119");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
@@ -306,26 +309,33 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     }
 
     private void getIndustrys(){
-        String[] type = new String[]{"互联网","金融行业","广告媒体"};
-        String[] internet = new String[]{"网站策划","网站编辑","运营专员","SEO专员","UI设计","美工",};
-        String[] bank = new String[]{"银行柜员","业务专员","清算员","操盘手","会计","出纳员",};
-        String[] media = new String[]{"客户专员","创意专员","企业策划","规划设计","地产销售","测绘测量",};
+        String[] type = new String[]{"互联网","金融银行","广告媒体"};
+        int[] id_type = new int[]{35,37,40};
+        String[] internet = new String[]{"网站策划","网站编辑","运营专员","SEM专员","UI设计师","美工"};
+        int[] id_internet = new int[]{131,132,125,141,127,133};
+        String[] bank = new String[]{"银行柜员","业务专员","清算员","资金专员","会计","出纳员"};
+        int[] id_bank = new int[]{296,285,292,261,251,252};
+        String[] media = new String[]{"文案策划","企业策划","活动策划","客户专员","创意专员","媒介专员"};
+        int[] id_media = new int[]{509,511,524,504,507,521};
         int[] img = new int[]{R.drawable.hulianwang,R.drawable.bank,R.drawable.media};
         industryList = new ArrayList<Industry>();
+
         for(int i=0;i<3;i++){
             List<Professional> prolist = new ArrayList<Professional>();
             Industry industry = new Industry();
-            industry.setId(i);
+            industry.setId(id_type[i]);
             industry.setName(type[i]);
             industry.setImgsrc(img[i]);
             for(int j=0;j<6;j++){
                 Professional professional = new Professional();
-                professional.setId(i);
                 if(i==0){
+                    professional.setId(id_internet[j]);
                     professional.setName(internet[j]);
                 }else if(i==1){
+                    professional.setId(id_bank[j]);
                     professional.setName(bank[j]);
                 }else if(i==2){
+                    professional.setId(id_media[j]);
                     professional.setName(media[j]);
                 }
                 prolist.add(professional);

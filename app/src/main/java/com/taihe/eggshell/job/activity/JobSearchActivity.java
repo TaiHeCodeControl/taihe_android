@@ -98,6 +98,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                 PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"keyword",prolist.get(position).getName());
                 Intent intent = new Intent(JobSearchActivity.this,FindJobActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -110,6 +111,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                 PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"keyword",historyList.get(position).getName());
                 Intent intent = new Intent(JobSearchActivity.this,FindJobActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

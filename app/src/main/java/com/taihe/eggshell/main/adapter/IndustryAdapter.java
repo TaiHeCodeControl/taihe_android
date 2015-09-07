@@ -1,6 +1,7 @@
 package com.taihe.eggshell.main.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 
@@ -69,14 +72,18 @@ public class IndustryAdapter extends BaseAdapter {
         viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtils.show(context,industry.getName());
+//                ToastUtils.show(context,industry.getName()+":"+industry.getId());
+                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "hy", industry.getId()+"");
+                context.startActivity(new Intent(context,FindJobActivity.class));
             }
         });
         viewHolder.gridView.setAdapter(new ProfessionalAdapter(context,industry.getProfessionalList()));
         viewHolder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtils.show(context,industry.getProfessionalList().get(position).getName());
+//                ToastUtils.show(context,industry.getProfessionalList().get(position).getName()+":"+industry.getProfessionalList().get(position).getId());
+                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job_post",industry.getProfessionalList().get(position).getId()+"");
+                context.startActivity(new Intent(context,FindJobActivity.class));
             }
         });
 
