@@ -79,7 +79,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     private Context mContext;
     private LoadingProgressDialog dialog;
     private int page = 1;
-//    private int pageSize = 10;
+    //    private int pageSize = 10;
     //选中条数的统计
     private int selectSize = 0;
     private int postednum = 0;
@@ -87,10 +87,11 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     private String Longitude = "";
     private String Latitude = "";
     private String keyword = "";
-    private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "",cityid = "",fbtime = "";
+    private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "", cityid = "", fbtime = "";
 
     private User user;
     private int userId;
+    private TextView tv_findjob_title;//标题名称
 
     private Handler jobListHandler = new Handler() {
         @Override
@@ -155,8 +156,17 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         edu = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "edu", "");
         exp = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "exp", "");
         type = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "type", "");
-        cityid = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"cityid","");
-        fbtime = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"fbtime","");
+        cityid = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "cityid", "");
+        fbtime = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "fbtime", "");
+
+        tv_findjob_title = (TextView) findViewById(R.id.tv_findjob_title);
+        if (keyword.equals("兼职")) {
+            tv_findjob_title.setText("兼职职位");
+        } else if (keyword.equals("实习")) {
+            tv_findjob_title.setText("实习职位");
+        } else {
+            tv_findjob_title.setText("全职职位");
+        }
 
         user = EggshellApplication.getApplication().getUser();
 
@@ -335,7 +345,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("cityid", cityid);//工作性质
 
 
-
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
 
 
@@ -349,6 +358,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 FindJobActivity.this.finish();
                 break;
             case R.id.rl_findjob_qc://全城
+                cb_selectAll.setChecked(false);
                 jobInfos.clear();
                 page = 1;
                 Longitude = "";
@@ -362,6 +372,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 tv_fujin.setTextColor(getResources().getColor(R.color.font_color_black));
                 break;
             case R.id.rl_findjob_fujin://附近
+                cb_selectAll.setChecked(false);
                 jobInfos.clear();
                 page = 1;
                 Longitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Longitude", "");
@@ -487,20 +498,31 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
-    protected void onStop() {
+    protected void onStop() {//清空兼职，实习，全职以外的其他字段
         super.onStop();
-
 
         //hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp
         // 工作性质=>type
 
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword","");
+        if (keyword.equals("兼职")) {
+            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "兼职");
+        } else if (keyword.equals("实习")) {
+            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "实习");
+        } else {
+            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "");
+        }
+
+        if (type.equals("55")) {//全职
+            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "55");
+        } else {
+            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "");
+        }
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post","");
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post", "");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "salary", "");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "edu", "");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", "");
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "");
+
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "cityid", "");//工作城市
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", "");//发布时间
     }

@@ -182,16 +182,39 @@ public class JobFilterActivity extends BaseActivity {
                 //keyword=>关键字 page=>页数 hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp 工作性质=>type
 
                 keyword = et_keyWord.getText().toString().trim();
-                //发布时间，工作地点
+
+
+                String key = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"keyword","");
+             //如果获取到的keyword是兼职，或者实习，并且关键字是空
+                if ((key.equals("兼职") || key.equals("实习") )&&TextUtils.isEmpty(keyword)) {
+                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", key);
+                }  else {
+                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", keyword);
+                }
+
+
+                //兼职，实习 按关键字查询，全职，不限 按typeID查询
+                String types = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"type","");
+                if (types.equals("55") && TextUtils.isEmpty(type)) {//全职
+                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "55");
+                } else if(type.equals("55") || type.equals("54")){//54-->不限
+                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", type);
+                }else if(type.equals("56")){//兼职
+                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "");
+                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "兼职");
+                }else if(type.equals("119")){//实习
+                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "");
+                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "实习");
+                }
 
                 //保存职位筛选的字段
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword",keyword);
+
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", hy);//工作行业
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post",job_post);//职位类别
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "salary", salary);
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "edu", edu);
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", exp);//工作年限
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", type);//工作类型
+//                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", type);//工作类型
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "cityid", city);//工作城市
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", pubtime);//发布时间
                 intent = new Intent(mContext,FindJobActivity.class);

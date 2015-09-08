@@ -73,6 +73,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private String collect;
 
     private TextView tv_jobdetail_description;
+    private TextView tv_companyAddress;
 
     private int UserId;
     private User user;
@@ -134,6 +135,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                             collectionImg.setImageResource(R.drawable.shoucang);
                         }
                         //职位详情信息填充
+                        tv_companyAddress.setText(jobDetaiInfo.data.address);
                         jobtitle.setText(cj_name);
                         jobcompany.setText(com_name);
                         jobstart.setText(lastupdate);//发布时间
@@ -209,6 +211,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         intent = getIntent();
         jobId = intent.getIntExtra("ID", 1);
         com_id = intent.getStringExtra("com_id");
+        tv_companyAddress = (TextView) findViewById(R.id.tv_jobdetail_company_address);
         titleView = (TextView) findViewById(R.id.id_title);
         collectionImg = (ImageView) findViewById(R.id.id_other);
         jobtitle = (TextView) findViewById(R.id.id_job_name);

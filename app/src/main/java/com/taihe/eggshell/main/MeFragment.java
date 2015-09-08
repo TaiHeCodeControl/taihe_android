@@ -104,12 +104,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private ImageLoader imageLoader;
 
     //expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
-    String postNum = "";
-    String collectNum = "";
-    String resumeNun = "";
-    String nick = "";
-    String qianming = "";
-    String userImagePath="";
+    private String postNum = "";
+    private String collectNum = "";
+    private String resumeNun = "";
+    private String nick = "";
+    private String qianming = "";
+    private String userImagePath="";
+
+    private int userId ;
+    private String token = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -190,6 +193,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    //初始化ImageLoad(volley)
     private void initImageLoad() {
         mQueue = Volley.newRequestQueue(mContext);
         imageLoader = new ImageLoader(mQueue, new BitmapCache());
@@ -197,12 +201,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     private void initView() {
 
-
         //初始化选择图片popWindow
         initImageSelect();
         user = EggshellApplication.getApplication().getUser();
-
-
 
         if (null == user) {
 
@@ -211,7 +212,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
             rl_logout.setVisibility(View.GONE);
         } else {
-
+            userId = user.getId();
+            token = user.getToken();
             if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
                 getBasic();
             } else {
@@ -227,7 +229,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
             //手机号
             String phoneNum = user.getPhoneNumber();
-
 
             if (!TextUtils.isEmpty(nick)) {//昵称
                 tv_username.setText(nick);
@@ -279,18 +280,17 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        Log.i("setUserVisibleHint","setUserVisibleHint");
+
     }
 
     //获取用户基本信息
     private void getBasic() {
 
-
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
                 try {
-                    Log.v(TAG, (String) o);
+                    Log.v("getBasic", (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");
@@ -305,8 +305,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         nick = data.optString("name");
                        qianming = data.optString("description");
                        userImagePath=data.optString("resume_photo");
-
-
 
                     } else {
 //                        ToastUtils.show(mContext, "访问失败");
@@ -333,8 +331,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         };
 
         Map<String, String> param = new HashMap<String, String>();
-        int userId = user.getId();
-        String token = user.getToken();
+
         param.put("uid", userId + "");
         param.put("token",token);
         RequestUtils.createRequest(mContext, Urls.METHOD_MINE_BASIC, "", true, param, true, listener, errorListener);
@@ -793,6 +790,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", UserId + "");
         param.put("photo", ImageString);
+        param.put("token",token);
         //http://localhost/eggker/interface/basicdata/head  比传参数  uid =>uid   photo=>photo
         RequestUtils.createRequest(mContext, Urls.METHOD_UPLOAD_IMAGE, "", true, param, true, listener, errorListener);
 

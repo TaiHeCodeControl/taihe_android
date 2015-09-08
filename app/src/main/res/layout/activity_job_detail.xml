@@ -337,6 +337,37 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:drawableLeft="@drawable/left_icon"
+                    android:drawablePadding="8dp"
+                    android:gravity="center"
+                    android:text="公司地址"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+
+                <TextView
+                    android:id="@+id/tv_jobdetail_company_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="公司地址"
+                    android:textColor="@color/font_color_gray"
+                    android:textSize="@dimen/font_size_26" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"

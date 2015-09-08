@@ -74,6 +74,8 @@ public class IndustryAdapter extends BaseAdapter {
             public void onClick(View v) {
 //                ToastUtils.show(context,industry.getName()+":"+industry.getId());
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "type", "");
+                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "keyword","");
+                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job_post","");
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "hy", industry.getId()+"");
                 context.startActivity(new Intent(context,FindJobActivity.class));
             }
@@ -84,6 +86,8 @@ public class IndustryAdapter extends BaseAdapter {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                ToastUtils.show(context,industry.getProfessionalList().get(position).getName()+":"+industry.getProfessionalList().get(position).getId());
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "type", "");
+                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "keyword","");
+                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "hy","");
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job_post",industry.getProfessionalList().get(position).getId()+"");
                 context.startActivity(new Intent(context,FindJobActivity.class));
             }
