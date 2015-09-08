@@ -207,10 +207,16 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         if (null == user) {
 
+            userImagePath = "";
+            imageLoader.get(userImagePath, ImageLoader.getImageListener(
+                    circleiv_mine_icon, R.drawable.touxiang,
+                    R.drawable.touxiang));
+
             tv_logintxt.setVisibility(View.VISIBLE);
             ll_userinfo.setVisibility(View.GONE);
 
             rl_logout.setVisibility(View.GONE);
+
         } else {
             userId = user.getId();
             token = user.getToken();
@@ -220,49 +226,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 ToastUtils.show(mContext, R.string.check_network);
             }
 
-            // 加载头像
 
-            Log.i("userImagePath",userImagePath);
-            imageLoader.get(userImagePath, ImageLoader.getImageListener(
-                    circleiv_mine_icon, R.drawable.touxiang,
-                    R.drawable.touxiang));
-
-            //手机号
-            String phoneNum = user.getPhoneNumber();
-
-            if (!TextUtils.isEmpty(nick)) {//昵称
-                tv_username.setText(nick);
-            } else {
-                tv_username.setText(phoneNum);
-            }
-
-
-            if (TextUtils.isEmpty(qianming)) {
-                tv_qianming.setText("学习是一种信仰！");
-            } else {
-
-                tv_qianming.setText(qianming);
-            }
-
-
-            if (TextUtils.isEmpty(postNum)) {
-
-                tv_mine_postnum.setText("(" + 0 + ")");
-            } else {
-                tv_mine_postnum.setText("(" + postNum + ")");
-            }
-
-            if (TextUtils.isEmpty(collectNum)) {
-                tv_mine_collectnum.setText("(" + 0 + ")");
-            } else {
-                tv_mine_collectnum.setText("(" + collectNum + ")");
-            }
-
-            if (TextUtils.isEmpty(resumeNun)) {
-                tv_mine_jianlinum.setText("(" + 0 + ")");
-            } else {
-                tv_mine_jianlinum.setText("(" + resumeNun + ")");
-            }
 
 
             tv_logintxt.setVisibility(View.GONE);
@@ -305,6 +269,50 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         nick = data.optString("name");
                        qianming = data.optString("description");
                        userImagePath=data.optString("resume_photo");
+
+                        // 加载头像
+
+                        Log.i("userImagePath",userImagePath);
+                        imageLoader.get(userImagePath, ImageLoader.getImageListener(
+                                circleiv_mine_icon, R.drawable.touxiang,
+                                R.drawable.touxiang));
+
+                        //手机号
+                        String phoneNum = user.getPhoneNumber();
+
+                        if (!TextUtils.isEmpty(nick)) {//昵称
+                            tv_username.setText(nick);
+                        } else {
+                            tv_username.setText(phoneNum);
+                        }
+
+
+                        if (TextUtils.isEmpty(qianming)) {
+                            tv_qianming.setText("学习是一种信仰！");
+                        } else {
+
+                            tv_qianming.setText(qianming);
+                        }
+
+
+                        if (TextUtils.isEmpty(postNum)) {
+
+                            tv_mine_postnum.setText("(" + 0 + ")");
+                        } else {
+                            tv_mine_postnum.setText("(" + postNum + ")");
+                        }
+
+                        if (TextUtils.isEmpty(collectNum)) {
+                            tv_mine_collectnum.setText("(" + 0 + ")");
+                        } else {
+                            tv_mine_collectnum.setText("(" + collectNum + ")");
+                        }
+
+                        if (TextUtils.isEmpty(resumeNun)) {
+                            tv_mine_jianlinum.setText("(" + 0 + ")");
+                        } else {
+                            tv_mine_jianlinum.setText("(" + resumeNun + ")");
+                        }
 
                     } else {
 //                        ToastUtils.show(mContext, "访问失败");
@@ -867,7 +875,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     if (code == 0) {//退出成功
 
                         ToastUtils.show(mContext, "成功退出");
-                        userImagePath = "";
                         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
                         Intent intent = new Intent(mContext, MainActivity.class);
                         startActivity(intent);
