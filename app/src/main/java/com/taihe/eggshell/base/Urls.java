@@ -5,9 +5,9 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 public class Urls {
 
     //正式
-    public static final String BASE_HYR_MOBILE_URL = "http://ceshi.tiahel.com/eggker/interface/index.php";
+//    public static final String BASE_HYR_MOBILE_URL = "http://ceshi.tiahel.com/eggker/interface/index.php";
     //测试
-//    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.120/eggker/interface";
+    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.120/eggker/interface";
 
     public static final String getMopHostUrl() {
         return PrefUtils.getStringPreference(EggshellApplication.getApplication().getApplicationContext(), PrefUtils.CONFIG,
@@ -29,6 +29,7 @@ public class Urls {
     public static final String METHOD_LOGIN = BASE_HYR_MOBILE_URL + "/login";//登录
     public static final String METHOD_REGIST_LOGOUT = BASE_HYR_MOBILE_URL + "/login/loginout";//退出登录
 
+    public static final String METHOD_MINE_BASIC = BASE_HYR_MOBILE_URL+"/basicdata/getbasic ";//基本信息
     public static final String METHOD_BASIC = BASE_HYR_MOBILE_URL+"/basicdata";//基本资料
     public static final String METHOD_BASIC_SAVE = BASE_HYR_MOBILE_URL+"/basicdata/add_basicdata";//保存修改的基本资料
     public static final String METHOD_UPLOAD_IMAGE = BASE_HYR_MOBILE_URL+"/basicdata/head";//上传头像

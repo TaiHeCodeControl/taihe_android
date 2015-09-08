@@ -59,7 +59,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private ImageView collectionImg;
     private LoadingProgressDialog dialog;
     private int jobId;
-    private String uid;
+    private String com_id;
     private LinearLayout ll_moreposition;
     private TextView tv_allzhiwei, tv_shouqizhiwei;
 
@@ -208,7 +208,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
         intent = getIntent();
         jobId = intent.getIntExtra("ID", 1);
-        uid = intent.getStringExtra("UID");
+        com_id = intent.getStringExtra("com_id");
         titleView = (TextView) findViewById(R.id.id_title);
         collectionImg = (ImageView) findViewById(R.id.id_other);
         jobtitle = (TextView) findViewById(R.id.id_job_name);
@@ -385,7 +385,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
         String jobIds = sb.toString();
         Map<String, String> param = new HashMap<String, String>();
-//        param.put("uid", 6 + "");//UserID       userId
         param.put("uid", UserId + "");//UserID       userId
         param.put("job_id", jobIds);
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
@@ -399,7 +398,15 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.id_apply_button://申请职位
 
-                postJob();
+                if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                    dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                            R.string.submitcertificate_string_wait_dialog));
+                    dialog.show();
+                    postJob();
+                } else {
+                    ToastUtils.show(mContext, R.string.check_network);
+                }
+
 //                JobApplyDialogUtil.isApplyJob(mContext, 10, 2);
                 break;
             case R.id.id_see_all:
@@ -429,11 +436,19 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                     Intent intent = new Intent(JobDetailActivity.this, LoginActivity.class);
 //                    intent.putExtra("LoginTag","jobDetail");
                     intent.putExtra("ID", jobId);
-                    intent.putExtra("UID", uid);
+                    intent.putExtra("UID", com_id);
                     startActivity(intent);
                 } else {
                     //收藏&取消收藏
-                    collectPosition();
+                    if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                        dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                                R.string.submitcertificate_string_wait_dialog));
+                        dialog.show();
+                        collectPosition();
+                    } else {
+                        ToastUtils.show(mContext, R.string.check_network);
+                    }
+
                 }
                 break;
         }
@@ -535,11 +550,11 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         };
 
         Map<String, String> param = new HashMap<String, String>();
-        param.put("id", uid + "");//职位列表中的uid
+        param.put("id", com_id + "");//职位列表中的uid
         param.put("pid", jobId + "");
         param.put("uid", UserId + "");
         Log.i("ID", jobId + "");
-        Log.i("UID", uid);
+        Log.i("com_id", com_id);
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
 
     }

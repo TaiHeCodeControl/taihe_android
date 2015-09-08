@@ -173,7 +173,7 @@ public class MyPostActivity extends BaseActivity {
                 JobInfo job = jobInfos.get(position);
                 Intent intent = new Intent(mContext, JobDetailActivity.class);
                 intent.putExtra("ID", job.getJob_Id());
-                intent.putExtra("UID", job.getCom_id());
+                intent.putExtra("com_id", job.getCom_id());
                 Log.i("ID", job.getJob_Id() + "");
                 startActivity(intent);
             }
@@ -314,13 +314,28 @@ public class MyPostActivity extends BaseActivity {
                         it.remove();
                     }
                 }
-                deletePositin();
+                if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                    dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                            R.string.submitcertificate_string_wait_dialog));
+                    dialog.show();
+                    deletePositin();
+                } else {
+                    ToastUtils.show(mContext, R.string.check_network);
+                }
+
 
                 break;
             case R.id.btn_alljob_shenqing://投递selectSize条职位，其中已投递条数需要从服务器获取
 //                JobApplyDialogUtil.isApplyJob(mContext, selectSize, 2);
                 //申请职位
-                postJob();
+                if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                    dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                            R.string.submitcertificate_string_wait_dialog));
+                    dialog.show();
+                    postJob();//申请职位
+                } else {
+                    ToastUtils.show(mContext, R.string.check_network);
+                }
                 break;
         }
     }
@@ -371,7 +386,7 @@ public class MyPostActivity extends BaseActivity {
         String ss = sb.toString();
 
         param.put("id", ss);
-        param.put("uid", 141 + "");
+        param.put("uid", userId + "");//用户id
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_POST_DELETE, false, param, true, listener, errorListener);
 
     }

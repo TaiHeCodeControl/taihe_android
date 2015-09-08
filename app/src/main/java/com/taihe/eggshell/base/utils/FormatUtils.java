@@ -62,23 +62,36 @@ public class FormatUtils {
         }
     }
 
-    public static void getMD5(String str){
+    public static String getMD5(String paramString) {
+        String returnStr;
         try {
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            digest.update(str.getBytes());
-            byte[] m = digest.digest();
-            StringBuilder sb = new StringBuilder();
-            for(int i = 0;i<m.length;i++){
-                sb.append(m[i]);
-            }
-
-            Log.v("MD5Utils:",MD5Utils.encode(str)+ "==" +sb.toString());
-
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            MessageDigest localMessageDigest = MessageDigest.getInstance("MD5");
+            localMessageDigest.update(paramString.getBytes());
+            returnStr = byteToHexString(localMessageDigest.digest());
+            return returnStr;
+        } catch (Exception e) {
+            return paramString;
         }
     }
+    /**
+     * 将指定byte数组转换成16进制字符串
+     *
+     * @param b
+     * @return
+     */
+    public static String byteToHexString(byte[] b) {
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < b.length; i++) {
+            String hex = Integer.toHexString(b[i] & 0xFF);
+            if (hex.length() == 1) {
+                hex = '0' + hex;
+            }
+            hexString.append(hex.toLowerCase());
+        }
+        return hexString.toString();
+    }
+
+
 
     public static String timestampToDatetime(String seconds){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");

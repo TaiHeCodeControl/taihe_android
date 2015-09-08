@@ -242,25 +242,25 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
 //                intent = new Intent(mContext, CitySelectActivity.class);
 //                startActivity(intent);
                 break;
-            case R.id.id_search_job:
+            case R.id.id_search_job://搜索
                 intent = new Intent(mContext, JobSearchActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.id_look_job:
+            case R.id.id_look_job://找工作
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.id_look_jianzhi:
+            case R.id.id_look_jianzhi://找兼职
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "56");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.id_look_shixi:
+            case R.id.id_look_shixi://找实习
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "119");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.id_information:
+            case R.id.id_information://信息台
                 intent = new Intent(mContext,Act_MeetingInfo.class);
                 startActivity(intent);
                 break;
