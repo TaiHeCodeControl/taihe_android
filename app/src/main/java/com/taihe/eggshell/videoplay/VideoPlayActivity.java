@@ -28,6 +28,7 @@ import com.easefun.polyvsdk.ijk.IjkVideoView;
 import com.easefun.polyvsdk.ijk.OnPreparedListener;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.main.adapter.VideoInfoAdapter;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
@@ -263,8 +264,8 @@ public class VideoPlayActivity extends BaseActivity {
 //        map.put("limit",""+limit);
 //        map.put("page",""+page);
 
-        String url = "http://195.198.1.122:8066/eggker/phpv/API.php/video/getGroup?id="+arrPlist[arrPlist.length-1];
-        RequestUtils.createRequest(getApplicationContext(), url, "", true, map, true, listener, errorListener);
+//        String url = "http://195.198.1.122:8066/eggker/phpv/API.php/video/getGroup?id="+arrPlist[arrPlist.length-1];
+        RequestUtils.createRequest(getApplicationContext(), Urls.VIDEO_DETAIL_LIST_URL+arrPlist[arrPlist.length-1], "", true, map, true, listener, errorListener);
     }
     @Override
     public void onClick(View v) {
