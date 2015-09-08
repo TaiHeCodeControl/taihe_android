@@ -59,10 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:textSize="16sp"
-                        android:textColor="@color/font_color_gray"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:maxLines="1"/>
+                        android:textColor="@color/font_color_gray" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -128,10 +125,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:textSize="16sp"
-                        android:textColor="@color/font_color_gray"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:maxLines="1"/>
+                        android:textColor="@color/font_color_gray" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -153,10 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:textSize="16sp"
-                        android:textColor="@color/font_color_gray"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:maxLines="1"/>
+                        android:textColor="@color/font_color_gray" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -178,10 +169,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:textSize="16sp"
-                        android:textColor="@color/font_color_gray"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:maxLines="1"/>
+                        android:textColor="@color/font_color_gray" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -207,8 +195,7 @@
                         android:lineSpacingExtra="5dp"
                         android:lineSpacingMultiplier="1.0"
                         android:textColor="@color/font_color_gray"
-                        android:textSize="16sp"
-                        android:text="深刻的历史的"/>
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 

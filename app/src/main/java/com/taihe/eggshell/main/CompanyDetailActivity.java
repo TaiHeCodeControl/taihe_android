@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
     private static final String TAG = "CompanyDetailActivity";
 
     private Context mContext;
+    private LinearLayout id_lineralayout_view;
     private TextView companyIndustry,companyType,companyScale,companyAddress,companyBrief,upordown;
     private ImageView img_company_detail_logo;
     private ScrollView scrollView;
@@ -65,6 +67,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
 
         mContext = this;
         scrollView = (ScrollView)findViewById(R.id.id_scroll_view);
+        id_lineralayout_view = (LinearLayout)findViewById(R.id.id_lineralayout_view);
         img_company_detail_logo = (ImageView)findViewById(R.id.img_company_detail_logo);
         companyIndustry = (TextView)findViewById(R.id.id_company_industry);
         companyType = (TextView)findViewById(R.id.id_company_type);
@@ -81,7 +84,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onClick(View view) {
                 page++;
-                getData();
+                getData(0);
             }
         });
         jobsListView.addFooterView(view);
@@ -112,7 +115,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
         });
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
             loading.show();
-            getData();
+            getData(1);
         }else{
             ToastUtils.show(mContext,R.string.check_network);
         }
@@ -173,7 +176,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
                 break;
         }
     }
-    private void getData() {
+    private void getData(final int tt) {
 
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
@@ -195,6 +198,8 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
                             if(imgP.length()>15) {
                                 FinalBitmap bitmap = FinalBitmap.create(mContext);
                                 bitmap.display(img_company_detail_logo, imgP);
+                            }else{
+                                img_company_detail_logo.setBackgroundResource(R.drawable.img1);
                             }
                             companyIndustry.setText(jo.optString("hy"));
                             companyScale.setText(jo.optString("gm"));
@@ -223,17 +228,19 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
                             if(jobInfos.size()==0){
                                 jobsListView.removeAllViews();
                             }
+
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }
                         // Log.e("data",data);
-
-                        scrollView.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                scrollView.scrollTo(0,0);
-                            }
-                        });
+                        if(tt!=0) {
+                            scrollView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    scrollView.scrollTo(0, 0);
+                                }
+                            });
+                        }
                     } else {
                         //String msg = jsonObject.getString("message");
 //                        ToastUtils.show(getActivity(), "网络连接异常");

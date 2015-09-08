@@ -15,10 +15,11 @@
     <ScrollView
         android:id="@+id/id_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fillViewport="true">
 
         <LinearLayout
+            android:id="@+id/id_lineralayout_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -27,8 +28,7 @@
                 android:id="@+id/img_company_detail_logo"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:background="@drawable/img1"
-                android:scaleType="centerCrop"/>
+                android:scaleType="fitXY"  />
 
             <View
                 android:layout_width="match_parent"
@@ -206,7 +206,7 @@
                 xmlns:ptr="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/id_jobs_list_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
                 android:listSelector="@color/white"
                 ptr:ptrAnimationStyle="flip"
