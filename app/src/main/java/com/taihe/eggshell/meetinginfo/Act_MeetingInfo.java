@@ -125,6 +125,7 @@ public class Act_MeetingInfo extends BaseActivity {
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
+                    meetingView.setSelection(list.size()-1);
                     if (code == 0) {
                         String data = jsonObject.getString("data");
                         try{

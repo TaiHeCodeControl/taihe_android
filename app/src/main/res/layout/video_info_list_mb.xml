@@ -40,10 +40,12 @@
             android:id="@+id/txt_vinfo_mb_name"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/relativeLayout"
-            android:layout_toEndOf="@+id/relativeLayout"
             android:textColor="@color/font_color_black"
             android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp" />
+            android:layout_marginStart="25dp"
+            android:singleLine="true"
+            android:layout_toLeftOf="@+id/txt_vinfo_mb_time"
+            android:layout_toStartOf="@+id/txt_vinfo_mb_time" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,7 +56,9 @@
             android:layout_alignParentEnd="true"
             android:textColor="@color/font_color_gray"
             android:layout_marginRight="13dp"
-            android:layout_marginEnd="13dp" />
+            android:layout_marginEnd="13dp"
+            android:singleLine="true"
+             />
     </RelativeLayout>
 
 </LinearLayout>

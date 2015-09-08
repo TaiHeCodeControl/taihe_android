@@ -3,6 +3,7 @@ package com.taihe.eggshell.main;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,11 +143,13 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 try {
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
+//                    Log.e("data", jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         String data = jsonObject.getString("data");
                         try{
                             playView.isSelected();
+                            playView.setSelection(list.size()-1);
                             JSONArray j1 = new JSONArray(data);
                             JSONObject j2;
                             for(int i=0;i<j1.length();i++){

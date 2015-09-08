@@ -71,9 +71,10 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
     WheelMain wheelMain;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private String oldphone,oldnickname,oldsex,oldaddress,oldjianjie,oldbirthday,oldemail,oldqq;
-    private String newphone,newnickname,newsex,newaddress,newjianjie,newbirthday,newemail,newqq;
+    private String newnickname,newsex,newaddress,newjianjie,newbirthday,newemail,newqq;
     private LoadingProgressDialog LoadingDialog;
     private int UserId;
+    private String token;
 
     private Handler basicHandler = new Handler(){
         @Override
@@ -89,22 +90,29 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
                     }else{
                         oldsex = "女";
                     }
+
+                    oldphone = basicBean.telphone;
+                    oldaddress = basicBean.address;
+                    oldnickname = basicBean.name;
+                    oldqq = et_qq.getText().toString().trim();
+                    oldemail = basicBean.email;
+                    oldbirthday = tv_birthdate.getText().toString().trim();
+                    oldjianjie = basicBean.description;
+
+                    if(TextUtils.isEmpty(oldjianjie)){
+                        tv_mybasic_jianjie.setText("学习是一种信仰");
+                    }else{
+                        tv_mybasic_jianjie.setText(oldjianjie);
+                    }
                     tv_mybasic_sex.setText(oldsex);
-                    tv_address.setText(basicBean.address);
-                    tv_mybasic_jianjie.setText(basicBean.description);
-                    et_nickname.setText(basicBean.name);
+                    tv_address.setText(oldaddress);
+
+                    et_nickname.setText(oldnickname);
 //                    et_qq;
-                    et_email.setText(basicBean.email);
+                    et_email.setText(oldemail);
                     tv_mybasic_registime.setText(basicBean.reg_date);
 
-                    oldphone = tv_phone.getText().toString().trim();
-                    oldaddress = tv_address.getText().toString().trim();
-                    oldnickname = et_nickname.getText().toString().trim();
-                    oldqq = et_qq.getText().toString().trim();
-                    oldemail = et_email.getText().toString().trim();
-                    oldbirthday = tv_birthdate.getText().toString().trim();
-                    oldjianjie = tv_mybasic_jianjie.getText().toString().trim();
-                    oldsex = tv_mybasic_sex.getText().toString().trim();
+
 
 
                     tv_address.addTextChangedListener(new MyTextWhatch());
@@ -137,6 +145,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
     public void initView() {
 
         UserId = EggshellApplication.getApplication().getUser().getId();
+        token = EggshellApplication.getApplication().getUser().getToken();
         iv_back = (RelativeLayout) findViewById(R.id.iv_mybasic_back);
         tv_mybasic_jianjie = (TextView) findViewById(R.id.tv_mybasic_jianjie);
         tv_birthdate = (TextView) findViewById(R.id.tv_mybasic_birthdate);
@@ -194,6 +203,8 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
         }
 
 
+
+
     }
 
     //获取用户的基本资料
@@ -232,7 +243,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
                 LoadingDialog.dismiss();
                 try {
                     if (null != volleyError.networkResponse.data) {
-                        Log.v("Image:", new String(volleyError.networkResponse.data));
+                        Log.v("getUserBasic:", new String(volleyError.networkResponse.data));
                     }
                     ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
 
@@ -246,6 +257,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
 
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", UserId + "");
+        param.put("token",token);
 
         RequestUtils.createRequest(mContext, "", Urls.METHOD_BASIC, true, param, true, listener, errorListener);
 
@@ -303,6 +315,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {
                         ToastUtils.show(mContext, "资料修改成功");
+                        MyBasicActivity.this.finish();
                     } else {
                         ToastUtils.show(mContext, "获取失败");
                     }
@@ -347,6 +360,8 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
         param.put("description",newjianjie);
         param.put("birthday",newbirthday);
         param.put("email",newemail);
+        param.put("token",token);
+
 //
         RequestUtils.createRequest(mContext, Urls.METHOD_BASIC_SAVE, "", true, param, true, listener, errorListener);
 
