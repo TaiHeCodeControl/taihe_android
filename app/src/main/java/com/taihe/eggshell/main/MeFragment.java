@@ -103,6 +103,14 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private RequestQueue mQueue;
     private ImageLoader imageLoader;
 
+    //expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
+    String postNum = "";
+    String collectNum = "";
+    String resumeNun = "";
+    String nick = "";
+    String qianming = "";
+    String userImagePath="";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -210,9 +218,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 ToastUtils.show(mContext, R.string.check_network);
             }
 
-            String userImagePath = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "ImagePath", "");
             // 加载头像
 
+            Log.i("userImagePath",userImagePath);
             imageLoader.get(userImagePath, ImageLoader.getImageListener(
                     circleiv_mine_icon, R.drawable.touxiang,
                     R.drawable.touxiang));
@@ -221,25 +229,22 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             String phoneNum = user.getPhoneNumber();
             Log.i("PHONeNUM", phoneNum);
 
-            String nick = user.getName();
-            if (nick != null) {//昵称
+
+            if (!TextUtils.isEmpty(nick)) {//昵称
                 tv_username.setText(nick);
             } else {
                 tv_username.setText(phoneNum);
             }
 
 
-            String qianming = user.getDescription();
             if (TextUtils.isEmpty(qianming)) {
                 tv_qianming.setText("学习是一种信仰！");
             } else {
 
                 tv_qianming.setText(qianming);
             }
-            //expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
-            String postNum = user.getFavjob();
-            String collectNum = user.getUsejob();
-            String resumeNun = user.getExpect();
+
+
             if (TextUtils.isEmpty(postNum)) {
 
                 tv_mine_postnum.setText("(" + 0 + ")");
@@ -286,8 +291,19 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     System.out.println("code=========" + code);
 
                     if (code == 0) {//
+                    // expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        postNum = data.optString("favjob");
+                       collectNum = data.optString("usejob");
+                      resumeNun = data.optString("expect");
+                        nick = data.optString("name");
+                       qianming = data.optString("description");
+                       userImagePath=data.optString("resume_photo");
+
+
+
                     } else {
-                        ToastUtils.show(mContext, "");
+                        ToastUtils.show(mContext, "访问失败");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -736,10 +752,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         String imagePath = data.getString("resume_photo");
 
                         ToastUtils.show(mContext, "头像上传成功");
-                        user.setResume_photo(imagePath);
-                        String ss = user.getResume_photo();
-                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "ImagePath", imagePath);
-                        Log.i("ss", ss);
+
+                        userImagePath = imagePath;
+                        Log.i("LOADimagePath","");
                         imageLoader.get(imagePath, ImageLoader.getImageListener(
                                 circleiv_mine_icon, R.drawable.touxiang,
                                 R.drawable.touxiang));
