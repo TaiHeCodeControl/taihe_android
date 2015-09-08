@@ -16,6 +16,7 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.IndustryActivity;
@@ -229,6 +230,10 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         TextUtils.isEmpty(school)||TextUtils.isEmpty(workexper)){
                     ToastUtils.show(mContext,"每项必填");
                     return;
+                }else if(!FormatUtils.isMobileNO(phonenu)){
+                    ToastUtils.show(mContext,"请填写正确的手机号");
+                }else if(!FormatUtils.isEmail(emails)){
+                    ToastUtils.show(mContext,"请填写正确的邮箱");
                 }else{
                     params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
                     params.put("name", resumname);
@@ -358,9 +363,14 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         JSONObject expect = data.getJSONObject("expect");
                         String rename = expect.getString("name");//简历名称
                         resumeName.setText(rename);
-                        JSONObject addres = expect.getJSONObject("three_cityid");//地区
-                        forCounty.setText(addres.getString("name"));
-                        city = addres.getString("id");
+                        if("null".equals(expect.getString("three_cityid"))){
+                            forCounty.setText("全城");
+                            city = "0";
+                        }else{
+                            JSONObject addres = expect.getJSONObject("three_cityid");//地区
+                            forCounty.setText(addres.getString("name"));
+                            city = addres.getString("id");
+                        }
                         JSONObject hy = expect.getJSONObject("hy");//期望行业
                         forIndusty.setText(hy.getString("name"));
                         id_industry = hy.getInt("id");

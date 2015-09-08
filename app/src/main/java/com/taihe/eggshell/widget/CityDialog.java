@@ -132,7 +132,13 @@ public class CityDialog extends Dialog{
             protected void onPostExecute(List<CityBJ> result) {
                 if (result != null && result.size() > 0) {
                     citylist.clear();
-                    citylist.addAll(result);
+                    List<CityBJ> lists = new ArrayList<CityBJ>();
+                    CityBJ city = new CityBJ();
+                    city.setId(0);
+                    city.setName("全城");
+                    lists.add(city);
+                    lists.addAll(result);
+                    citylist.addAll(lists);
                     cityAdapter.notifyDataSetChanged();
                 } else {
                     Log.v("搜索：", "空");

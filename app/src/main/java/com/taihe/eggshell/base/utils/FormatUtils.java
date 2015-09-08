@@ -29,7 +29,7 @@ public class FormatUtils {
 		 * ：133、153、180、189、（1349）
 		 *
 		 */
-        String telRegex = "[1][3458]\\d{9}";
+        String telRegex = "[1][34578]\\d{9}";
         if (TextUtils.isEmpty(mobiles))
             return false;
         else

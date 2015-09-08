@@ -17,7 +17,7 @@ public class WheelMain {
 	private WheelView wv_mins;
 	public int screenheight;
 	private boolean hasSelectTime;
-	private static int START_YEAR = 1990, END_YEAR = 2100;
+	private static int START_YEAR = 1970, END_YEAR = 2100;
 
 	public View getView() {
 		return view;

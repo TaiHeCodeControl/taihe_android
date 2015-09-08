@@ -28,5 +28,7 @@
     <color name="font_color_red">#f54337</color>
     <color name="font_color_gray">#646464</color>
     <color name="font_color_gray_jobsearch">#969696</color>
+    <color name="darkred">#9e1923</color>
+    <color name="darkblue">#1874CD</color>
 
 </resources>

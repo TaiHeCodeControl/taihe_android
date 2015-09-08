@@ -20,7 +20,7 @@ android {
             storeFile file("D://AndroidStudioProjects/eggshellandroidkeystory.jks")
 //            storeFile file("D://androidtool/eggshellandroidkeystory.jks")
 //			storeFile file("D://android_app/eggshellandroidkeystory.jks")AndroidStudioProjects
-          storeFile file("D://Studio/StudioWorkSpaces/eggshellandroidkeystory.jks")
+//          storeFile file("D://Studio/StudioWorkSpaces/eggshellandroidkeystory.jks")
             storePassword "beijingtaihetianxiatouzikonggu"
             keyAlias "eggshellandroidkeystory"
             keyPassword "beijingtaihetianxiatouzikonggu"
