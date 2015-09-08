@@ -210,6 +210,24 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
                             }else {
                                 companyBrief.setText(Html.fromHtml(strTemp));
                             }
+                            companyBrief.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (companyBrief.getLineCount() > 2) {
+                                        isMore = true;
+                                        companyBrief.setMaxLines(2);
+                                        upordown.setVisibility(View.VISIBLE);
+                                    } else {
+                                        upordown.setVisibility(View.GONE);
+                                    }
+                                }
+                            });
+//                            if (lines <= 3) {
+//                                upordown.setVisibility(View.GONE);
+//                            } else {
+//                                companyBrief.setMaxLines(3);
+//                                upordown.setVisibility(View.VISIBLE);
+//                            }
                             JobInfo vMode;
                             for(int i=0;i<j1.length();i++){
                                 vMode = new JobInfo();
