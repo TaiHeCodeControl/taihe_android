@@ -128,6 +128,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
                     list_job_all.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+                    list_job_all.setSelection(adapter.getCount() - 9);
                     break;
             }
         }

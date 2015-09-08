@@ -127,6 +127,7 @@ public class MyCollectActivity extends BaseActivity {
 
                         list_job_all.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
+                        list_job_all.setSelection(adapter.getCount() - 9);
                     } catch (Exception e) {
 
                     }
