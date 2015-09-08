@@ -866,7 +866,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     if (code == 0) {//退出成功
 
                         ToastUtils.show(mContext, "成功退出");
-                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "ImagePath", "");
+                        userImagePath = "";
                         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
                         Intent intent = new Intent(mContext, MainActivity.class);
                         startActivity(intent);
