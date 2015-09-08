@@ -80,10 +80,6 @@ public class RequestUtils {
 
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Charset", "UTF-8");
-//                headers.put("Content-Type", "application/x-www-form-urlencoded");
-//                headers.put("Accept-Encoding", "gzip,deflate");//判断是不是gzip返回类型
-//                headers.put("User-Agent","Android-"+getAppKey(context)+"-"+getVersion(context));
-//                headers.put("X-City", PrefUtils.getUserCityPreference(context, PrefUtils.KEY_USER_LOCATION, PrefUtils.KEY_USER_LOCATION_KEY, PrefUtils.KEY_USER_LOCATION_DEFAULTVALUE));
                 if(null!= EggshellApplication.getApplication().getUser()){
 //                    headers.put("X-Auth-Token", EggshellApplication.getApplication().getUser().getToken());
                 }else if(!TextUtils.isEmpty(PrefUtils.getStringPreference(context,PrefUtils.USER_TOKEN,PrefUtils.KEY_USER_TOKEN,""))){

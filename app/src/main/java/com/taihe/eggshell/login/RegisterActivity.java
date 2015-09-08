@@ -159,7 +159,7 @@ public class RegisterActivity extends BaseActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.v("TAG:", volleyError.networkResponse.statusCode + "");
+//                Log.v("TAG:", new String(volleyError.networkResponse.data));
                 ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
 
             }

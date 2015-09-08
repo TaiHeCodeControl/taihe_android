@@ -63,13 +63,20 @@ public class FormatUtils {
     }
 
     public static void getMD5(String str){
+        str = "?/danker#$%?%";
         try {
             MessageDigest digest = MessageDigest.getInstance("MD5");
             digest.update(str.getBytes());
             byte[] m = digest.digest();
             StringBuilder sb = new StringBuilder();
+            int s;
             for(int i = 0;i<m.length;i++){
-                sb.append(m[i]);
+                s = m[i];
+                if(s<0)
+                    s +=256;
+                if(i<16)
+                sb.append("0");
+                sb.append(Integer.toHexString(i));
             }
 
             Log.v("MD5Utils:",MD5Utils.encode(str)+ "==" +sb.toString());

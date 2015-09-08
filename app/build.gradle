@@ -10,6 +10,8 @@ android {
         targetSdkVersion 20
         versionCode 1
         versionName "1.0"
+
+        manifestPlaceholders = [channel_value : "umeng"]
     }
 
     signingConfigs{
@@ -43,7 +45,28 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+            shrinkResources true
+
+            signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if(outputFile != null && outputFile.name.endsWith('.apk')){
+                        def fileName = "eggker_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent,fileName)
+                    }
+                }
+            }
         }
+    }
+
+    productFlavors{
+        guanwang{}
+    }
+
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [channel_value: name]
     }
 
     sourceSets {

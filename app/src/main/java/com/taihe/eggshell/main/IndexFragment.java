@@ -28,6 +28,7 @@ import com.taihe.eggshell.base.Constants;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.APKUtils;
+import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
@@ -193,18 +194,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         });
 
         getCompanyLogo();
-//        RecommendAdapter recommendAdapter = new RecommendAdapter(mContext,companylogolist);
-//        companyGridView.setAdapter(recommendAdapter);
-//        recommendAdapter.notifyDataSetChanged();
-//        companyGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        ToastUtils.show(mContext,position+"");
-//                        Intent intent = new Intent(mContext,CompanyDetailActivity.class);
-//                        intent.putExtra("companyId",position);
-//                        startActivity(intent);
-//            }
-//        });
 
         getIndustrys();
         IndustryAdapter industryAdapter = new IndustryAdapter(mContext,industryList);
@@ -232,7 +221,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         });
         getVersionCode();
 
-//        FormatUtils.getMD5("你妹");
     }
 
     @Override
