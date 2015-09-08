@@ -2,6 +2,7 @@ package com.taihe.eggshell.meetinginfo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,7 +49,7 @@ public class InfoDetailActivity extends BaseActivity{
         telPhone.setText(intent.getStringExtra("telphone"));
         callPerson.setText(intent.getStringExtra("user"));
         comeWay.setText(intent.getStringExtra("traffic_route"));
-        jobBrief.setText(intent.getStringExtra("content"));
+        jobBrief.setText(Html.fromHtml(intent.getStringExtra("content")));
         FinalBitmap bitmap = FinalBitmap.create(mContext);
         bitmap.display(imgLog,intent.getStringExtra("logo"));
     }

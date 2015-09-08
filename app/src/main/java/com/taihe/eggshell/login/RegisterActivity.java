@@ -159,9 +159,14 @@ public class RegisterActivity extends BaseActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-//                Log.v("TAG:", new String(volleyError.networkResponse.data));
-                ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
-
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("getCode", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
             }
         };
 
@@ -229,8 +234,14 @@ public class RegisterActivity extends BaseActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
-                Log.v("TAG:", volleyError.networkResponse.statusCode + "");
-                ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("Register", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
             }
         };
 //        String method = "http://195.198.1.197/eggker/interface/register?telphone=" + p_num + "&password=" + pwd + "&code" + p_code;

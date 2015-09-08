@@ -89,36 +89,48 @@ public class MyPostActivity extends BaseActivity {
                 case 101://删除职位成功
                     adapter.notifyDataSetChanged();
                     cb_selectAll.setChecked(false);
-                    ToastUtils.show(mContext,"删除成功");
+                    ToastUtils.show(mContext, "删除成功");
                     break;
                 case 201://收藏职位列表
-                    List<JobInfo> joblist = (List<JobInfo>) msg.obj;
-                    jobInfos.addAll(joblist);
-                    int size = jobInfos.size();
 
-                    tv_collect_num.setText(size + "条记录");
-                    adapter = new AllJobAdapter(mContext, jobInfos, true);
-                    adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
-                        @Override
-                        public void checkedPosition(int position, boolean isChecked) {
-                            jobInfos.get(position).setIsChecked(isChecked);
-                            //如果有listview没有被选中，全选按钮状态为false
-                            if (jobInfos.get(position).isChecked()) {
-                                selectSize += 1;
-                                if (selectSize == jobInfos.size()) {
-                                    cb_selectAll.setChecked(true);
+                    try {
+                        JSONObject jsonObject = (JSONObject) msg.obj;
+                        String count = jsonObject.getString("count");
+                        String data = jsonObject.getString("data");
+
+
+                        Gson gson = new Gson();
+                        List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
+                        }.getType());
+
+                        jobInfos.addAll(joblist);
+
+                        tv_collect_num.setText(count + "条记录");
+                        adapter = new AllJobAdapter(mContext, jobInfos, true);
+                        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
+                            @Override
+                            public void checkedPosition(int position, boolean isChecked) {
+                                jobInfos.get(position).setIsChecked(isChecked);
+                                //如果有listview没有被选中，全选按钮状态为false
+                                if (jobInfos.get(position).isChecked()) {
+                                    selectSize += 1;
+                                    if (selectSize == jobInfos.size()) {
+                                        cb_selectAll.setChecked(true);
+                                    }
+                                } else {
+                                    selectSize -= 1;
+                                    cb_selectAll.setChecked(false);
                                 }
-                            } else {
-                                selectSize -= 1;
-                                cb_selectAll.setChecked(false);
+
+
                             }
+                        });
 
+                        list_job_all.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    } catch (Exception e) {
 
-                        }
-                    });
-
-                    list_job_all.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    }
                     break;
             }
         }
@@ -141,11 +153,10 @@ public class MyPostActivity extends BaseActivity {
     }
 
 
-
     public void initListView() {
 
         user = EggshellApplication.getApplication().getUser();
-        if(user != null){
+        if (user != null) {
             userId = user.getId();
         }
         jobInfos = new ArrayList<JobInfo>();
@@ -162,7 +173,7 @@ public class MyPostActivity extends BaseActivity {
                 JobInfo job = jobInfos.get(position);
                 Intent intent = new Intent(mContext, JobDetailActivity.class);
                 intent.putExtra("ID", job.getJob_Id());
-                intent.putExtra("UID", job.getCom_id());
+                intent.putExtra("com_id", job.getCom_id());
                 Log.i("ID", job.getJob_Id() + "");
                 startActivity(intent);
             }
@@ -240,19 +251,15 @@ public class MyPostActivity extends BaseActivity {
 
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {
-                        String data = jsonObject.getString("data");
-                        Gson gson = new Gson();
-                        List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
-                        }.getType());
 
                         Message msg = Message.obtain();
                         msg.what = 201;
-                        msg.obj = joblist;
+                        msg.obj = jsonObject;
                         mHandler.sendMessage(msg);
 
-                    } else if (code == 1){
-                        ToastUtils.show(mContext,"没有已投递的职位");
-                    }else{
+                    } else if (code == 1) {
+                        ToastUtils.show(mContext, "没有已投递的职位");
+                    } else {
                         ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {
@@ -307,13 +314,28 @@ public class MyPostActivity extends BaseActivity {
                         it.remove();
                     }
                 }
-                deletePositin();
+                if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                    dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                            R.string.submitcertificate_string_wait_dialog));
+                    dialog.show();
+                    deletePositin();
+                } else {
+                    ToastUtils.show(mContext, R.string.check_network);
+                }
+
 
                 break;
             case R.id.btn_alljob_shenqing://投递selectSize条职位，其中已投递条数需要从服务器获取
 //                JobApplyDialogUtil.isApplyJob(mContext, selectSize, 2);
                 //申请职位
-                postJob();
+                if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                    dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                            R.string.submitcertificate_string_wait_dialog));
+                    dialog.show();
+                    postJob();//申请职位
+                } else {
+                    ToastUtils.show(mContext, R.string.check_network);
+                }
                 break;
         }
     }
@@ -364,12 +386,10 @@ public class MyPostActivity extends BaseActivity {
         String ss = sb.toString();
 
         param.put("id", ss);
-        param.put("uid", 141 + "");
+        param.put("uid", userId + "");//用户id
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_POST_DELETE, false, param, true, listener, errorListener);
 
     }
-
-
 
 
     private void goBack() {

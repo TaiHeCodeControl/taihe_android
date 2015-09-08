@@ -36,7 +36,7 @@ import java.util.Map;
 
 public class NearbyFragment extends Fragment implements View.OnClickListener{
     private TextView id_title,txt_around_tag1,txt_around_tag2;
-    private LinearLayout lin_back,lin_around_tag1,lin_around_tag2;
+    private LinearLayout lin_back,lin_around_tag1,lin_around_tag2,id_linear_listview_tag;
     private Context context;
     private PullToRefreshGridView playView;
     private PlayAdapter playAdapter;
@@ -48,6 +48,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_around, null) ;
         lin_back = (LinearLayout)v.findViewById(R.id.lin_back);
+        id_linear_listview_tag = (LinearLayout)v.findViewById(R.id.id_linear_listview_tag);
         lin_around_tag1 = (LinearLayout)v.findViewById(R.id.lin_around_tag1);
         lin_around_tag2 = (LinearLayout)v.findViewById(R.id.lin_around_tag2);
         id_title = (TextView) v.findViewById(R.id.id_title);
@@ -73,6 +74,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         playView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+                loading.show();
                 page=1;
                 list.clear();
                 getListData();
@@ -81,9 +83,16 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+                loading.show();
                 page++;
                 getListData();
                 playView.onRefreshComplete();
+//                playView.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        playView.scrollTo(0, id_linear_listview_tag.getMeasuredHeight() - playView.getHeight());
+//                    }
+//                });
             }
         });
 	}
@@ -98,6 +107,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
             case R.id.lin_around_tag1:
                 list.clear();
                 type=1;
+                loading.show();
                 img_around_tag1.setBackgroundResource(R.drawable.high);
                 img_around_tag2.setBackgroundResource(R.drawable.fulick);
                 txt_around_tag1.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
@@ -110,6 +120,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
             case R.id.lin_around_tag2:
                 list.clear();
                 type=2;
+                loading.show();
                 img_around_tag1.setBackgroundResource(R.drawable.highck);
                 img_around_tag2.setBackgroundResource(R.drawable.fuli);
                 txt_around_tag2.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
@@ -188,7 +199,6 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
 //                    volleyError.networkResponse.statusCode;
             }
         };
-        loading.show();
         Map<String,String> map = new HashMap<String,String>();
         map.put("type",""+type);
         map.put("limit",""+limit);

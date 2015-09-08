@@ -60,11 +60,8 @@ public class LoginActivity extends BaseActivity {
     private String userphone;
     private String password;
     private String telphone;
-    //expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
-    private String expect;
-    private String favjob;
-    private String resume_photo;
-    private String usejob;
+    private String token;
+
     private String uid;
     private Intent intent;
     private String loginTag;
@@ -167,13 +164,11 @@ public class LoginActivity extends BaseActivity {
                         ToastUtils.show(mContext, "登录成功");
                         JSONObject data = jsonObject.getJSONObject("data");
 
+                        token = data.optString("token");
                         telphone = data.optString("telphone");
-                        expect = data.optString("expect");
-                        favjob = data.optString("favjob");
-                        resume_photo = data.optString("resume_photo");
-                        usejob = data.optString("usejob");
-                        uid = data.optString("uid");
-                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "ImagePath", resume_photo);
+                        uid = data.optString("uid");//用户id
+                        token = FormatUtils.getMD5(token + uid);
+
                         //登录成功保存用户登录信息
                         loginSuccess();
 
@@ -193,9 +188,15 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
                 loading.dismiss();
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"网络错误");
-//                    String err = new String(volleyError.networkResponse.data);
-//                    volleyError.networkResponse.statusCode;
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("Login:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
             }
         };
 
@@ -206,12 +207,9 @@ public class LoginActivity extends BaseActivity {
     //登录成功保存用户登录信息
     private void loginSuccess() {
         Map<String, String> datas = new HashMap<String, String>();
-        datas.put("id", uid);
+        datas.put("id", uid);//用户id
         datas.put("phoneNumber", telphone);
-        datas.put("expect",expect);
-        datas.put("favjob",favjob);
-        datas.put("resume_photo",resume_photo);
-        datas.put("usejob",usejob);
+        datas.put("token",token);
 
         Gson gson = new Gson();
         // 将对象转换为JSON数据
@@ -247,10 +245,10 @@ public class LoginActivity extends BaseActivity {
         }else if(loginTag.equals("jobDetail")){
             Intent intents = getIntent();
             int  jobId = intents.getIntExtra("ID", 1);
-            String uid = intents.getStringExtra("UID");
+            String com_id = intents.getStringExtra("com_id");
             intent = new Intent(LoginActivity.this, JobDetailActivity.class);
             intent.putExtra("ID",jobId);
-            intent.putExtra("UID",uid);
+            intent.putExtra("com_id",com_id);
             startActivity(intent);
         }
         LoginActivity.this.finish();

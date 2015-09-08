@@ -189,15 +189,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     private void initView() {
 
+
         //初始化选择图片popWindow
         initImageSelect();
         user = EggshellApplication.getApplication().getUser();
-        String userImagePath = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "ImagePath", "");
-        // 加载头像
 
-        imageLoader.get(userImagePath, ImageLoader.getImageListener(
-                circleiv_mine_icon, R.drawable.touxiang,
-                R.drawable.touxiang));
 
 
         if (null == user) {
@@ -208,11 +204,19 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             rl_logout.setVisibility(View.GONE);
         } else {
 
-
-            if (!TextUtils.isEmpty(user.getResume_photo())) {
-
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "ImagePath", user.getResume_photo());
+            if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                getBasic();
+            } else {
+                ToastUtils.show(mContext, R.string.check_network);
             }
+
+            String userImagePath = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "ImagePath", "");
+            // 加载头像
+
+            imageLoader.get(userImagePath, ImageLoader.getImageListener(
+                    circleiv_mine_icon, R.drawable.touxiang,
+                    R.drawable.touxiang));
+
             //手机号
             String phoneNum = user.getPhoneNumber();
             Log.i("PHONeNUM", phoneNum);
@@ -264,6 +268,54 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             //
         }
 
+
+    }
+
+    //获取用户基本信息
+    private void getBasic() {
+
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                try {
+                    Log.v(TAG, (String) o);
+
+                    JSONObject jsonObject = new JSONObject((String) o);
+                    int code = jsonObject.getInt("code");
+                    System.out.println("code=========" + code);
+
+                    if (code == 0) {//
+                    } else {
+                        ToastUtils.show(mContext, "");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("GetMINEBASIC:", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+
+            }
+        };
+
+        Map<String, String> param = new HashMap<String, String>();
+        int userId = user.getId();
+        String token = user.getToken();
+        param.put("uid", userId + "");
+        param.put("token",token);
+        RequestUtils.createRequest(mContext, Urls.METHOD_MINE_BASIC, "", true, param, true, listener, errorListener);
 
     }
 

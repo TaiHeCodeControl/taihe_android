@@ -73,6 +73,7 @@
         android:layout_height="0.5dp"
         android:background="@color/line_gray"/>
     <LinearLayout
+        android:id="@+id/id_linear_listview_tag"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">

@@ -208,7 +208,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                     JobInfo job = jobInfos.get(position);
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
                     intent.putExtra("ID", job.getJob_Id());
-                    intent.putExtra("UID", job.getUid());
+                    intent.putExtra("com_id", job.getUid());
                     Log.i("ID", job.getJob_Id() + "");
                     startActivity(intent);
                 }
@@ -251,7 +251,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         } else {
             ToastUtils.show(mContext, R.string.check_network);
         }
-
 
     }
 
@@ -365,7 +364,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 Longitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Longitude", "");
                 Latitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Latitude", "");
                 Log.i("job--Longitude ", Longitude + "Latitude====" + Latitude);
-                getList();
+                initData();
                 iv_quancheng.setImageResource(R.drawable.quancheng02);
                 iv_fujin.setImageResource(R.drawable.fujin02);
 
@@ -395,8 +394,15 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                     userId = EggshellApplication.getApplication().getUser().getId();
 
                     if (selectSize > 0) {
+                        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                            dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                                    R.string.submitcertificate_string_wait_dialog));
+                            dialog.show();
+                            postJob();//申请职位
+                        } else {
+                            ToastUtils.show(mContext, R.string.check_network);
+                        }
 
-                        postJob();//申请职位
                     } else {
                         ToastUtils.show(mContext, "请选择您想要申请的职位");
                     }
