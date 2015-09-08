@@ -86,36 +86,50 @@ public class MyCollectActivity extends BaseActivity {
                 case 101://删除职位成功
                     adapter.notifyDataSetChanged();
                     cb_selectAll.setChecked(false);
-                    ToastUtils.show(mContext,"删除成功");
+                    ToastUtils.show(mContext, "删除成功");
                     break;
                 case 201://收藏职位列表
-                    List<JobInfo> joblist = (List<JobInfo>) msg.obj;
-                    jobInfos.addAll(joblist);
-                    int size = jobInfos.size();
 
-                    tv_collect_num.setText(size + "条记录");
-                    adapter = new AllJobAdapter(mContext, jobInfos, true);
-                    adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
-                        @Override
-                        public void checkedPosition(int position, boolean isChecked) {
-                            jobInfos.get(position).setIsChecked(isChecked);
-                            //如果有listview没有被选中，全选按钮状态为false
-                            if (jobInfos.get(position).isChecked()) {
-                                selectSize += 1;
-                                if (selectSize == jobInfos.size()) {
-                                    cb_selectAll.setChecked(true);
+
+                    try {
+                        JSONObject jsonObject = (JSONObject) msg.obj;
+                        String count = jsonObject.getString("count");
+                        String data = jsonObject.getString("data");
+
+
+                        Gson gson = new Gson();
+                        List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
+                        }.getType());
+
+
+                        jobInfos.addAll(joblist);
+
+                        tv_collect_num.setText(count + "条记录");
+                        adapter = new AllJobAdapter(mContext, jobInfos, true);
+                        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
+                            @Override
+                            public void checkedPosition(int position, boolean isChecked) {
+                                jobInfos.get(position).setIsChecked(isChecked);
+                                //如果有listview没有被选中，全选按钮状态为false
+                                if (jobInfos.get(position).isChecked()) {
+                                    selectSize += 1;
+                                    if (selectSize == jobInfos.size()) {
+                                        cb_selectAll.setChecked(true);
+                                    }
+                                } else {
+                                    selectSize -= 1;
+                                    cb_selectAll.setChecked(false);
                                 }
-                            } else {
-                                selectSize -= 1;
-                                cb_selectAll.setChecked(false);
+
+
                             }
+                        });
 
+                        list_job_all.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    } catch (Exception e) {
 
-                        }
-                    });
-
-                    list_job_all.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    }
                     break;
             }
         }
@@ -139,7 +153,7 @@ public class MyCollectActivity extends BaseActivity {
 
     public void initListView() {
         user = EggshellApplication.getApplication().getUser();
-        if(user!=null){
+        if (user != null) {
             userId = user.getId() + "";
         }
         jobInfos = new ArrayList<JobInfo>();
@@ -234,20 +248,16 @@ public class MyCollectActivity extends BaseActivity {
 
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {
-                        String data = jsonObject.getString("data");
-                        Gson gson = new Gson();
-                        List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
-                        }.getType());
 
                         Message msg = Message.obtain();
                         msg.what = 201;
-                        msg.obj = joblist;
+                        msg.obj = jsonObject;
                         mHandler.sendMessage(msg);
 
 
-                    }else if (code == 1){
-                        ToastUtils.show(mContext,"没有收藏的职位");
-                    }else{
+                    } else if (code == 1) {
+                        ToastUtils.show(mContext, "没有收藏的职位");
+                    } else {
                         ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {
@@ -277,7 +287,7 @@ public class MyCollectActivity extends BaseActivity {
         param.put("page", page + "");
         param.put("limit", pageSize + "");
 //        param.put("uid", 141 + "");//UserID
-        param.put("uid",userId);
+        param.put("uid", userId);
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_COLLECT, false, param, true, listener, errorListener);
 
     }
@@ -365,7 +375,6 @@ public class MyCollectActivity extends BaseActivity {
     }
 
 
-
     private void goBack() {
         Intent intent = new Intent(MyCollectActivity.this, MainActivity.class);
         intent.putExtra("MeFragment", "MeFragment");
@@ -443,7 +452,6 @@ public class MyCollectActivity extends BaseActivity {
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
 
     }
-
 
 
     //监听返回按钮
