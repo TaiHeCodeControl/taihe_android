@@ -95,7 +95,7 @@ public class CompanyDetailAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(context, JobDetailActivity.class);
                 intent.putExtra("ID",jobInfo.getJob_Id());
-                intent.putExtra("UID",jobInfo.getUid().toString());
+                intent.putExtra("com_id",jobInfo.getUid().toString());
                 context.startActivity(intent);
             }
         });

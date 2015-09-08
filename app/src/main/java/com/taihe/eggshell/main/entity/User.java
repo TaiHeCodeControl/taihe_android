@@ -96,7 +96,11 @@ public class User {
     }
 
     public void setToken(String token) {
-        this.token = token;
+        if(token!=null && token.length()>0){
+            this.token = token;
+        }else{
+            this.token = "";
+        }
     }
 
     public String getResumeid() {
