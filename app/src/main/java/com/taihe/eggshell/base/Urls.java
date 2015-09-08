@@ -38,13 +38,11 @@ public class Urls {
     public static final String METHOD_RESET_PASSWORD = "/login/update_pwd";//重置密码
     public static final String METHOD_CHECK_CODE = "/login/next";//判断验证码
 
-
     public static final String METHOD_JOB_LIST = BASE_HYR_MOBILE_URL + "/Position/nearbycompany";//职位列表
     public static final String METHOD_JOB_LIST_COLLECT = BASE_HYR_MOBILE_URL + "/Position/collectlist";//收藏职位列表
     public static final String METHOD_JOB_LIST_POST = BASE_HYR_MOBILE_URL + "/Position/getPositionlist";//申请职位列表
     public static final String METHOD_JOB_LIST_COLLECT_DELETE = BASE_HYR_MOBILE_URL + "/Position/delcollectlist";//删除收藏职位
     public static final String METHOD_JOB_LIST_POST_DELETE = BASE_HYR_MOBILE_URL + "/Position/delgetPosition";//删除申请职位
-
 
     public static final String METHOD_JOB_DETAIL = BASE_HYR_MOBILE_URL+"/Position/details";//职位详情
     public static final String METHOD_JOB_COLLECT = BASE_HYR_MOBILE_URL+"/Position/collect";//职位收藏
