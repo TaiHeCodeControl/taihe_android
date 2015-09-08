@@ -208,9 +208,11 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 if (position < jobInfos.size()) {
                     JobInfo job = jobInfos.get(position);
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
-                    intent.putExtra("ID", job.getJob_Id());
-                    intent.putExtra("com_id", job.getUid());
-                    Log.i("ID", job.getJob_Id() + "");
+                    int jobId = job.getJob_Id();
+                    String com_id = job.getUid();
+                    intent.putExtra("ID", jobId);
+                    intent.putExtra("com_id", com_id);
+                    Log.i("ID", jobId + "");
                     startActivity(intent);
                 }
 

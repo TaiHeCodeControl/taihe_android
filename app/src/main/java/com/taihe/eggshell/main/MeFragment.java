@@ -275,6 +275,13 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        Log.i("setUserVisibleHint","setUserVisibleHint");
+    }
+
     //获取用户基本信息
     private void getBasic() {
 
@@ -302,7 +309,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
 
                     } else {
-                        ToastUtils.show(mContext, "访问失败");
+//                        ToastUtils.show(mContext, "访问失败");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -319,7 +326,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     }
                     ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
                 } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
+//                    ToastUtils.show(mContext, "联网失败");
                 }
 
             }

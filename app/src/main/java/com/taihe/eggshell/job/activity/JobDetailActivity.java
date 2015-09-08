@@ -263,8 +263,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 if (position < jobInfos.size()) {
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
                     intent.putExtra("ID", jobInfos.get(position).getJob_Id());
-                    intent.putExtra("UID", jobInfos.get(position).getUid());
+                    intent.putExtra("com_id", jobInfos.get(position).getUid());
                     startActivity(intent);
+                    JobDetailActivity.this.finish();
                 }
 
             }
