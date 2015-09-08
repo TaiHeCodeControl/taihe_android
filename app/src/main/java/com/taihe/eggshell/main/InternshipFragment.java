@@ -221,7 +221,6 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
             }
         };
 
-        loading.show();
         Map<String,String> map = new HashMap<String,String>();
 //        map.put("pagesize",""+pagesize);
 //        map.put("page",""+page);
@@ -237,6 +236,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.id_lin_more:
+                loading.show();
                 page++;
                 updataUI();
                 break;
@@ -248,6 +248,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                 img_fragment_top2.setBackgroundResource(R.drawable.yuyinck);
                 txt_fragment_top1.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
                 txt_fragment_top2.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
+                loading.show();
                 page=1;
                 updataUI();
                 break;
@@ -258,6 +259,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                 img_fragment_top2.setBackgroundResource(R.drawable.yuyin);
                 txt_fragment_top2.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
                 txt_fragment_top1.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
+                loading.show();
                 page=1;
                 updataUIFL();
                 break;
