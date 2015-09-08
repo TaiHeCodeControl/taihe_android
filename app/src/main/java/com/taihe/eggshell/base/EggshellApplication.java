@@ -32,7 +32,7 @@ public class EggshellApplication extends Application {
     private File saveDir;
 
     //
-    private String loginTag;
+    private String loginTag = "";
 
     public void onCreate() {
         eggApplication = this;

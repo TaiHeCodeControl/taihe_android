@@ -432,6 +432,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 loading.dismiss();
+                Log.v("FFF:",new String(volleyError.networkResponse.data));
                 ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
             }
         };

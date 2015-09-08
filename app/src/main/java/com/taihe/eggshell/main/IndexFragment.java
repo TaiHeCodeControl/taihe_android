@@ -244,7 +244,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_look_shixi://找实习
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "119");
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "54");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;

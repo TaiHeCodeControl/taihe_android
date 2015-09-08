@@ -219,7 +219,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
             //手机号
             String phoneNum = user.getPhoneNumber();
-            Log.i("PHONeNUM", phoneNum);
 
             String nick = user.getName();
             if (nick != null) {//昵称
