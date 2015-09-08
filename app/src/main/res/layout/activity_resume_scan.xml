@@ -351,7 +351,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="运营专员"
+                        android:text="职位"
                         android:textColor="@color/black"/>
 
                     <TextView
@@ -359,7 +359,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="运营专员"
+                        android:text="公司"
                         android:textColor="@color/black"/>
 
                     <TextView
@@ -431,7 +431,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="清华大学"
+                        android:text="学校"
                         android:textColor="@color/black"/>
 
                     <LinearLayout
@@ -502,7 +502,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
-                    android:text="计算机"
+                    android:text="名称"
                     android:textColor="@color/black"/>
 
                 <LinearLayout
@@ -669,7 +669,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="证书全称"
+                        android:text="证书"
                         android:textColor="@color/black"/>
 
                     <TextView
