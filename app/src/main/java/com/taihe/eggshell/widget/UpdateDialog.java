@@ -25,15 +25,17 @@ public class UpdateDialog extends Dialog{
     private Context mContext;
 
     private Button leftButton,rightButton;
-    private TextView titleText;
+    private TextView titleText,title;
+    private String mtitle;
     private List<String> msglist;
     private View.OnClickListener leftClickListener,rightClickListener;
 
-    public UpdateDialog(Context context,List<String> list, View.OnClickListener leftListener, View.OnClickListener rightListener){
+    public UpdateDialog(Context context,String title,List<String> list, View.OnClickListener leftListener, View.OnClickListener rightListener){
         super(context);
 
         this.mContext = context;
         this.msglist = list;
+        this.mtitle = title;
         this.leftClickListener = leftListener;
         this.rightClickListener = rightListener;
         initView();
@@ -46,6 +48,7 @@ public class UpdateDialog extends Dialog{
         getWindow().setBackgroundDrawable(new BitmapDrawable());
         setCanceledOnTouchOutside(false);
 
+        title = (TextView)findViewById(R.id.id_dialog_brief);
         titleText = (TextView)findViewById(R.id.id_dialog_title);
         leftButton = (Button)findViewById(R.id.id_dialog_left);
         rightButton = (Button)findViewById(R.id.id_dialog_right);
@@ -53,6 +56,7 @@ public class UpdateDialog extends Dialog{
         VersionAdapter adapter = new VersionAdapter(mContext);
         listview.setAdapter(adapter);
 
+        title.setText(mtitle);
         leftButton.setOnClickListener(leftClickListener);
         rightButton.setOnClickListener(rightClickListener);
     }

@@ -81,7 +81,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
-                    android:text="18810309229"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -117,7 +116,6 @@
                     android:layout_marginLeft="90dp"
                     android:background="@null"
                     android:imeOptions="actionNext"
-                    android:text="王昕"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -152,7 +150,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
-                    android:text="男"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -196,7 +193,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
-                    android:text="北京"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -298,7 +294,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
-                    android:text="2010-10-5"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -344,7 +339,6 @@
                     android:layout_marginLeft="90dp"
                     android:background="@null"
                     android:imeOptions="actionNext"
-                    android:text="huanhuan@tiahel.com"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -379,7 +373,6 @@
                     android:layout_marginLeft="90dp"
                     android:background="@null"
                     android:imeOptions="actionDone"
-                    android:text="488128882"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 
@@ -452,7 +445,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
-                    android:text="2010-10-5"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 

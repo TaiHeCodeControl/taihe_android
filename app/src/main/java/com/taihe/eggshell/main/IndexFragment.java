@@ -356,11 +356,12 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                     int code = jsonObject.getInt("code");
                     if(code == 0) {
                         final String url = jsonObject.getString("data");
+                        String title = jsonObject.getString("title");
                         String message = jsonObject.getString("message");
                         Gson gson = new Gson();
                         List<String> meglist = gson.fromJson(message,new TypeToken<List<String>>(){}.getType());
 
-                        dialog = new UpdateDialog(mContext,meglist,new View.OnClickListener() {
+                        dialog = new UpdateDialog(mContext,title,meglist,new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
@@ -368,7 +369,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                         },new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.show(mContext,"更新");
                                 dialog.dismiss();
                                 updateAPK(url);
                             }

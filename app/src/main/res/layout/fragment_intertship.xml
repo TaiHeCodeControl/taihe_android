@@ -99,7 +99,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="名师风采"
+                        android:text="推荐课程"
                         android:textSize="15sp"
                         android:textColor="@color/black" />
                 </LinearLayout>

@@ -13,7 +13,14 @@
     <string name="check_network">请检查网络...</string>
     <string name="error_server">服务器错误</string>
 
-
+    <string name="set_aboutus_tell">
+        400-0084-111
+    </string>
+    <string name="set_aboutus1">
+        邮箱：tiahe1@tiahe1.com\n
+        邮编：100000\n
+        地址：北京市海淀区中关村南大街数码大厦A座19层
+    </string>
     <string name="set_aboutus">
         &#160;&#160;&#160;&#160;
         “蛋壳儿”是一个具有社交功能的就业孵化平台。为中国大学生提供线上职位推荐、社交互动，线下职能培训、
@@ -38,14 +45,9 @@
         \n &#160;&#160;&#160;&#160; 实现你的人生梦想
         \n &#160;&#160;&#160;&#160;
         “蛋壳儿”完备的职业规划指导，先进的人才孵化体系，帮助大学生建立科学、有价值的人生志趣，指引他们实现人生梦想。
-
         \n\n
         联系我们\n
-        蛋壳儿之家\n
-        电话：400-0084-111\n
-        邮箱：tiahe1@tiahe1.com\n
-        邮编：100000\n
-        地址：北京市海淀区中关村南大街数码大厦A座19层
+        蛋壳儿之家
     </string>
 
     <!-- 自定义progressdialog -->

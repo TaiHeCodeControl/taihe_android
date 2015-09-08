@@ -11,22 +11,21 @@ android {
         versionCode 1
         versionName "1.0"
 
-        manifestPlaceholders = [channel_value : "umeng"]
+        manifestPlaceholders = [channel_value: "umeng"]
     }
 
-    signingConfigs{
+    signingConfigs {
 
-        debug{
-//            storeFile file("D://AndroidStudioProjects/eggshellandroidkeystory.jks")
+        debug {
+            storeFile file("D://AndroidStudioProjects/eggshellandroidkeystory.jks")
 //            storeFile file("D://androidtool/eggshellandroidkeystory.jks")
-//			storeFile file("D://android_app/eggshellandroidkeystory.jks")AndroidStudioProjects
-          storeFile file("D://Studio/StudioWorkSpaces/eggshellandroidkeystory.jks")
+            storeFile file("D://Studio/StudioWorkSpaces/eggshellandroidkeystory.jks")
             storePassword "beijingtaihetianxiatouzikonggu"
             keyAlias "eggshellandroidkeystory"
             keyPassword "beijingtaihetianxiatouzikonggu"
         }
 
-        release{
+        release {
             storeFile file("D://AndroidStudioProjects/eggshellandroidkeystory.jks")
             storePassword "beijingtaihetianxiatouzikonggu"
             keyAlias "eggshellandroidkeystory"
@@ -52,17 +51,17 @@ android {
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
-                    if(outputFile != null && outputFile.name.endsWith('.apk')){
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         def fileName = "eggker_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
-                        output.outputFile = new File(outputFile.parent,fileName)
+                        output.outputFile = new File(outputFile.parent, fileName)
                     }
                 }
             }
         }
     }
 
-    productFlavors{
-        guanwang{}
+    productFlavors {
+        guanwang {}
     }
 
     productFlavors.all { flavor ->
