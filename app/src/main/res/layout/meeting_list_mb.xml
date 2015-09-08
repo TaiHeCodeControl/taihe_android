@@ -30,19 +30,16 @@
             android:id="@+id/relative_meeting_list_mb_tag1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
             android:layout_marginLeft="10dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="姓名姓名姓名"
                 android:textSize="16sp"
                 android:id="@+id/txt_meetinglist_mb_name"
                 android:textColor="@color/font_color_red"
                 android:layout_alignParentTop="true"
-                android:ellipsize="end"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:layout_toLeftOf="@+id/txt_meetinglist_mb_date"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
@@ -107,18 +104,18 @@
             android:id="@+id/relative_meeting_list_mb_tag2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:layout_marginLeft="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="姓名姓名姓名"
+                android:text=""
                 android:textSize="16sp"
                 android:id="@+id/txt_meetinglist_mb_name2"
                 android:textColor="@color/font_color_red"
                 android:layout_alignParentTop="true"
-                android:ellipsize="end"
-                android:maxLines="1"
+                android:singleLine="true"
                 android:layout_alignLeft="@+id/linearLayout" />
 
             <LinearLayout
