@@ -470,12 +470,13 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         final String url = jsonObject.getString("data");
+                        String title = jsonObject.getString("title");
                         String message = jsonObject.getString("message");
                         Gson gson = new Gson();
                         List<String> meglist = gson.fromJson(message, new TypeToken<List<String>>() {
                         }.getType());
 
-                        updateDialog = new UpdateDialog(mContext, meglist, new View.OnClickListener() {
+                        updateDialog = new UpdateDialog(mContext,title, meglist, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 updateDialog.dismiss();
