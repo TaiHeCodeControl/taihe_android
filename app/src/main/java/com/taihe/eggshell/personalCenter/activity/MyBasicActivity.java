@@ -20,6 +20,7 @@ import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.GsonUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
@@ -53,12 +54,12 @@ import org.json.JSONObject;
  * 基本资料界面，个人基本信息的查看和编辑
  * Created by huan on 2015/8/11.
  */
-public class MyBasicActivity extends Activity implements View.OnClickListener{
+public class MyBasicActivity extends Activity implements View.OnClickListener {
 
 
     private static final int REQUEST_CODE_CITY = 10;
     private Context mContext;
-    private TextView tv_phone,tv_birthdate, tv_mybasic_sex, tv_address, tv_mybasic_jianjie, tv_save;
+    private TextView tv_phone, tv_birthdate, tv_mybasic_sex, tv_address, tv_mybasic_jianjie, tv_save;
     private EditText et_nickname, et_qq, et_email;
     private TextView tv_mybasic_registime;
 
@@ -70,24 +71,24 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
 
     WheelMain wheelMain;
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private String oldphone,oldnickname,oldsex,oldaddress,oldjianjie,oldbirthday,oldemail,oldqq;
-    private String newnickname,newsex,newaddress,newjianjie,newbirthday,newemail,newqq;
+    private String oldphone, oldnickname, oldsex, oldaddress, oldjianjie, oldbirthday, oldemail, oldqq;
+    private String newnickname, newsex, newaddress, newjianjie, newbirthday, newemail, newqq;
     private LoadingProgressDialog LoadingDialog;
     private int UserId;
     private String token;
 
-    private Handler basicHandler = new Handler(){
+    private Handler basicHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 10://填充基本资料
                     MyBasicInfo.BasicBean basicBean = (MyBasicInfo.BasicBean) msg.obj;
                     tv_phone.setText(basicBean.telphone);
 //                    tv_birthdate.setText(basicBean.);
-                    if(basicBean.sex.equals("0") || basicBean.sex.equals("6")){
+                    if (basicBean.sex.equals("0") || basicBean.sex.equals("6")) {
                         oldsex = "男";
-                    }else{
+                    } else {
                         oldsex = "女";
                     }
 
@@ -99,48 +100,26 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
                     oldbirthday = basicBean.birthday;
                     oldjianjie = basicBean.description;
 
-                    if(TextUtils.isEmpty(oldjianjie)){
-                        tv_mybasic_jianjie.setText("学习是一种信仰");
-                    }else{
+                    if (TextUtils.isEmpty(oldjianjie)) {
+                        tv_mybasic_jianjie.setHint("学习是一种信仰");
+                    } else {
                         tv_mybasic_jianjie.setText(oldjianjie);
                     }
                     tv_mybasic_sex.setText(oldsex);
-                    if(TextUtils.isEmpty(oldaddress)){
-                        tv_address.setText("北京");
-                    }else{
-                        tv_address.setText(oldaddress);
-                    }
-                    if(TextUtils.isEmpty(oldbirthday)){//生日
-                        tv_birthdate.setText(verTime);
-                    }else{
-                        tv_birthdate.setText(oldbirthday);
-                    }
-                    if(TextUtils.isEmpty(oldnickname)){//昵称
-                        et_nickname.setText("蛋壳儿");
-                    }else{
-                        et_nickname.setText(oldnickname);
-                    }
-
+                    tv_address.setText("北京");
+                    tv_birthdate.setText(oldbirthday);
+                    et_nickname.setText(oldnickname);
 //                    et_qq;
-                    if(TextUtils.isEmpty(oldemail)){
-                        et_email.setText("tiahel@tiahel.com");
-                    }else{
-                        et_email.setText(oldemail);
-                    }
+                    et_email.setText(oldemail);
                     tv_mybasic_registime.setText(basicBean.reg_date);
 
                     tv_address.addTextChangedListener(new MyTextWhatch());
                     tv_birthdate.addTextChangedListener(new MyTextWhatch());
-
                     tv_mybasic_sex.addTextChangedListener(new MyTextWhatch());
-
                     tv_mybasic_jianjie.addTextChangedListener(new MyTextWhatch());
                     et_email.addTextChangedListener(new MyTextWhatch());
-
 //                    et_qq.addTextChangedListener(new MyTextWhatch());
-
                     et_nickname.addTextChangedListener(new MyTextWhatch());
-
 
                     break;
             }
@@ -206,19 +185,14 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
     }
 
     private void initData() {
+        LoadingDialog = new LoadingProgressDialog(mContext, getResources().getString(
+                R.string.submitcertificate_string_wait_dialog));
         if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-            LoadingDialog = new LoadingProgressDialog(mContext, getResources().getString(
-                    R.string.submitcertificate_string_wait_dialog));
             LoadingDialog.show();
             getViewDate();
-
         } else {
             ToastUtils.show(mContext, R.string.check_network);
         }
-
-
-
-
     }
 
     //获取用户的基本资料
@@ -270,10 +244,9 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
 
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", UserId + "");
-        param.put("token",token);
+        param.put("token", token);
 
         RequestUtils.createRequest(mContext, "", Urls.METHOD_BASIC, true, param, true, listener, errorListener);
-
 
 
     }
@@ -304,7 +277,17 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
                 break;
 
             case R.id.tv_mybasic_save://保存修改信息
-                saveBasic();
+                if(!FormatUtils.isEmail(newemail) && !TextUtils.isEmpty(newemail)) {
+                    ToastUtils.show(mContext, "请填写正确的邮箱");
+                    return;
+                }
+
+                if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                    LoadingDialog.show();
+                    saveBasic();
+                } else {
+                    ToastUtils.show(mContext, R.string.check_network);
+                }
                 break;
         }
     }
@@ -317,7 +300,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
             public void onResponse(Object o) {
                 LoadingDialog.dismiss();
                 try {
-                    Log.v("HHH:", (String) o);
+                    Log.v("SAVEBASIC:", (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
@@ -357,19 +340,19 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
 
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", UserId + "");
-        param.put("telphone",oldphone);
-        param.put("name",newnickname);
-        if(newsex.equals("男")){
+        param.put("telphone", oldphone);
+        param.put("name", newnickname);
+        if (newsex.equals("男")) {
             newsex = "6";
-        }else{
+        } else {
             newsex = "7";
         }
-        param.put("sex",newsex);
-        param.put("address",newaddress);
-        param.put("description",newjianjie);
-        param.put("birthday",newbirthday);
-        param.put("email",newemail);
-        param.put("token",token);
+        param.put("sex", newsex);
+        param.put("address", newaddress);
+        param.put("description", newjianjie);
+        param.put("birthday", newbirthday);
+        param.put("email", newemail);
+        param.put("token", token);
 
 //
         RequestUtils.createRequest(mContext, Urls.METHOD_BASIC_SAVE, "", true, param, true, listener, errorListener);
@@ -568,7 +551,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
     }
 
 
-    class MyTextWhatch implements TextWatcher{
+    class MyTextWhatch implements TextWatcher {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -601,7 +584,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
         newjianjie = tv_mybasic_jianjie.getText().toString().trim();
         newsex = tv_mybasic_sex.getText().toString().trim();
 
-        if (!newaddress.equals(oldaddress) || !newnickname.equals(oldnickname) || !newqq.equals(oldqq) ||!newemail.equals(oldemail) || !newbirthday.equals(oldbirthday) || !newjianjie.equals(oldjianjie) || !newsex.equals(oldsex)) {
+        if (!newaddress.equals(oldaddress) || !newnickname.equals(oldnickname) || !newqq.equals(oldqq) || !newemail.equals(oldemail) || !newbirthday.equals(oldbirthday) || !newjianjie.equals(oldjianjie) || !newsex.equals(oldsex)) {
             tv_save.setClickable(true);
             tv_save.setTextColor(getResources().getColor(R.color.font_color_red));
         } else {

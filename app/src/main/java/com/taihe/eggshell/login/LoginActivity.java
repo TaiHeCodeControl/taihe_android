@@ -104,12 +104,8 @@ public class LoginActivity extends BaseActivity {
                 goBack();
                 break;
             case R.id.btn_login_login:
-                if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
-                    loading.show();
+
                     login();
-                }else{
-                    ToastUtils.show(mContext,R.string.check_network);
-                }
 
                 break;
             case R.id.tv_login_forgetpassword:
@@ -143,7 +139,12 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.show(getApplicationContext(), R.string.login_login_phone_toast);
             return;
         }
-        loginFromNet();
+        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+            loading.show();
+            loginFromNet();
+        }else{
+            ToastUtils.show(mContext,R.string.check_network);
+        }
     }
 
     private void loginFromNet() {

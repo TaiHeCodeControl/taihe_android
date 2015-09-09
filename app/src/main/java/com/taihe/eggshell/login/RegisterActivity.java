@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.google.gson.Gson;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
@@ -27,6 +28,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.main.entity.User;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,6 +59,8 @@ public class RegisterActivity extends BaseActivity {
 
     private String telphone;
     private String uid;
+    private LoadingProgressDialog loading;
+
 
     @Override
     public void initView() {
@@ -75,6 +79,7 @@ public class RegisterActivity extends BaseActivity {
 
         lin_back.setOnClickListener(this);
         btn_register.setOnClickListener(this);
+        loading = new LoadingProgressDialog(mContext, "正在请求...");
     }
 
     @Override
@@ -105,10 +110,18 @@ public class RegisterActivity extends BaseActivity {
         if (!FormatUtils.isMobileNO(p_num)) {
             ToastUtils.show(RegisterActivity.this, "手机号格式不正确");
         } else if (pwd.length() < 6) {
-            ToastUtils.show(RegisterActivity.this, "密码长度太短");
+            ToastUtils.show(RegisterActivity.this, "密码长度必须大于6位");
         } else {
             //服务器注册
-            registerFromNet();
+
+            if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                loading.show();
+                registerFromNet();
+            } else {
+                ToastUtils.show(mContext, R.string.check_network);
+            }
+
+
         }
     }
 
@@ -123,14 +136,107 @@ public class RegisterActivity extends BaseActivity {
             ToastUtils.show(RegisterActivity.this, "手机号格式不正确");
             return;
         }
-        getCodeFromNet();
+
+        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+            loading.show();
+            getCodeFromNet();
+        } else {
+            ToastUtils.show(mContext, R.string.check_network);
+        }
+    }
+
+    //注册
+    private void registerFromNet() {
+
+        Map<String, String> dataParams = new HashMap<String, String>();
+        dataParams.put("telphone", p_num);
+        dataParams.put("password", pwd);
+        dataParams.put("code", p_code);
+
+        //返回监听事件
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object obj) {//返回值
+                loading.dismiss();
+                try {
+                    Log.v(TAG, (String) obj);
+                    JSONObject jsonObject = new JSONObject((String) obj);
+                    int code = jsonObject.getInt("code");
+                    System.out.println("code=========" + code);
+                    if (code == 0) {
+                        ToastUtils.show(mContext, "注册成功");
+                        JSONObject data = jsonObject.getJSONObject("data");
+
+                        telphone = data.getString("telphone");
+                        uid = data.getString("uid");
+                        Log.i(TAG, uid);
+                        Log.i(TAG, telphone);
+
+                        Map<String, String> datas = new HashMap<String, String>();
+                        datas.put("id", uid);
+                        datas.put("phoneNumber", telphone);
+                        Gson gson = new Gson();
+                        // 将对象转换为JSON数据
+                        String userData = gson.toJson(datas);
+                        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, userData);
+                        //注册成功之后，登录
+                        Intent intent = new Intent();
+                        intent.putExtra("data", telphone);
+                        setResult(10, intent);
+                        RegisterActivity.this.finish();
+                    } else if (code == 1001) {
+                        String msg = jsonObject.getString("message");
+                        JSONArray data = jsonObject.getJSONArray("data");
+                        ToastUtils.show(mContext, msg);
+                    } else if (code == 1002) {
+                        String msg = jsonObject.getString("message");
+                        JSONArray data = jsonObject.getJSONArray("data");
+                        ToastUtils.show(mContext, msg);
+                    } else {
+                        String msg = jsonObject.getString("message");
+                        ToastUtils.show(mContext, msg);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {//返回值
+                loading.dismiss();
+                try {
+                    if (null != volleyError.networkResponse.data) {
+                        Log.v("Register", new String(volleyError.networkResponse.data));
+                    }
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                } catch (Exception e) {
+                    ToastUtils.show(mContext, "联网失败");
+                }
+            }
+        };
+//        String method = "http://195.198.1.197/eggker/interface/register?telphone=" + p_num + "&password=" + pwd + "&code" + p_code;
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_REGIST, false, dataParams, true, listener, errorListener);
+    }
+
+    //获取验证码
+    private void getCodeFromNet() {
+
+        tv_getcode.setEnabled(false);
+        TimerCount timerCount = new TimerCount(1000 * 60, 1000);
+        timerCount.start();
+        tv_getcode.setBackgroundResource(R.drawable.msg_count_start);
+
+
         Map<String, String> dataParams = new HashMap<String, String>();
         dataParams.put("telphone", p_num);
 
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object obj) {
-
+                loading.dismiss();
                 try {
                     Log.v(TAG, (String) obj);
                     JSONObject jsonObject = new JSONObject((String) obj);
@@ -159,6 +265,7 @@ public class RegisterActivity extends BaseActivity {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                loading.dismiss();
                 try {
                     if (null != volleyError.networkResponse.data) {
                         Log.v("getCode", new String(volleyError.networkResponse.data));
@@ -174,88 +281,6 @@ public class RegisterActivity extends BaseActivity {
         RequestUtils.createRequest(mContext, "", Urls.METHOD_REGIST_GETCODE, false, dataParams, true, listener, errorListener);
     }
 
-
-    //注册
-    private void registerFromNet() {
-
-        Map<String, String> dataParams = new HashMap<String, String>();
-        dataParams.put("telphone", p_num);
-        dataParams.put("password", pwd);
-        dataParams.put("code", p_code);
-
-        //返回监听事件
-        Response.Listener listener = new Response.Listener() {
-            @Override
-            public void onResponse(Object obj) {//返回值
-                try {
-                    Log.v(TAG, (String) obj);
-                    JSONObject jsonObject = new JSONObject((String) obj);
-                    int code = jsonObject.getInt("code");
-                    System.out.println("code=========" + code);
-                    if (code == 0) {
-                        ToastUtils.show(mContext, "注册成功");
-                        JSONObject data = jsonObject.getJSONObject("data");
-
-                        telphone = data.getString("telphone");
-                        uid = data.getString("uid");
-                        Log.i(TAG, uid);
-                        Log.i(TAG, telphone);
-
-                        Map<String, String> datas = new HashMap<String, String>();
-                        datas.put("id", uid);
-                        datas.put("phoneNumber", telphone);
-                        Gson gson = new Gson();
-                        // 将对象转换为JSON数据
-                        String userData = gson.toJson(datas);
-                        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, userData);
-                        //注册成功之后，登录
-                        Intent intent = new Intent();
-                        intent.putExtra("data",telphone);
-                        setResult(10,intent);
-                        RegisterActivity.this.finish();
-                    } else if (code == 1001) {
-                        String msg = jsonObject.getString("message");
-                        JSONArray data = jsonObject.getJSONArray("data");
-                        ToastUtils.show(mContext, msg);
-                    } else if (code == 1002) {
-                        String msg = jsonObject.getString("message");
-                        JSONArray data = jsonObject.getJSONArray("data");
-                        ToastUtils.show(mContext, msg);
-                    } else {
-                        String msg = jsonObject.getString("message");
-                        ToastUtils.show(mContext, msg);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {//返回值
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("Register", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-            }
-        };
-//        String method = "http://195.198.1.197/eggker/interface/register?telphone=" + p_num + "&password=" + pwd + "&code" + p_code;
-        RequestUtils.createRequest(mContext, "", Urls.METHOD_REGIST, false, dataParams, true, listener, errorListener);
-    }
-
-    private void getCodeFromNet() {
-
-        tv_getcode.setEnabled(false);
-        TimerCount timerCount = new TimerCount(1000 * 60, 1000);
-        timerCount.start();
-        tv_getcode.setBackgroundResource(R.drawable.msg_count_start);
-    }
 
     private class TimerCount extends CountDownTimer {
 
