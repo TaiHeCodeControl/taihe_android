@@ -63,12 +63,16 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
     private int PAGE_SIZE = 10;
     private String Longitude, Latitude;
     private DbUtils db;
+    private Intent intents;
+    private String fromTags;
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_job_search);
         super.initView();
         mContext = this;
+        intents = getIntent();
+        fromTags = intents.getStringExtra("From");
         Longitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Longitude", "");
         Latitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Latitude", "");
         Log.i("job--Longitude ", Longitude + "Latitude====" + Latitude);
@@ -95,10 +99,16 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         gv_hotjob.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"keyword",prolist.get(position).getName());
-                Intent intent = new Intent(JobSearchActivity.this,FindJobActivity.class);
-                startActivity(intent);
-                finish();
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", prolist.get(position).getName());
+                if (fromTags.equals("Index")) {
+                    Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent();
+                    setResult(201, intent);
+                }
+
+                JobSearchActivity.this.finish();
             }
         });
 
@@ -108,10 +118,16 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         lv_searchHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"keyword",historyList.get(position).getName());
-                Intent intent = new Intent(JobSearchActivity.this,FindJobActivity.class);
-                startActivity(intent);
-                finish();
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", historyList.get(position).getName());
+                if (fromTags.equals("Index")) {
+                    Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent();
+                    setResult(201, intent);
+                }
+
+                JobSearchActivity.this.finish();
             }
         });
 
@@ -142,12 +158,10 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
 
                         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", word);
 
-                        Intent intents = getIntent();
-                        String fromTags = intents.getStringExtra("From");
-                        if(fromTags.equals("Index")){
+                        if (fromTags.equals("Index")) {
                             Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
                             startActivity(intent);
-                        }else{
+                        } else {
                             Intent intent = new Intent();
                             setResult(201, intent);
                         }
@@ -162,7 +176,6 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                 break;
         }
     }
-
 
 
     private void getHotSearch() {
