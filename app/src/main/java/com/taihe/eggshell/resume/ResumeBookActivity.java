@@ -1,6 +1,7 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -145,7 +146,13 @@ public class ResumeBookActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
-                            ToastUtils.show(mContext,"添加成功!");
+                            Intent intent = new Intent(mContext,ResumeBookScanActivity.class);
+                            intent.putExtra("eid",eid);
+                            intent.putExtra("name",techName);
+                            intent.putExtra("sdate",years);
+                            intent.putExtra("title",techType);
+                            intent.putExtra("content",contextWord);
+                            startActivity(intent);
                             finish();
                         }catch (Exception ex){
                             ex.printStackTrace();

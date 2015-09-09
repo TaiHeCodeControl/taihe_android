@@ -232,6 +232,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".resume.ResumeBookScanActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".resume.ResumeWorkScanActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
