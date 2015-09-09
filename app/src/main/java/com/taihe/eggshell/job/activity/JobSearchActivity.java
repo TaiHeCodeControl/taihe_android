@@ -99,7 +99,12 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         gv_hotjob.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", prolist.get(position).getName());
+                if(prolist.get(position).getName().equals("银行柜员")){
+                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "柜员");
+                }else{
+                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", prolist.get(position).getName());
+                }
+
                 if (fromTags.equals("Index")) {
                     Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
                     startActivity(intent);
