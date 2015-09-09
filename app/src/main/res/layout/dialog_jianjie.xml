@@ -9,53 +9,73 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="35dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="9dp"
-            android:layout_centerVertical="true"
             android:text="请输入您的个人简介"
             android:textColor="@color/white"
             android:textSize="@dimen/font_size_26" />
 
         <RelativeLayout
             android:id="@+id/rl_dialogsex_cancel"
-            android:layout_alignParentRight="true"
             android:layout_width="40dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/cha" />
 
         </RelativeLayout>
     </RelativeLayout>
 
-
-    <EditText
-        android:id="@+id/et_jianjie_jianjie"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:hint="学习是一种信仰！"
-        android:gravity="top"
-        android:textSize="13sp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/feedtext"/>
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/feedtext"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_jianjie_jianjie"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="学习是一种信仰！"
+            android:maxLength="15"
+            android:padding="10dp"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_mine_jianjie_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:paddingRight="10dp"
+            android:text="15字"
+            android:textColor="@color/font_color_gray"
+            android:textSize="13sp" />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_jianjie_confirm"
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:text="确定"
-        android:textSize="14sp"
-        android:textColor="@color/white"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/lanniu2"/>
+        android:layout_marginTop="10dp"
+        android:background="@drawable/lanniu2"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
 
 </LinearLayout>

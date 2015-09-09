@@ -77,6 +77,9 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
     private int UserId;
     private String token;
 
+    private TextView text_jianjie_size;
+    private int txtsize;
+
     private Handler basicHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -277,7 +280,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
                 break;
 
             case R.id.tv_mybasic_save://保存修改信息
-                if(!FormatUtils.isEmail(newemail) && !TextUtils.isEmpty(newemail)) {
+                if (!FormatUtils.isEmail(newemail) && !TextUtils.isEmpty(newemail)) {
                     ToastUtils.show(mContext, "请填写正确的邮箱");
                     return;
                 }
@@ -380,8 +383,12 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
 
         final EditText et_jianjie = (EditText) view.findViewById(R.id.et_jianjie_jianjie);
 
+        text_jianjie_size = (TextView) view.findViewById(R.id.tv_mine_jianjie_size);
         jianjiehint = tv_mybasic_jianjie.getText().toString().trim();
-        et_jianjie.setHint(jianjiehint);
+        et_jianjie.setText(jianjiehint);
+
+        text_jianjie_size.setText(15 - jianjiehint.length() + "字");
+        et_jianjie.addTextChangedListener(tw);
         Button btn_ok = (Button) view.findViewById(R.id.btn_jianjie_confirm);
 
         btn_ok.setOnClickListener(new View.OnClickListener() {
@@ -550,6 +557,25 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    TextWatcher tw = new TextWatcher() {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before,
+                                  int count) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count,
+                                      int after) {
+            // 显示实时输入内容
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            String txt = s.toString();
+            txtsize = 15 - txt.length();
+            text_jianjie_size.setText(txtsize + "字");
+        }
+    };
 
     class MyTextWhatch implements TextWatcher {
         @Override
