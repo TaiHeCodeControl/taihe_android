@@ -42,7 +42,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
     private PullToRefreshGridView playView;
     private PlayAdapter playAdapter;
     private ImageView img_around_tag1,img_around_tag2;
-    int limit=2,page=1,type=1;
+    int limit=5,page=1,type=1;
     List<PlayInfoMode> list;
     private LoadingProgressDialog loading;
 	@Override

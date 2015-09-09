@@ -54,7 +54,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     private int viewwidth1 = 0,index=0;
     private ScrollView scroll_hotnotes;
     List<VideoInfoMode> listInfo,listTopInfo;
-    int pagesize=4,page=1;
+    int pagesize=6,page=1;
     private ProgressBar progressBar;
     private LoadingProgressDialog loading;
     Handler mHandler = new Handler(){

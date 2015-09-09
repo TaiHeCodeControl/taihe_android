@@ -40,7 +40,7 @@ public class Act_MeetingInfo extends BaseActivity {
     private ImageView img_meetinginfo_top1,img_meetinginfo_top2;
     private PullToRefreshGridView meetingView;
     private PlayAdapter playAdapter;
-    int limit=2,page=1,type=1;
+    int limit=5,page=1,type=1;
     List<PlayInfoMode> list;
     private LoadingProgressDialog loading;
     private Context mContext;
