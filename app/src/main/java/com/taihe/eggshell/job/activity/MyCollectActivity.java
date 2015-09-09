@@ -68,7 +68,7 @@ public class MyCollectActivity extends BaseActivity {
     private static final String TAG = "MyCollectActivity";
 
     private int page = 1;
-    private int pageSize = 2;
+    private int pageSize = 8;
     //选中条数的统计
     private int selectSize = 0;
     private int postednum = 0;
@@ -383,8 +383,9 @@ public class MyCollectActivity extends BaseActivity {
 
         String ss = sb.toString();
 
-        param.put("id", ss);
+        param.put("job_id", ss);
         param.put("uid", userId + "");//用户id
+        Log.i("collectDelete", param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_COLLECT_DELETE, false, param, true, listener, errorListener);
 
     }

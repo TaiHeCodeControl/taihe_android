@@ -62,6 +62,9 @@ import java.util.Map;
 public class FindJobActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = "FINDJOBACTIVITY";
+    private static final int REQUEST_CODE_KEYWORDSEARCH = 1001;
+    private static final int REQUEST_CODE_FILTER = 1002;
+
     private Intent intent;
 
     private TextView tv_allJob, tv_fujin;
@@ -341,8 +344,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("edu", edu);
         param.put("exp", exp);//工作年限
         param.put("type", type);//工作性质
-        param.put("fbtime ", fbtime);//工作性质
-        param.put("cityid", cityid);//工作性质
+        param.put("fbtime ", fbtime);//
+        param.put("cityid", cityid);//
 
 
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
@@ -388,13 +391,13 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             case R.id.iv_findjob_search://关键字搜索
 
                 intent = new Intent(FindJobActivity.this, JobSearchActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_CODE_KEYWORDSEARCH);
                 break;
 
             case R.id.iv_findjob_filter://职位筛选
 
                 intent = new Intent(FindJobActivity.this, JobFilterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_FILTER);
                 break;
 
             case R.id.btn_alljob_shenqing:
@@ -525,5 +528,14 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "cityid", "");//工作城市
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", "");//发布时间
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_CODE_FILTER || requestCode == REQUEST_CODE_KEYWORDSEARCH){
+            initView();
+            initData();
+        }
     }
 }

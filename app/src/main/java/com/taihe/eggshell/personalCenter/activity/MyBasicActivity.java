@@ -227,9 +227,9 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
                         msg.obj = basicBean;
                         basicHandler.sendMessage(msg);
 
-                        ToastUtils.show(mContext, "获取基本资料成功");
+//                        ToastUtils.show(mContext, "获取基本资料成功");
                     } else {
-                        ToastUtils.show(mContext, "获取失败");
+//                        ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

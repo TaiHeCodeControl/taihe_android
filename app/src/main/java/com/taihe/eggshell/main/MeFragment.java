@@ -140,16 +140,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         rl_logout = (RelativeLayout) rootView.findViewById(R.id.rl_mine_logout);
         rl_mine_feedback = (RelativeLayout) rootView.findViewById(R.id.rl_mine_feedback);
         rl_mine_checkupdate = (RelativeLayout) rootView.findViewById(R.id.rl_mine_checkupdate);
-
         tv_version = (TextView) rootView.findViewById(R.id.tv_mine_version);
         tv_version.setText("当前版本V" + APKUtils.getVersionName());
-
         ll_userinfo = (LinearLayout) rootView.findViewById(R.id.ll_mine_userinfo);
         tv_logintxt = (TextView) rootView.findViewById(R.id.tv_mine_logintxt);
-
         tv_username = (TextView) rootView.findViewById(R.id.tv_mine_username);
-
-
         tv_qianming = (TextView) rootView.findViewById(R.id.tv_mine_qianming);
         tv_mine_postnum = (TextView) rootView.findViewById(R.id.tv_mine_postnum);
         tv_mine_collectnum = (TextView) rootView.findViewById(R.id.tv_mine_collectnum);
@@ -168,7 +163,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         rl_hezuo.setOnClickListener(this);
         rl_logout.setOnClickListener(this);
 
-
         dialog = new ChoiceDialog(mContext, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,12 +172,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         }, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dialog.dismiss();
-
                 logout();//退出登录
-
-
             }
         });
 
@@ -207,47 +197,41 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         if (null == user) {
 
+            //退出登录，清空用户头像，职位个数等信息
             userImagePath = "";
             imageLoader.get(userImagePath, ImageLoader.getImageListener(
                     circleiv_mine_icon, R.drawable.touxiang,
                     R.drawable.touxiang));
+            tv_mine_postnum.setText("(" + 0 + ")");
+            tv_mine_collectnum.setText("(" + 0 + ")");
+            tv_mine_jianlinum.setText("(" + 0 + ")");
 
             tv_logintxt.setVisibility(View.VISIBLE);
             ll_userinfo.setVisibility(View.GONE);
-
             rl_logout.setVisibility(View.GONE);
 
         } else {
             userId = user.getId();
             token = user.getToken();
             if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-                getBasic();
+                getBasic();//获取用户基本信息，投递职位个数，简历个数，头像等
             } else {
                 ToastUtils.show(mContext, R.string.check_network);
             }
 
-
-
-
             tv_logintxt.setVisibility(View.GONE);
             ll_userinfo.setVisibility(View.VISIBLE);
-
             rl_logout.setVisibility(View.VISIBLE);
-
-            //
         }
-
-
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-
     }
 
-    //获取用户基本信息
+    //获取用户基本信息，投递职位个数，简历个数，头像等
     private void getBasic() {
 
         Response.Listener listener = new Response.Listener() {
@@ -269,14 +253,11 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         nick = data.optString("name");
                        qianming = data.optString("description");
                        userImagePath=data.optString("resume_photo");
-
                         // 加载头像
-
                         Log.i("userImagePath",userImagePath);
                         imageLoader.get(userImagePath, ImageLoader.getImageListener(
                                 circleiv_mine_icon, R.drawable.touxiang,
                                 R.drawable.touxiang));
-
                         //手机号
                         String phoneNum = user.getPhoneNumber();
 
@@ -285,18 +266,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         } else {
                             tv_username.setText(phoneNum);
                         }
-
-
                         if (TextUtils.isEmpty(qianming)) {
                             tv_qianming.setText("学习是一种信仰！");
                         } else {
-
                             tv_qianming.setText(qianming);
                         }
-
-
                         if (TextUtils.isEmpty(postNum)) {
-
                             tv_mine_postnum.setText("(" + 0 + ")");
                         } else {
                             tv_mine_postnum.setText("(" + postNum + ")");
@@ -466,7 +441,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
-
+    //获取新版本
     private void getVersionCode() {
         Response.Listener listener = new Response.Listener() {
             @Override
@@ -519,7 +494,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_UPDATE, true, params, true, listener, errorListener);
     }
-
+    //更新APK
     private void updateAPK(String url) {
 
         final ProgressDialog progressDialog = new ProgressDialog(mContext);
@@ -804,7 +779,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         RequestUtils.createRequest(mContext, Urls.METHOD_UPLOAD_IMAGE, "", true, param, true, listener, errorListener);
 
     }
-
+    //将头像转换成Base64编码
     public String getPstr(String pathname) {
 
         try {

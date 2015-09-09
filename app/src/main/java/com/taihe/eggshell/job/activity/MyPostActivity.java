@@ -66,7 +66,7 @@ public class MyPostActivity extends BaseActivity {
 
 
     private int page = 1;
-    private int pageSize = 2;
+    private int pageSize = 8;
     //选中条数的统计
     private int postednum = 0;
     private static final String TAG = "MyPostActivity";
@@ -175,7 +175,7 @@ public class MyPostActivity extends BaseActivity {
                 Intent intent = new Intent(mContext, JobDetailActivity.class);
                 intent.putExtra("ID", job.getJob_Id());
                 intent.putExtra("com_id", job.getCom_id());
-                Log.i("ID", job.getJob_Id() + "");
+//                Log.i("ID", job.getJob_Id() + "");
                 startActivity(intent);
             }
         });
@@ -246,7 +246,7 @@ public class MyPostActivity extends BaseActivity {
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v("Post:", (String) o);
+//                    Log.v("Post:", (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
@@ -291,6 +291,7 @@ public class MyPostActivity extends BaseActivity {
         param.put("limit", pageSize + "");
 //        param.put("uid", 6 + "");//UserID
         param.put("uid", userId + "");//UserID
+
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_POST, false, param, true, listener, errorListener);
 
     }
@@ -348,7 +349,7 @@ public class MyPostActivity extends BaseActivity {
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v("DELETEPOST:", (String) o);
+//                    Log.v("DELETEPOST:", (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
@@ -386,8 +387,9 @@ public class MyPostActivity extends BaseActivity {
 
         String ss = sb.toString();
 
-        param.put("id", ss);
+        param.put("job_id", ss);
         param.put("uid", userId + "");//用户id
+//        Log.i("postDelete",param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_POST_DELETE, false, param, true, listener, errorListener);
 
     }
@@ -419,7 +421,7 @@ public class MyPostActivity extends BaseActivity {
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v(TAG, (String) o);
+//                    Log.v(TAG, (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 

@@ -217,7 +217,7 @@ public class AddressSelectActivity extends Activity implements View.OnClickListe
             String pcode = ((MyListItem) adapterView.getItemAtPosition(position)).getPcode();
 //            Toast.makeText(AddressSelectActivity.this, province + " " + city, Toast.LENGTH_LONG).show();
 
-            addressString = province + city + et_jiedao.getText().toString();
+            addressString = province + city ;
 //			initSpinner3(pcode);
 
         }
@@ -250,7 +250,7 @@ public class AddressSelectActivity extends Activity implements View.OnClickListe
             case R.id.btn_address_comfirm://确认地址
 
                 Intent intent = new Intent();
-                intent.putExtra("Address",addressString);
+                intent.putExtra("Address",addressString + et_jiedao.getText().toString());
                 setResult(RESULT_CODE_ADDRESS, intent);
                 AddressSelectActivity.this.finish();
                 //                //当前界面向右退出
