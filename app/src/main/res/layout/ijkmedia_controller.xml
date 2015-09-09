@@ -87,15 +87,16 @@
             android:background="@drawable/btn_back" />
 
         <ImageButton
-            android:id="@+id/landscape"
+            android:id="@+id/videochange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:visibility="invisible"
             android:layout_toLeftOf="@+id/videochange"
             android:background="@drawable/change" />
 
         <ImageButton
-            android:id="@+id/videochange"
+            android:id="@+id/landscape"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
