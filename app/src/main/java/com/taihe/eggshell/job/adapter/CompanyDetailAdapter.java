@@ -67,6 +67,7 @@ public class CompanyDetailAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.company_detail_job_list, null);
             holder = new ViewHolder();
             holder.tv_jobName = (TextView) view.findViewById(R.id.COMDETtv_listjob_jobname);
+            holder.tv_comName = (TextView) view.findViewById(R.id.COMDETtv_listjob_comname);
             holder.tv_city = (TextView) view.findViewById(R.id.COMDETtv_listjob_city);
             holder.tv_edu = (TextView) view.findViewById(R.id.COMDETtv_listjob_edu);
             holder.tv_pubTiem = (TextView) view.findViewById(R.id.COMDETtv_listjob_pubtime);
@@ -77,6 +78,9 @@ public class CompanyDetailAdapter extends BaseAdapter {
         String jobName = jobInfo.getName();
         if(!TextUtils.isEmpty(jobName)){
             holder.tv_jobName.setText(jobName);
+        }
+        if(!TextUtils.isEmpty(jobInfo.getName())){
+            holder.tv_comName.setText(jobInfo.getCom_name());
         }
         if(!TextUtils.isEmpty(jobInfo.getProvinceid())){
             holder.tv_city.setText(jobInfo.getProvinceid());
@@ -103,7 +107,7 @@ public class CompanyDetailAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        TextView tv_jobName, tv_city, tv_edu, tv_pubTiem, tv_salaryRange;
+        TextView tv_jobName, tv_comName,tv_city, tv_edu, tv_pubTiem, tv_salaryRange;
     }
 
 

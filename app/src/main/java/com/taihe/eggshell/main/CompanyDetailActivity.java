@@ -237,6 +237,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
                                 vMode.setSalary(j2.optString("salary"));
                                 vMode.setEdu(j2.optString("edu"));
                                 vMode.setName(j2.optString("name"));
+                                vMode.setCom_name(j2.optString("com_name"));
                                 vMode.setLastupdate(j2.optString("sdate"));
                                 vMode.setProvinceid(j2.optString("provinceid"));
                                 jobInfos.add(vMode);
