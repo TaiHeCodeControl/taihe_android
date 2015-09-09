@@ -23,6 +23,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.resume.entity.Resumes;
+import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -46,6 +47,7 @@ public class ResumeManagerActivity extends BaseActivity{
     private LoadingProgressDialog loading;
     private TextView createResume,scanResume,edtResume,useResume,delResume;
     private CheckBox checkBox;
+    private ChoiceDialog deleteDialog;
     private LinearLayout lin_back;
     private RelativeLayout resumeRelative;
     private View line;
@@ -142,17 +144,34 @@ public class ResumeManagerActivity extends BaseActivity{
                     EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
                     ToastUtils.show(mContext,"你使用了简历:"+resume.getName());
                 }else{
-                    ToastUtils.show(mContext,"请选择简历");
+                    ToastUtils.show(mContext, "请选择简历");
                 }
                 break;
             case R.id.id_del:
-                if(isSelected){
-                    if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
-                        loading.show();
-                        deleteResume();
-                    }else{
-                        ToastUtils.show(mContext,R.string.check_network);
+                 deleteDialog = new ChoiceDialog(mContext,new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteDialog.dismiss();
                     }
+                },new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+                            deleteDialog.dismiss();
+                            loading.show();
+                            deleteResume();
+                        }else{
+                            ToastUtils.show(mContext,R.string.check_network);
+                        }
+                    }
+                });
+
+                deleteDialog.getTitleText().setText("确定要删除吗？");
+                deleteDialog.getRightButton().setText("确定");
+                deleteDialog.getLeftButton().setText("取消");
+
+                if(isSelected){
+                    deleteDialog.show();
                 }else{
                     ToastUtils.show(mContext,"请选择要删除的简历");
                 }
@@ -223,6 +242,7 @@ public class ResumeManagerActivity extends BaseActivity{
                         createResume.setEnabled(true);
                         createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.msg_vercode_background));
                         EggshellApplication.getApplication().getUser().setResumeid("");
+                        isSelected = false;
                         ToastUtils.show(mContext,"删除成功");
                     }
                 } catch (JSONException e) {
