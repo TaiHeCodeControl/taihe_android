@@ -328,16 +328,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     //申请职位
     public void postJob() {
 
-
-        StringBuilder sb = new StringBuilder();//选择的职位
-        for (JobInfo jobInfo : jobInfos) {
-            System.out.println(jobInfo.getJob_Id() + "======" + jobInfo.isChecked());
-            if (jobInfo.isChecked()) {
-                sb.append(jobInfo.getJob_Id());
-                sb.append(",");
-            }
-        }
-
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
@@ -387,10 +377,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             }
         };
 
-        String jobIds = sb.toString();
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", UserId + "");//UserID       userId
-        param.put("job_id", jobIds);
+        param.put("job_id", jobId+"");
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
 
     }
