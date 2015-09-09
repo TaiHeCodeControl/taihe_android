@@ -3,7 +3,8 @@ package com.taihe.eggshell.videoplay;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -23,14 +23,17 @@ import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
-import com.easefun.polyvsdk.PolyvSDKClient;
+import com.easefun.polyvsdk.PolyvDownloader;
+import com.easefun.polyvsdk.Video;
 import com.easefun.polyvsdk.ijk.IjkVideoView;
 import com.easefun.polyvsdk.ijk.OnPreparedListener;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.DBservice;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.main.adapter.VideoInfoAdapter;
+import com.taihe.eggshell.videoplay.mode.DownloadInfo;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.umeng.analytics.MobclickAgent;
 
@@ -64,6 +67,8 @@ public class VideoPlayActivity extends BaseActivity {
     private TextView playTitle;
     private List<VideoInfoMode> listInfo;
     private ListView lst_video_play;
+    private ArrayList<PolyvDownloader> downloaders;
+    private DBservice service;
     String[] arrPlist;
     Handler mHandler = new Handler(){
         @Override
@@ -124,6 +129,7 @@ public class VideoPlayActivity extends BaseActivity {
         listInfo = new ArrayList<VideoInfoMode>();
         videoAdapter = new VideoInfoAdapter(getApplicationContext());
         lst_video_play.setDividerHeight(0);
+        service = new DBservice(getApplicationContext());
         Bundle e = getIntent().getExtras();
         String title="";
         if (e != null) {
@@ -192,33 +198,34 @@ public class VideoPlayActivity extends BaseActivity {
                         changeToPortrait();
                     }
                 });
+        //下载
+        mediaController.setOnClickListener(new DownloadListener(vid, playTitle.getText().toString()));
         // 设置视频尺寸 ，在横屏下效果较明显
-        mediaController.setOnVideoChangeListener(new MediaController.OnVideoChangeListener() {
-
-            @Override
-            public void onVideoChange(int layout) {
-                // TODO Auto-generated method stub
-                videoview.setVideoLayout(layout);
-                switch (layout) {
-                    case IjkVideoView.VIDEO_LAYOUT_ORIGIN:
-//                        Log.e("err","err1=="+layout);
-                        //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_ORIGIN", 1).show();
-                        break;
-                    case IjkVideoView.VIDEO_LAYOUT_SCALE:
-//                       Log.e("err","err2=="+layout);
-                        //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_SCALE", 1).show();
-                        break;
-                    case IjkVideoView.VIDEO_LAYOUT_STRETCH:
-//                        Log.e("err","err3=="+layout);
-                        //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_STRETCH", 1).show();
-                        break;
-                    case IjkVideoView.VIDEO_LAYOUT_ZOOM:
-//                        Log.e("err","err4=="+layout);
-                        //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_ZOOM", 1).show();
-                        break;
-                }
-            }
-        });
+//        mediaController.setOnVideoChangeListener(new MediaController.OnVideoChangeListener() {
+//            @Override
+//            public void onVideoChange(int layout) {
+//                // TODO Auto-generated method stub
+//                videoview.setVideoLayout(layout);
+//                switch (layout) {
+//                    case IjkVideoView.VIDEO_LAYOUT_ORIGIN:
+////                        Log.e("err","err1=="+layout);
+//                        //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_ORIGIN", 1).show();
+//                        break;
+//                    case IjkVideoView.VIDEO_LAYOUT_SCALE:
+////                       Log.e("err","err2=="+layout);
+//                        //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_SCALE", 1).show();
+//                        break;
+//                    case IjkVideoView.VIDEO_LAYOUT_STRETCH:
+////                        Log.e("err","err3=="+layout);
+//                        //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_STRETCH", 1).show();
+//                        break;
+//                    case IjkVideoView.VIDEO_LAYOUT_ZOOM:
+////                        Log.e("err","err4=="+layout);
+//                        //Toast.makeText(IjkFullVideoActivity.this, "VIDEO_LAYOUT_ZOOM", 1).show();
+//                        break;
+//                }
+//            }
+//        });
         getData();
         lst_video_play.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -335,5 +342,66 @@ public class VideoPlayActivity extends BaseActivity {
         super.onResume();
         MobclickAgent.onResume(getApplication());
     }
+    class DownloadListener implements View.OnClickListener {
+        private String vid;
+        private String title;
 
+        public DownloadListener(String vid,String title) {
+            this.vid = vid;
+            this.title = title;
+        }
+
+        @Override
+        public void onClick(View v) {
+            downloaders = new ArrayList<PolyvDownloader>();
+            Video.loadVideo(vid, new Video.OnVideoLoaded() {
+                public void onloaded(final Video v) {
+                    if (v == null) {
+                        return;
+                    }
+                    //码率数
+                    int df_num = v.getDf();
+                    String[] items = null;
+                    if (df_num == 1) {
+                        items = new String[]{"流畅"};
+                    }
+                    if (df_num == 2) {
+                        items = new String[]{"流畅", "高清"};
+                    }
+                    if (df_num == 3) {
+                        items = new String[]{"流畅", "高清", "超清"};
+                    }
+
+                    final AlertDialog.Builder selectDialog = new AlertDialog.Builder(
+                            getApplicationContext()).setTitle("选择下载码率")
+                            // 数字2代表的是数组的下标
+                            .setSingleChoiceItems(items, 0,
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            int bitrate = which + 1;
+                                            DownloadInfo downloadInfo = new DownloadInfo(vid,v.getDuration(),v.getFilesize(bitrate),bitrate);
+                                            downloadInfo.setTitle(title);
+                                            Log.i("videoAdapter",downloadInfo.toString());
+                                            if (service != null && !service .isAdd(downloadInfo)) {
+                                                service.addDownloadFile(downloadInfo);
+                                            } else {
+//                                                ((Activity) context).runOnUiThread(new Runnable() {
+//                                                    @Override
+//                                                    public void run() {
+//                                                        Toast.makeText(getApplicationContext(),"下载任务已经增加到队列",1).show();
+//                                                    }
+//                                                });
+
+                                            }
+                                            dialog.dismiss();
+                                        }
+                                    });
+                    selectDialog.show().setCanceledOnTouchOutside(true);
+
+                }
+            });
+        }
+
+    }
 }

@@ -41,8 +41,9 @@ public class ResumeTechActivity extends BaseActivity{
     private EditText techEdit,techYear,workTimeEnd;
     private LoadingProgressDialog loading;
     private Resumes resume;
-    private String techName,years,techType,techLevel;
+    private String techName,years,techType,techLevel,strLB,strSLD;
     private int id_skill,id_level;
+
     private Map<String,String> params = new HashMap<String, String>();
 
     private static final int RESULT_INDUSTRY = 20;
@@ -120,11 +121,11 @@ public class ResumeTechActivity extends BaseActivity{
 
                 break;
             case R.id.id_reset:
-                techEdit.setHint("请填写单位名称");
-                techYear.setHint("2015-01-01");
-                workTimeEnd.setHint("2015-01-01");
-                techtypeEdit.setHint("请填写担任职位");
-                levelEdit.setHint("请填写工作内容");
+                techEdit.setText ("");
+                techYear.setText("");
+                workTimeEnd.setText("");
+                techtypeEdit.setText("");
+                levelEdit.setText("");
 
                 break;
         }
@@ -141,6 +142,13 @@ public class ResumeTechActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if(code == 0){
                         ToastUtils.show(mContext,"创建成功");
+                        Intent intent = new Intent(mContext,ResumeTechScanActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("name",techName);
+                        intent.putExtra("specialty",strLB);
+                        intent.putExtra("title",strSLD);
+                        intent.putExtra("sdate",years);
+                        startActivity(intent);
                         finish();
                     }else{
                         ToastUtils.show(mContext,"创建失败");
@@ -161,21 +169,23 @@ public class ResumeTechActivity extends BaseActivity{
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_RESUME_TECH,false,params,true,listener,errorListener);
     }
-
+    StaticData result;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
-            StaticData result = data.getParcelableExtra("data");
+            result = data.getParcelableExtra("data");
             if(null == result){
                 return;
             }
             switch (requestCode){
                 case RESULT_INDUSTRY:
+                    strLB=result.getName();
                     techtypeEdit.setText(result.getName());
                     id_skill = result.getId();
                     break;
                 case RESULT_LEVEL:
+                    strSLD=result.getName();
                     levelEdit.setText(result.getName());
                     id_level = result.getId();
                     break;
