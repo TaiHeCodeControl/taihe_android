@@ -20,6 +20,7 @@ public class MyBasicInfo {
             public String sex;
             public String telphone;
             public String uid;
+            public String birthday;
     }
 
 

@@ -34,6 +34,7 @@ import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
+import com.taihe.eggshell.widget.addressselect.AddressSelectActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +48,7 @@ import java.util.Map;
 public class LoginActivity extends BaseActivity {
 
     private static final String TAG = "LoginActivity";
+    private static final int REQUEST_CODE_REGISTER = 100 ;
 
     private Context mContext;
     private EditText et_userphone;
@@ -116,7 +118,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.tv_login_regist:
                 intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_CODE_REGISTER);
 //                this.finish();
                 break;
         }
@@ -258,6 +260,23 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         goBack();
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String telphoneNUM = "";
+        if (data != null) {
+            telphoneNUM = data.getStringExtra("data");
+        }
+        if (telphoneNUM == null || TextUtils.isEmpty(telphoneNUM)) {
+            return;
+        }
+        if (requestCode == REQUEST_CODE_REGISTER ) {
+
+            et_userphone.setText(telphoneNUM);
+        }
     }
 
 }

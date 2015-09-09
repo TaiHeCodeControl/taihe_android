@@ -171,7 +171,7 @@ public class RegisterActivity extends BaseActivity {
         };
 
 
-        RequestUtils.createRequest(mContext, "",Urls.METHOD_REGIST_GETCODE, false, dataParams, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_REGIST_GETCODE, false, dataParams, true, listener, errorListener);
     }
 
 
@@ -208,9 +208,10 @@ public class RegisterActivity extends BaseActivity {
                         // 将对象转换为JSON数据
                         String userData = gson.toJson(datas);
                         PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, userData);
-
-                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        //注册成功之后，登录
+                        Intent intent = new Intent();
+                        intent.putExtra("data",telphone);
+                        setResult(10,intent);
                         RegisterActivity.this.finish();
                     } else if (code == 1001) {
                         String msg = jsonObject.getString("message");

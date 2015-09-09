@@ -94,9 +94,9 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
                     oldphone = basicBean.telphone;
                     oldaddress = basicBean.address;
                     oldnickname = basicBean.name;
-                    oldqq = et_qq.getText().toString().trim();
+//                    oldqq = et_qq.getText().toString().trim();
                     oldemail = basicBean.email;
-                    oldbirthday = tv_birthdate.getText().toString().trim();
+                    oldbirthday = basicBean.birthday;
                     oldjianjie = basicBean.description;
 
                     if(TextUtils.isEmpty(oldjianjie)){
@@ -105,15 +105,29 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
                         tv_mybasic_jianjie.setText(oldjianjie);
                     }
                     tv_mybasic_sex.setText(oldsex);
-                    tv_address.setText(oldaddress);
+                    if(TextUtils.isEmpty(oldaddress)){
+                        tv_address.setText("北京");
+                    }else{
+                        tv_address.setText(oldaddress);
+                    }
+                    if(TextUtils.isEmpty(oldbirthday)){//生日
+                        tv_birthdate.setText(verTime);
+                    }else{
+                        tv_birthdate.setText(oldbirthday);
+                    }
+                    if(TextUtils.isEmpty(oldnickname)){//昵称
+                        et_nickname.setText("蛋壳儿");
+                    }else{
+                        et_nickname.setText(oldnickname);
+                    }
 
-                    et_nickname.setText(oldnickname);
 //                    et_qq;
-                    et_email.setText(oldemail);
+                    if(TextUtils.isEmpty(oldemail)){
+                        et_email.setText("tiahel@tiahel.com");
+                    }else{
+                        et_email.setText(oldemail);
+                    }
                     tv_mybasic_registime.setText(basicBean.reg_date);
-
-
-
 
                     tv_address.addTextChangedListener(new MyTextWhatch());
                     tv_birthdate.addTextChangedListener(new MyTextWhatch());
@@ -123,7 +137,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
                     tv_mybasic_jianjie.addTextChangedListener(new MyTextWhatch());
                     et_email.addTextChangedListener(new MyTextWhatch());
 
-                    et_qq.addTextChangedListener(new MyTextWhatch());
+//                    et_qq.addTextChangedListener(new MyTextWhatch());
 
                     et_nickname.addTextChangedListener(new MyTextWhatch());
 
@@ -254,7 +268,6 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
             }
         };
 
-
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", UserId + "");
         param.put("token",token);
@@ -270,16 +283,12 @@ public class MyBasicActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_mybasic_back://退出当前页面
-
                 goBack();
-
                 break;
 
             case R.id.rl_mybasic_city://选择城市
-
                 intent = new Intent(MyBasicActivity.this, AddressSelectActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_CITY);
-
                 break;
 
             case R.id.rl_mybasic_sex://选择性别
