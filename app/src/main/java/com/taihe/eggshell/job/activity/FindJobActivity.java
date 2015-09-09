@@ -391,6 +391,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             case R.id.iv_findjob_search://关键字搜索
 
                 intent = new Intent(FindJobActivity.this, JobSearchActivity.class);
+                intent.putExtra("From","findjob");
                 startActivityForResult(intent,REQUEST_CODE_KEYWORDSEARCH);
                 break;
 

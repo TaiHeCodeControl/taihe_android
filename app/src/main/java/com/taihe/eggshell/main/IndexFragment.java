@@ -232,6 +232,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.id_search_job://搜索
                 intent = new Intent(mContext, JobSearchActivity.class);
+                intent.putExtra("From","Index");
                 startActivity(intent);
                 break;
             case R.id.id_look_job://找工作
