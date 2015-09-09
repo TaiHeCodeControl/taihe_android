@@ -116,7 +116,7 @@ public class ResumeScanActivity extends BaseActivity{
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-                Log.v(TAG,(String)o);
+//                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");

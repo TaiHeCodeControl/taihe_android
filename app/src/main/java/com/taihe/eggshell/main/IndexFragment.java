@@ -350,7 +350,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Object o) {
 
-                Log.v(TAG,(String)o);
+//                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");

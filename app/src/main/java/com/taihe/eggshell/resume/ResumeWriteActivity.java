@@ -328,7 +328,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-                Log.v(TAG,(String)o);
+//                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
@@ -418,7 +418,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-                Log.v(TAG, (String) o);
+//                Log.v(TAG, (String) o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
@@ -442,11 +442,11 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 loading.dismiss();
-                Log.v("FFF:",new String(volleyError.networkResponse.data));
+//                Log.v("FFF:",new String(volleyError.networkResponse.data));
                 ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
             }
         };
-        Log.v("PAR:",params.toString());
+//        Log.v("PAR:",params.toString());
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_CREATE_RESUME, false, params, true, listener, errorListener);
     }
 
