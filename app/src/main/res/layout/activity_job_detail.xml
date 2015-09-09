@@ -12,7 +12,8 @@
     <ScrollView
         android:id="@+id/sv_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:fillViewport="true"
         android:scrollbars="none">
 
@@ -283,13 +284,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="岗位职责"
                     android:ellipsize="end"
+                    android:gravity="center"
                     android:lineSpacingExtra="5dp"
                     android:lineSpacingMultiplier="1.0"
+                    android:text="岗位职责"
                     android:textColor="@color/font_color_black"
                     android:textSize="@dimen/font_size_26" />
+
                 <TextView
                     android:id="@+id/id_see_allzhize"
                     android:layout_width="wrap_content"
@@ -331,7 +333,7 @@
                     android:divider="@null"
                     android:listSelector="@color/white"
                     android:scrollbars="none"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
 
             <LinearLayout
@@ -436,8 +438,8 @@
                 android:layout_marginTop="15dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingTop="15dp"
-                android:paddingLeft="15dp">
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp">
 
 
                 <TextView
@@ -451,39 +453,43 @@
                     android:textSize="@dimen/font_size_26" />
 
                 <View
-                    android:layout_marginTop="15dp"
-                    style="@style/line_fill" />
+                    style="@style/line_fill"
+                    android:layout_marginTop="15dp" />
 
             </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white">
+
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_other_position"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/white"
                     android:dividerHeight="0dp"
-                    android:listSelector="@color/white"
                     android:focusable="false"
+                    android:listSelector="@color/white"
                     android:scrollbars="none" />
             </RelativeLayout>
 
 
-            <Button
-                android:id="@+id/id_apply_button"
-                android:layout_width="120dp"
-                android:layout_height="36dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/apply_job"
-                android:text="申请职位"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
         </LinearLayout>
 
     </ScrollView>
 
+    <View style="@style/line_fill" />
+
+    <Button
+        android:id="@+id/id_apply_button"
+        android:layout_width="120dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/apply_job"
+        android:text="申请职位"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 </LinearLayout>

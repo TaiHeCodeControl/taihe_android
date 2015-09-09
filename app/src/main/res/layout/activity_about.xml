@@ -53,6 +53,15 @@
                 android:textColor="@color/font_color_black"
                 android:textSize="12dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dip"
+                android:layout_marginRight="15dip"
+                android:lineSpacingExtra="5dp"
+                android:text="联系我们\n蛋壳儿之家"
+                android:textColor="@color/font_color_black"
+                android:textSize="12dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
