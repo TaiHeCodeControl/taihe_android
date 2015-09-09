@@ -72,6 +72,7 @@ public class VideoPlayActivity extends BaseActivity {
             switch (msg.what){
                 case 100:
                     try{
+                        int tempnum =0;
                         JSONArray j1 = new JSONArray(msg.obj.toString());
                         JSONObject j2;
                         for(int i=0;i<j1.length();i++){
@@ -87,10 +88,19 @@ public class VideoPlayActivity extends BaseActivity {
                             vMode.setVideo_obvious(j2.optString("video_obvious").toString());
                             vMode.setVimage(j2.optString("vimage").toString());
                             vMode.setStatus(j2.optString("status").toString());
+                            if(playTitle.getText().toString().equals(j2.optString("video_name").toString())){
+                                tempnum=i;
+                            }
                             listInfo.add(vMode);
                         }
                         videoAdapter.setVideoData(listInfo);
                         lst_video_play.setAdapter(videoAdapter);
+                        if(listInfo.size()>0){
+                            lst_video_play.setSelection(tempnum);
+                            videoAdapter.setSelectedPosition(tempnum);
+                            lst_video_play.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.bg_gray));
+                            videoAdapter.notifyDataSetInvalidated();
+                        }
                     }catch (Exception ex){
                         ex.printStackTrace();
                     }
@@ -264,7 +274,6 @@ public class VideoPlayActivity extends BaseActivity {
 //        map.put("limit",""+limit);
 //        map.put("page",""+page);
 
-//        String url = "http://195.198.1.122:8066/eggker/phpv/API.php/video/getGroup?id="+arrPlist[arrPlist.length-1];
         RequestUtils.createRequest(getApplicationContext(), Urls.VIDEO_DETAIL_LIST_URL+arrPlist[arrPlist.length-1], "", true, map, true, listener, errorListener);
     }
     @Override
