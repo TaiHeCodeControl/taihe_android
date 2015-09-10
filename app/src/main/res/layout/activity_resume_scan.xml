@@ -599,6 +599,16 @@
                     android:paddingLeft="15dp"
                     android:text=""
                     android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/id_to_add_self"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:text="暂时没有内容...点击添加"
+                    android:textSize="@dimen/font_size_15"
+                    android:textColor="@color/font_color_gray"
+                    android:visibility="gone"/>
             </LinearLayout>
 
             </LinearLayout>

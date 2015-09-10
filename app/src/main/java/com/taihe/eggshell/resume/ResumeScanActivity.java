@@ -56,7 +56,7 @@ public class ResumeScanActivity extends BaseActivity{
     private TextView selfbrief;
     private LoadingProgressDialog loading;
     private MyListView worklistview,edulistview,techlistview,projectlistview,booklistview,trainlistview;
-    private TextView addWork,addEdu,addTech,addProject,addBook,addTrain;
+    private TextView addWork,addEdu,addTech,addProject,addBook,addTrain,addSelf;
     private Resumes eid;
     private Intent intent;
     private ScrollView scrollView;
@@ -139,6 +139,8 @@ public class ResumeScanActivity extends BaseActivity{
 //        trainbrief = (TextView)findViewById(R.id.id_train_brief);
         //自我评价
         selfbrief = (TextView)findViewById(R.id.id_self_desc);
+        addSelf = (TextView)findViewById(R.id.id_to_add_self);
+        addSelf.setOnClickListener(this);
 
     }
 
@@ -206,6 +208,11 @@ public class ResumeScanActivity extends BaseActivity{
                 break;
             case R.id.id_to_add_book:
                 intent = new Intent(mContext,ResumeBookActivity.class);
+                intent.putExtra("eid",eid);
+                startActivity(intent);
+                break;
+            case R.id.id_to_add_self:
+                intent = new Intent(mContext,ResumeSelfActivity.class);
                 intent.putExtra("eid",eid);
                 startActivity(intent);
                 break;
@@ -353,6 +360,9 @@ public class ResumeScanActivity extends BaseActivity{
                         if(!ohter.equals("[]")){
                             JSONObject other = data.getJSONObject("other");
                             selfbrief.setText(other.getString("content"));
+                            addSelf.setVisibility(View.GONE);
+                        }else{
+                            addSelf.setVisibility(View.VISIBLE);
                         }
 
                         scrollView.post(new Runnable() {
