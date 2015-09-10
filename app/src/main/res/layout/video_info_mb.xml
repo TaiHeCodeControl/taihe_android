@@ -23,13 +23,12 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:layout_marginBottom="0dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="生物靠高核心考点的分析"
                 android:id="@+id/txt_video_mb_title"
                 android:gravity="center"
                 android:singleLine="true"

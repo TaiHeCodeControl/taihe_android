@@ -13,16 +13,17 @@
 
             <ImageView
                 android:id="@+id/img_video_head_mb_log"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:layout_marginBottom="0dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#66033186"
+                android:visibility="invisible"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
@@ -30,7 +31,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="徐建烽"
                     android:id="@+id/txt_video_head_mb_name"
                     android:gravity="center"
                     android:singleLine="true"
@@ -39,7 +39,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
-                    android:text="生物靠高核心考点的分析"
                     android:id="@+id/txt_video_head_mb_title"
                     android:gravity="center"
                     android:singleLine="true"

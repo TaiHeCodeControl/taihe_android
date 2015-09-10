@@ -155,6 +155,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                             JSONArray jt = jo.getJSONArray("teacher");
                             JSONObject j2;
                             VideoInfoMode vMode;
+                            int tmpImg = R.drawable.video_top1;
                             for (int i = 0; i < jt.length(); i++) {
                                 vMode = new VideoInfoMode();
                                 j2 = jt.getJSONObject(i);
@@ -167,7 +168,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                                 vMode.setVideo_about(j2.optString("video_about").toString());
                                 vMode.setVideo_obvious(j2.optString("video_obvious").toString());
                                 vMode.setStatus(j2.optString("status").toString());
-                                vMode.setVimage(j2.optString("vimage").toString());
+                                vMode.setVimage((tmpImg+i)+"");
                                 vMode.setPlist(j2.optString("plist").toString());
                                 listTopInfo.add(vMode);
                             }

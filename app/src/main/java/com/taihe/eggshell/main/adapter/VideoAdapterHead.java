@@ -31,7 +31,7 @@ public class VideoAdapterHead extends BaseAdapter{
 
     private Context mContext;
     private  List<VideoInfoMode> list;
-
+    private int tempImg;
     public VideoAdapterHead(Context context){
         this.mContext = context;
     }
@@ -69,8 +69,11 @@ public class VideoAdapterHead extends BaseAdapter{
         }
         viewHolder.txtTitle.setText(list.get(position).getVideo_name().toString());
         viewHolder.txtName.setText(list.get(position).getVideo_teacher().toString());
-        FinalBitmap bitmap = FinalBitmap.create(mContext);
-        bitmap.display(viewHolder.imgPic,list.get(position).getVimage().toString());
+
+        tempImg = Integer.parseInt(list.get(position).getVimage().toString());
+        viewHolder.imgPic.setBackgroundResource(tempImg);
+//        FinalBitmap bitmap = FinalBitmap.create(mContext);
+//        bitmap.display(viewHolder.imgPic,list.get(position).getVimage().toString());
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
