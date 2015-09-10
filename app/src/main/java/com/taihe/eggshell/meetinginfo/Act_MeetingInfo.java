@@ -40,7 +40,7 @@ public class Act_MeetingInfo extends BaseActivity {
     private ImageView img_meetinginfo_top1,img_meetinginfo_top2;
     private PullToRefreshGridView meetingView;
     private PlayAdapter playAdapter;
-    int limit=5,page=1,type=1;
+    int limit=5,page=1,type=2;
     List<PlayInfoMode> list;
     private LoadingProgressDialog loading;
     private Context mContext;
@@ -93,7 +93,7 @@ public class Act_MeetingInfo extends BaseActivity {
         switch (view.getId()){
             case R.id.lin_meetinginfo_top1:
                 list.clear();
-                type=1;
+                type=2;
                 img_meetinginfo_top1.setBackgroundResource(R.drawable.zhaopinhui);
                 img_meetinginfo_top2.setBackgroundResource(R.drawable.shuangxuanhuick);
                 txt_meetinginfo_top1.setTextColor(getResources().getColor(R.color.font_color_red));
@@ -104,7 +104,7 @@ public class Act_MeetingInfo extends BaseActivity {
                 break;
             case R.id.lin_meetinginfo_top2:
                 list.clear();
-                type=2;
+                type=1;
                 img_meetinginfo_top1.setBackgroundResource(R.drawable.zhaopinhuick);
                 img_meetinginfo_top2.setBackgroundResource(R.drawable.shuangxuanhui);
                 txt_meetinginfo_top2.setTextColor(getResources().getColor(R.color.font_color_red));

@@ -42,7 +42,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
     private PullToRefreshGridView playView;
     private PlayAdapter playAdapter;
     private ImageView img_around_tag1,img_around_tag2;
-    int limit=5,page=1,type=1;
+    int limit=5,page=1,type=2;
     List<PlayInfoMode> list;
     private LoadingProgressDialog loading;
 	@Override
@@ -107,7 +107,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
 		switch (view.getId()){
             case R.id.lin_around_tag1:
                 list.clear();
-                type=1;
+                type=2;
                 loading.show();
                 img_around_tag1.setBackgroundResource(R.drawable.high);
                 img_around_tag2.setBackgroundResource(R.drawable.fulick);
@@ -120,7 +120,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.lin_around_tag2:
                 list.clear();
-                type=2;
+                type=1;
                 loading.show();
                 img_around_tag1.setBackgroundResource(R.drawable.highck);
                 img_around_tag2.setBackgroundResource(R.drawable.fuli);
