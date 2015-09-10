@@ -163,9 +163,10 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         fbtime = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "fbtime", "");
 
         tv_findjob_title = (TextView) findViewById(R.id.tv_findjob_title);
-        if (keyword.equals("兼职")) {
+        //根据type判断是兼职还是实习还是全职职位
+        if (type.equals("56")) {
             tv_findjob_title.setText("兼职职位");
-        } else if (keyword.equals("实习")) {
+        } else if (type.equals("129")) {
             tv_findjob_title.setText("实习职位");
         } else {
             tv_findjob_title.setText("全职职位");

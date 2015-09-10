@@ -39,6 +39,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -99,9 +101,9 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         gv_hotjob.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(prolist.get(position).getName().equals("银行柜员")){
+                if (prolist.get(position).getName().equals("银行柜员")) {
                     PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "柜员");
-                }else{
+                } else {
                     PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", prolist.get(position).getName());
                 }
 
@@ -118,6 +120,8 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         });
 
         getDataFromDatabase();
+
+
         historyAdapter = new SearchHistoryAdapter(mContext, historyList);
         lv_searchHistory.setAdapter(historyAdapter);
         lv_searchHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -138,6 +142,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
 
 
     }
+
 
     @Override
     public void onClick(View v) {
@@ -210,6 +215,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
+
                 return list;
             }
 
