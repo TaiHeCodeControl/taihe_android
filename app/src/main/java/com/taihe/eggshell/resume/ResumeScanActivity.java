@@ -167,7 +167,7 @@ public class ResumeScanActivity extends BaseActivity{
         MobclickAgent.onResume(mContext);
 
         eid = getIntent().getParcelableExtra("eid");
-        Log.v("TTT:",eid.getRid()+"");
+//        Log.v("TTT:",eid.getRid()+"");
         loading = new LoadingProgressDialog(mContext,"正在请求...");
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             loading.show();
@@ -361,7 +361,9 @@ public class ResumeScanActivity extends BaseActivity{
                             JSONObject other = data.getJSONObject("other");
                             selfbrief.setText(other.getString("content"));
                             addSelf.setVisibility(View.GONE);
+                            selfbrief.setVisibility(View.VISIBLE);
                         }else{
+                            selfbrief.setVisibility(View.GONE);
                             addSelf.setVisibility(View.VISIBLE);
                         }
 

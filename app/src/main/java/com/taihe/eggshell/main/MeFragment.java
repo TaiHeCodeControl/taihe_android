@@ -475,6 +475,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
                         updateDialog.getTitleText().setText("发现新版本");
                         updateDialog.show();
+                    }else{
+                        ToastUtils.show(mContext, "已是最新版本");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
