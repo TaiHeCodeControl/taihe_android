@@ -37,6 +37,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -207,7 +208,8 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
             @Override
             protected List<SearchHistory> doInBackground(Void... params) {
 
-                Selector selector = Selector.from(SearchHistory.class).limit(PAGE_SIZE).offset(offset);
+//                Selector selector = Selector.from(SearchHistory.class).limit(PAGE_SIZE).offset(offset);
+                Selector selector = Selector.from(SearchHistory.class);
 
                 List<SearchHistory> list = null;
                 try {
@@ -216,6 +218,24 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
 
+                int size = list.size();
+                for(int i = 0; i < size - 1;i++){
+                    for(int j = i+1; j < size; j ++){
+                        if(list.get(i).getName().equalsIgnoreCase(list.get(j).getName())){
+                            list.remove(i);
+                            i--;
+                            size--;
+                            break;
+                        }
+                    }
+
+                }
+                if(size > 10){
+                    for(int i = 0; i < size -10;i++){
+                        list.remove(i);
+                    }
+                }
+                Collections.reverse(list);
                 return list;
             }
 

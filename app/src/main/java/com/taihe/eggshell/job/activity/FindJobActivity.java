@@ -368,7 +368,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 Longitude = "";
                 Latitude = "";
 
-                getList();
+                initData();
                 iv_quancheng.setImageResource(R.drawable.quancheng01);
                 iv_fujin.setImageResource(R.drawable.fujin01);
 
