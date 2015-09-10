@@ -127,7 +127,7 @@ public class ResumeManagerActivity extends BaseActivity{
                 break;
             case R.id.id_scan_resume:
                 intent = new Intent(mContext,ResumeScanActivity.class);
-                intent.putExtra("eid",resume.getRid()+"");
+                intent.putExtra("eid",resume);
                 startActivity(intent);
                 break;
             case R.id.id_edt:
@@ -198,7 +198,8 @@ public class ResumeManagerActivity extends BaseActivity{
                             resumeRelative.setVisibility(View.VISIBLE);
                             line.setVisibility(View.VISIBLE);
                             resume = resumesList.get(0);
-                            checkBox.setText(resume.getName());
+                            checkBox.setText("\u3000"+resume.getName());
+                            checkBox.setChecked(false);
 //                            EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
                         }else{
                             resumeRelative.setVisibility(View.GONE);

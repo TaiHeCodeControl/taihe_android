@@ -328,7 +328,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-//                Log.v(TAG,(String)o);
+                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
@@ -340,9 +340,16 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         userName.setText(name);
                         String emails = info.getString("email");//邮箱
                         email.setText(emails);
-                        JSONObject edu = info.getJSONObject("edu");//学历
-                        forTopSchool.setText(edu.getString("name"));
-                        id_school = edu.getInt("id");
+
+                        if(!"null".equals(info.getString("edu"))){
+                            JSONObject edu = info.getJSONObject("edu");//学历
+                            forTopSchool.setText(edu.getString("name"));
+                            id_school = edu.getInt("id");
+                        }else{
+                            forTopSchool.setText("");
+                            id_school = 15;
+                        }
+
                         JSONObject experince = info.getJSONObject("exp");//工作经验
                         forWorkExper.setText(experince.getString("name"));
                         id_workex = experince.getInt("id");
@@ -418,7 +425,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-//                Log.v(TAG, (String) o);
+                Log.v(TAG, (String) o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
@@ -431,6 +438,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                         resume.setName(resumeName.getText().toString());
                         intent.putExtra("resume", resume);
                         startActivity(intent);
+                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

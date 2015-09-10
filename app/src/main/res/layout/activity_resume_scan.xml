@@ -47,6 +47,7 @@
         android:background="@color/line_gray"/>
 
     <ScrollView
+        android:id="@+id/id_scan_scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white">
@@ -70,7 +71,7 @@
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/id_user_name"
-                        android:text="王某某"
+                        android:text="王五"
                         style="@style/ResumeScanPeo"/>
 
                     <TextView
@@ -93,7 +94,7 @@
                     <TextView
                         android:id="@+id/id_age"
                         android:layout_marginLeft="2dp"
-                        android:text="25岁"
+                        android:text="100岁"
                         style="@style/ResumeScanPeo"/>
 
                     <TextView
@@ -332,52 +333,23 @@
                     android:layout_marginBottom="8dp"
                     android:background="@color/line_gray"/>
 
-                <LinearLayout
+                <com.taihe.eggshell.widget.MyListView
+                    android:id="@+id/id_work_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|center"
+                    android:divider="@color/white"
+                    android:dividerHeight="0.5dp"
+                    android:background="@color/white"/>
+
+                <TextView
+                    android:id="@+id/id_to_add_work"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/id_time_work"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="时间段"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/id_position"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="职位"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/id_company_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="公司"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="工作内容:"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/id_work_content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text=""
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
+                    android:text="暂时没有内容...点击添加"
+                    android:textSize="@dimen/font_size_15"
+                    android:textColor="@color/font_color_gray"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -404,74 +376,23 @@
                     android:layout_marginBottom="8dp"
                     android:background="@color/line_gray"/>
 
-                <LinearLayout
+                <com.taihe.eggshell.widget.MyListView
+                    android:id="@+id/id_edu_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/white"
+                    android:dividerHeight="0.5dp"
+                    android:background="@color/white"/>
+
+                <TextView
+                    android:id="@+id/id_to_add_edu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:gravity="left|center"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/id_time_edu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="时间段"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/id_professional"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="专业"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/id_school_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="学校"
-                        android:textColor="@color/black"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:text="担任职位:"
-                            android:textColor="@color/black"/>
-
-                        <TextView
-                            android:id="@+id/id_school_posion"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="10dp"
-                            android:text=""
-                            android:textColor="@color/black"/>
-                        </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="专业描述:"
-                        android:textColor="@color/font_color_gray"/>
-
-                    <TextView
-                        android:id="@+id/id_prof_brief"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text=""
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
+                    android:text="暂时没有内容...点击添加"
+                    android:textSize="@dimen/font_size_15"
+                    android:textColor="@color/font_color_gray"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -497,62 +418,24 @@
                     android:layout_marginBottom="8dp"
                     android:background="@color/line_gray"/>
 
-                <TextView
-                    android:id="@+id/id_tech_name"
-                    android:layout_width="wrap_content"
+                <com.taihe.eggshell.widget.MyListView
+                    android:id="@+id/id_tech_list"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="名称"
-                    android:textColor="@color/black"/>
+                    android:divider="@color/white"
+                    android:dividerHeight="0.5dp"
+                    android:background="@color/white"/>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/id_to_add_tech"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:gravity="left|center"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:orientation="horizontal">
+                    android:text="暂时没有内容...点击添加"
+                    android:textSize="@dimen/font_size_15"
+                    android:textColor="@color/font_color_gray"
+                    android:visibility="gone"/>
 
-                    <TextView
-                        style="@style/ResumeTextStyle_left"
-                        android:text="掌握时间:"/>
-
-                    <TextView
-                        android:id="@+id/id_contron_time"
-                        style="@style/ResumeTextStyle"
-                        android:text=""/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:gravity="left|center"
-                    android:paddingLeft="15dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        style="@style/ResumeTextStyle_left"
-                        android:text="熟练程度:"/>
-
-                    <TextView
-                        android:id="@+id/id_hot_level"
-                        style="@style/ResumeTextStyle"
-                        android:text=""/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:gravity="left|center"
-                    android:paddingLeft="15dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        style="@style/ResumeTextStyle_left"
-                        android:text="技能名称:"/>
-
-                    <TextView
-                        android:id="@+id/id_tech"
-                        style="@style/ResumeTextStyle"
-                        android:text="" />
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -578,52 +461,23 @@
                     android:layout_marginBottom="8dp"
                     android:background="@color/line_gray"/>
 
-                <LinearLayout
+                <com.taihe.eggshell.widget.MyListView
+                    android:id="@+id/id_project_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|center"
+                    android:divider="@color/white"
+                    android:dividerHeight="0.5dp"
+                    android:background="@color/white"/>
+
+                <TextView
+                    android:id="@+id/id_to_add_project"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/id_time_project"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="时间段"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/id_own_posion"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="担任职位"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/id_project_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="项目名称"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="项目内容:"
-                        android:textColor="@color/font_color_gray"/>
-
-                    <TextView
-                        android:id="@+id/id_content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text=""
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
+                    android:text="暂时没有内容...点击添加"
+                    android:textSize="@dimen/font_size_15"
+                    android:textColor="@color/font_color_gray"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -650,52 +504,23 @@
                     android:layout_marginBottom="8dp"
                     android:background="@color/line_gray"/>
 
-                <LinearLayout
+                <com.taihe.eggshell.widget.MyListView
+                    android:id="@+id/id_book_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|center"
+                    android:divider="@color/white"
+                    android:dividerHeight="0.5dp"
+                    android:background="@color/white"/>
+
+                <TextView
+                    android:id="@+id/id_to_add_book"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/id_time_book"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="时间段"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/id_book_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="证书"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/id_book_from"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="颁发单位"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="证书描述:"
-                        android:textColor="@color/font_color_gray"/>
-
-                    <TextView
-                        android:id="@+id/id_book_brief"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text=""
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
+                    android:text="暂时没有内容...点击添加"
+                    android:textSize="@dimen/font_size_15"
+                    android:textColor="@color/font_color_gray"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -722,52 +547,23 @@
                     android:layout_marginBottom="8dp"
                     android:background="@color/line_gray"/>
 
-                <LinearLayout
+                <com.taihe.eggshell.widget.MyListView
+                    android:id="@+id/id_train_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|center"
+                    android:divider="@color/white"
+                    android:dividerHeight="0.5dp"
+                    android:background="@color/white"/>
+
+                <TextView
+                    android:id="@+id/id_to_add_train"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/id_time_train"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="时间段"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/id_train_direction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="培训方向"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/id_train_company"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="培训机构"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="培训描述:"
-                        android:textColor="@color/font_color_gray"/>
-
-                    <TextView
-                        android:id="@+id/id_train_brief"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text=""
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
+                    android:text="暂时没有内容...点击添加"
+                    android:textSize="@dimen/font_size_15"
+                    android:textColor="@color/font_color_gray"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 

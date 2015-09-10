@@ -77,7 +77,10 @@
 
     <!--申请职位对话框中CheckBox的样式-->
     <style name="CustomCheckboxBlue" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/checkbox_blue</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawableLeft">@drawable/checkbox_blue</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="CustomCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
@@ -108,9 +111,11 @@
     </style>
 
     <style name="CustomRadioButton">
-        <item name="android:button">@drawable/radio_check</item>
+        <item name="android:button">@null</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:drawableLeft">@drawable/radio_check</item>
         <item name="android:padding">5dp</item>
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="WriteResumeTextStyle">

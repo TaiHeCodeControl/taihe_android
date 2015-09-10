@@ -228,7 +228,7 @@ public class ResumeWorkActivity extends BaseActivity{
         map.put("department",departName);
         map.put("title",positionName);
         map.put("content",contextWord);
-
+        Log.v("FFFFF:",map.toString());
         RequestUtils.createRequest(mContext, Urls.RESUME_WORK_URL, "", true, map, true, listener, errorListener);
     }
     @Override
