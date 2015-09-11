@@ -21,7 +21,7 @@ public class BaseActivity extends Activity implements View.OnClickListener{
 
     private static final String TAG = "BaseActivity";
 
-    private Context mContext;
+    public Context mContext;
     private ImageView backImage;
     private TextView titleTextView;
     private LinearLayout lin_back;

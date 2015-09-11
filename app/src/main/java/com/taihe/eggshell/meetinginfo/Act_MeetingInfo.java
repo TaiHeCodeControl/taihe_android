@@ -140,10 +140,10 @@ public class Act_MeetingInfo extends BaseActivity {
                                 vMode.setOrganizers(j2.optString("organizers").toString());
                                 vMode.setEvery_time("");
                                 vMode.setUser(j2.optString("user").toString());
-                                vMode.setTelphone(j2.optString("telphone").toString());
-                                vMode.setTraffic_route(j2.optString("traffic_route").toString());
+                                vMode.setTelphone(j2.optString("phone").toString());
+                                vMode.setTraffic_route(j2.optString("traffic").toString());
                                 vMode.setLogo(j2.optString("logo").toString());
-                                vMode.setContent(j2.optString("content").toString());
+                                vMode.setContent(j2.optString("body").toString());
                                 vMode.setStarttime(j2.optString("starttime").toString());
                                 vMode.setEndtime(j2.optString("endtime").toString());
                                 list.add(vMode);

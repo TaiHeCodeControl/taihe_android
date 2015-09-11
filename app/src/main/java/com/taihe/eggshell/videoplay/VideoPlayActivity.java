@@ -4,6 +4,8 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -103,7 +105,7 @@ public class VideoPlayActivity extends BaseActivity {
                         if(listInfo.size()>0){
                             lst_video_play.setSelection(tempnum);
                             videoAdapter.setSelectedPosition(tempnum);
-                            lst_video_play.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.bg_gray));
+                            lst_video_play.setBackgroundColor(mContext.getResources().getColor(R.color.bg_gray));
                             videoAdapter.notifyDataSetInvalidated();
                         }
                     }catch (Exception ex){
@@ -127,9 +129,9 @@ public class VideoPlayActivity extends BaseActivity {
     public void initData() {
         initTitle("课程播放");
         listInfo = new ArrayList<VideoInfoMode>();
-        videoAdapter = new VideoInfoAdapter(getApplicationContext());
+        videoAdapter = new VideoInfoAdapter(mContext);
         lst_video_play.setDividerHeight(0);
-        service = new DBservice(getApplicationContext());
+        service = new DBservice(mContext);
         Bundle e = getIntent().getExtras();
         String title="";
         if (e != null) {
@@ -141,6 +143,7 @@ public class VideoPlayActivity extends BaseActivity {
         if (vid != null && vid.length() > 0) {
             encrypt = true;
         }
+
         arrPlist = plist.split(",");
         playTitle.setText(title);
         wm = this.getWindowManager();
@@ -153,12 +156,16 @@ public class VideoPlayActivity extends BaseActivity {
         mediaController = new MediaController(this, false);
         videoview.setMediaController(mediaController);
         videoview.setMediaBufferingIndicator(progressBar);
+        if (RequestUtils.GetWebType(mContext) != 0) {
+        }else{
+            Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
+        }
         if (encrypt) {
             try{
-                if (RequestUtils.GetWebType(getApplicationContext()) != 0) {
+                if (RequestUtils.GetWebType(mContext) != 0) {
                     videoview.setVid(vid, 1);
                 }else{
-                    Toast.makeText(getApplicationContext(), "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
                 }
             }catch (Exception ex){
                 ex.printStackTrace();
@@ -199,12 +206,12 @@ public class VideoPlayActivity extends BaseActivity {
                     }
                 });
         //下载
-        mediaController.setOnClickListener(new DownloadListener(vid, playTitle.getText().toString()));
+//        playTitle.setOnClickListener(new DownloadListener(vid, playTitle.getText().toString()));
+
         // 设置视频尺寸 ，在横屏下效果较明显
 //        mediaController.setOnVideoChangeListener(new MediaController.OnVideoChangeListener() {
 //            @Override
 //            public void onVideoChange(int layout) {
-//                // TODO Auto-generated method stub
 //                videoview.setVideoLayout(layout);
 //                switch (layout) {
 //                    case IjkVideoView.VIDEO_LAYOUT_ORIGIN:
@@ -230,13 +237,13 @@ public class VideoPlayActivity extends BaseActivity {
         lst_video_play.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                view.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.bg_gray));
+                view.setBackgroundColor(mContext.getResources().getColor(R.color.bg_gray));
                 videoAdapter.setSelectedPosition(i);
                 videoAdapter.notifyDataSetInvalidated();
-                if (RequestUtils.GetWebType(getApplicationContext()) != 0) {
+                if (RequestUtils.GetWebType(mContext) != 0) {
                     videoview.setVid(listInfo.get(i).getVideo_id(), 1);
                 }else{
-                    Toast.makeText(getApplicationContext(), "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
                 }
                 playTitle.setText(listInfo.get(i).getVideo_name());
             }
@@ -281,7 +288,7 @@ public class VideoPlayActivity extends BaseActivity {
 //        map.put("limit",""+limit);
 //        map.put("page",""+page);
 
-        RequestUtils.createRequest(getApplicationContext(), Urls.VIDEO_DETAIL_LIST_URL+arrPlist[arrPlist.length-1], "", true, map, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, Urls.VIDEO_DETAIL_LIST_URL+arrPlist[arrPlist.length-1], "", true, map, true, listener, errorListener);
     }
     @Override
     public void onClick(View v) {
@@ -334,13 +341,13 @@ public class VideoPlayActivity extends BaseActivity {
     protected void onPause() {
         // TODO Auto-generated method stub
         super.onPause();
-        MobclickAgent.onPause(getApplication());
+        MobclickAgent.onPause(mContext);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        MobclickAgent.onResume(getApplication());
+        MobclickAgent.onResume(mContext);
     }
     class DownloadListener implements View.OnClickListener {
         private String vid;
@@ -372,8 +379,8 @@ public class VideoPlayActivity extends BaseActivity {
                         items = new String[]{"流畅", "高清", "超清"};
                     }
 
-                    final AlertDialog.Builder selectDialog = new AlertDialog.Builder(
-                            getApplicationContext()).setTitle("选择下载码率")
+                    final Builder selectDialog = new AlertDialog.Builder(
+                            mContext).setTitle("选择下载码率")
                             // 数字2代表的是数组的下标
                             .setSingleChoiceItems(items, 0,
                                     new DialogInterface.OnClickListener() {
@@ -386,17 +393,18 @@ public class VideoPlayActivity extends BaseActivity {
                                             if (service != null && !service .isAdd(downloadInfo)) {
                                                 service.addDownloadFile(downloadInfo);
                                             } else {
-//                                                ((Activity) context).runOnUiThread(new Runnable() {
-//                                                    @Override
-//                                                    public void run() {
-//                                                        Toast.makeText(getApplicationContext(),"下载任务已经增加到队列",1).show();
-//                                                    }
-//                                                });
+                                                ((Activity) mContext).runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Toast.makeText(mContext,"下载任务已经增加到队列",Toast.LENGTH_LONG).show();
+                                                    }
+                                                });
 
                                             }
                                             dialog.dismiss();
                                         }
-                                    });
+                                    }
+                            );
                     selectDialog.show().setCanceledOnTouchOutside(true);
 
                 }
