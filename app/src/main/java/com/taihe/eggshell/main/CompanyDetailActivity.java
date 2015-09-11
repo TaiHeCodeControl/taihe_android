@@ -274,7 +274,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
                 loading.dismiss();
-                ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "网络错误");
+                ToastUtils.show(mContext, "网络错误");
 //                    String err = new String(volleyError.networkResponse.data);
 //                    volleyError.networkResponse.statusCode;
             }

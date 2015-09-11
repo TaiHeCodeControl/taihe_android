@@ -233,8 +233,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.v("TTT:",new String(volleyError.networkResponse.data));
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
+//                Log.v("TTT:",new String(volleyError.networkResponse.data));
+                ToastUtils.show(mContext,"网络异常");
             }
         };
 
@@ -336,7 +336,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
+                ToastUtils.show(mContext,"网络异常");
             }
         };
 

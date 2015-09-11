@@ -216,7 +216,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
                 loading.dismiss();
-                ToastUtils.show(getActivity(), volleyError.networkResponse.statusCode + "网络错误");
+                ToastUtils.show(getActivity(), "网络异常");
 //                    String err = new String(volleyError.networkResponse.data);
 //                    volleyError.networkResponse.statusCode;
             }

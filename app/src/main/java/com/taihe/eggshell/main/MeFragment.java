@@ -305,7 +305,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     if (null != volleyError.networkResponse.data) {
                         Log.v("GetMINEBASIC:", new String(volleyError.networkResponse.data));
                     }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                    ToastUtils.show(mContext, "网络异常");
                 } catch (Exception e) {
 //                    ToastUtils.show(mContext, "联网失败");
                 }
@@ -764,7 +764,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     if (null != volleyError.networkResponse.data) {
                         Log.v("Image:", new String(volleyError.networkResponse.data));
                     }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                    ToastUtils.show(mContext, "网络异常");
 
                 } catch (Exception e) {
                     ToastUtils.show(mContext, "联网失败");
@@ -873,7 +873,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     if (null != volleyError.networkResponse.data) {
                         Log.v("LogOut:", new String(volleyError.networkResponse.data));
                     }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                    ToastUtils.show(mContext, "网络异常");
                 } catch (Exception e) {
                     ToastUtils.show(mContext, "联网失败");
                 }

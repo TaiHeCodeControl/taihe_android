@@ -278,7 +278,7 @@ public class MyPostActivity extends BaseActivity {
                     if (null != volleyError.networkResponse.data) {
                         Log.v("MYCOLLECT:", new String(volleyError.networkResponse.data));
                     }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                    ToastUtils.show(mContext, "网络异常");
 
                 } catch (Exception e) {
                     ToastUtils.show(mContext, "联网失败");
@@ -375,7 +375,7 @@ public class MyPostActivity extends BaseActivity {
                     if (null != volleyError.networkResponse.data) {
                         Log.v("MYCOLLECTDELETE:", new String(volleyError.networkResponse.data));
                     }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                    ToastUtils.show(mContext, "网络异常");
 
                 } catch (Exception e) {
                     ToastUtils.show(mContext, "联网失败");
@@ -457,7 +457,7 @@ public class MyPostActivity extends BaseActivity {
                     if (null != volleyError.networkResponse.data) {
                         Log.v("jobPost:", new String(volleyError.networkResponse.data));
                     }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                    ToastUtils.show(mContext, "网络异常");
                 } catch (Exception e) {
                     ToastUtils.show(mContext, "联网失败");
                 }

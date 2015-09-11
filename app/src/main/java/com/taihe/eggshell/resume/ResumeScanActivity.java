@@ -384,7 +384,7 @@ public class ResumeScanActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 loading.dismiss();
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"服务器异常");
+                ToastUtils.show(mContext,"网络异常");
             }
         };
 

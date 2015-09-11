@@ -387,7 +387,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                    ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
+                    ToastUtils.show(mContext,"网络异常");
             }
         };
 
@@ -425,7 +425,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Object obj) {//返回值
 
-                Log.v(TAG,(String)obj);
+//                Log.v(TAG,(String)obj);
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");

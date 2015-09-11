@@ -153,7 +153,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                 if(null!=volleyError.networkResponse.data){
                     Log.v("Forget:",new String(volleyError.networkResponse.data));
                 }
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
+                ToastUtils.show(mContext,"网络异常");
             }
         };
 
@@ -212,7 +212,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                 if(null!=volleyError.networkResponse.data){
                     Log.v("Forget:",new String(volleyError.networkResponse.data));
                 }
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+mContext.getResources().getString(R.string.error_server));
+                ToastUtils.show(mContext,"网络异常");
             }
         };
 
