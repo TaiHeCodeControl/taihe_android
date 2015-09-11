@@ -424,6 +424,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object obj) {//返回值
+
+                Log.v(TAG,(String)obj);
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");

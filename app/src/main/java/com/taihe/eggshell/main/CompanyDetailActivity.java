@@ -281,9 +281,10 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
         };
         Map<String,String> map = new HashMap<String,String>();
         map.put("mid",mid);
-        map.put("uid","128");//uid
+        map.put("uid",uid);//uid
 //        map.put("limit",""+limit);
         map.put("page",""+page);
+//        Log.v(TAG,map.toString());
         RequestUtils.createRequest(mContext, Urls.COMPY_DETAIL_URL, "", true, map, true, listener, errorListener);
     }
     @Override
