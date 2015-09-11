@@ -163,7 +163,7 @@ public class ResumeTechActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 loading.dismiss();
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"网络错误");
+                ToastUtils.show(mContext,"网络异常");
             }
         };
 

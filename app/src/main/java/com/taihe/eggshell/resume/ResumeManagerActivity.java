@@ -218,7 +218,7 @@ public class ResumeManagerActivity extends BaseActivity{
                     loading.dismiss();
                     resumeRelative.setVisibility(View.GONE);
                     line.setVisibility(View.GONE);
-                    ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"网络错误");
+                    ToastUtils.show(mContext,"网络异常");
             }
         };
         Map<String,String> params = new HashMap<String, String>();
@@ -256,7 +256,7 @@ public class ResumeManagerActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 loading.dismiss();
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"网络错误");
+                ToastUtils.show(mContext,"网络异常");
             }
         };
         Map<String,String> params = new HashMap<String, String>();

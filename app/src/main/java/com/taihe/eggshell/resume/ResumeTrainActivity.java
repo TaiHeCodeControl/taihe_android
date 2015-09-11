@@ -199,7 +199,7 @@ public class ResumeTrainActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
                 loading.dismiss();
-                ToastUtils.show(mContext,volleyError.networkResponse.statusCode+"网络错误");
+                ToastUtils.show(mContext,"网络异常");
             }
         };
 
