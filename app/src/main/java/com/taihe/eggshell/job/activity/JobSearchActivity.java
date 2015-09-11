@@ -215,28 +215,34 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                 List<SearchHistory> list = null;
                 try {
                     list = DbHelper.getDbUtils(DbHelper.DB_TYPE_USER).findAll(selector);
+
                 } catch (DbException e) {
                     e.printStackTrace();
                 }
 
-                int size = list.size();
-                for(int i = 0; i < size - 1;i++){
-                    for(int j = i+1; j < size; j ++){
-                        if(list.get(i).getName().equalsIgnoreCase(list.get(j).getName())){
+
+                if (list != null) {
+                    int size = list.size();
+                    for (int i = 0; i < size - 1; i++) {
+                        for (int j = i + 1; j < size; j++) {
+                            if (list.get(i).getName().equalsIgnoreCase(list.get(j).getName())) {
+                                list.remove(i);
+                                i--;
+                                size--;
+                                break;
+                            }
+                        }
+
+                    }
+                    if (size > 10) {
+                        for (int i = 0; i < size - 10; i++) {
                             list.remove(i);
-                            i--;
-                            size--;
-                            break;
                         }
                     }
+                    Collections.reverse(list);
+                }
 
-                }
-                if(size > 10){
-                    for(int i = 0; i < size -10;i++){
-                        list.remove(i);
-                    }
-                }
-                Collections.reverse(list);
+
                 return list;
             }
 
