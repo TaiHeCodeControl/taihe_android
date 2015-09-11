@@ -82,6 +82,9 @@ public class MyPostActivity extends BaseActivity {
     private TextView tv_collect_num;
     private StringBuilder sb = new StringBuilder();
 
+    private int delectNum = 0 ;
+    private String collectCount;
+
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -90,13 +93,14 @@ public class MyPostActivity extends BaseActivity {
                 case 101://删除职位成功
                     adapter.notifyDataSetChanged();
                     cb_selectAll.setChecked(false);
+                    tv_collect_num.setText(Integer.parseInt(collectCount) - delectNum + "条记录");
                     ToastUtils.show(mContext, "删除成功");
                     break;
                 case 201://收藏职位列表
 
                     try {
                         JSONObject jsonObject = (JSONObject) msg.obj;
-                        String count = jsonObject.getString("count");
+                        collectCount= jsonObject.getString("count");
                         String data = jsonObject.getString("data");
                         if (data.equals("[]")) {
                             ToastUtils.show(mContext,"没有投递的职位了");
@@ -107,7 +111,7 @@ public class MyPostActivity extends BaseActivity {
 
                             jobInfos.addAll(joblist);
 
-                            tv_collect_num.setText(count + "条记录");
+                            tv_collect_num.setText(collectCount + "条记录");
                             adapter = new AllJobAdapter(mContext, jobInfos, true);
                             adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
                                 @Override
@@ -315,6 +319,7 @@ public class MyPostActivity extends BaseActivity {
                     if (jobinfo.isChecked()) {
                         sb.append(jobinfo.getJob_Id());
                         sb.append(",");
+                        delectNum++;
                         it.remove();
                     }
                 }
