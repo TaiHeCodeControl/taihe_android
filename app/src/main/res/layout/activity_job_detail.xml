@@ -285,10 +285,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:lineSpacingExtra="5dp"
                     android:lineSpacingMultiplier="1.0"
-                    android:text="岗位职责"
+                    android:text=""
                     android:textColor="@color/font_color_black"
                     android:textSize="@dimen/font_size_26" />
 
@@ -390,10 +390,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:gravity="left"
                     android:ellipsize="end"
                     android:lineSpacingExtra="5dp"
                     android:lineSpacingMultiplier="1.0"
-                    android:text="深刻的历史的"
+                    android:text=""
                     android:textColor="@color/font_color_black"
                     android:textSize="@dimen/font_size_26" />
 
