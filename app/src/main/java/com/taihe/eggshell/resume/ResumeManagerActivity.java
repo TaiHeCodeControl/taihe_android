@@ -119,7 +119,6 @@ public class ResumeManagerActivity extends BaseActivity{
         switch (v.getId()){
             /*case R.id.lin_back:
                 goBack();
-
                 break;*/
             case R.id.id_create_resume:
                 intent = new Intent(mContext,ResumeWriteActivity.class);
