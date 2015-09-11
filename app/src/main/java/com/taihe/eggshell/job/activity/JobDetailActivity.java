@@ -370,7 +370,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                     if (null != volleyError.networkResponse.data) {
                         Log.v("jobPost:", new String(volleyError.networkResponse.data));
                     }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "服务器异常");
                 } catch (Exception e) {
                     ToastUtils.show(mContext, "联网失败");
                 }
@@ -482,7 +482,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                     if (null != volleyError.networkResponse.data) {
                         Log.v("jobDetailCollect:", new String(volleyError.networkResponse.data));
                     }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "服务器异常");
                 } catch (Exception e) {
                     ToastUtils.show(mContext, "联网失败");
                 }
@@ -535,7 +535,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                     if (null != volleyError.networkResponse.data) {
                         Log.v("jobDetail:", new String(volleyError.networkResponse.data));
                     }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
+                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "服务器异常");
                 } catch (Exception e) {
                     ToastUtils.show(mContext, "联网失败");
                 }
