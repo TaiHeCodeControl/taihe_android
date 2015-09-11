@@ -208,7 +208,8 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             Log.i("USERID", UserId + "");
         }
 
-
+        dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                R.string.submitcertificate_string_wait_dialog));
         intent = getIntent();
         jobId = intent.getIntExtra("ID", 1);
         com_id = intent.getStringExtra("com_id");
@@ -275,8 +276,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             }
         });
 
-        dialog = new LoadingProgressDialog(mContext, getResources().getString(
-                R.string.submitcertificate_string_wait_dialog));
 
         if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             dialog.show();
@@ -392,14 +391,26 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.id_apply_button://申请职位
 
-                if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-                    dialog = new LoadingProgressDialog(mContext, getResources().getString(
-                            R.string.submitcertificate_string_wait_dialog));
-                    dialog.show();
-                    postJob();
+                if (user == null) {
+                    EggshellApplication.getApplication().setLoginTag("jobDetail");
+                    Intent intent = new Intent(JobDetailActivity.this, LoginActivity.class);
+//                    intent.putExtra("LoginTag","jobDetail");
+                    intent.putExtra("ID", jobId);
+                    intent.putExtra("com_id", com_id);
+                    startActivity(intent);
                 } else {
-                    ToastUtils.show(mContext, R.string.check_network);
+                    //申请职位
+                    if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+
+                        dialog.show();
+                        postJob();
+                    } else {
+                        ToastUtils.show(mContext, R.string.check_network);
+                    }
+
                 }
+
+
 
 //                JobApplyDialogUtil.isApplyJob(mContext, 10, 2);
                 break;
@@ -426,22 +437,21 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             case R.id.id_other:
 
                 if (user == null) {
-                    EggshellApplication.getApplication().setLoginTag("jobDetail");
-                    Intent intent = new Intent(JobDetailActivity.this, LoginActivity.class);
+                        EggshellApplication.getApplication().setLoginTag("jobDetail");
+                        Intent intent = new Intent(JobDetailActivity.this, LoginActivity.class);
 //                    intent.putExtra("LoginTag","jobDetail");
-                    intent.putExtra("ID", jobId);
-                    intent.putExtra("UID", com_id);
-                    startActivity(intent);
-                } else {
-                    //收藏&取消收藏
-                    if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-                        dialog = new LoadingProgressDialog(mContext, getResources().getString(
-                                R.string.submitcertificate_string_wait_dialog));
-                        dialog.show();
-                        collectPosition();
+                        intent.putExtra("ID", jobId);
+                        intent.putExtra("com_id", com_id);
+                        startActivity(intent);
                     } else {
-                        ToastUtils.show(mContext, R.string.check_network);
-                    }
+                        //收藏&取消收藏
+                        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+
+                            dialog.show();
+                            collectPosition();
+                        } else {
+                            ToastUtils.show(mContext, R.string.check_network);
+                        }
 
                 }
                 break;
