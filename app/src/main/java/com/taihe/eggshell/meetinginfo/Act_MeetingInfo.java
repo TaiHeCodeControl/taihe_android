@@ -149,7 +149,7 @@ public class Act_MeetingInfo extends BaseActivity {
                                 list.add(vMode);
                             }
                             meetingView.setVisibility(View.VISIBLE);
-                            playAdapter.setPlayData(list,1);
+                            playAdapter.setPlayData(list,2);
                             meetingView.setAdapter(playAdapter);
                             if(list.size()==0){
                                 meetingView.removeAllViews();

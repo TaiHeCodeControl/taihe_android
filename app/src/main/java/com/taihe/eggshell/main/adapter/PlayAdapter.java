@@ -74,7 +74,7 @@ public class PlayAdapter extends BaseAdapter{
         }else{
             viewHolder = (ViewHolder)convertView.getTag();
         }
-        if(type==1) {
+        if(type==2) {
             viewHolder.tag1.setVisibility(View.VISIBLE);
             viewHolder.tag2.setVisibility(View.GONE);
             viewHolder.txtTitle.setText(list.get(position).getTitle().toString());
