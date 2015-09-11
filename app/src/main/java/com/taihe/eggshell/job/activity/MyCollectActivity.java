@@ -96,8 +96,10 @@ public class MyCollectActivity extends BaseActivity {
                         JSONObject jsonObject = (JSONObject) msg.obj;
                         String count = jsonObject.getString("count");
                         String data = jsonObject.getString("data");
-
-
+                        Log.i("ListData", data);
+                        if (data.equals("[]")) {
+                            ToastUtils.show(mContext,"没有收藏的职位了");
+                        }
                         Gson gson = new Gson();
                         List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
                         }.getType());
@@ -255,11 +257,7 @@ public class MyCollectActivity extends BaseActivity {
                         msg.what = 201;
                         msg.obj = jsonObject;
                         mHandler.sendMessage(msg);
-
-
-                    } else if (code == 1) {
-                        ToastUtils.show(mContext, "没有收藏的职位");
-                    } else {
+                    }else {
                         ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {

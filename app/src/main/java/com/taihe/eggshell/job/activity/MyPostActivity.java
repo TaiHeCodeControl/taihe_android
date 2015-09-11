@@ -98,8 +98,9 @@ public class MyPostActivity extends BaseActivity {
                         JSONObject jsonObject = (JSONObject) msg.obj;
                         String count = jsonObject.getString("count");
                         String data = jsonObject.getString("data");
-
-
+                        if (data.equals("[]")) {
+                            ToastUtils.show(mContext,"没有投递的职位了");
+                        }
                         Gson gson = new Gson();
                         List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
                         }.getType());
@@ -259,9 +260,7 @@ public class MyPostActivity extends BaseActivity {
                         msg.obj = jsonObject;
                         mHandler.sendMessage(msg);
 
-                    } else if (code == 1) {
-                        ToastUtils.show(mContext, "没有已投递的职位");
-                    } else {
+                    }else {
                         ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {
