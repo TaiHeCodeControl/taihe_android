@@ -109,9 +109,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private String resumeNun = "";
     private String nick = "";
     private String qianming = "";
-    private String userImagePath="";
+    private String userImagePath = "";
 
-    private int userId ;
+    private int userId;
     private String token = "";
 
     @Override
@@ -245,16 +245,16 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     System.out.println("code=========" + code);
 
                     if (code == 0) {//
-                    // expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
+                        // expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
                         JSONObject data = jsonObject.getJSONObject("data");
                         postNum = data.optString("favjob");
-                       collectNum = data.optString("usejob");
-                      resumeNun = data.optString("expect");
+                        collectNum = data.optString("usejob");
+                        resumeNun = data.optString("expect");
                         nick = data.optString("name");
-                       qianming = data.optString("description");
-                       userImagePath=data.optString("resume_photo");
+                        qianming = data.optString("description");
+                        userImagePath = data.optString("resume_photo");
                         // 加载头像
-                        Log.i("userImagePath",userImagePath);
+                        Log.i("userImagePath", userImagePath);
                         imageLoader.get(userImagePath, ImageLoader.getImageListener(
                                 circleiv_mine_icon, R.drawable.touxiang,
                                 R.drawable.touxiang));
@@ -301,22 +301,14 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("GetMINEBASIC:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, "网络异常");
-                } catch (Exception e) {
-//                    ToastUtils.show(mContext, "联网失败");
-                }
-
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
         Map<String, String> param = new HashMap<String, String>();
 
         param.put("uid", userId + "");
-        param.put("token",token);
+        param.put("token", token);
         RequestUtils.createRequest(mContext, Urls.METHOD_MINE_BASIC, "", true, param, true, listener, errorListener);
 
     }
@@ -441,6 +433,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
     //获取新版本
     private void getVersionCode() {
         Response.Listener listener = new Response.Listener() {
@@ -459,7 +452,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         List<String> meglist = gson.fromJson(message, new TypeToken<List<String>>() {
                         }.getType());
 
-                        updateDialog = new UpdateDialog(mContext,title, meglist, new View.OnClickListener() {
+                        updateDialog = new UpdateDialog(mContext, title, meglist, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 updateDialog.dismiss();
@@ -475,7 +468,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
                         updateDialog.getTitleText().setText("发现新版本");
                         updateDialog.show();
-                    }else{
+                    } else {
                         ToastUtils.show(mContext, "已是最新版本");
                     }
                 } catch (JSONException e) {
@@ -488,6 +481,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
@@ -496,6 +490,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_UPDATE, true, params, true, listener, errorListener);
     }
+
     //更新APK
     private void updateAPK(String url) {
 
@@ -743,7 +738,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         ToastUtils.show(mContext, "头像上传成功");
 
                         userImagePath = imagePath;
-                        Log.i("LOADimagePath","");
+                        Log.i("LOADimagePath", "");
                         imageLoader.get(imagePath, ImageLoader.getImageListener(
                                 circleiv_mine_icon, R.drawable.touxiang,
                                 R.drawable.touxiang));
@@ -760,27 +755,19 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 uploadImageDialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("Image:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, "网络异常");
-
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", UserId + "");
         param.put("photo", ImageString);
-        param.put("token",token);
+        param.put("token", token);
         //http://localhost/eggker/interface/basicdata/head  比传参数  uid =>uid   photo=>photo
         RequestUtils.createRequest(mContext, Urls.METHOD_UPLOAD_IMAGE, "", true, param, true, listener, errorListener);
 
     }
+
     //将头像转换成Base64编码
     public String getPstr(String pathname) {
 
@@ -869,14 +856,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 //                LoadingDialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("LogOut:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, "网络异常");
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
+                ToastUtils.show(mContext, "网络异常");
 
             }
         };

@@ -233,15 +233,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LoadingDialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("getUserBasic:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
-
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
+                ToastUtils.show(mContext, "网络异常");
 
             }
         };
@@ -325,16 +317,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 LoadingDialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("Image:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, volleyError.networkResponse.statusCode + "");
-
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 

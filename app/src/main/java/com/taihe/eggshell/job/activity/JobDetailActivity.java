@@ -344,7 +344,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 //                        postednum = 1 - sucNum;
 //
 //                        JobApplyDialogUtil.isApplyJob(mContext, 1, postednum);
-                        ToastUtils.show(mContext,"申请成功");
+                        ToastUtils.show(mContext, "申请成功");
 
                     } else if (code == 1) {//请先创建简历
                         ToastUtils.show(mContext, "请先创建简历");
@@ -365,21 +365,13 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("jobPost:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, "网络异常");
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", UserId + "");//UserID       userId
-        param.put("job_id", jobId+"");
+        param.put("job_id", jobId + "");
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
 
     }
@@ -411,7 +403,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 }
 
 
-
 //                JobApplyDialogUtil.isApplyJob(mContext, 10, 2);
                 break;
             case R.id.id_see_all:
@@ -437,21 +428,21 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             case R.id.id_other:
 
                 if (user == null) {
-                        EggshellApplication.getApplication().setLoginTag("jobDetail");
-                        Intent intent = new Intent(JobDetailActivity.this, LoginActivity.class);
+                    EggshellApplication.getApplication().setLoginTag("jobDetail");
+                    Intent intent = new Intent(JobDetailActivity.this, LoginActivity.class);
 //                    intent.putExtra("LoginTag","jobDetail");
-                        intent.putExtra("ID", jobId);
-                        intent.putExtra("com_id", com_id);
-                        startActivity(intent);
-                    } else {
-                        //收藏&取消收藏
-                        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                    intent.putExtra("ID", jobId);
+                    intent.putExtra("com_id", com_id);
+                    startActivity(intent);
+                } else {
+                    //收藏&取消收藏
+                    if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
 
-                            dialog.show();
-                            collectPosition();
-                        } else {
-                            ToastUtils.show(mContext, R.string.check_network);
-                        }
+                        dialog.show();
+                        collectPosition();
+                    } else {
+                        ToastUtils.show(mContext, R.string.check_network);
+                    }
 
                 }
                 break;
@@ -488,15 +479,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("jobDetailCollect:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, "网络异常");
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
@@ -541,15 +524,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("jobDetail:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, "网络异常");
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 

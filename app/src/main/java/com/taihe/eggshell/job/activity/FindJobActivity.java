@@ -316,16 +316,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("Job:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, "网络异常");
-
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
@@ -393,8 +384,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             case R.id.iv_findjob_search://关键字搜索
 
                 intent = new Intent(FindJobActivity.this, JobSearchActivity.class);
-                intent.putExtra("From","findjob");
-                startActivityForResult(intent,REQUEST_CODE_KEYWORDSEARCH);
+                intent.putExtra("From", "findjob");
+                startActivityForResult(intent, REQUEST_CODE_KEYWORDSEARCH);
                 break;
 
             case R.id.iv_findjob_filter://职位筛选
@@ -482,15 +473,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("jobPost:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, "网络异常");
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
@@ -536,7 +519,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == REQUEST_CODE_FILTER || requestCode == REQUEST_CODE_KEYWORDSEARCH){
+        if (requestCode == REQUEST_CODE_FILTER || requestCode == REQUEST_CODE_KEYWORDSEARCH) {
             initView();
             initData();
         }

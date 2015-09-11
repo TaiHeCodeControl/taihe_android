@@ -272,16 +272,7 @@ public class MyCollectActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("MYCOLLECT:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, "网络异常");
-
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
@@ -367,16 +358,7 @@ public class MyCollectActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("MYCOLLECTDELETE:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, "网络异常");
-
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
@@ -449,15 +431,7 @@ public class MyCollectActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                try {
-                    if (null != volleyError.networkResponse.data) {
-                        Log.v("jobPost:", new String(volleyError.networkResponse.data));
-                    }
-                    ToastUtils.show(mContext, "网络异常");
-                } catch (Exception e) {
-                    ToastUtils.show(mContext, "联网失败");
-                }
-
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
