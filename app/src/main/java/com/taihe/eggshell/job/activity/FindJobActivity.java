@@ -46,6 +46,7 @@ import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.widget.CustomViewPager;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -539,5 +540,17 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             initView();
             initData();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

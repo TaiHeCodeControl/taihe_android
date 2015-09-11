@@ -27,6 +27,8 @@ import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.entity.CityBJ;
 import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.widget.CustomViewPager;
+import com.umeng.analytics.MobclickAgent;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -486,5 +488,17 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             }, 2000);
 
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

@@ -32,6 +32,7 @@ import com.taihe.eggshell.job.bean.SearchHistory;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -253,4 +254,15 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         }.execute();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
+    }
 }

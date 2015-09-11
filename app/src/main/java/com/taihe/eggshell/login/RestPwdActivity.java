@@ -19,6 +19,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -129,5 +130,17 @@ public class RestPwdActivity extends BaseActivity implements View.OnClickListene
         param.put("telphone",phonenum);
         param.put("newpwd",onepwd);
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_RESET_PASSWORD, false, param, true, listener, errorListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

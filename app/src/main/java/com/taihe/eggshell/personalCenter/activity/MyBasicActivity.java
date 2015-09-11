@@ -32,6 +32,7 @@ import com.taihe.eggshell.widget.addressselect.AddressSelectActivity;
 import com.taihe.eggshell.widget.datepicker.JudgeDate;
 import com.taihe.eggshell.widget.datepicker.ScreenInfo;
 import com.taihe.eggshell.widget.datepicker.WheelMain;
+import com.umeng.analytics.MobclickAgent;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -618,5 +619,17 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
             tv_save.setTextColor(getResources().getColor(R.color.font_color_gray));
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

@@ -20,6 +20,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateUtils;
 import com.taihe.eggshell.widget.ChoiceDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -158,7 +159,7 @@ public class FeedbackActivity extends BaseActivity{
             }
         };
 
-        RequestUtils.createRequest(mContext, Urls.BASE_HYR_MOBILE_URL,Urls.FEEDBACK_URL,true,dataParams,true,listener,errorListener);
+        RequestUtils.createRequest(mContext, Urls.BASE_HYR_MOBILE_URL, Urls.FEEDBACK_URL, true, dataParams, true, listener, errorListener);
     }
 
     TextWatcher tw = new TextWatcher() {
@@ -198,5 +199,17 @@ public class FeedbackActivity extends BaseActivity{
         }
 
         return flag;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

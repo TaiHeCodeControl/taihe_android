@@ -1,5 +1,6 @@
 package com.taihe.eggshell.job.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -19,6 +20,7 @@ import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.DbHelper;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.main.entity.StaticData;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,7 @@ public class IndustryActivity extends BaseActivity {
     private IndustrysAdapter industrysAdapter;
     private StaticData staticdata;
 
+    private Context mContext;
     private int page = 0;
     private int PAGE_SIZE = 5000;
 
@@ -46,6 +49,7 @@ public class IndustryActivity extends BaseActivity {
         setContentView(R.layout.activity_industry_list);
         super.initView();
 
+        mContext = this;
         intent = getIntent();
         filterString = intent.getStringExtra("Filter");
 
@@ -171,7 +175,7 @@ public class IndustryActivity extends BaseActivity {
     private WhereBuilder getBuilder(String id) {
         WhereBuilder builder = WhereBuilder.b();
         StringBuilder sb = new StringBuilder();
-        sb.append(" keyid = '" + id +"'");
+        sb.append(" keyid = '" + id + "'");
         return builder.expr(sb.toString());
     }
 
@@ -253,4 +257,15 @@ public class IndustryActivity extends BaseActivity {
         }.execute();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
+    }
 }

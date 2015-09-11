@@ -68,4 +68,6 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
     public void onPageScrollStateChanged(int i) {
 
     }
+
+
 }

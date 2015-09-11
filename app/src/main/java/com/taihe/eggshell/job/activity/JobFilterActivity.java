@@ -21,6 +21,7 @@ import com.taihe.eggshell.main.entity.CityBJ;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.widget.CityDialog;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by huan on 2015/8/11.
@@ -269,5 +270,17 @@ public class JobFilterActivity extends BaseActivity {
             }
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }

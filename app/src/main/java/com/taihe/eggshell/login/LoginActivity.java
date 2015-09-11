@@ -35,6 +35,7 @@ import com.taihe.eggshell.job.activity.MyPostActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.addressselect.AddressSelectActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -278,6 +279,18 @@ public class LoginActivity extends BaseActivity {
 
             et_userphone.setText(telphoneNUM);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 
 }

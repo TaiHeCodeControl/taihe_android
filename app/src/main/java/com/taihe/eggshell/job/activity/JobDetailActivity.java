@@ -37,6 +37,7 @@ import com.taihe.eggshell.job.adapter.JobDescAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.MyListView;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -581,5 +582,17 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         protected Void doInBackground(Void... params) {
             return null;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(mContext);
     }
 }
