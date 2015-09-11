@@ -167,7 +167,6 @@ public class ResumeScanActivity extends BaseActivity{
         MobclickAgent.onResume(mContext);
 
         eid = getIntent().getParcelableExtra("eid");
-//        Log.v("TTT:",eid.getRid()+"");
         loading = new LoadingProgressDialog(mContext,"正在请求...");
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             loading.show();
