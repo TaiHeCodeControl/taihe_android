@@ -187,11 +187,9 @@ public class RegisterActivity extends BaseActivity {
                         RegisterActivity.this.finish();
                     } else if (code == 1001) {
                         String msg = jsonObject.getString("message");
-                        JSONArray data = jsonObject.getJSONArray("data");
                         ToastUtils.show(mContext, msg);
                     } else if (code == 1002) {
                         String msg = jsonObject.getString("message");
-                        JSONArray data = jsonObject.getJSONArray("data");
                         ToastUtils.show(mContext, msg);
                     } else {
                         String msg = jsonObject.getString("message");
