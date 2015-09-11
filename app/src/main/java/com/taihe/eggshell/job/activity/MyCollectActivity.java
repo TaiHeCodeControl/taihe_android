@@ -96,41 +96,42 @@ public class MyCollectActivity extends BaseActivity {
                         JSONObject jsonObject = (JSONObject) msg.obj;
                         String count = jsonObject.getString("count");
                         String data = jsonObject.getString("data");
-                        Log.i("ListData", data);
                         if (data.equals("[]")) {
                             ToastUtils.show(mContext,"没有收藏的职位了");
-                        }
-                        Gson gson = new Gson();
-                        List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
-                        }.getType());
+                        }else{
+                            Gson gson = new Gson();
+                            List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
+                            }.getType());
 
 
-                        jobInfos.addAll(joblist);
+                            jobInfos.addAll(joblist);
 
-                        tv_collect_num.setText(count + "条记录");
-                        adapter = new AllJobAdapter(mContext, jobInfos, true);
-                        adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
-                            @Override
-                            public void checkedPosition(int position, boolean isChecked) {
-                                jobInfos.get(position).setIsChecked(isChecked);
-                                //如果有listview没有被选中，全选按钮状态为false
-                                if (jobInfos.get(position).isChecked()) {
-                                    selectSize += 1;
-                                    if (selectSize == jobInfos.size()) {
-                                        cb_selectAll.setChecked(true);
+                            tv_collect_num.setText(count + "条记录");
+                            adapter = new AllJobAdapter(mContext, jobInfos, true);
+                            adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
+                                @Override
+                                public void checkedPosition(int position, boolean isChecked) {
+                                    jobInfos.get(position).setIsChecked(isChecked);
+                                    //如果有listview没有被选中，全选按钮状态为false
+                                    if (jobInfos.get(position).isChecked()) {
+                                        selectSize += 1;
+                                        if (selectSize == jobInfos.size()) {
+                                            cb_selectAll.setChecked(true);
+                                        }
+                                    } else {
+                                        selectSize -= 1;
+                                        cb_selectAll.setChecked(false);
                                     }
-                                } else {
-                                    selectSize -= 1;
-                                    cb_selectAll.setChecked(false);
+
+
                                 }
+                            });
 
+                            list_job_all.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            list_job_all.setSelection(adapter.getCount() - 9);
+                        }
 
-                            }
-                        });
-
-                        list_job_all.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
-                        list_job_all.setSelection(adapter.getCount() - 9);
                     } catch (Exception e) {
 
                     }
