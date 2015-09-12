@@ -76,7 +76,8 @@ public class IndustryAdapter extends BaseAdapter {
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "type", "");
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "keyword","");
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job_post","");
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "hy", industry.getId()+"");
+                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "hy", "");
+                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job1", industry.getId()+"");
                 context.startActivity(new Intent(context,FindJobActivity.class));
             }
         });

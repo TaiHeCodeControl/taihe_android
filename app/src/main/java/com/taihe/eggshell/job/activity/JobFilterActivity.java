@@ -211,7 +211,8 @@ public class JobFilterActivity extends BaseActivity {
                 String key = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"keyword","");
                 PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"type",type);
                 //保存职位筛选的字段
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", hy);//工作行业
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");//工作行业
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job1", hy);//工作行业
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post",job_post);//职位类别
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "salary", salary);
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "edu", edu);

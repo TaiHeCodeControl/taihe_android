@@ -240,6 +240,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post","");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword","");
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job1", "");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
@@ -248,6 +249,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post","");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword","");
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job1", "");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
@@ -256,6 +258,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post","");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword","");
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job1", "");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;

@@ -224,7 +224,7 @@ public class ResumeScanActivity extends BaseActivity{
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-//                Log.v(TAG,(String)o);
+                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
@@ -255,7 +255,8 @@ public class ResumeScanActivity extends BaseActivity{
                         JSONObject expect = data.getJSONObject("expect");
                         String rename = expect.getString("name");//简历名称
                         resumename.setText(rename);
-
+                        String ctime = expect.getString("ctime");
+                        createTime.setText("创建于"+ctime);
                         if("null".equals(expect.getString("three_cityid"))){
                             hopeaddress.setText("全城");
                         }else{

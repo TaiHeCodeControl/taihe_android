@@ -92,7 +92,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     private String Latitude = "";
     private String keyword = "";
     private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "", cityid = "", fbtime = "";
-
+    private String job1 = "";
     private User user;
     private int userId;
     private TextView tv_findjob_title;//标题名称
@@ -162,6 +162,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         type = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "type", "");
         cityid = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "cityid", "");
         fbtime = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "fbtime", "");
+        job1 = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job1", "");
 
         tv_findjob_title = (TextView) findViewById(R.id.tv_findjob_title);
         //根据type判断是兼职还是实习还是全职职位
@@ -289,15 +290,26 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                     if (code == 0) {
 
                         String data = jsonObject.getString("data");
-                        Gson gson = new Gson();
-                        List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
-                        }.getType());
+                        if("[]".equals(data)){
+                            if(page==1){
+                                jobInfos.clear();
+                                adapter = new AllJobAdapter(mContext, jobInfos, true);
+                                list_job_all.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+                                ToastUtils.show(mContext,"没有了");
+                            }else{
+                                ToastUtils.show(mContext,"没有了");
+                            }
+                        }else{
+                            Gson gson = new Gson();
+                            List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
+                            }.getType());
 
-                        Message msg = new Message();
-                        msg.obj = joblist;
-                        msg.what = 1001;
-                        jobListHandler.sendMessage(msg);
-
+                            Message msg = new Message();
+                            msg.obj = joblist;
+                            msg.what = 1001;
+                            jobListHandler.sendMessage(msg);
+                        }
                     } else if (code == 4001) {
                         Message msg = new Message();
                         msg.what = 1002;
@@ -339,8 +351,9 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("type", type);//工作性质
         param.put("fbtime ", fbtime);//
         param.put("cityid", cityid);//
+        param.put("job1",job1);
 
-
+        Log.v(TAG,param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
 
 
