@@ -184,6 +184,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
             public void onResponse(Object obj) {//返回值
                 loading.dismiss();
                 try {
+                    Log.v(TAG,(String)obj);
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
@@ -203,6 +204,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
                             }
                             companyIndustry.setText(jo.optString("hy"));
                             companyScale.setText(jo.optString("gm"));
+                            companyType.setText(jo.optString("pr"));
                             companyAddress.setText(jo.optString("address"));
                             String strTemp=jo.optString("content").toString();
                             if(strTemp.contains("null")){
