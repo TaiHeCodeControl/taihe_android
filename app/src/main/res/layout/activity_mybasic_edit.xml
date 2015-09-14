@@ -115,6 +115,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
                     android:background="@null"
+                    android:maxLength="16"
                     android:imeOptions="actionNext"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />

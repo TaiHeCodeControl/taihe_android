@@ -64,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:text="王昕"
+                    android:maxLength="16"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_size_32" />
 
