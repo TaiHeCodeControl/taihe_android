@@ -30,24 +30,23 @@
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/COMDETrl_listjob_select"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_toLeftOf="@+id/COMDETtv_listjob_salaryrange"
+            android:layout_toStartOf="@+id/COMDETtv_listjob_salaryrange">
 
             <TextView
                 android:id="@+id/COMDETtv_listjob_jobname"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="职位名称"
                 android:imeOptions="actionNext"
-                android:maxLength="14"
-                android:maxLines="1"
-                android:ellipsize="end"
                 android:singleLine="true"
                 android:textColor="@color/font_color_black"
                 android:textSize="@dimen/font_size_30" />
             <TextView
                 android:id="@+id/COMDETtv_listjob_comname"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="公司名称"
