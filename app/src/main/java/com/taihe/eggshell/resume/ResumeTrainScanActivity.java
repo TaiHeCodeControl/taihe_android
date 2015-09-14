@@ -46,7 +46,7 @@ public class ResumeTrainScanActivity extends BaseActivity{
         initTitle("写简历");
         Intent intent = getIntent();
         eid = intent.getParcelableExtra("eid");
-        resume_name.setText(eid.getName()+"-教育经历");
+        resume_name.setText(eid.getName()+"-培训经历");
         schoolName = intent.getStringExtra("name");
         startTime = intent.getStringExtra("sdate");
         endTime = intent.getStringExtra("edate");
