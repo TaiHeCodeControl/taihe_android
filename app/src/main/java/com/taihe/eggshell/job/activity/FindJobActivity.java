@@ -93,6 +93,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     private String keyword = "";
     private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "", cityid = "", fbtime = "";
     private String job1 = "";
+    private String TitleString = "";
     private User user;
     private int userId;
     private TextView tv_findjob_title;//标题名称
@@ -153,6 +154,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
     private void initView() {
 
+        TitleString = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "titleString", "");
         keyword = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "keyword", "");
         hy = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "hy", "");
         job_post = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job_post", "");
@@ -165,13 +167,18 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         job1 = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job1", "");
 
         tv_findjob_title = (TextView) findViewById(R.id.tv_findjob_title);
-        //根据type判断是兼职还是实习还是全职职位
-        if (type.equals("56")) {
-            tv_findjob_title.setText("兼职职位");
-        } else if (type.equals("129")) {
-            tv_findjob_title.setText("实习职位");
+
+        if (TitleString.equals("搜索结果")) {
+            tv_findjob_title.setText("搜索结果");
         } else {
-            tv_findjob_title.setText("全职职位");
+            //根据type判断是兼职还是实习还是全职职位
+            if (type.equals("56")) {
+                tv_findjob_title.setText("兼职职位");
+            } else if (type.equals("129")) {
+                tv_findjob_title.setText("实习职位");
+            } else {
+                tv_findjob_title.setText("全职职位");
+            }
         }
 
         user = EggshellApplication.getApplication().getUser();
@@ -290,17 +297,17 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                     if (code == 0) {
 
                         String data = jsonObject.getString("data");
-                        if("[]".equals(data)){
-                            if(page==1){
+                        if ("[]".equals(data)) {
+                            if (page == 1) {
                                 jobInfos.clear();
                                 adapter = new AllJobAdapter(mContext, jobInfos, true);
                                 list_job_all.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
-                                ToastUtils.show(mContext,"没有了");
-                            }else{
-                                ToastUtils.show(mContext,"没有了");
+                                ToastUtils.show(mContext, "没有了");
+                            } else {
+                                ToastUtils.show(mContext, "没有了");
                             }
-                        }else{
+                        } else {
                             Gson gson = new Gson();
                             List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
                             }.getType());
@@ -351,9 +358,9 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("type", type);//工作性质
         param.put("fbtime ", fbtime);//
         param.put("cityid", cityid);//
-        param.put("job1",job1);
+        param.put("job1", job1);
 
-        Log.v(TAG,param.toString());
+        Log.v(TAG, param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
 
 
@@ -527,6 +534,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "cityid", "");//工作城市
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", "");//发布时间
+
+
     }
 
 

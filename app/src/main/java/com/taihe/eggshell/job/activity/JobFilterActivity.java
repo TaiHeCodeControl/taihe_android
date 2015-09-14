@@ -66,6 +66,7 @@ public class JobFilterActivity extends BaseActivity {
         super.initView();
 
         mContext = this;
+
         iv_clear = (ImageView) findViewById(R.id.iv_jobfilter_clear);
         iv_clear.setOnClickListener(this);
 
@@ -220,6 +221,7 @@ public class JobFilterActivity extends BaseActivity {
 //                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", type);//工作类型
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "cityid", city);//工作城市
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", pubtime);//发布时间
+                PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"titleString","搜索结果");
                 intent = new Intent();
                 setResult(101,intent);
                 this.finish();

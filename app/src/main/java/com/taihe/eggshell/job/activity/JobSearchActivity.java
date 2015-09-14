@@ -75,6 +75,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         setContentView(R.layout.activity_job_search);
         super.initView();
         mContext = this;
+
         intents = getIntent();
         fromTags = intents.getStringExtra("From");
         Longitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Longitude", "");
@@ -116,6 +117,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                     Intent intent = new Intent();
                     setResult(201, intent);
                 }
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "搜索结果");
 
                 JobSearchActivity.this.finish();
             }
@@ -137,6 +139,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                     Intent intent = new Intent();
                     setResult(201, intent);
                 }
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "搜索结果");
 
                 JobSearchActivity.this.finish();
             }
@@ -177,7 +180,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                             Intent intent = new Intent();
                             setResult(201, intent);
                         }
-
+                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "搜索结果");
                         this.finish();
                     } else {
                         ToastUtils.show(mContext, "请输入内容");

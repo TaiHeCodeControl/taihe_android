@@ -236,6 +236,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_look_job://找工作
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "55");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post","");
@@ -245,6 +246,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_look_jianzhi://找兼职
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "56");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post","");
@@ -254,6 +256,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_look_shixi://找实习
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "129");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post","");

@@ -77,6 +77,7 @@ public class IndustryAdapter extends BaseAdapter {
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "keyword","");
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job_post","");
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "hy", "");
+                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "titleString", "");
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job1", industry.getId()+"");
                 context.startActivity(new Intent(context,FindJobActivity.class));
             }
@@ -90,6 +91,8 @@ public class IndustryAdapter extends BaseAdapter {
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "keyword","");
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "hy","");
                 PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job_post",industry.getProfessionalList().get(position).getId()+"");
+                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "titleString", "");
+                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job1", "");
                 context.startActivity(new Intent(context,FindJobActivity.class));
             }
         });
