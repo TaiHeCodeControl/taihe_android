@@ -513,25 +513,14 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         //hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp
         // 工作性质=>type
 
-        if (keyword.equals("兼职")) {
-            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "兼职");
-        } else if (keyword.equals("实习")) {
-            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "实习");
-        } else {
-            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "");
-        }
-
-        if (type.equals("55")) {//全职
-            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "55");
-        } else {
-            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "");
-        }
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "");
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post", "");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "salary", "");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "edu", "");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", "");
-
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job1", "");
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "cityid", "");//工作城市
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", "");//发布时间
 
