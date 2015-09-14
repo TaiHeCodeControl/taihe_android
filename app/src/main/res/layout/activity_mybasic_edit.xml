@@ -110,12 +110,13 @@
 
                 <EditText
                     android:id="@+id/et_mybasic_nickname"
-                    android:layout_width="160dp"
+                    android:layout_width="170dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="90dp"
                     android:background="@null"
                     android:maxLength="16"
+                    android:singleLine="true"
                     android:imeOptions="actionNext"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />

@@ -185,31 +185,7 @@ public class JobFilterActivity extends BaseActivity {
 
                 keyword = et_keyWord.getText().toString().trim();
 
-//             //如果获取到的keyword是兼职，或者实习，并且关键字是空
-//                if ((key.equals("兼职") || key.equals("实习") )&&TextUtils.isEmpty(keyword)) {
-//                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", key);
-//                }  else {
-//                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", keyword);
-//                }
-
-
-//                //兼职，实习 按关键字查询，全职，不限 按typeID查询
-//                String types = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"type","");
-//                if (types.equals("55") && TextUtils.isEmpty(type)) {//全职
-//                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "55");
-//                } else if(type.equals("55") || type.equals("54")){//54-->不限
-//                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", type);
-//                }else if(type.equals("56")){//兼职
-//                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "");
-//                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "兼职");
-//                }else if(type.equals("119")){//实习
-//                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "");
-//                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "实习");
-//                }
-
-
-
-                String key = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,"keyword","");
+                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", keyword);
                 PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"type",type);
                 //保存职位筛选的字段
                 PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");//工作行业

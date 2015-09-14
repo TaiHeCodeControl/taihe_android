@@ -48,7 +48,7 @@
                         android:layout_marginRight="50dp"
                         android:background="@null"
                         android:hint="输入关键字，例:工程师"
-                       />
+                        android:singleLine="true"/>
 
                     <ImageView
                         android:id="@+id/iv_jobfilter_clear"
