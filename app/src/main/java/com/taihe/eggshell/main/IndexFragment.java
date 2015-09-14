@@ -455,7 +455,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }
-                        // Log.e("data",data);
                     } else {
                         //String msg = jsonObject.getString("msg");
 //                        ToastUtils.show(mContext, msg);
