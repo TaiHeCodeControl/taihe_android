@@ -1,6 +1,7 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -181,6 +182,14 @@ public class ResumeTrainActivity extends BaseActivity{
                     if (code == 0) {
                         try{
                             Toast.makeText(mContext,"添加成功!",Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(mContext,ResumeTrainScanActivity.class);
+                            intent.putExtra("eid",eid);
+                            intent.putExtra("name",companyName);
+                            intent.putExtra("sdate",startTime);
+                            intent.putExtra("edate",endTime);
+                            intent.putExtra("title",positionName);
+                            intent.putExtra("content",contextWord);
+                            startActivity(intent);
                             finish();
                         }catch (Exception ex){
                             ex.printStackTrace();
