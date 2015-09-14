@@ -469,6 +469,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                
             }
         };
 
