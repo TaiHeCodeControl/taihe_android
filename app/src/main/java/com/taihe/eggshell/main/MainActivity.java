@@ -1,8 +1,10 @@
 package com.taihe.eggshell.main;
 
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +16,10 @@ import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.chinaway.framework.swordfish.DbUtils;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
@@ -22,6 +28,8 @@ import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.DbHelper;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.FormatUtils;
+import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.entity.CityBJ;
@@ -45,7 +53,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     private CustomViewPager main_viewPager;
     private RadioGroup main_tab_RadioGroup;
-    public  RadioButton radio_index;
+    public RadioButton radio_index;
     private RadioButton radio_social, radio_openclass, radio_me;
     private ArrayList<Fragment> fragmentList;
     private DbUtils db;
@@ -106,22 +114,23 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         getJobStaticDataFromNet();
     }
 
-    private void getStaticDataFromNet(){
+    private void getStaticDataFromNet() {
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
 
-                Log.v(TAG,(String)o);
+                Log.v(TAG, (String) o);
                 try {
-                    JSONObject jsonObject = new JSONObject((String)o);
+                    JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");
-                    if(code == 0){
+                    if (code == 0) {
                         JSONObject data = jsonObject.getJSONObject("data");
                         String hy = data.getString("hy");
                         Gson gson = new Gson();
-                        List<StaticData> industryList = gson.fromJson(hy,new TypeToken<List<StaticData>>(){}.getType());
+                        List<StaticData> industryList = gson.fromJson(hy, new TypeToken<List<StaticData>>() {
+                        }.getType());
 
-                        for(int i=0;i<industryList.size();i++){
+                        for (int i = 0; i < industryList.size(); i++) {
                             industryList.get(i).setTypese("hy");
                         }
                         hylist.clear();
@@ -129,8 +138,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(industryList);
 
                         String pay = data.getString("pay");
-                        List<StaticData> salaryList = gson.fromJson(pay,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<salaryList.size();i++){
+                        List<StaticData> salaryList = gson.fromJson(pay, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < salaryList.size(); i++) {
                             salaryList.get(i).setTypese("pay");
                         }
                         paylist.clear();
@@ -138,9 +148,10 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(salaryList);
 
                         String type = data.getString("type");
-                        if(!type.equals("false")){
-                            List<StaticData> workTypeList = gson.fromJson(type,new TypeToken<List<StaticData>>(){}.getType());
-                            for(int i=0;i<workTypeList.size();i++){
+                        if (!type.equals("false")) {
+                            List<StaticData> workTypeList = gson.fromJson(type, new TypeToken<List<StaticData>>() {
+                            }.getType());
+                            for (int i = 0; i < workTypeList.size(); i++) {
                                 workTypeList.get(i).setTypese("types");
                             }
                             typelist.clear();
@@ -149,8 +160,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         }
 
                         String workexper = data.getString("experience");
-                        List<StaticData> workExperinceList = gson.fromJson(workexper,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<workExperinceList.size();i++){
+                        List<StaticData> workExperinceList = gson.fromJson(workexper, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < workExperinceList.size(); i++) {
                             workExperinceList.get(i).setTypese("experience");
                         }
                         experiencelist.clear();
@@ -158,8 +170,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(workExperinceList);
 
                         String dgtime = data.getString("dgtime");
-                        List<StaticData> dgTimeList = gson.fromJson(dgtime,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<dgTimeList.size();i++){
+                        List<StaticData> dgTimeList = gson.fromJson(dgtime, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < dgTimeList.size(); i++) {
                             dgTimeList.get(i).setTypese("dgtime");
                         }
                         dgtimelist.clear();
@@ -167,8 +180,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(dgTimeList);
 
                         String status = data.getString("jobstatus");
-                        List<StaticData> jobStatusList = gson.fromJson(status,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<jobStatusList.size();i++){
+                        List<StaticData> jobStatusList = gson.fromJson(status, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < jobStatusList.size(); i++) {
                             jobStatusList.get(i).setTypese("jobstatus");
                         }
                         jobstatuslist.clear();
@@ -176,8 +190,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(jobStatusList);
 
                         String education = data.getString("education");
-                        List<StaticData> educationList = gson.fromJson(education,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<educationList.size();i++){
+                        List<StaticData> educationList = gson.fromJson(education, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < educationList.size(); i++) {
                             educationList.get(i).setTypese("education");
                         }
                         educationlist.clear();
@@ -185,8 +200,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(educationList);
 
                         String skill = data.getString("skill");//技能
-                        List<StaticData> skillList = gson.fromJson(skill,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<skillList.size();i++){
+                        List<StaticData> skillList = gson.fromJson(skill, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < skillList.size(); i++) {
                             skillList.get(i).setTypese("skill");
                         }
                         skilllist.clear();
@@ -194,8 +210,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(skillList);
 
                         String ing = data.getString("ing");//熟练程度
-                        List<StaticData> inglist = gson.fromJson(ing,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<inglist.size();i++){
+                        List<StaticData> inglist = gson.fromJson(ing, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < inglist.size(); i++) {
                             inglist.get(i).setTypese("ing");
                         }
                         inglists.clear();
@@ -203,25 +220,28 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(inglist);
 
                         String pubtime = data.getString("fbtime");//发布时间
-                        List<StaticData> publist = gson.fromJson(pubtime,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<publist.size();i++){
+                        List<StaticData> publist = gson.fromJson(pubtime, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < publist.size(); i++) {
                             publist.get(i).setTypese("pubtime");
                         }
                         pubtimelist.clear();
                         pubtimelist.addAll(publist);
 
                         String citys = data.getString("three_cityid");//北京市
-                        List<CityBJ> cityBJList = gson.fromJson(citys,new TypeToken<List<CityBJ>>(){}.getType());
+                        List<CityBJ> cityBJList = gson.fromJson(citys, new TypeToken<List<CityBJ>>() {
+                        }.getType());
                         db.saveOrUpdateAll(cityBJList);
 
                         String job_classid = data.getString("job_classid");
-                        List<StaticData> joblist = gson.fromJson(job_classid,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<joblist.size();i++){
+                        List<StaticData> joblist = gson.fromJson(job_classid, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < joblist.size(); i++) {
                             joblist.get(i).setTypese("job");
                         }
                         db.saveOrUpdateAll(joblist);
 
-                    }else{
+                    } else {
 
                     }
                 } catch (Exception e) {
@@ -234,33 +254,34 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 //                Log.v("TTT:",new String(volleyError.networkResponse.data));
-                ToastUtils.show(mContext,"网络异常");
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("", "");
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_STATIC_DATA, false, params, true, listener, errorListener);
 
     }
 
-    private void getJobStaticDataFromNet(){
+    private void getJobStaticDataFromNet() {
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
 
 //                Log.v(TAG,(String)o);
                 try {
-                    JSONObject jsonObject = new JSONObject((String)o);
+                    JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");
-                    if(code == 0){
+                    if (code == 0) {
                         JSONObject data = jsonObject.getJSONObject("data");
                         String hy = data.getString("hy");
                         Gson gson = new Gson();
-                        List<StaticData> industryList = gson.fromJson(hy,new TypeToken<List<StaticData>>(){}.getType());
+                        List<StaticData> industryList = gson.fromJson(hy, new TypeToken<List<StaticData>>() {
+                        }.getType());
 
-                        for(int i=0;i<industryList.size();i++){
+                        for (int i = 0; i < industryList.size(); i++) {
                             industryList.get(i).setTypese("hy");
                         }
                         job_hylist.clear();
@@ -268,8 +289,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(industryList);
 
                         String pay = data.getString("pay");
-                        List<StaticData> salaryList = gson.fromJson(pay,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<salaryList.size();i++){
+                        List<StaticData> salaryList = gson.fromJson(pay, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < salaryList.size(); i++) {
                             salaryList.get(i).setTypese("pay");
                         }
                         job_paylist.clear();
@@ -277,9 +299,10 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(salaryList);
 
                         String type = data.getString("type");
-                        if(!type.equals("false")){
-                            List<StaticData> workTypeList = gson.fromJson(type,new TypeToken<List<StaticData>>(){}.getType());
-                            for(int i=0;i<workTypeList.size();i++){
+                        if (!type.equals("false")) {
+                            List<StaticData> workTypeList = gson.fromJson(type, new TypeToken<List<StaticData>>() {
+                            }.getType());
+                            for (int i = 0; i < workTypeList.size(); i++) {
                                 workTypeList.get(i).setTypese("types");
                             }
                             job_typelist.clear();
@@ -288,8 +311,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         }
 
                         String workexper = data.getString("experience");
-                        List<StaticData> workExperinceList = gson.fromJson(workexper,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<workExperinceList.size();i++){
+                        List<StaticData> workExperinceList = gson.fromJson(workexper, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < workExperinceList.size(); i++) {
                             workExperinceList.get(i).setTypese("experience");
                         }
                         job_experiencelist.clear();
@@ -297,8 +321,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(workExperinceList);
 
                         String education = data.getString("education");
-                        List<StaticData> educationList = gson.fromJson(education,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<educationList.size();i++){
+                        List<StaticData> educationList = gson.fromJson(education, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < educationList.size(); i++) {
                             educationList.get(i).setTypese("education");
                         }
                         job_educationlist.clear();
@@ -306,8 +331,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                        db.saveOrUpdateAll(educationList);
 
                         String pubtime = data.getString("fbtime");//发布时间
-                        List<StaticData> publist = gson.fromJson(pubtime,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<publist.size();i++){
+                        List<StaticData> publist = gson.fromJson(pubtime, new TypeToken<List<StaticData>>() {
+                        }.getType());
+                        for (int i = 0; i < publist.size(); i++) {
                             publist.get(i).setTypese("pubtime");
                         }
                         job_pubtimelist.clear();
@@ -324,7 +350,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         }
                         db.saveOrUpdateAll(joblist);*/
 
-                    }else{
+                    } else {
 
                     }
                 } catch (Exception e) {
@@ -336,11 +362,11 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ToastUtils.show(mContext,"网络异常");
+                ToastUtils.show(mContext, "网络异常");
             }
         };
 
-        Map<String,String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("", "");
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_STATIC_DATA_JOB, false, params, true, listener, errorListener);
@@ -490,10 +516,69 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
     }
 
+
+    //====================定位-----------==============
+    public LocationClient mLocationClient;
+    public MyLocationListener mMyLocationListener;
+
+    private String Longitude = "";
+    private String Latitude = "";
+
+    public Vibrator mVibrator;
+
+    private void initLocation() {
+        mLocationClient = new LocationClient(this.getApplicationContext());
+        mMyLocationListener = new MyLocationListener();
+        mLocationClient.registerLocationListener(mMyLocationListener);
+        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+
+
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//设置定位模式
+        option.setCoorType("gcj02");//返回的定位结果是百度经纬度，默认值gcj02
+        int span = 60000;
+        option.setScanSpan(span);//设置发起定位请求的间隔时间为 1min
+        option.setIsNeedAddress(true);
+        mLocationClient.start();
+        mLocationClient.setLocOption(option);
+    }
+
+
+    /**
+     * 实现实时位置回调监听
+     */
+    public class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //Receive Location
+
+            Longitude = Double.toString(location.getLongitude());
+            Latitude = Double.toString(location.getLatitude());
+
+            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "Longitude", Longitude);
+            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "Latitude", Latitude);
+
+            Log.i("longitude", FormatUtils.getStringDate() + "==========longitude" + Longitude + "---------latitude:" + Latitude);
+
+        }
+
+
+    }
+
+    @Override
+    protected void onStop() {
+        // TODO Auto-generated method stub
+        mLocationClient.stop();
+        super.onStop();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(mContext);
+        Log.i(TAG, "onResume");
+        initLocation();
     }
 
     @Override
