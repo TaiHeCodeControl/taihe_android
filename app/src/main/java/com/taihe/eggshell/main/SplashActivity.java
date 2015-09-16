@@ -35,8 +35,7 @@ public class SplashActivity extends Activity {
 
     private static final String TAG = "SPLASHACTIVITY";
     private Context mContext;
-    private String Longitude = "";
-    private String Latitude = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,72 +80,5 @@ public class SplashActivity extends Activity {
 
         view.setAnimation(animation);
 
-        initLocation();
-
-
-    }
-
-
-    //====================定位-----------==============
-    public LocationClient mLocationClient;
-    public MyLocationListener mMyLocationListener;
-
-
-    public Vibrator mVibrator;
-
-    private void initLocation() {
-        mLocationClient = new LocationClient(this.getApplicationContext());
-        mMyLocationListener = new MyLocationListener();
-        mLocationClient.registerLocationListener(mMyLocationListener);
-        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-
-
-        LocationClientOption option = new LocationClientOption();
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//设置定位模式
-        option.setCoorType("gcj02");//返回的定位结果是百度经纬度，默认值gcj02
-        int span=1000;
-        option.setScanSpan(span);//设置发起定位请求的间隔时间为5000ms
-        option.setIsNeedAddress(true);
-
-
-        if(TextUtils.isEmpty(Longitude)){
-            mLocationClient.start();
-
-        }else{
-            mLocationClient.stop();
-
-        }
-
-        mLocationClient.setLocOption(option);
-    }
-
-
-    /**
-     * 实现实时位置回调监听
-     */
-    public class MyLocationListener implements BDLocationListener {
-
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            //Receive Location
-
-            Longitude = Double.toString(location.getLongitude());
-            Latitude = Double.toString(location.getLatitude());
-
-            PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"Longitude",Longitude);
-            PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"Latitude",Latitude);
-
-            Log.i(TAG,"longitude" + Longitude + "---------latitude:" +  Latitude);
-
-        }
-
-
-    }
-
-    @Override
-    protected void onStop() {
-        // TODO Auto-generated method stub
-        mLocationClient.stop();
-        super.onStop();
     }
 }

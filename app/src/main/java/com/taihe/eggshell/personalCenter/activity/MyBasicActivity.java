@@ -218,8 +218,6 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
                         msg.what = 10;
                         msg.obj = basicBean;
                         basicHandler.sendMessage(msg);
-
-//                        ToastUtils.show(mContext, "获取基本资料成功");
                     } else {
 //                        ToastUtils.show(mContext, "获取失败");
                     }
@@ -305,7 +303,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
                         ToastUtils.show(mContext, "资料修改成功");
                         MyBasicActivity.this.finish();
                     } else {
-                        ToastUtils.show(mContext, "获取失败");
+//                        ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
