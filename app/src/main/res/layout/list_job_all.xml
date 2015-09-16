@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="84dp">
 
         <FrameLayout
             android:id="@+id/rl_listjob_select"
@@ -29,18 +29,19 @@
         </FrameLayout>
 
         <LinearLayout
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/rl_listjob_select"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_listjob_jobname"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="职位名称"
+                android:gravity="center_vertical"
                 android:ellipsize="end"
                 android:imeOptions="actionNext"
                 android:maxLength="14"
@@ -52,9 +53,10 @@
             <TextView
                 android:id="@+id/tv_listjob_businessname"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="公司名称"
+                android:gravity="center_vertical"
                 android:ellipsize="end"
                 android:imeOptions="actionNext"
                 android:maxLength="16"
@@ -65,7 +67,9 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
