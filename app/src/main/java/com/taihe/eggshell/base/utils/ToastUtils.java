@@ -35,7 +35,7 @@ public class ToastUtils {
         if(null!=volleyError.networkResponse){
             Toast.makeText(context,"服务器异常,请稍后再试",Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context,"请检查网络",Toast.LENGTH_SHORT);
+            Toast.makeText(context,"请检查网络",Toast.LENGTH_SHORT).show();
         }
     }
 }
