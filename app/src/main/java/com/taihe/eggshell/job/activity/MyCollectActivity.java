@@ -274,6 +274,7 @@ public class MyCollectActivity extends BaseActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
+//                Log.i("MYCOLLECT",new String(volleyError.networkResponse.data));
                 ToastUtils.show(mContext, "网络异常");
             }
         };
