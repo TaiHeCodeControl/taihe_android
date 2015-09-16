@@ -460,7 +460,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         }, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ToastUtils.show(mContext, "更新");
+//                                ToastUtils.show(mContext, "更新");
                                 updateDialog.dismiss();
                                 updateAPK(url);
                             }

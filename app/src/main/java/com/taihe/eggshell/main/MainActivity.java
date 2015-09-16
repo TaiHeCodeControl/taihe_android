@@ -111,7 +111,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             @Override
             public void onResponse(Object o) {
 
-                Log.v(TAG,(String)o);
+//                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
@@ -362,7 +362,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         fragmentList.add(meFragment);
 
         main_viewPager.setAdapter(new MyAdapter(getSupportFragmentManager(), fragmentList));
-        main_viewPager.setOffscreenPageLimit(0);// 控制预加载的页面数量（默认情况下参数为1）
 
         Intent intent = getIntent();
         String tags = intent.getStringExtra("Main");
@@ -401,6 +400,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
             // viewpager直接从第一页切换到第五页，会从中间的几页过度过去，怎么取消这个效果
             // viewpagar.setCurrentItem(,);第二个参数设置为false
+            getStaticDataFromNet();
+            getJobStaticDataFromNet();
             main_viewPager.setCurrentItem(current, false);
             //设置没有登录状态下MeFragment不可见
 //            if(current==3){

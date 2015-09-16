@@ -452,6 +452,13 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                             RecommendAdapter recommendAdapter = new RecommendAdapter(mContext,listInfo);
                             companyGridView.setAdapter(recommendAdapter);
                             recommendAdapter.notifyDataSetChanged();
+
+                            scrollView.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    scrollView.scrollTo(0,0);
+                                }
+                            });
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }

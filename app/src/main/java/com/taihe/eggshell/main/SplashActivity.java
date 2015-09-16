@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -20,6 +21,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.APKUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
 
 import java.util.List;
@@ -44,6 +46,9 @@ public class SplashActivity extends Activity {
         mContext = this;
         View view = View.inflate(mContext, R.layout.activity_splash, null);
         setContentView(view);
+
+        TextView versionTextView = (TextView)findViewById(R.id.id_app_version);
+        versionTextView.setText(APKUtils.getVersionName());
 
         Animation animation = new AlphaAnimation(0.1f, 1.0f);
         animation.setDuration(1500);

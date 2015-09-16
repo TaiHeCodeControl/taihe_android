@@ -7,7 +7,7 @@
     <com.taihe.eggshell.widget.MyScrollView
         android:id="@+id/id_index_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:fillViewport="true"
         android:scrollbars="none">
@@ -26,8 +26,9 @@
                 <com.taihe.eggshell.widget.ImagesGallery
                     android:id="@+id/gallery"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"/>
+                    android:layout_height="180dp"
+                    android:layout_centerInParent="true"
+                    android:soundEffectsEnabled="false"/>
 
                 <LinearLayout
                     android:id="@+id/id_linear_fos"
