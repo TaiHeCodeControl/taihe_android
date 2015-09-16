@@ -79,7 +79,7 @@ public class VideoInfoAdapter extends BaseAdapter{
         } else {
             viewHolder.relat_vinfo_list_mb.setBackgroundColor(mContext.getResources().getColor(R.color.white));
         }
-        viewHolder.txtNum.setText(position+"");
+        viewHolder.txtNum.setText(position+1+"");
         viewHolder.txtName.setText(list.get(position).getVideo_name().toString());
         viewHolder.txtTime.setText(list.get(position).getVideo_hour().toString());
 //        convertView.setOnClickListener(new View.OnClickListener() {

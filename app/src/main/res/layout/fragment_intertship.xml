@@ -189,7 +189,7 @@
                             android:textColor="@color/hint_color"
                             android:padding="10dp"
                             android:textSize="15sp"
-                            android:text="加载更多"/>
+                            android:text="点击加载更多"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

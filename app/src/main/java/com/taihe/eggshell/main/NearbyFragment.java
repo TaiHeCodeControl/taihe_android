@@ -143,7 +143,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 try {
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
-//                    Log.e("data", jsonObject.toString());
+                    Log.e("data", jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         String data = jsonObject.getString("data");

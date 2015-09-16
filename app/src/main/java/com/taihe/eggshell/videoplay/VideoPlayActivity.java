@@ -180,7 +180,7 @@ public class VideoPlayActivity extends BaseActivity {
 
             @Override
             public void onPrepared(IMediaPlayer mp) {
-                
+
             }
         });
 

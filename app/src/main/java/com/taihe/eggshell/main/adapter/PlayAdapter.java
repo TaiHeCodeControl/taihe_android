@@ -79,7 +79,7 @@ public class PlayAdapter extends BaseAdapter{
             viewHolder.tag2.setVisibility(View.GONE);
             viewHolder.txtTitle.setText(list.get(position).getTitle().toString());
             viewHolder.txtAddr.setText(list.get(position).getAddress().toString());
-            viewHolder.txtUser.setText(list.get(position).getUser().toString());
+            viewHolder.txtUser.setText(list.get(position).getOrganizers().toString());
             viewHolder.txtDate.setText(list.get(position).getStarttime().toString());
         }else{
             viewHolder.tag2.setVisibility(View.VISIBLE);

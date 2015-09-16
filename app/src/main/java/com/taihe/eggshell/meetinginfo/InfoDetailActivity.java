@@ -43,7 +43,7 @@ public class InfoDetailActivity extends BaseActivity{
         super.initData();
         Intent intent = getIntent();
         initTitle("详情");
-        mainPlat.setText(intent.getStringExtra("title"));
+        mainPlat.setText(intent.getStringExtra("organizers"));
         startTime.setText(intent.getStringExtra("starttime") + "至" + intent.getStringExtra("endtime"));
         address.setText(intent.getStringExtra("address"));
         telPhone.setText(intent.getStringExtra("telphone"));
