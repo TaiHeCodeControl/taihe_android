@@ -156,6 +156,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                             JSONObject j2;
                             VideoInfoMode vMode;
                             int tmpImg = R.drawable.video_top1;
+                            listTopInfo.clear();
                             for (int i = 0; i < jt.length(); i++) {
                                 vMode = new VideoInfoMode();
                                 j2 = jt.getJSONObject(i);
