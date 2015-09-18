@@ -110,6 +110,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                     adapter.notifyDataSetChanged();
                     break;
                 case 1001:
+                    cb_selectAll.setChecked(false);
                     List<JobInfo> joblist = (List<JobInfo>) msg.obj;
                     jobInfos.addAll(joblist);
                     adapter = new AllJobAdapter(mContext, jobInfos, true);
@@ -215,7 +216,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
-                cb_selectAll.setChecked(false);
+
                 page++;
                 getList();
                 list_job_all.onRefreshComplete();
@@ -376,6 +377,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             case R.id.rl_findjob_qc://全城
                 cb_selectAll.setChecked(false);
                 jobInfos.clear();
+                //选中条数的统计
+               selectSize = 0;
                 page = 1;
                 Longitude = "";
                 Latitude = "";
@@ -390,6 +393,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             case R.id.rl_findjob_fujin://附近
                 cb_selectAll.setChecked(false);
                 jobInfos.clear();
+                //选中条数的统计
+                selectSize = 0;
                 page = 1;
                 Longitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Longitude", "");
                 Latitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Latitude", "");

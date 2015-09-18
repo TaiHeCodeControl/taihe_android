@@ -105,6 +105,7 @@ public class MyPostActivity extends BaseActivity {
                         if (data.equals("[]")) {
                             ToastUtils.show(mContext,"没有投递的职位了");
                         }else{
+                            cb_selectAll.setChecked(false);
                             Gson gson = new Gson();
                             List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
                             }.getType());
@@ -196,7 +197,6 @@ public class MyPostActivity extends BaseActivity {
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
-                cb_selectAll.setChecked(false);
                 page++;
                 getList();
                 list_job_all.onRefreshComplete();

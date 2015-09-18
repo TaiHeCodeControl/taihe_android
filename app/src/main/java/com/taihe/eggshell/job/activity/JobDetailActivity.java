@@ -175,7 +175,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                             jobInfo.setSalary(jobDetaiInfo.data.lists.get(i).salary);
                             jobInfo.setUid(jobDetaiInfo.data.lists.get(i).uid);
 
-
                             jobInfos.add(jobInfo);
                         }
 
@@ -286,42 +285,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             ToastUtils.show(mContext, R.string.check_network);
         }
 
-
-//        //职位描述列表
-//        List<String> desc = new ArrayList<String>();
-//        for (int i = 0; i < 5; i++) {
-//            desc.add(i + "、你每年考试的记录看到");
-//        }
-//
-//        //岗位职责
-//        tv_jobdetail_description.post(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//            }
-//        });
-//        //职位描述信息填充
-//        JobDescAdapter jobDescAdapter = new JobDescAdapter(mContext, desc);
-//        jobDescListView.setAdapter(jobDescAdapter);
-        //公司介绍
-//        company_jieshao.setText("\u3000\u3000" + "深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路深刻的历史的李开复快递费的路口附近道路");
-//        //查看全部和点击收起
-//        company_jieshao.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                Log.i("jieshao_line", company_jieshao.getLineCount() + "");
-//                if (company_jieshao.getLineCount() > 3) {
-//                    company_jieshao.setMaxLines(2);
-//                    updown.setVisibility(View.VISIBLE);
-//                    shouqi.setVisibility(View.GONE);
-//                } else {
-//                    updown.setVisibility(View.GONE);
-//                    shouqi.setVisibility(View.GONE);
-//                }
-//            }
-//        });
-
-
     }
 
 
@@ -340,10 +303,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {//申请成功
 
-//                        int sucNum = Integer.valueOf(jsonObject.getString("data"));
-//                        postednum = 1 - sucNum;
-//
-//                        JobApplyDialogUtil.isApplyJob(mContext, 1, postednum);
                         ToastUtils.show(mContext, "申请成功");
 
                     } else if (code == 1) {//请先创建简历
@@ -386,7 +345,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 if (user == null) {
                     EggshellApplication.getApplication().setLoginTag("jobDetail");
                     Intent intent = new Intent(JobDetailActivity.this, LoginActivity.class);
-//                    intent.putExtra("LoginTag","jobDetail");
                     intent.putExtra("ID", jobId);
                     intent.putExtra("com_id", com_id);
                     startActivity(intent);
@@ -402,8 +360,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
                 }
 
-
-//                JobApplyDialogUtil.isApplyJob(mContext, 10, 2);
                 break;
             case R.id.id_see_all:
                 company_jieshao.setMaxLines(Integer.MAX_VALUE);
@@ -430,7 +386,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 if (user == null) {
                     EggshellApplication.getApplication().setLoginTag("jobDetail");
                     Intent intent = new Intent(JobDetailActivity.this, LoginActivity.class);
-//                    intent.putExtra("LoginTag","jobDetail");
                     intent.putExtra("ID", jobId);
                     intent.putExtra("com_id", com_id);
                     startActivity(intent);
