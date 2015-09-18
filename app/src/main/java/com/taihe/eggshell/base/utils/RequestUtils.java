@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.chinaway.framework.swordfish.network.http.AuthFailureError;
 import com.chinaway.framework.swordfish.network.http.DefaultRetryPolicy;
@@ -67,6 +68,10 @@ public class RequestUtils {
 					throw new AuthFailureError("缺少参数！");
 				} else {
 					if (jsonFormat) {
+                        if(null!= EggshellApplication.getApplication().getUser() && null!= EggshellApplication.getApplication().getUser().getToken()){
+                            dataParams.put("token",EggshellApplication.getApplication().getUser().getToken());
+                        }
+//                        Log.v("DD:",dataParams.toString());
                         return dataParams;
 					} else {
 						dataParams.put("method", method);

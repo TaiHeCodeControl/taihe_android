@@ -254,7 +254,6 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     params.put("sex",sex);
                     params.put("three_cityid",city);
                     params.put("cityid","52");
-
                     loading.show();
                     submitInfoToServer();
                 }
