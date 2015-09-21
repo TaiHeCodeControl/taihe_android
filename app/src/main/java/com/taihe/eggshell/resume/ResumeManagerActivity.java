@@ -118,7 +118,6 @@ public class ResumeManagerActivity extends BaseActivity{
         super.onClick(v);
         switch (v.getId()){
             /*case R.id.lin_back:
-                goBack();
                 break;*/
             case R.id.id_create_resume:
                 intent = new Intent(mContext,ResumeWriteActivity.class);
