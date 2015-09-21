@@ -177,7 +177,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 tv_findjob_title.setText("兼职职位");
             } else if (type.equals("129")) {
                 tv_findjob_title.setText("实习职位");
-            } else {
+            } else if(type.equals("55")){
                 tv_findjob_title.setText("全职职位");
             }
         }
