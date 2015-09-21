@@ -53,6 +53,7 @@ public class BookScanAdapter extends BaseAdapter{
             viewHolder.id_time = (TextView)convertView.findViewById(R.id.id_time);
             viewHolder.id_department = (TextView)convertView.findViewById(R.id.id_department);
             viewHolder.id_content = (TextView)convertView.findViewById(R.id.id_content);
+            viewHolder.id_position = (TextView)convertView.findViewById(R.id.id_position);
 
             viewHolder.tv_goon_name = (TextView) convertView.findViewById(R.id.tv_goon_name);
             viewHolder.tv_goon_time = (TextView) convertView.findViewById(R.id.tv_goon_time);
@@ -61,6 +62,7 @@ public class BookScanAdapter extends BaseAdapter{
             viewHolder.tv_resume_goon_content = (TextView) convertView.findViewById(R.id.tv_resume_goon_content);
 
             viewHolder.ll_goon_position = (LinearLayout) convertView.findViewById(R.id.ll_goon_position);
+            viewHolder.ll_content = (LinearLayout) convertView.findViewById(R.id.ll_content);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (BookViewHolder)convertView.getTag();
@@ -73,12 +75,38 @@ public class BookScanAdapter extends BaseAdapter{
             viewHolder.tv_gon_department.setText("颁发单位:");
             viewHolder.tv_resume_goon_content.setText("证书描述:");
 
+            viewHolder.id_time.setText(FormatUtils.timestampToDatetime(book.getSdate()));
+            viewHolder.id_department.setText(book.getTitle());
+            viewHolder.id_name.setText(book.getName());
+            viewHolder.id_content.setText(book.getContent());
+
+        }else if(itemString.equals("project")){
+            viewHolder.tv_goon_name.setText("项目名称:");
+            viewHolder.tv_goon_time.setText("项目时间:");
+            viewHolder.tv_gon_department.setText("项目环境:");
+            viewHolder.tv_gon_position.setText("担任职务");
+            viewHolder.tv_resume_goon_content.setText("项目内容:");
+
+            viewHolder.id_time.setText(FormatUtils.timestampToDatetime(book.getSdate()) + "--" + FormatUtils.timestampToDatetime(book.getEdate()) );
+            viewHolder.id_position.setText(book.getTitle());
+            viewHolder.id_department.setText(book.getSys());
+            viewHolder.id_name.setText(book.getName());
+            viewHolder.id_content.setText(book.getContent());
+
+        }else if(itemString.equals("skill")){
+            viewHolder.ll_content.setVisibility(View.GONE);
+            viewHolder.tv_goon_name.setText("技能名称:");
+            viewHolder.tv_goon_time.setText("技能类别:");
+            viewHolder.tv_gon_department.setText("熟练程度:");
+            viewHolder.tv_gon_position.setText("掌握时间");
+
+
+            viewHolder.id_name.setText(book.getName());
+            viewHolder.id_time.setText(book.getSkill() );
+            viewHolder.id_department.setText(book.getIng());
+            viewHolder.id_position.setText(book.getLongtime());
         }
 
-        viewHolder.id_time.setText(FormatUtils.timestampToDatetime(book.getSdate()));
-        viewHolder.id_department.setText(book.getTitle());
-        viewHolder.id_name.setText(book.getName());
-        viewHolder.id_content.setText(book.getContent());
 
         return convertView;
     }
@@ -101,5 +129,6 @@ public class BookScanAdapter extends BaseAdapter{
         TextView id_content;
 
         LinearLayout ll_goon_position;
+        LinearLayout ll_content;
     }
 }

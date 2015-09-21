@@ -99,9 +99,6 @@ public class ResumeBookScanActivity extends BaseActivity{
                     if(code == 0){
                         JSONObject data = jsonObject.getJSONObject("data");
 
-                        JSONObject info = data.getJSONObject("info");
-                        String name = info.getString("uname");//姓名
-
                         String booklist = data.getString("cert");//证书
                         if(!booklist.equals("[]")){
                             Gson gson = new Gson();

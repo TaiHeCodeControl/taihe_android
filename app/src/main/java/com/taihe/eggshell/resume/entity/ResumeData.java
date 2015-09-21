@@ -18,6 +18,15 @@ public class ResumeData {
     private String skill;
     private String ing;
     private String longtime;
+    private String sys;
+
+    public String getSys() {
+        return sys;
+    }
+
+    public void setSys(String sys) {
+        this.sys = sys;
+    }
 
     public int getId() {
         return id;
