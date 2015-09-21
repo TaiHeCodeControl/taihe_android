@@ -20,6 +20,7 @@
         android:padding="5dp">
 
         <TextView
+            android:id="@+id/id_resume_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -52,15 +53,14 @@
         android:orientation="vertical"
         android:background="@drawable/find_paassword_background">
 
-        <com.taihe.eggshell.widget.MyListView
+        <ListView
             android:id="@+id/id_resume_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="160dp"
             android:scrollbars="none"
             android:listSelector="@color/white"
-            android:divider="@color/line_gray"
-            android:dividerHeight="0.5dp">
-        </com.taihe.eggshell.widget.MyListView>
+            android:divider="@null">
+        </ListView>
 
     </LinearLayout>
 

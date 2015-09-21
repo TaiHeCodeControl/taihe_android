@@ -63,7 +63,7 @@ public class ResumeListAdapter extends BaseAdapter{
         }else{
             holder = (ResumeHolderView)convertView.getTag();
         }
-
+        holder.checkBox.setChecked(false);
         holder.checkBox.setText("\u3000"+resume.getName());
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

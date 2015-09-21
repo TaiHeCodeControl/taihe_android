@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -46,12 +47,11 @@ public class ResumeManagerActivity extends BaseActivity{
     private Context mContext;
     private Intent intent;
 
-    private Resumes resume;
     private LoadingProgressDialog loading;
-    private TextView createResume,edtResume,useResume,delResume;
+    private TextView createResume,edtResume,useResume,delResume,numResume;
     private ChoiceDialog deleteDialog;
     private LinearLayout lin_back;
-    private MyListView resumelistview;
+    private ListView resumelistview;
     private ResumeListAdapter adapter;
     private List<Resumes> resumelist = new ArrayList<Resumes>();
     private List<Resumes> selectedresumelist = new ArrayList<Resumes>();
@@ -66,7 +66,8 @@ public class ResumeManagerActivity extends BaseActivity{
         lin_back = (LinearLayout) findViewById(R.id.lin_back);
         lin_back.setOnClickListener(this);
 
-        resumelistview = (MyListView)findViewById(R.id.id_resume_list);
+        numResume = (TextView)findViewById(R.id.id_resume_num);
+        resumelistview = (ListView)findViewById(R.id.id_resume_list);
         createResume = (TextView)findViewById(R.id.id_create_resume);
         edtResume = (TextView)findViewById(R.id.id_edt);
         useResume = (TextView)findViewById(R.id.id_use);
@@ -85,7 +86,7 @@ public class ResumeManagerActivity extends BaseActivity{
 
         initTitle("简历管理");
         loading = new LoadingProgressDialog(mContext,"正在请求...");
-        selectedresumelist.clear();
+
         adapter = new ResumeListAdapter(mContext,resumelist,new ResumeListAdapter.ResumeSelectedListener() {
             @Override
             public void selectedResume(Resumes resume) {
@@ -105,7 +106,7 @@ public class ResumeManagerActivity extends BaseActivity{
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(mContext);
-
+        selectedresumelist.clear();
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             loading.show();
             getUserResumeList();
@@ -187,9 +188,15 @@ public class ResumeManagerActivity extends BaseActivity{
                         Gson gson = new Gson();
                         List<Resumes> resumesList = gson.fromJson(data,new TypeToken<List<Resumes>>(){}.getType());
                         if(resumesList.size()>0){
-//                            createResume.setEnabled(false);
-//                            createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.unable_select_background));
-                            resume = resumesList.get(0);
+                            if(resumesList.size()>=5){
+                                createResume.setEnabled(false);
+                                createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.unable_select_background));
+                            }else{
+                                createResume.setEnabled(true);
+                                createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.msg_vercode_background));
+                            }
+                            numResume.setText("我的简历("+resumesList.size()+")");
+                            resumelist.clear();
                             resumelist.addAll(resumesList);
                             adapter.notifyDataSetChanged();
 //                            EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
@@ -228,9 +235,8 @@ public class ResumeManagerActivity extends BaseActivity{
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
                     if(code == 0){
-//                        createResume.setEnabled(true);
-//                        createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.msg_vercode_background));
-                        EggshellApplication.getApplication().getUser().setResumeid("");
+                        getUserResumeList();
+//                        EggshellApplication.getApplication().getUser().setResumeid("");
                         ToastUtils.show(mContext,"删除成功");
                     }
                 } catch (JSONException e) {
@@ -252,7 +258,7 @@ public class ResumeManagerActivity extends BaseActivity{
         for(Resumes r : selectedresumelist){
             sb.append(r.getRid()+",");
         }
-        params.put("eid",sb.toString().substring(0,sb.toString().lastIndexOf(",")));
+        params.put("eid", sb.toString().substring(0, sb.toString().lastIndexOf(",")));
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_DELETE_RESUME,false,params,true,listener,errorListener);
     }
