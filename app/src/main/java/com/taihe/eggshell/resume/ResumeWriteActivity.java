@@ -408,7 +408,8 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ToastUtils.show(mContext,"网络异常");
+                Log.v(TAG,new String(volleyError.networkResponse.data));
+                ToastUtils.show(mContext,volleyError);
             }
         };
 

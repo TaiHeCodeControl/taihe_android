@@ -71,7 +71,7 @@ public class RequestUtils {
                         if(null!= EggshellApplication.getApplication().getUser() && null!= EggshellApplication.getApplication().getUser().getToken()){
                             dataParams.put("token",EggshellApplication.getApplication().getUser().getToken());
                         }
-//                        Log.v("DD:",dataParams.toString());
+                        Log.v("DD:",dataParams.toString());
                         return dataParams;
 					} else {
 						dataParams.put("method", method);

@@ -22,14 +22,17 @@ import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.MainActivity;
+import com.taihe.eggshell.resume.adapter.ResumeListAdapter;
 import com.taihe.eggshell.resume.entity.Resumes;
 import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
+import com.taihe.eggshell.widget.MyListView;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,14 +48,13 @@ public class ResumeManagerActivity extends BaseActivity{
 
     private Resumes resume;
     private LoadingProgressDialog loading;
-    private TextView createResume,scanResume,edtResume,useResume,delResume;
-    private CheckBox checkBox;
+    private TextView createResume,edtResume,useResume,delResume;
     private ChoiceDialog deleteDialog;
     private LinearLayout lin_back;
-    private RelativeLayout resumeRelative;
-    private View line;
-
-    private boolean isSelected = false;
+    private MyListView resumelistview;
+    private ResumeListAdapter adapter;
+    private List<Resumes> resumelist = new ArrayList<Resumes>();
+    private List<Resumes> selectedresumelist = new ArrayList<Resumes>();
 
     @Override
     public void initView() {
@@ -64,32 +66,17 @@ public class ResumeManagerActivity extends BaseActivity{
         lin_back = (LinearLayout) findViewById(R.id.lin_back);
         lin_back.setOnClickListener(this);
 
-        resumeRelative = (RelativeLayout)findViewById(R.id.id_resume_list);
-        line = findViewById(R.id.id_line_resume);
-
+        resumelistview = (MyListView)findViewById(R.id.id_resume_list);
         createResume = (TextView)findViewById(R.id.id_create_resume);
-        scanResume = (TextView)findViewById(R.id.id_scan_resume);
         edtResume = (TextView)findViewById(R.id.id_edt);
         useResume = (TextView)findViewById(R.id.id_use);
         delResume = (TextView)findViewById(R.id.id_del);
-        checkBox = (CheckBox)findViewById(R.id.id_check_box);
 
         createResume.setOnClickListener(this);
-        scanResume.setOnClickListener(this);
         edtResume.setOnClickListener(this);
         useResume.setOnClickListener(this);
         delResume.setOnClickListener(this);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isSelected = isChecked;
-                if(isSelected){
-                    EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
-                }else{
-                    EggshellApplication.getApplication().getUser().setResumeid("");
-                }
-            }
-        });
+
     }
 
     @Override
@@ -98,6 +85,20 @@ public class ResumeManagerActivity extends BaseActivity{
 
         initTitle("简历管理");
         loading = new LoadingProgressDialog(mContext,"正在请求...");
+        selectedresumelist.clear();
+        adapter = new ResumeListAdapter(mContext,resumelist,new ResumeListAdapter.ResumeSelectedListener() {
+            @Override
+            public void selectedResume(Resumes resume) {
+                selectedresumelist.add(resume);
+            }
+
+            @Override
+            public void deleteResume(Resumes resumes) {
+                selectedresumelist.remove(resumes);
+            }
+        });
+        resumelistview.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -123,26 +124,21 @@ public class ResumeManagerActivity extends BaseActivity{
                 intent = new Intent(mContext,ResumeWriteActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.id_scan_resume:
-                intent = new Intent(mContext,ResumeScanActivity.class);
-                intent.putExtra("eid",resume);
-                startActivity(intent);
-                break;
             case R.id.id_edt:
-                if(isSelected){
+                if(selectedresumelist.size()==1){
                     intent = new Intent(mContext,ResumeWriteActivity.class);
-                    intent.putExtra("eid",resume.getRid()+"");
+                    intent.putExtra("eid",selectedresumelist.get(0).getRid()+"");
                     startActivity(intent);
                 }else{
-                    ToastUtils.show(mContext,"请选择简历");
+                    ToastUtils.show(mContext,"请选择一份简历");
                 }
                 break;
             case R.id.id_use:
-                if(isSelected){
-                    EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
-                    ToastUtils.show(mContext,"你使用了简历:"+resume.getName());
+                if(selectedresumelist.size()==1){
+                    EggshellApplication.getApplication().getUser().setResumeid(selectedresumelist.get(0).getRid()+"");
+                    ToastUtils.show(mContext,"你使用了简历:"+selectedresumelist.get(0).getName());
                 }else{
-                    ToastUtils.show(mContext, "请选择简历");
+                    ToastUtils.show(mContext, "请选择一份简历");
                 }
                 break;
             case R.id.id_del:
@@ -168,7 +164,7 @@ public class ResumeManagerActivity extends BaseActivity{
                 deleteDialog.getRightButton().setText("确定");
                 deleteDialog.getLeftButton().setText("取消");
 
-                if(isSelected){
+                if(selectedresumelist.size()>0){
                     deleteDialog.show();
                 }else{
                     ToastUtils.show(mContext,"请选择要删除的简历");
@@ -182,7 +178,7 @@ public class ResumeManagerActivity extends BaseActivity{
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-//                Log.v(TAG,(String)o);
+                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
@@ -191,17 +187,15 @@ public class ResumeManagerActivity extends BaseActivity{
                         Gson gson = new Gson();
                         List<Resumes> resumesList = gson.fromJson(data,new TypeToken<List<Resumes>>(){}.getType());
                         if(resumesList.size()>0){
-                            createResume.setEnabled(false);
-                            createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.unable_select_background));
-                            resumeRelative.setVisibility(View.VISIBLE);
-                            line.setVisibility(View.VISIBLE);
+//                            createResume.setEnabled(false);
+//                            createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.unable_select_background));
                             resume = resumesList.get(0);
-                            checkBox.setText("\u3000"+resume.getName());
-                            checkBox.setChecked(false);
+                            resumelist.addAll(resumesList);
+                            adapter.notifyDataSetChanged();
 //                            EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
                         }else{
-                            resumeRelative.setVisibility(View.GONE);
-                            line.setVisibility(View.GONE);
+//                            resumeRelative.setVisibility(View.GONE);
+//                            line.setVisibility(View.GONE);
                         }
                     }
                 } catch (JSONException e) {
@@ -215,9 +209,7 @@ public class ResumeManagerActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                     loading.dismiss();
-                    resumeRelative.setVisibility(View.GONE);
-                    line.setVisibility(View.GONE);
-                    ToastUtils.show(mContext,"网络异常");
+                    ToastUtils.show(mContext,volleyError);
             }
         };
         Map<String,String> params = new HashMap<String, String>();
@@ -236,12 +228,9 @@ public class ResumeManagerActivity extends BaseActivity{
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
                     if(code == 0){
-                        resumeRelative.setVisibility(View.GONE);
-                        line.setVisibility(View.GONE);
-                        createResume.setEnabled(true);
-                        createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.msg_vercode_background));
+//                        createResume.setEnabled(true);
+//                        createResume.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.msg_vercode_background));
                         EggshellApplication.getApplication().getUser().setResumeid("");
-                        isSelected = false;
                         ToastUtils.show(mContext,"删除成功");
                     }
                 } catch (JSONException e) {
@@ -255,11 +244,15 @@ public class ResumeManagerActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 loading.dismiss();
-                ToastUtils.show(mContext,"网络异常");
+                ToastUtils.show(mContext,volleyError);
             }
         };
         Map<String,String> params = new HashMap<String, String>();
-        params.put("eid",resume.getRid()+"");
+        StringBuilder sb = new StringBuilder();
+        for(Resumes r : selectedresumelist){
+            sb.append(r.getRid()+",");
+        }
+        params.put("eid",sb.toString().substring(0,sb.toString().lastIndexOf(",")));
 
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_DELETE_RESUME,false,params,true,listener,errorListener);
     }
