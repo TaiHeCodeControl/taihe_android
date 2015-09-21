@@ -177,8 +177,50 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 tv_findjob_title.setText("兼职职位");
             } else if (type.equals("129")) {
                 tv_findjob_title.setText("实习职位");
-            } else if(type.equals("55")){
+            } else if(type.equals("55")) {
                 tv_findjob_title.setText("全职职位");
+            }else if(job1.equals("35")){
+                tv_findjob_title.setText("互联网");
+            }else if(job1.equals("37")){
+                tv_findjob_title.setText("金融银行");
+            }else if(job1.equals("40")){
+                tv_findjob_title.setText("广告媒体");
+            }else if(job_post.equals("131")){
+                tv_findjob_title.setText("网站策划");
+            }else if(job_post.equals("132")){
+                tv_findjob_title.setText("网站编辑");
+            }else if(job_post.equals("125")){
+                tv_findjob_title.setText("运营专员");
+            }else if(job_post.equals("141")){
+                tv_findjob_title.setText("SEM专员");
+            }else if(job_post.equals("127")){
+                tv_findjob_title.setText("UI设计师");
+            }else if(job_post.equals("133")){
+                tv_findjob_title.setText("美工");
+            }else if(job_post.equals("296")){
+                tv_findjob_title.setText("银行柜员");
+            }else if(job_post.equals("285")){
+                tv_findjob_title.setText("业务专员");
+            }else if(job_post.equals("292")){
+                tv_findjob_title.setText("清算员");
+            }else if(job_post.equals("261")){
+                tv_findjob_title.setText("资金专员");
+            }else if(job_post.equals("251")){
+                tv_findjob_title.setText("会计");
+            }else if(job_post.equals("252")){
+                tv_findjob_title.setText("出纳员");
+            }else if(job_post.equals("509")){
+                tv_findjob_title.setText("文案策划");
+            }else if(job_post.equals("511")){
+                tv_findjob_title.setText("企业策划");
+            }else if(job_post.equals("524")){
+                tv_findjob_title.setText("活动策划");
+            }else if(job_post.equals("504")){
+                tv_findjob_title.setText("客户专员");
+            }else if(job_post.equals("507")){
+                tv_findjob_title.setText("创意专员");
+            }else if(job_post.equals("521")){
+                tv_findjob_title.setText("媒介专员");
             }
         }
 
@@ -510,28 +552,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
 
     }
-
-    @Override
-    protected void onStop() {//清空兼职，实习，全职以外的其他字段
-        super.onStop();
-
-        //hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp
-        // 工作性质=>type
-
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "");
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "");
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post", "");
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "salary", "");
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "edu", "");
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", "");
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job1", "");
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "cityid", "");//工作城市
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", "");//发布时间
-
-
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.PrefUtils;
+import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.main.entity.CityBJ;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.StaticData;
@@ -185,19 +186,9 @@ public class JobFilterActivity extends BaseActivity {
 
                 keyword = et_keyWord.getText().toString().trim();
 
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", keyword);
-                PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"type",type);
                 //保存职位筛选的字段
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");//工作行业
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job1", hy);//工作行业
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post",job_post);//职位类别
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "salary", salary);
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "edu", edu);
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", exp);//工作年限
-//                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", type);//工作类型
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "cityid", city);//工作城市
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", pubtime);//发布时间
-                PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"titleString","搜索结果");
+                JobFilterUtils.filterJob(mContext,keyword,type,"",hy,job_post,salary,edu,exp,city,pubtime,"搜索结果");
+
                 intent = new Intent();
                 setResult(101,intent);
                 this.finish();

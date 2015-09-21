@@ -15,6 +15,7 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.FindJobActivity;
+import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 
@@ -72,13 +73,10 @@ public class IndustryAdapter extends BaseAdapter {
         viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                ToastUtils.show(context,industry.getName()+":"+industry.getId());
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "type", "");
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "keyword","");
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job_post","");
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "hy", "");
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "titleString", "");
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job1", industry.getId()+"");
+                String job1 = industry.getId() + "";
+                //搜索职位
+                JobFilterUtils.filterJob(context, "", "", "", job1, "", "", "", "", "", "", "");
+
                 context.startActivity(new Intent(context,FindJobActivity.class));
             }
         });
@@ -86,13 +84,11 @@ public class IndustryAdapter extends BaseAdapter {
         viewHolder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                ToastUtils.show(context,industry.getProfessionalList().get(position).getName()+":"+industry.getProfessionalList().get(position).getId());
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "type", "");
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "keyword","");
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "hy","");
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job_post",industry.getProfessionalList().get(position).getId()+"");
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "titleString", "");
-                PrefUtils.saveStringPreferences(context, PrefUtils.CONFIG, "job1", "");
+
+                String job_post = industry.getProfessionalList().get(position).getId() + "";
+                //搜索职位
+                JobFilterUtils.filterJob(context, "", "", "", "", job_post, "", "", "", "", "","");
+
                 context.startActivity(new Intent(context,FindJobActivity.class));
             }
         });

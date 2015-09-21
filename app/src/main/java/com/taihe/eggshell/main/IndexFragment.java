@@ -35,6 +35,7 @@ import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobSearchActivity;
+import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
 import com.taihe.eggshell.main.adapter.IndustryAdapter;
@@ -236,32 +237,20 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_look_job://找工作
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "55");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post","");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword","");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job1", "");
+                //搜索职位
+                JobFilterUtils.filterJob(mContext, "", "55", "", "", "", "", "", "", "", "","");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_look_jianzhi://找兼职
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "56");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post","");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword","");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job1", "");
+                //搜索职位
+                JobFilterUtils.filterJob(mContext, "", "56", "", "", "", "", "", "", "", "","");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_look_shixi://找实习
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "type", "129");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", "");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job_post","");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword","");
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job1", "");
+                //搜索职位
+                JobFilterUtils.filterJob(mContext, "", "129", "", "", "", "", "", "", "", "","");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;

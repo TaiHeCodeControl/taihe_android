@@ -28,6 +28,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.HotJobAdapter;
 import com.taihe.eggshell.job.adapter.SearchHistoryAdapter;
+import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.job.bean.SearchHistory;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
@@ -105,9 +106,12 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (prolist.get(position).getName().equals("银行柜员")) {
-                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", "柜员");
+                    //搜索职位
+                    JobFilterUtils.filterJob(mContext, "柜员", "", "", "", "", "", "", "", "", "","搜索结果");
                 } else {
-                    PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", prolist.get(position).getName());
+                    String keyword = prolist.get(position).getName();
+                    //搜索职位
+                    JobFilterUtils.filterJob(mContext, keyword, "", "", "", "", "", "", "", "", "","搜索结果");
                 }
 
                 if (fromTags.equals("Index")) {
@@ -117,7 +121,6 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                     Intent intent = new Intent();
                     setResult(201, intent);
                 }
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "搜索结果");
 
                 JobSearchActivity.this.finish();
             }
@@ -131,7 +134,9 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         lv_searchHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", historyList.get(position).getName());
+                //搜索职位
+                JobFilterUtils.filterJob(mContext, historyList.get(position).getName(), "", "", "", "", "", "", "", "", "","搜索结果");
+
                 if (fromTags.equals("Index")) {
                     Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
                     startActivity(intent);
@@ -139,7 +144,6 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                     Intent intent = new Intent();
                     setResult(201, intent);
                 }
-                PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "搜索结果");
 
                 JobSearchActivity.this.finish();
             }
@@ -170,8 +174,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                         }
                         getDataFromDatabase();
                         //搜索职位
-
-                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", word);
+                        JobFilterUtils.filterJob(mContext, word, "", "", "", "", "", "", "", "", "","搜索结果");
 
                         if (fromTags.equals("Index")) {
                             Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
@@ -180,7 +183,6 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                             Intent intent = new Intent();
                             setResult(201, intent);
                         }
-                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", "搜索结果");
                         this.finish();
                     } else {
                         ToastUtils.show(mContext, "请输入内容");
