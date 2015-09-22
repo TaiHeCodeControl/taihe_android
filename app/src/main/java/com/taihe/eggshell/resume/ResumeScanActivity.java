@@ -47,12 +47,6 @@ public class ResumeScanActivity extends BaseActivity{
 
     private TextView createTime,userName,gender,age,schoolLevel,experice,address,telphone,email,resumename;
     private TextView hopeposition,hopeindustry,hopemoney,hopeaddress,hopetime,staus,positiontype;
-    private TextView worktime,workposition,workcompany,workcontent;
-    private TextView edutime,eduindusty,eduschool,eduposition,edubrief;
-    private TextView techname,techyears,techlevel,techn;
-    private TextView projecttime,projectpostion,projectname,projectbrief;
-    private TextView bookname,booktime,bookcompany,bookbrief;
-    private TextView traintime,traindirection,traincompnay,trainbrief;
     private TextView selfbrief;
     private LoadingProgressDialog loading;
     private MyListView worklistview,edulistview,techlistview,projectlistview,booklistview,trainlistview;
@@ -92,51 +86,26 @@ public class ResumeScanActivity extends BaseActivity{
         worklistview = (MyListView)findViewById(R.id.id_work_list);
         addWork = (TextView)findViewById(R.id.id_to_add_work);
         addWork.setOnClickListener(this);
-//        worktime = (TextView)findViewById(R.id.id_time_work);
-//        workposition = (TextView)findViewById(R.id.id_position);
-//        workcompany = (TextView)findViewById(R.id.id_company_name);
-//        workcontent = (TextView)findViewById(R.id.id_work_content);
         //教育
         edulistview = (MyListView)findViewById(R.id.id_edu_list);
         addEdu = (TextView)findViewById(R.id.id_to_add_edu);
         addEdu.setOnClickListener(this);
-//        edutime = (TextView)findViewById(R.id.id_time_edu);
-//        eduindusty = (TextView)findViewById(R.id.id_professional);
-//        eduschool = (TextView)findViewById(R.id.id_school_name);
-//        eduposition = (TextView)findViewById(R.id.id_school_posion);
-//        edubrief = (TextView)findViewById(R.id.id_prof_brief);
         //专业技能
         techlistview = (MyListView)findViewById(R.id.id_tech_list);
         addTech = (TextView)findViewById(R.id.id_to_add_tech);
         addTech.setOnClickListener(this);
-//        techname = (TextView)findViewById(R.id.id_tech_name);
-//        techyears = (TextView)findViewById(R.id.id_contron_time);
-//        techlevel = (TextView)findViewById(R.id.id_hot_level);
-//        techn = (TextView)findViewById(R.id.id_tech);
         //项目经验
         projectlistview = (MyListView)findViewById(R.id.id_project_list);
         addProject = (TextView)findViewById(R.id.id_to_add_project);
         addProject.setOnClickListener(this);
-//        projecttime = (TextView)findViewById(R.id.id_time_project);
-//        projectpostion = (TextView)findViewById(R.id.id_own_posion);
-//        projectname = (TextView)findViewById(R.id.id_project_name);
-//        projectbrief = (TextView)findViewById(R.id.id_content);
         //证书
         booklistview = (MyListView)findViewById(R.id.id_book_list);
         addBook = (TextView)findViewById(R.id.id_to_add_book);
         addBook.setOnClickListener(this);
-//        booktime = (TextView)findViewById(R.id.id_time_book);
-//        bookname = (TextView)findViewById(R.id.id_book_name);
-//        bookcompany = (TextView)findViewById(R.id.id_book_from);
-//        bookbrief = (TextView)findViewById(R.id.id_book_brief);
         //培训
         trainlistview = (MyListView)findViewById(R.id.id_train_list);
         addTrain = (TextView)findViewById(R.id.id_to_add_train);
         addTrain.setOnClickListener(this);
-//        traintime = (TextView)findViewById(R.id.id_time_train);
-//        traindirection = (TextView)findViewById(R.id.id_train_direction);
-//        traincompnay = (TextView)findViewById(R.id.id_train_company);
-//        trainbrief = (TextView)findViewById(R.id.id_train_brief);
         //自我评价
         selfbrief = (TextView)findViewById(R.id.id_self_desc);
         addSelf = (TextView)findViewById(R.id.id_to_add_self);
@@ -149,16 +118,6 @@ public class ResumeScanActivity extends BaseActivity{
         super.initData();
 
         initTitle("简历预览");
-//        eid = getIntent().getParcelableExtra("eid");
-//        Log.v("TTT:",eid.getRid()+"");
-//        loading = new LoadingProgressDialog(mContext,"正在请求...");
-//        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-//            loading.show();
-//            getResumeData(eid.getRid()+"");
-//        }else{
-//            ToastUtils.show(mContext,R.string.check_network);
-//        }
-
     }
 
     @Override
@@ -282,11 +241,6 @@ public class ResumeScanActivity extends BaseActivity{
                             List<ResumeData> worklists = gson.fromJson(worklist,new TypeToken<List<ResumeData>>(){}.getType());
                             worklistview.setAdapter(new WorkAdapter(mContext,worklists));
                             addWork.setVisibility(View.GONE);
-//                            ResumeData work = worklists.get(0);
-//                            worktime.setText(FormatUtils.timestampToDatetime(work.getSdate())+"——"+FormatUtils.timestampToDatetime(work.getEdate()));
-//                            workposition.setText(work.getName());
-//                            workcompany.setText(work.getDepartment());
-//                            workcontent.setText(work.getContent());
                         }else{
                             addWork.setVisibility(View.VISIBLE);
                         }
@@ -295,12 +249,6 @@ public class ResumeScanActivity extends BaseActivity{
                             List<ResumeData> jylists = gson.fromJson(jylist,new TypeToken<List<ResumeData>>(){}.getType());
                             edulistview.setAdapter(new EduAdapter(mContext,jylists));
                             addEdu.setVisibility(View.GONE);
-//                            ResumeData jy = jylists.get(0);
-//                            edutime.setText(FormatUtils.timestampToDatetime(jy.getSdate())+"——"+FormatUtils.timestampToDatetime(jy.getEdate()));
-//                            eduindusty.setText(jy.getSpecialty());
-//                            eduposition.setText(jy.getTitle());
-//                            eduschool.setText(jy.getName());
-//                            edubrief.setText(jy.getContent());
                         }else{
                             addEdu.setVisibility(View.VISIBLE);
                         }
@@ -309,11 +257,6 @@ public class ResumeScanActivity extends BaseActivity{
                             List<ResumeData> skilllists = gson.fromJson(skilllist,new TypeToken<List<ResumeData>>(){}.getType());
                             techlistview.setAdapter(new TechAdapter(mContext,skilllists));
                             addTech.setVisibility(View.GONE);
-//                            ResumeData skill = skilllists.get(0);
-//                            techlevel.setText(skill.getIng());
-//                            techyears.setText(skill.getLongtime()+"年");
-//                            techname.setText(skill.getSkill());
-//                            techn.setText(skill.getSkill());
                         }else{
                             addTech.setVisibility(View.VISIBLE);
                         }
@@ -322,11 +265,6 @@ public class ResumeScanActivity extends BaseActivity{
                             List<ResumeData> projectlists = gson.fromJson(projectlist,new TypeToken<List<ResumeData>>(){}.getType());
                             projectlistview.setAdapter(new ProjectAdapter(mContext,projectlists));
                             addProject.setVisibility(View.GONE);
-//                            ResumeData project = projectlists.get(0);
-//                            projecttime.setText(FormatUtils.timestampToDatetime(project.getSdate())+"——"+FormatUtils.timestampToDatetime(project.getEdate()));
-//                            projectname.setText(project.getName());
-//                            projectbrief.setText(project.getContent());
-//                            projectpostion.setText(project.getTitle());
                         }else{
                             addProject.setVisibility(View.VISIBLE);
                         }
@@ -335,11 +273,6 @@ public class ResumeScanActivity extends BaseActivity{
                             List<ResumeData> trainlists = gson.fromJson(trainlist,new TypeToken<List<ResumeData>>(){}.getType());
                             trainlistview.setAdapter(new TrainAdapter(mContext,trainlists));
                             addTrain.setVisibility(View.GONE);
-//                            ResumeData train = trainlists.get(0);
-//                            traintime.setText(FormatUtils.timestampToDatetime(train.getSdate())+"——"+FormatUtils.timestampToDatetime(train.getEdate()));
-//                            traincompnay.setText(train.getName());
-//                            traindirection.setText(train.getTitle());
-//                            trainbrief.setText(train.getContent());
                         }else{
                             addTrain.setVisibility(View.VISIBLE);
                         }
@@ -348,11 +281,6 @@ public class ResumeScanActivity extends BaseActivity{
                             List<ResumeData> booklists = gson.fromJson(booklist,new TypeToken<List<ResumeData>>(){}.getType());
                             booklistview.setAdapter(new BookAdapter(mContext,booklists));
                             addBook.setVisibility(View.GONE);
-//                            ResumeData book = booklists.get(0);
-//                            booktime.setText(FormatUtils.timestampToDatetime(book.getSdate()));
-//                            bookcompany.setText(book.getTitle());
-//                            bookname.setText(book.getName());
-//                            bookbrief.setText(book.getContent());
                         }else{
                             addBook.setVisibility(View.VISIBLE);
                         }

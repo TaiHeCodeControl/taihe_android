@@ -71,12 +71,6 @@ public class ResumeWorkScanActivity extends BaseActivity{
             tempT="培训经历";
         }
         resume_name.setText(eid.getName()+"一"+tempT);
-//        companyName = intent.getStringExtra("name");
-//        startTime = intent.getStringExtra("sdate");
-//        endTime = intent.getStringExtra("edate");
-//        departName = intent.getStringExtra("department");
-//        positionName = intent.getStringExtra("title");
-//        contextWord = intent.getStringExtra("content");
         loading.show();
         getResumeData(eid.getRid()+"");
     }
@@ -142,22 +136,7 @@ public class ResumeWorkScanActivity extends BaseActivity{
                         if("edu".equals(tempTielt)){
                             return;
                         }
-//                        String skilllist = data.getString("skill");//技能
-//                        if(!skilllist.equals("[]")){
-//                            List<ResumeData> skilllists = gson.fromJson(skilllist,new TypeToken<List<ResumeData>>(){}.getType());
-//                            techlistview.setAdapter(new TechAdapter(mContext,skilllists));
-//                            addTech.setVisibility(View.GONE);
-//                        }else{
-//                            addTech.setVisibility(View.VISIBLE);
-//                        }
-//                        String projectlist = data.getString("project");//项目
-//                        if(!projectlist.equals("[]")){
-//                            List<ResumeData> projectlists = gson.fromJson(projectlist,new TypeToken<List<ResumeData>>(){}.getType());
-//                            projectlistview.setAdapter(new ProjectAdapter(mContext,projectlists));
-//                            addProject.setVisibility(View.GONE);
-//                        }else{
-//                            addProject.setVisibility(View.VISIBLE);
-//                        }
+
                         tempTag = new String[] {"培训中心:","培训时间:","","培训方向:","培训描述:"};
                         worklist = data.getString("training");//培训
                         if(!worklist.equals("[]")){
@@ -167,31 +146,6 @@ public class ResumeWorkScanActivity extends BaseActivity{
                         if("train".equals(tempTielt)){
                             return;
                         }
-//                        String booklist = data.getString("cert");//证书
-//                        if(!booklist.equals("[]")){
-//                            List<ResumeData> booklists = gson.fromJson(booklist,new TypeToken<List<ResumeData>>(){}.getType());
-//                            booklistview.setAdapter(new BookAdapter(mContext,booklists));
-//                            addBook.setVisibility(View.GONE);
-//                        }else{
-//                            addBook.setVisibility(View.VISIBLE);
-//                        }
-//                        String ohter = data.getString("other");//自我评价
-//                        if(!ohter.equals("[]")){
-//                            JSONObject other = data.getJSONObject("other");
-//                            selfbrief.setText(other.getString("content"));
-//                            addSelf.setVisibility(View.GONE);
-//                            selfbrief.setVisibility(View.VISIBLE);
-//                        }else{
-//                            selfbrief.setVisibility(View.GONE);
-//                            addSelf.setVisibility(View.VISIBLE);
-//                        }
-
-//                        scrollView.post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                scrollView.scrollTo(0,0);
-//                            }
-//                        });
 
                         worklistview.setSelection(worklists.size());
                     }
@@ -205,7 +159,7 @@ public class ResumeWorkScanActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 loading.dismiss();
-                ToastUtils.show(mContext, "网络异常");
+                ToastUtils.show(mContext, volleyError);
             }
         };
 
