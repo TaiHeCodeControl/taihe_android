@@ -127,10 +127,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_gray" />
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0.5dp"-->
+        <!--android:background="@color/line_gray" />-->
 
     <TextView
         android:id="@+id/tv_resume_goon_content"
