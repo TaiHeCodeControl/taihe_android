@@ -56,6 +56,7 @@ public class Urls {
     public static final String METHOD_GET_RESUME = "/Except/resume_manager";//简历管理
     public static final String METHOD_DELETE_RESUME = "/Except/resume_del";//删除简历
     public static final String METHOD_RESUME_SCAN = "/Except/resume_preview";//简历预览
+    public static final String METHOD_RESUME_USE = "/Except/resume_use";//使用简历
 
     public static final String NEARBY_URL = BASE_HYR_MOBILE_URL + "/Activity/index?";//玩出范
     public static final String RESUME_WORK_URL = BASE_HYR_MOBILE_URL + "/Except/resume_work";//工作经历

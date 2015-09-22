@@ -408,7 +408,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Log.v(TAG,new String(volleyError.networkResponse.data));
+//                Log.v(TAG,new String(volleyError.networkResponse.data));
                 ToastUtils.show(mContext,volleyError);
             }
         };
@@ -451,7 +451,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
             public void onErrorResponse(VolleyError volleyError) {
                 loading.dismiss();
 //                Log.v("FFF:",new String(volleyError.networkResponse.data));
-                ToastUtils.show(mContext,"网络异常");
+                ToastUtils.show(mContext,volleyError);
             }
         };
 //        Log.v("PAR:",params.toString());

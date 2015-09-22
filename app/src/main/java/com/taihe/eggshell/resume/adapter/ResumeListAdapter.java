@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
+import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.resume.ResumeScanActivity;
 import com.taihe.eggshell.resume.entity.Resumes;
 
@@ -58,6 +59,7 @@ public class ResumeListAdapter extends BaseAdapter{
 
             holder.checkBox = (CheckBox)convertView.findViewById(R.id.id_check_box);
             holder.scanResume = (TextView)convertView.findViewById(R.id.id_scan_resume);
+            holder.resumeTime = (TextView)convertView.findViewById(R.id.id_resume_time);
 
             convertView.setTag(holder);
         }else{
@@ -76,6 +78,8 @@ public class ResumeListAdapter extends BaseAdapter{
             }
         });
 
+        holder.resumeTime.setText(FormatUtils.timestampToDatetime(resume.getCtime()));
+
         holder.scanResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +94,7 @@ public class ResumeListAdapter extends BaseAdapter{
 
     class ResumeHolderView{
         CheckBox checkBox;
-        TextView scanResume;
+        TextView scanResume,resumeTime;
     }
 
     public interface ResumeSelectedListener{

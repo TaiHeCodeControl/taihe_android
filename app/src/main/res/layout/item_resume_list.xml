@@ -16,14 +16,23 @@
             android:id="@+id/id_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
             android:checked="false"
             android:text=""
+            android:maxLength="6"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:padding="10dp"
             style="@style/CustomCheckboxBlue"/>
+
+        <TextView
+            android:id="@+id/id_resume_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/id_scan_resume"

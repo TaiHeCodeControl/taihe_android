@@ -378,7 +378,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
-                ToastUtils.show(mContext, "网络异常");
+                ToastUtils.show(mContext, volleyError);
             }
         };
 

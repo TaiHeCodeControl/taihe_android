@@ -136,8 +136,7 @@ public class ResumeManagerActivity extends BaseActivity{
                 break;
             case R.id.id_use:
                 if(selectedresumelist.size()==1){
-                    EggshellApplication.getApplication().getUser().setResumeid(selectedresumelist.get(0).getRid()+"");
-                    ToastUtils.show(mContext,"你使用了简历:"+selectedresumelist.get(0).getName());
+                    sendResumeId();
                 }else{
                     ToastUtils.show(mContext, "请选择一份简历");
                 }
@@ -174,12 +173,47 @@ public class ResumeManagerActivity extends BaseActivity{
         }
     }
 
+    private void sendResumeId(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                loading.dismiss();
+//                Log.v(TAG,(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        ToastUtils.show(mContext,"你使用了简历:"+selectedresumelist.get(0).getName());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                loading.dismiss();
+//                Log.v(TAG,new String(volleyError.networkResponse.data));
+                ToastUtils.show(mContext,volleyError);
+            }
+        };
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("eid", selectedresumelist.get(0).getRid()+"");
+        params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
+//        Log.v(TAG,params.toString());
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_RESUME_USE,false,params,true,listener,errorListener);
+
+    }
+
     private void getUserResumeList(){
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-                Log.v(TAG,(String)o);
+//                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
@@ -201,8 +235,8 @@ public class ResumeManagerActivity extends BaseActivity{
                             adapter.notifyDataSetChanged();
 //                            EggshellApplication.getApplication().getUser().setResumeid(resume.getRid()+"");
                         }else{
-//                            resumeRelative.setVisibility(View.GONE);
-//                            line.setVisibility(View.GONE);
+                            resumelist.clear();
+                            adapter.notifyDataSetChanged();
                         }
                     }
                 } catch (JSONException e) {
@@ -230,13 +264,12 @@ public class ResumeManagerActivity extends BaseActivity{
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-//                Log.v(TAG,(String)o);
+                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
                     if(code == 0){
                         getUserResumeList();
-//                        EggshellApplication.getApplication().getUser().setResumeid("");
                         ToastUtils.show(mContext,"删除成功");
                     }
                 } catch (JSONException e) {
@@ -250,6 +283,7 @@ public class ResumeManagerActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 loading.dismiss();
+//                Log.v(TAG,new String(volleyError.networkResponse.data));
                 ToastUtils.show(mContext,volleyError);
             }
         };
@@ -259,7 +293,6 @@ public class ResumeManagerActivity extends BaseActivity{
             sb.append(r.getRid()+",");
         }
         params.put("eid", sb.toString().substring(0, sb.toString().lastIndexOf(",")));
-
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_DELETE_RESUME,false,params,true,listener,errorListener);
     }
 
