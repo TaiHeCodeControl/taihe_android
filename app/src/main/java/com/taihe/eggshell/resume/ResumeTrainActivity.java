@@ -182,13 +182,14 @@ public class ResumeTrainActivity extends BaseActivity{
                     if (code == 0) {
                         try{
                             Toast.makeText(mContext,"添加成功!",Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(mContext,ResumeTrainScanActivity.class);
+                            Intent intent = new Intent(mContext,ResumeWorkScanActivity.class);
                             intent.putExtra("eid",eid);
                             intent.putExtra("name",companyName);
                             intent.putExtra("sdate",startTime);
                             intent.putExtra("edate",endTime);
                             intent.putExtra("title",positionName);
                             intent.putExtra("content",contextWord);
+                            intent.putExtra("acttitle","train");
                             startActivity(intent);
                             finish();
                         }catch (Exception ex){

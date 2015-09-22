@@ -2,16 +2,32 @@ package com.taihe.eggshell.resume;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.TextView;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.resume.adapter.ResumeAdapter;
+import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
+import com.taihe.eggshell.widget.MyListView;
 import com.umeng.analytics.MobclickAgent;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wang on 2015/8/15.
@@ -23,26 +39,20 @@ public class ResumeWorkScanActivity extends BaseActivity{
     private Context mContext;
 
     private TextView commitText,resume_name;
-    private TextView companyTextView,departTextView,positionTextView,contextTextView,workTimeStart;
-    private String companyName,startTime,endTime,departName,positionName,contextWord;
     private Resumes eid;
+    String tempTielt;
+    private MyListView worklistview;
+    private LoadingProgressDialog loading;
     @Override
     public void initView() {
         setContentView(R.layout.activity_resume_work_scan);
         super.initView();
-
         mContext = this;
-
         resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_go_on);
-        companyTextView = (TextView)findViewById(R.id.id_company_name);
-        departTextView = (TextView)findViewById(R.id.id_department);
-        positionTextView = (TextView)findViewById(R.id.id_position);
-        contextTextView = (TextView)findViewById(R.id.id_context);
-        workTimeStart = (TextView)findViewById(R.id.id_start_time);
-
+        worklistview = (MyListView)findViewById(R.id.id_work_list_look);
         commitText.setOnClickListener(this);
-
+        loading = new LoadingProgressDialog(mContext,"正在请求...");
     }
 
     @Override
@@ -51,19 +61,24 @@ public class ResumeWorkScanActivity extends BaseActivity{
         initTitle("写简历");
         Intent intent = getIntent();
         eid = intent.getParcelableExtra("eid");
-        resume_name.setText(eid.getName()+"-工作经历");
-        companyName = intent.getStringExtra("name");
-        startTime = intent.getStringExtra("sdate");
-        endTime = intent.getStringExtra("edate");
-        departName = intent.getStringExtra("department");
-        positionName = intent.getStringExtra("title");
-        contextWord = intent.getStringExtra("content");
-
-        companyTextView.setText(companyName);
-        departTextView.setText(departName);
-        positionTextView.setText(positionName);
-        contextTextView.setText(contextWord);
-        workTimeStart.setText(startTime+"到"+endTime);
+        tempTielt = intent.getStringExtra("acttitle");
+        String tempT="";
+        if("work".equals(tempTielt)){
+            tempT="工作经历";
+        }else if("edu".equals(tempTielt)){
+            tempT="教育经历";
+        }else if("train".equals(tempTielt)){
+            tempT="培训经历";
+        }
+        resume_name.setText(eid.getName()+"一"+tempT);
+//        companyName = intent.getStringExtra("name");
+//        startTime = intent.getStringExtra("sdate");
+//        endTime = intent.getStringExtra("edate");
+//        departName = intent.getStringExtra("department");
+//        positionName = intent.getStringExtra("title");
+//        contextWord = intent.getStringExtra("content");
+        loading.show();
+        getResumeData(eid.getRid()+"");
     }
 
     @Override
@@ -71,7 +86,14 @@ public class ResumeWorkScanActivity extends BaseActivity{
         super.onClick(v);
         switch (v.getId()){
             case R.id.id_go_on:
-                Intent intent = new Intent(mContext,ResumeWorkActivity.class);
+                Intent intent = null;
+                if("work".equals(tempTielt)){
+                    intent = new Intent(mContext,ResumeWorkActivity.class);
+                }else if("edu".equals(tempTielt)){
+                    intent = new Intent(mContext,ResumeEduActivity.class);
+                }else if("train".equals(tempTielt)){
+                    intent = new Intent(mContext,ResumeTrainActivity.class);
+                }
                 intent.putExtra("eid",eid);
                 startActivity(intent);
                 finish();
@@ -88,5 +110,108 @@ public class ResumeWorkScanActivity extends BaseActivity{
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(mContext);
+    }
+
+    private void getResumeData(String id) {
+        //返回监听事件
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                Log.v(TAG, (String) o);
+                loading.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        JSONObject data = jsonObject.getJSONObject("data");
+
+                        String[] tempTag = new String[] {"单位名称:","工作时间:","所在部门:","担任职位:","工作内容:"};
+                        Gson gson = new Gson();
+                        String worklist = data.getString("work");//工作经验
+                        List<ResumeData> worklists = gson.fromJson(worklist,new TypeToken<List<ResumeData>>(){}.getType());
+                        worklistview.setAdapter(new ResumeAdapter(mContext,worklists,1,tempTag));
+                        if("work".equals(tempTielt)){
+                            return;
+                        }
+                        tempTag = new String[] {"学校名称:","在校时间:","所学专业:","社团职位:","专业描述:"};
+                        worklist = data.getString("jy");//教育
+                        if(!worklist.equals("[]")){
+                            worklists = gson.fromJson(worklist,new TypeToken<List<ResumeData>>(){}.getType());
+                            worklistview.setAdapter(new ResumeAdapter(mContext,worklists,2,tempTag));
+                        }
+                        if("edu".equals(tempTielt)){
+                            return;
+                        }
+//                        String skilllist = data.getString("skill");//技能
+//                        if(!skilllist.equals("[]")){
+//                            List<ResumeData> skilllists = gson.fromJson(skilllist,new TypeToken<List<ResumeData>>(){}.getType());
+//                            techlistview.setAdapter(new TechAdapter(mContext,skilllists));
+//                            addTech.setVisibility(View.GONE);
+//                        }else{
+//                            addTech.setVisibility(View.VISIBLE);
+//                        }
+//                        String projectlist = data.getString("project");//项目
+//                        if(!projectlist.equals("[]")){
+//                            List<ResumeData> projectlists = gson.fromJson(projectlist,new TypeToken<List<ResumeData>>(){}.getType());
+//                            projectlistview.setAdapter(new ProjectAdapter(mContext,projectlists));
+//                            addProject.setVisibility(View.GONE);
+//                        }else{
+//                            addProject.setVisibility(View.VISIBLE);
+//                        }
+                        tempTag = new String[] {"培训中心:","培训时间:","","培训方向:","培训描述:"};
+                        worklist = data.getString("training");//培训
+                        if(!worklist.equals("[]")){
+                            worklists = gson.fromJson(worklist,new TypeToken<List<ResumeData>>(){}.getType());
+                            worklistview.setAdapter(new ResumeAdapter(mContext,worklists,3,tempTag));
+                        }
+                        if("train".equals(tempTielt)){
+                            return;
+                        }
+//                        String booklist = data.getString("cert");//证书
+//                        if(!booklist.equals("[]")){
+//                            List<ResumeData> booklists = gson.fromJson(booklist,new TypeToken<List<ResumeData>>(){}.getType());
+//                            booklistview.setAdapter(new BookAdapter(mContext,booklists));
+//                            addBook.setVisibility(View.GONE);
+//                        }else{
+//                            addBook.setVisibility(View.VISIBLE);
+//                        }
+//                        String ohter = data.getString("other");//自我评价
+//                        if(!ohter.equals("[]")){
+//                            JSONObject other = data.getJSONObject("other");
+//                            selfbrief.setText(other.getString("content"));
+//                            addSelf.setVisibility(View.GONE);
+//                            selfbrief.setVisibility(View.VISIBLE);
+//                        }else{
+//                            selfbrief.setVisibility(View.GONE);
+//                            addSelf.setVisibility(View.VISIBLE);
+//                        }
+
+//                        scrollView.post(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                scrollView.scrollTo(0,0);
+//                            }
+//                        });
+
+                        worklistview.setSelection(worklists.size());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                loading.dismiss();
+                ToastUtils.show(mContext, "网络异常");
+            }
+        };
+
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("eid",id);
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_RESUME_SCAN, false, map, true, listener, errorListener);
     }
 }

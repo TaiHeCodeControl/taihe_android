@@ -190,7 +190,7 @@ public class ResumeEduActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
-                            Intent intent = new Intent(mContext,ResumeEduScanActivity.class);
+                            Intent intent = new Intent(mContext,ResumeWorkScanActivity.class);
                             intent.putExtra("eid",eid);
                             intent.putExtra("name",schoolName);
                             intent.putExtra("sdate",startTime);
@@ -198,6 +198,7 @@ public class ResumeEduActivity extends BaseActivity{
                             intent.putExtra("specialty",industyName);
                             intent.putExtra("title",positionName);
                             intent.putExtra("content",contextWord);
+                            intent.putExtra("acttitle","edu");
                             startActivity(intent);
                             finish();
                         }catch (Exception ex){

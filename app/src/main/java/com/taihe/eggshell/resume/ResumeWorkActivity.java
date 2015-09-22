@@ -196,6 +196,7 @@ public class ResumeWorkActivity extends BaseActivity{
                             intent.putExtra("department",departName);
                             intent.putExtra("title",positionName);
                             intent.putExtra("content",contextWord);
+                            intent.putExtra("acttitle","work");
                             startActivity(intent);
                             finish();
                         }catch (Exception ex){
