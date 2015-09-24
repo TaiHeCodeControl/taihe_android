@@ -283,10 +283,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                             tv_mine_collectnum.setText("(" + collectNum + ")");
                         }
 
-                        if (TextUtils.isEmpty(resumeNun) || resumeNun.equals("0")) {//如果建立个数不为0全为1
+                        if (TextUtils.isEmpty(resumeNun) || resumeNun.equals("0")) {
                             tv_mine_jianlinum.setText("(" + 0 + ")");
                         } else {
-                            tv_mine_jianlinum.setText("(" + 1 + ")");
+                            tv_mine_jianlinum.setText("(" + resumeNun + ")");
                         }
 
                     } else {
