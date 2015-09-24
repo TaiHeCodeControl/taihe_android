@@ -126,7 +126,8 @@ public class ResumeSelfActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
                 loading.dismiss();
-                ToastUtils.show(mContext,"网络异常");
+//                Log.v("TTT:",new String(volleyError.networkResponse.data));
+                ToastUtils.show(mContext,volleyError);
             }
         };
 

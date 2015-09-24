@@ -7,7 +7,7 @@ public class Urls {
     //正式
     public static final String BASE_HYR_MOBILE_URL = "http://ceshi.tiahel.com/eggker/interface/index.php";
     //测试
-//    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.120/eggker/interface";
+//    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.124/eggker/interface";
 
     public static final String getMopHostUrl() {
         return PrefUtils.getStringPreference(EggshellApplication.getApplication().getApplicationContext(), PrefUtils.CONFIG,
@@ -70,5 +70,7 @@ public class Urls {
     public static final String MEETING_LIST_URL = BASE_HYR_MOBILE_URL + "/Infos/index";//信息台
     public static final String COMPY_LIST_URL = BASE_HYR_MOBILE_URL + "/Position/recommend_company";//名企推荐
     public static final String COMPY_DETAIL_URL = BASE_HYR_MOBILE_URL + "/Position/company_detail";//名企详情
+
+    public static final String RESUME_WORK_LIST = "/Except/work_list";//工作
 
 }

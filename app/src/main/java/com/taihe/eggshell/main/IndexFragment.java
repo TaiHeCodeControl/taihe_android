@@ -166,6 +166,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initData(){
+
         indexTitleView.getBackground().setAlpha(0);
 
         getGalleryImg();
@@ -194,9 +195,9 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
 
         });
 
-        getCompanyLogo();
-
-        getIndustrys();
+        getCompanyLogo();//名企企Logo
+        getVersionCode();//检查版本
+        getIndustrys();//行业列表
         IndustryAdapter industryAdapter = new IndustryAdapter(mContext,industryList);
         positionListView.setAdapter(industryAdapter);
         industryAdapter.notifyDataSetChanged();
@@ -214,13 +215,12 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             }
         });
 
-        scrollView.post(new Runnable() {
+        /*scrollView.post(new Runnable() {
             @Override
             public void run() {
                 scrollView.scrollTo(0,0);
             }
-        });
-        getVersionCode();
+        });*/
 
     }
 
@@ -441,13 +441,15 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                             RecommendAdapter recommendAdapter = new RecommendAdapter(mContext,listInfo);
                             companyGridView.setAdapter(recommendAdapter);
                             recommendAdapter.notifyDataSetChanged();
+//                            indexTitleView.getBackground().setAlpha(0);
 
-                            scrollView.post(new Runnable() {
+                            /*scrollView.post(new Runnable() {
                                 @Override
                                 public void run() {
                                     scrollView.scrollTo(0,0);
+                                    indexTitleView.getBackground().setAlpha(0);
                                 }
-                            });
+                            });*/
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }

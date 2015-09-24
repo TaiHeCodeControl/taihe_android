@@ -313,7 +313,7 @@ public class ResumeScanActivity extends BaseActivity{
             public void onErrorResponse(VolleyError volleyError) {
                 loading.dismiss();
 //                Log.v(TAG,new String(volleyError.networkResponse.data));
-                ToastUtils.show(mContext,"网络异常");
+                ToastUtils.show(mContext,volleyError);
             }
         };
 

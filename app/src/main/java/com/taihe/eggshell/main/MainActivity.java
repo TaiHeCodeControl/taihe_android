@@ -119,7 +119,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             @Override
             public void onResponse(Object o) {
 
-//                Log.v(TAG,(String)o);
+                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");
@@ -254,7 +254,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             @Override
             public void onErrorResponse(VolleyError volleyError) {
 //                Log.v("TTT:",new String(volleyError.networkResponse.data));
-                ToastUtils.show(mContext, "网络异常");
+//                ToastUtils.show(mContext, volleyError);
             }
         };
 
@@ -362,7 +362,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                ToastUtils.show(mContext, "网络异常");
+//                ToastUtils.show(mContext, volleyError);
             }
         };
 
