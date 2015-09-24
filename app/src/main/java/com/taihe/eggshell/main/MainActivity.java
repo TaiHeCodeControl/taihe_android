@@ -339,17 +339,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         job_pubtimelist.clear();
                         job_pubtimelist.addAll(publist);
 
-                        /*String citys = data.getString("three_cityid");//北京市
-                        List<CityBJ> cityBJList = gson.fromJson(citys,new TypeToken<List<CityBJ>>(){}.getType());
-                        db.saveOrUpdateAll(cityBJList);
-
-                        String job_classid = data.getString("job_classid");
-                        List<StaticData> joblist = gson.fromJson(job_classid,new TypeToken<List<StaticData>>(){}.getType());
-                        for(int i=0;i<joblist.size();i++){
-                            joblist.get(i).setTypese("job");
-                        }
-                        db.saveOrUpdateAll(joblist);*/
-
                     } else {
 
                     }
