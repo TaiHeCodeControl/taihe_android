@@ -5,9 +5,11 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 public class Urls {
 
     //正式
-    public static final String BASE_HYR_MOBILE_URL = "http://ceshi.tiahel.com/eggker/interface/index.php";
+    public static final String BASE_HYR_MOBILE_URL = "http://eggker.cn/eggker/interface/index.php";
+    public static final String BASE_VIDEO_MOBILE_URL = "http://eggker.cn/eggker/interface/api.php";
     //测试
-//    public static final String BASE_HYR_MOBILE_URL = "http://195.198.1.124/eggker/interface";
+//    public static final String BASE_HYR_MOBILE_URL = "http://ceshi.tiahel.com/eggker/interface/index.php";
+//    public static final String BASE_VIDEO_MOBILE_URL = "http://ceshi.tiahel.com/eggker/interface/api.php";
 
     public static final String getMopHostUrl() {
         return PrefUtils.getStringPreference(EggshellApplication.getApplication().getApplicationContext(), PrefUtils.CONFIG,
@@ -21,10 +23,6 @@ public class Urls {
     public static final String METHOD_REGIST = BASE_HYR_MOBILE_URL+"/register";//注册
     public static final String FEEDBACK_URL = "/Feedback/index";//意见反馈
     public static final String METHOD_REGIST_GETCODE = BASE_HYR_MOBILE_URL+"/register/chTelphone";//注册获取验证码
-
-//    public static final String METHOD_REGIST_LOGOUT = "http://195.198.1.211/eggker/interface/login/loginout";//退出登录
-//    public static final String METHOD_BASIC = "http://195.198.1.211/eggker/interface/basicdata";//基本资料
-//    public static final String METHOD_UPLOAD_IMAGE = "http://195.198.1.211/eggker/interface/basicdata/head";//上传头像
 
     public static final String METHOD_LOGIN = BASE_HYR_MOBILE_URL + "/login";//登录
     public static final String METHOD_REGIST_LOGOUT = BASE_HYR_MOBILE_URL + "/login/loginout";//退出登录
@@ -65,8 +63,8 @@ public class Urls {
     public static final String RESUME_PROJECT_URL = BASE_HYR_MOBILE_URL + "/Except/resume_project";//项目经验
     public static final String RESUME_BOOK_URL = BASE_HYR_MOBILE_URL + "/Except/resume_cert";//证书
     public static final String RESUME_OTHER_URL = BASE_HYR_MOBILE_URL + "/Except/resume_other";//自我评价
-    public static final String VIDEO_LIST_URL = "http://ceshi.tiahel.com/eggker/interface/api.php/Video/getPageList";//公开课
-    public static final String VIDEO_DETAIL_LIST_URL = "http://ceshi.tiahel.com/eggker/interface/api.php/video/getGroup?id=";//公开课章节
+    public static final String VIDEO_LIST_URL = BASE_VIDEO_MOBILE_URL+"/Video/getPageList";//公开课
+    public static final String VIDEO_DETAIL_LIST_URL = BASE_VIDEO_MOBILE_URL+"/video/getGroup?id=";//公开课章节
     public static final String MEETING_LIST_URL = BASE_HYR_MOBILE_URL + "/Infos/index";//信息台
     public static final String COMPY_LIST_URL = BASE_HYR_MOBILE_URL + "/Position/recommend_company";//名企推荐
     public static final String COMPY_DETAIL_URL = BASE_HYR_MOBILE_URL + "/Position/company_detail";//名企详情
