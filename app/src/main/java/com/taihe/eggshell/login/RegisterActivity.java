@@ -267,7 +267,7 @@ public class RegisterActivity extends BaseActivity {
                 loading.dismiss();
                 try {
                     if (null != volleyError.networkResponse.data) {
-                        Log.v("getCode", new String(volleyError.networkResponse.data));
+//                        Log.v("getCode", new String(volleyError.networkResponse.data));
                     }
                     ToastUtils.show(mContext, "网络异常");
                 } catch (Exception e) {

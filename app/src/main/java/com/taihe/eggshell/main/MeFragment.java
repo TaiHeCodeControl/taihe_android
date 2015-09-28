@@ -480,7 +480,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
                 ToastUtils.show(mContext, "网络异常");
             }
         };
