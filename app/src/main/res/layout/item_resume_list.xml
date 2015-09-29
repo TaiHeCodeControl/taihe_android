@@ -14,14 +14,14 @@
 
         <CheckBox
             android:id="@+id/id_check_box"
-            android:layout_width="wrap_content"
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
             android:checked="false"
             android:text=""
-            android:maxLength="5"
             android:ellipsize="end"
+            android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp"
             style="@style/CustomCheckboxBlue"/>
@@ -30,7 +30,9 @@
             android:id="@+id/id_resume_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@+id/id_scan_resume"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
             android:text=""
             android:textColor="@color/black"
             android:textSize="15sp"/>
