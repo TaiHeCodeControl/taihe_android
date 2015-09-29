@@ -91,6 +91,7 @@ public class FormatUtils {
         return hexString.toString();
     }
 
+    //时间戳转时间格式
     public static String timestampToDatetime(String seconds){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String time = "";
@@ -102,6 +103,18 @@ public class FormatUtils {
         return time;
     }
 
+
+    //时间格式转时间戳
+    public static long datetimeToTimestamp(String time){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        long timestamp = 0L;
+        try {
+            timestamp = simpleDateFormat.parse(time).getTime();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return timestamp;
+    }
 
     /**
      * 获取现在时间

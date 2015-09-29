@@ -229,6 +229,17 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
+        if(isVisibleToUser && getUserVisibleHint()){
+            if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                getBasic();//获取用户基本信息，投递职位个数，简历个数，头像等
+            }
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initView();
     }
 
     //获取用户基本信息，投递职位个数，简历个数，头像等
@@ -238,11 +249,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Object o) {
                 try {
-                    Log.v("getBasic", (String) o);
+                    Log.v(TAG, (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");
-                    System.out.println("code=========" + code);
 
                     if (code == 0) {//
                         // expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
@@ -514,14 +524,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             }
         }).downloadInBackground(url);
     }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        initView();
-    }
-
 
     // ================================以下是修改头像代码============================
 
@@ -820,7 +822,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         startActivityForResult(intent, PHOTORESOULT);
 
     }
-
 
     //退出登录
     private void logout() {

@@ -90,7 +90,9 @@ public class ResumeManagerActivity extends BaseActivity{
         adapter = new ResumeListAdapter(mContext,resumelist,new ResumeListAdapter.ResumeSelectedListener() {
             @Override
             public void selectedResume(Resumes resume) {
-                selectedresumelist.add(resume);
+                if(!selectedresumelist.contains(resume)){
+                    selectedresumelist.add(resume);
+                }
             }
 
             @Override
@@ -99,7 +101,6 @@ public class ResumeManagerActivity extends BaseActivity{
             }
         });
         resumelistview.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -213,7 +214,7 @@ public class ResumeManagerActivity extends BaseActivity{
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-//                Log.v(TAG,(String)o);
+                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");

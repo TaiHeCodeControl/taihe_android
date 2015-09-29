@@ -2,6 +2,7 @@ package com.taihe.eggshell.resume.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +66,7 @@ public class ResumeListAdapter extends BaseAdapter{
         }else{
             holder = (ResumeHolderView)convertView.getTag();
         }
-        holder.checkBox.setChecked(false);
+
         holder.checkBox.setText("\u3000"+resume.getName());
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -78,8 +79,13 @@ public class ResumeListAdapter extends BaseAdapter{
             }
         });
 
-        holder.resumeTime.setText(FormatUtils.timestampToDatetime(resume.getCtime()));
+        if(0==position){
+            holder.checkBox.setChecked(true);
+        }else{
+            holder.checkBox.setChecked(false);
+        }
 
+        holder.resumeTime.setText(FormatUtils.timestampToDatetime(resume.getCtime()));
         holder.scanResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

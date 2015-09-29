@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.FormatUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -61,7 +63,12 @@ public class TimeDialog extends Dialog{
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                customTimeListener.setTime(wheelMain.getTime());
+                if(FormatUtils.datetimeToTimestamp(wheelMain.getTime()) > new Date().getTime()){
+                    ToastUtils.show(mContext,"时间不合理...");
+                }else{
+                    customTimeListener.setTime(wheelMain.getTime());
+                }
+
             }
         });
 
