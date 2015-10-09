@@ -21,7 +21,7 @@ public class JobFilterUtils {
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "salary", salary);
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "edu", edu);
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", exp);//工作年限
-        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "cityid", city);//工作城市
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "three_cityid", city);//工作城市
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", pubtime);//发布时间
 
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", titleString);//搜索职位

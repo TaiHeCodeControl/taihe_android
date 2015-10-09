@@ -163,7 +163,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         edu = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "edu", "");
         exp = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "exp", "");
         type = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "type", "");
-        cityid = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "cityid", "");
+        cityid = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "three_cityid", "");
         fbtime = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "fbtime", "");
         job1 = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job1", "");
 
@@ -400,7 +400,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("exp", exp);//工作年限
         param.put("type", type);//工作性质
         param.put("fbtime ", fbtime);//
-        param.put("cityid", cityid);//
+        param.put("three_cityid", cityid);//
         param.put("job1", job1);
 
         Log.v(TAG, param.toString());
