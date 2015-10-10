@@ -332,7 +332,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v("Job:", (String) o);
+                    Log.v("JOB:::", (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
@@ -382,7 +382,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             }
         };
 
-        //http://195.198.1.83/eggker/interface/Position/nearbycompany?
         // longitude=116.404916&dimensionality=39.927471&keyword=工程师&page=1
         //    传值项： longitude=>经度  dimensionality=>纬度 keyword=>关键字
         //    page=>页数 hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp
@@ -403,7 +402,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("three_cityid", cityid);//
         param.put("job1", job1);
 
-        Log.v(TAG, param.toString());
+        Log.v(TAG, param.toString()+":"+Urls.METHOD_JOB_LIST);
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
 
 
@@ -556,6 +555,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_FILTER || requestCode == REQUEST_CODE_KEYWORDSEARCH) {
+            page = 1;
             initView();
             initData();
         }
