@@ -128,8 +128,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                                 selectSize -= 1;
                                 cb_selectAll.setChecked(false);
                             }
-
-
                         }
                     });
 
@@ -150,7 +148,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         mContext = this;
         initView();
         initData();
-
     }
 
     private void initView() {
@@ -253,12 +250,10 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
-
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
-
                 page++;
                 getList();
                 list_job_all.onRefreshComplete();
@@ -307,8 +302,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 adapter.notifyDataSetChanged();
             }
         });
-
-
     }
 
     private void initData() {
@@ -320,25 +313,19 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         } else {
             ToastUtils.show(mContext, R.string.check_network);
         }
-
     }
-
 
     //全城职位列表
     private void getList() {
-
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v("JOB:::", (String) o);
-
+                    Log.v("JOB:", (String) o);
                     JSONObject jsonObject = new JSONObject((String) o);
-
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {
-
                         String data = jsonObject.getString("data");
                         if ("[]".equals(data)) {
                             if (page == 1) {
@@ -378,6 +365,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 dialog.dismiss();
+//                Log.v(TAG,new String(volleyError.networkResponse.data));
                 ToastUtils.show(mContext, volleyError);
             }
         };
@@ -398,16 +386,13 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("edu", edu);
         param.put("exp", exp);//工作年限
         param.put("type", type);//工作性质
-        param.put("fbtime ", fbtime);//
+        param.put("fbtime", fbtime);//
         param.put("three_cityid", cityid);//
         param.put("job1", job1);
 
-        Log.v(TAG, param.toString()+":"+Urls.METHOD_JOB_LIST);
+        Log.v(TAG, param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
-
-
     }
-
 
     @Override
     public void onClick(View view) {
@@ -439,7 +424,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 page = 1;
                 Longitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Longitude", "");
                 Latitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Latitude", "");
-                Log.i("job--Longitude ", Longitude + "Latitude====" + Latitude);
                 initData();
                 iv_quancheng.setImageResource(R.drawable.quancheng02);
                 iv_fujin.setImageResource(R.drawable.fujin02);
@@ -485,14 +469,11 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                     }
                 }
                 break;
-
         }
     }
 
-
     //申请职位
     public void postJob() {
-
 
         StringBuilder sb = new StringBuilder();//选择的职位
         for (JobInfo jobInfo : jobInfos) {
@@ -509,22 +490,15 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 dialog.dismiss();
                 try {
                     Log.v(TAG, (String) o);
-
                     JSONObject jsonObject = new JSONObject((String) o);
-
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {//申请成功
-
                         int sucNum = Integer.valueOf(jsonObject.getString("data"));
                         postednum = selectSize - sucNum;
-
                         JobApplyDialogUtil.isApplyJob(mContext, selectSize, postednum);
-
                     } else if (code == 1) {//请先创建简历
                         ToastUtils.show(mContext, "请先创建简历");
-
                     } else if (code == 2) {//不能重复申请
-
                         ToastUtils.show(mContext, "你选的职位已申请过，一周内不能重复申请");
                     } else {
                         ToastUtils.show(mContext, "申请失败");
@@ -549,7 +523,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("uid", userId + "");//UserID       userId
         param.put("job_id", jobIds);
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
-
     }
 
     @Override
