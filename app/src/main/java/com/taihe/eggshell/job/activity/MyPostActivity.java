@@ -231,7 +231,6 @@ public class MyPostActivity extends BaseActivity {
         });
     }
 
-
     private void initListData() {
 
         if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
@@ -248,24 +247,19 @@ public class MyPostActivity extends BaseActivity {
 
     //我的申请职位列表
     private void getList() {
-
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
 //                    Log.v("Post:", (String) o);
-
                     JSONObject jsonObject = new JSONObject((String) o);
-
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {
-
                         Message msg = Message.obtain();
                         msg.what = 201;
                         msg.obj = jsonObject;
                         mHandler.sendMessage(msg);
-
                     }else {
                         ToastUtils.show(mContext, "获取失败");
                     }
@@ -302,17 +296,14 @@ public class MyPostActivity extends BaseActivity {
 
     }
 
-
     @Override
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.lin_back:
                 goBack();
-
                 break;
             case R.id.btn_collectjob_delete://删除职位
-
                 Iterator<JobInfo> it = jobInfos.iterator();
                 while (it.hasNext()) {
                     JobInfo jobinfo = it.next();
@@ -331,8 +322,6 @@ public class MyPostActivity extends BaseActivity {
                 } else {
                     ToastUtils.show(mContext, R.string.check_network);
                 }
-
-
                 break;
             case R.id.btn_alljob_shenqing://投递selectSize条职位，其中已投递条数需要从服务器获取
 //                JobApplyDialogUtil.isApplyJob(mContext, selectSize, 2);
@@ -401,14 +390,12 @@ public class MyPostActivity extends BaseActivity {
 
     }
 
-
     private void goBack() {
         Intent intent = new Intent(MyPostActivity.this, MainActivity.class);
         intent.putExtra("MeFragment", "MeFragment");
         startActivity(intent);
         this.finish();
     }
-
 
     //申请职位
     public void postJob() {
@@ -479,7 +466,6 @@ public class MyPostActivity extends BaseActivity {
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
 
     }
-
 
     //监听返回按钮
     @Override
