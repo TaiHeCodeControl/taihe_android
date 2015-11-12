@@ -8,7 +8,7 @@ import android.text.TextUtils;
 
 import com.easefun.polyvsdk.PolyvSDKClient;
 import com.google.gson.Gson;
-import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -22,8 +22,6 @@ import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.videoplay.PolyvDemoService;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EggshellApplication extends Application {
 
@@ -37,7 +35,6 @@ public class EggshellApplication extends Application {
     public void onCreate() {
         eggApplication = this;
         super.onCreate();
-
 
         File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "polyvSDK/Cache");
 //        EggshellCrashHandler.getInstance().init(this);
@@ -56,9 +53,9 @@ public class EggshellApplication extends Application {
 //					    .discCacheFileNameGenerator(new Md5FileNameGenerator())//
                     .tasksProcessingOrder(QueueProcessingType.LIFO)
                     .discCacheFileCount(100)
-                    .discCache(new UnlimitedDiscCache(cacheDir))
+                    .diskCache(new UnlimitedDiskCache(cacheDir))
                     .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
-                    .imageDownloader(new BaseImageDownloader(getApplicationContext(), 5 * 1000, 30 * 1000)) // connectTimeout (5 s), readTimeout (30 s)��ʱʱ��
+                    .imageDownloader(new BaseImageDownloader(getApplicationContext(), 5 * 1000, 30 * 1000)) // connectTimeout (5 s), readTimeout (30 s)
                     .writeDebugLogs() // Remove for release app
                     .build();
             // Initialize ImageLoader with configuration.

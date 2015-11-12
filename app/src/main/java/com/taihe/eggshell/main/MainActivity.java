@@ -119,7 +119,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             @Override
             public void onResponse(Object o) {
 
-                Log.v(TAG,(String)o);
+//                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");
@@ -522,7 +522,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         mLocationClient.registerLocationListener(mMyLocationListener);
         mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
 
-
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//设置定位模式
         option.setCoorType("gcj02");//返回的定位结果是百度经纬度，默认值gcj02
@@ -542,23 +541,16 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         @Override
         public void onReceiveLocation(BDLocation location) {
             //Receive Location
-
             Longitude = Double.toString(location.getLongitude());
             Latitude = Double.toString(location.getLatitude());
 
             PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "Longitude", Longitude);
             PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "Latitude", Latitude);
-
-            Log.i("longitude", FormatUtils.getStringDate() + "==========longitude" + Longitude + "---------latitude:" + Latitude);
-
         }
-
-
     }
 
     @Override
     protected void onStop() {
-        // TODO Auto-generated method stub
         mLocationClient.stop();
         super.onStop();
     }
@@ -567,7 +559,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(mContext);
-        Log.i(TAG, "onResume");
         initLocation();
     }
 
