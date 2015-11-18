@@ -43,8 +43,7 @@
             android:text="创建新简历"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:background="@drawable/msg_vercode_background"
-            android:layout_alignParentEnd="true" />
+            android:background="@drawable/delet_background"/>
         </RelativeLayout>
 
     <LinearLayout

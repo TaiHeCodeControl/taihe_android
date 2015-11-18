@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,19 +16,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.Constants;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.APKUtils;
-import com.taihe.eggshell.base.utils.FormatUtils;
-import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateHelper;
@@ -40,7 +35,6 @@ import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
 import com.taihe.eggshell.main.adapter.IndustryAdapter;
 import com.taihe.eggshell.main.adapter.RecommendAdapter;
-import com.taihe.eggshell.main.adapter.VideoAdapterHead;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
@@ -111,14 +105,18 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     };
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            changeViewPagerListener = (ChangeViewPagerListener)context;
+        }catch(ClassCastException e){
+            throw new ClassCastException(context.toString()+"must implement OnArticleSelectedListener");
+        }
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        try{
-            changeViewPagerListener = (ChangeViewPagerListener)activity;
-        }catch(ClassCastException e){
-            throw new ClassCastException(activity.toString()+"must implement OnArticleSelectedListener");
-        }
     }
 
     @Override
@@ -211,16 +209,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                     message.obj = oldY * (ALPHA_END - ALPHA_START) / scrollView.getMaxScrollAmount() + ALPHA_START;
                 }
                 handler.sendMessage(message);
-
             }
         });
-
-        /*scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.scrollTo(0,0);
-            }
-        });*/
 
     }
 
@@ -441,15 +431,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                             RecommendAdapter recommendAdapter = new RecommendAdapter(mContext,listInfo);
                             companyGridView.setAdapter(recommendAdapter);
                             recommendAdapter.notifyDataSetChanged();
-//                            indexTitleView.getBackground().setAlpha(0);
 
-                            /*scrollView.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    scrollView.scrollTo(0,0);
-                                    indexTitleView.getBackground().setAlpha(0);
-                                }
-                            });*/
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }

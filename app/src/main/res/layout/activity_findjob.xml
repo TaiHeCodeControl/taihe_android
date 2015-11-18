@@ -139,8 +139,8 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-
-        <com.handmark.pulltorefresh.library.PullToRefreshGridView xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        <com.handmark.pulltorefresh.library.PullToRefreshGridView
+            xmlns:ptr="http://schemas.android.com/apk/res-auto"
             android:id="@+id/list_alljob_all"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
@@ -162,6 +162,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:background="@color/white"
         android:paddingBottom="20dp"
         android:paddingTop="20dp">
@@ -184,17 +185,14 @@
             android:textSize="@dimen/font_size_26" />
 
         <Button
-
             android:id="@+id/btn_alljob_shenqing"
-            android:layout_width="wrap_content"
+            android:layout_width="120dp"
             android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="112dp"
-            android:background="@drawable/lanniu"
+            android:background="@drawable/next_step_background"
             android:text="申请职位"
             android:textColor="@color/white"
             android:textSize="@dimen/font_size_26" />
-
-
     </RelativeLayout>
 </LinearLayout>

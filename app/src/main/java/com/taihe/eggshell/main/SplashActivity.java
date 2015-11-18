@@ -1,37 +1,25 @@
 package com.taihe.eggshell.main;
 
 import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.TextView;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.location.Poi;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.utils.APKUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
-
-import java.util.List;
 
 
 /**
  * Created by Thinkpad on 2015/7/15.
  */
 public class SplashActivity extends Activity {
-
 
     private static final String TAG = "SPLASHACTIVITY";
     private Context mContext;
@@ -42,6 +30,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mContext = this;
         View view = View.inflate(mContext, R.layout.activity_splash, null);
         setContentView(view);

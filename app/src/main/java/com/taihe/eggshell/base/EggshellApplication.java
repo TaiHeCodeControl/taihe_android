@@ -1,27 +1,26 @@
 package com.taihe.eggshell.base;
 
 import android.app.Application;
-
 import android.os.Environment;
 import android.text.TextUtils;
-
 
 import com.easefun.polyvsdk.PolyvSDKClient;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
-import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.videoplay.PolyvDemoService;
 
 import java.io.File;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class EggshellApplication extends Application {
 
@@ -38,6 +37,8 @@ public class EggshellApplication extends Application {
 
         File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "polyvSDK/Cache");
 //        EggshellCrashHandler.getInstance().init(this);
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);     		// 初始化 JPush
 
         try {
             ImageLoaderConfiguration config = new ImageLoaderConfiguration

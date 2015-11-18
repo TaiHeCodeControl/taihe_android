@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,14 +22,9 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
-import com.taihe.eggshell.base.utils.httprequest.MSCJSONObject;
-import com.taihe.eggshell.base.utils.httprequest.MSCOpenUrlRunnable;
-import com.taihe.eggshell.base.utils.httprequest.MSCPostUrlParam;
-import com.taihe.eggshell.base.utils.httprequest.MSCUrlManager;
-import com.taihe.eggshell.main.adapter.VideoAdapterHead;
-import com.taihe.eggshell.main.mode.PlayInfoMode;
-import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.taihe.eggshell.main.adapter.VideoAdapterGride;
+import com.taihe.eggshell.main.adapter.VideoAdapterHead;
+import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.MyGridView;
 import com.umeng.analytics.MobclickAgent;
@@ -146,6 +140,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
             public void onResponse(Object obj) {//返回值
                 try {
                     loading.dismiss();
+//                    Log.v("VIDEO:",(String)obj);
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
@@ -219,7 +214,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                 loading.dismiss();
                 ToastUtils.show(getActivity(), "网络异常");
 //                    String err = new String(volleyError.networkResponse.data);
-//                    volleyError.networkResponse.statusCode;
+//                    Log.v("EEE:",new String(volleyError.networkResponse.data));
             }
         };
 
