@@ -1,5 +1,8 @@
 package com.taihe.eggshell.main;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.taihe.eggshell.R;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 
 import org.json.JSONException;
@@ -29,7 +33,7 @@ public class MyReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-//		Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+		Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 		
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
@@ -39,7 +43,7 @@ public class MyReceiver extends BroadcastReceiver {
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
         	Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
         	processCustomMessage(context, bundle);
-        
+
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
@@ -76,11 +80,6 @@ public class MyReceiver extends BroadcastReceiver {
 			}else if(key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)){
 				sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
 			} else if (key.equals(JPushInterface.EXTRA_EXTRA)) {
-//				if (bundle.getString(JPushInterface.EXTRA_EXTRA).isEmpty()) {
-//					Log.i(TAG, "This message has no Extra data");
-//					continue;
-//				}
-
 				try {
 					JSONObject json = new JSONObject(bundle.getString(JPushInterface.EXTRA_EXTRA));
 					Iterator<String> it =  json.keys();
@@ -103,7 +102,6 @@ public class MyReceiver extends BroadcastReceiver {
 	
 	//send msg to MainActivity
 	private void processCustomMessage(Context context, Bundle bundle) {
-		if (MainActivity.isForeground) {
 			String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
 			String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
 			Intent msgIntent = new Intent(MainActivity.MESSAGE_RECEIVED_ACTION);
@@ -119,6 +117,23 @@ public class MyReceiver extends BroadcastReceiver {
 				}
 			}
 			context.sendBroadcast(msgIntent);
-		}
+            PendingIntent pi = PendingIntent.getActivity(context,0,new Intent(context,FindJobActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);
+            showNotification(context,pi,message,true);
 	}
+
+    private void showNotification(Context context, PendingIntent pi, String text, boolean speak) {
+        Notification notification = new Notification.Builder(context)
+                .setAutoCancel(true)
+                .setSmallIcon(R.drawable.icon)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setWhen(System.currentTimeMillis())
+                .setContentIntent(pi)
+                .setContentText(text)
+                .setContentTitle("蛋壳儿")
+                .build();
+
+        NotificationManager mNotifyMgr = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        mNotifyMgr.notify(0, notification);
+    }
+
 }

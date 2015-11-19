@@ -134,8 +134,9 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         initViewPager();
         initData();
 
+        // used for receive msg  推送
         JPushInterface.init(getApplicationContext());
-        registerMessageReceiver();  // used for receive msg
+        registerMessageReceiver();
     }
 
     public void initView() {
@@ -578,7 +579,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                     logs = "Set tag and alias success";
                     Log.i(TAG, logs);
                     break;
-
                 case 6002:
                     logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
                     Log.i(TAG, logs);
@@ -588,14 +588,11 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         Log.i(TAG, "No network");
                     }
                     break;
-
                 default:
                     logs = "Failed with errorCode = " + code;
                     Log.e(TAG, logs);
             }
-
         }
-
     };
 
     private final TagAliasCallback mTagsCallback = new TagAliasCallback() {
@@ -608,7 +605,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                     logs = "Set tag and alias success";
                     Log.i(TAG, logs);
                     break;
-
                 case 6002:
                     logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
                     Log.i(TAG, logs);
@@ -618,14 +614,11 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         Log.i(TAG, "No network");
                     }
                     break;
-
                 default:
                     logs = "Failed with errorCode = " + code;
                     Log.e(TAG, logs);
             }
-
         }
-
     };
 
 
@@ -653,7 +646,6 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         mLocationClient.start();
         mLocationClient.setLocOption(option);
     }
-
 
     /**
      * 实现实时位置回调监听
@@ -700,7 +692,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
     //for receive customer msg from jpush server
     private MessageReceiver mMessageReceiver;
-    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
+    public static final String MESSAGE_RECEIVED_ACTION = "com.taihe.message.MESSAGE_RECEIVED_ACTION";
     public static final String KEY_TITLE = "title";
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_EXTRAS = "extras";
@@ -725,6 +717,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                 if (!TextUtils.isEmpty(extras)) {
                     showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
                 }
+                Log.v(TAG+"Receiver:",showMsg.toString());
             }
         }
     }
