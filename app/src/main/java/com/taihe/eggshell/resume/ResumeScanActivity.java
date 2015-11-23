@@ -2,6 +2,7 @@ package com.taihe.eggshell.resume;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
@@ -31,7 +32,6 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -124,14 +124,22 @@ public class ResumeScanActivity extends BaseActivity{
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(mContext);
-
-        eid = getIntent().getParcelableExtra("eid");
         loading = new LoadingProgressDialog(mContext,"正在请求...");
-        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-            loading.show();
-            getResumeData(eid.getRid()+"");
+        if(null!=getIntent().getStringExtra("eid") && !TextUtils.isEmpty(getIntent().getStringExtra("eid"))){
+            if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                loading.show();
+                getResumeData(getIntent().getStringExtra("eid"));
+            }else{
+                ToastUtils.show(mContext,R.string.check_network);
+            }
         }else{
-            ToastUtils.show(mContext,R.string.check_network);
+            eid = getIntent().getParcelableExtra("eid");
+            if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                loading.show();
+                getResumeData(eid.getRid()+"");
+            }else{
+                ToastUtils.show(mContext,R.string.check_network);
+            }
         }
     }
 

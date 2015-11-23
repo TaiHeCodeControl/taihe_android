@@ -71,12 +71,12 @@
                     <TextView
                         android:id="@+id/id_look_shixi"
                         style="@style/index_tab"
-                        android:text="找实习"
+                        android:text="实习生"
                         android:drawableTop="@drawable/shixi"/>
                     <TextView
                         android:id="@+id/id_information"
                         style="@style/index_tab"
-                        android:text="信息台"
+                        android:text="社交圈"
                         android:drawableTop="@drawable/xinxitai"/>
                 </LinearLayout>
 
@@ -100,7 +100,7 @@
                     <TextView
                         android:id="@+id/id_we_chat"
                         style="@style/index_tab"
-                        android:text="微社交"
+                        android:text="V达人"
                         android:drawableTop="@drawable/weishejiao"/>
                     <TextView
                         android:id="@+id/id_public_class"
@@ -171,24 +171,14 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:background="#35383e">
-
-        <TextView
-            android:id="@+id/id_job_place"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:padding="5dp"
-            android:text="北京"
-            android:textSize="18sp"
-            android:textColor="@color/white"/>
-            <!--android:drawablePadding="5dp"
-            android:drawableRight="@drawable/down_icon"-->
 
         <RelativeLayout
             android:id="@+id/id_search_job"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_weight="3.5"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/search_background">
@@ -211,6 +201,20 @@
                 android:src="@drawable/search_icon"
                 android:layout_alignParentRight="true"/>
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/id_to_company"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="企业版"
+            android:textSize="18sp"
+            android:textColor="@color/white"/>
+        <!--android:drawablePadding="5dp"
+        android:drawableRight="@drawable/down_icon"-->
 
     </LinearLayout>
 </RelativeLayout>

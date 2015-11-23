@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.job.activity.FindJobActivity;
+import com.taihe.eggshell.resume.ResumeScanActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,14 +52,22 @@ public class MyReceiver extends BroadcastReceiver {
         	
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
-            
-        	//打开自定义的Activity
-        	Intent i = new Intent(context, FindJobActivity.class);
-        	i.putExtras(bundle);
-        	//i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        	i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
-        	context.startActivity(i);
-        	
+
+            String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+            try {
+                JSONObject extraJson = new JSONObject(extras);
+                String id = extraJson.getString("eid");
+                //打开自定义的Activity
+                Intent i = new Intent(context, ResumeScanActivity.class);
+                i.putExtras(bundle);
+                i.putExtra("eid",id);
+                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                context.startActivity(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
             //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
@@ -118,7 +127,7 @@ public class MyReceiver extends BroadcastReceiver {
 			}
 			context.sendBroadcast(msgIntent);
             PendingIntent pi = PendingIntent.getActivity(context,0,new Intent(context,FindJobActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);
-            showNotification(context,pi,message,true);
+            showNotification(context, pi, message, true);
 	}
 
     private void showNotification(Context context, PendingIntent pi, String text, boolean speak) {

@@ -155,7 +155,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         db = DbHelper.getDbUtils(DbHelper.DB_TYPE_USER);
 
         // ","隔开的多个 转换成 Set
-        String[] sArray = "你妹".split(",");
+        String[] sArray = "企业".split(",");
         Set<String> tagSet = new LinkedHashSet<String>();
         for (String sTagItme : sArray) {
             if (!isValidTagAndAlias(sTagItme)) {

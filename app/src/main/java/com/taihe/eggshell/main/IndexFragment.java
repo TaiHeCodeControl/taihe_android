@@ -21,6 +21,7 @@ import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.taihe.eggshell.company.CompanyActivity;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
@@ -69,7 +70,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     private GridView companyGridView;
     private MyListView positionListView;
     private MyScrollView scrollView;
-    private TextView lookJob,jianZhi,shiXi,newInfos,writeResume,playMode,weChat,publicClass,jobPlace;
+    private TextView lookJob,jianZhi,shiXi,newInfos,writeResume,playMode,weChat,publicClass,companyOrPerson;
     private UpdateDialog dialog;
 
     private ArrayList<ImageView> imageViews = new ArrayList<ImageView>();
@@ -134,7 +135,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initView(){
-        jobPlace = (TextView)rootView.findViewById(R.id.id_job_place);
+        companyOrPerson = (TextView)rootView.findViewById(R.id.id_to_company);
         scrollView = (MyScrollView)rootView.findViewById(R.id.id_index_scroll);
         indexTitleView = (LinearLayout)rootView.findViewById(R.id.id_index_title);
         searchRelativeLayout = (RelativeLayout)rootView.findViewById(R.id.id_search_job);
@@ -160,7 +161,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
         weChat.setOnClickListener(this);
         publicClass.setOnClickListener(this);
         searchRelativeLayout.setOnClickListener(this);
-//        jobPlace.setOnClickListener(this);
+        companyOrPerson.setOnClickListener(this);
     }
 
     private void initData(){
@@ -217,9 +218,9 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.id_job_place:
-//                intent = new Intent(mContext, CitySelectActivity.class);
-//                startActivity(intent);
+            case R.id.id_to_company:
+                intent = new Intent(mContext, CompanyActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_search_job://搜索
                 intent = new Intent(mContext, JobSearchActivity.class);
@@ -295,13 +296,13 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     }
 
     private void getIndustrys(){
-        String[] type = new String[]{"互联网","金融银行","广告媒体"};
+        String[] type = new String[]{"互联网","金融银行","教育培训"};
         int[] id_type = new int[]{35,37,40};
         String[] internet = new String[]{"网站策划","网站编辑","运营专员","SEM专员","UI设计师","美工"};
         int[] id_internet = new int[]{131,132,125,141,127,133};
         String[] bank = new String[]{"银行柜员","业务专员","清算员","资金专员","会计","出纳员"};
         int[] id_bank = new int[]{296,285,292,261,251,252};
-        String[] media = new String[]{"文案策划","企业策划","活动策划","客户专员","创意专员","媒介专员"};
+        String[] media = new String[]{"市场专员","咨询销售","培训讲师","教学管理","教职管理","就业专员"};
         int[] id_media = new int[]{509,511,524,504,507,521};
         int[] img = new int[]{R.drawable.hulianwang,R.drawable.bank,R.drawable.media};
         industryList = new ArrayList<Industry>();
