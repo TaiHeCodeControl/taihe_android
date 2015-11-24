@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/id_v"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/tu"/>
+
+    <TextView
+        android:id="@+id/id_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="姓名"
+        android:textSize="14sp"
+        android:textColor="#323232"/>
+
+    <TextView
+        android:id="@+id/id_user_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="学员"
+        android:textSize="14sp"
+        android:textColor="#646464"/>
+</LinearLayout>

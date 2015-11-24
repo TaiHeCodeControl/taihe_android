@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title_bar" />
+
+    <View style="@style/line_fill" />
+
+    <TextView
+        android:id="@+id/id_user_type_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="蛋壳精英"
+        android:textSize="16sp"
+        android:textColor="#323232"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/id_v"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:scaleType="centerInside"
+            android:background="@drawable/tu"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp">
+
+            <TextView
+                android:id="@+id/id_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_alignParentTop="true"
+                android:gravity="center"
+                android:text="姓名"
+                android:textSize="14sp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/id_user_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_centerVertical="true"
+                android:text="学员"
+                android:textSize="14sp"
+                android:textColor="@color/index_tab_color"/>
+
+            <TextView
+                android:id="@+id/id_user_faith"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="8dp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="学习是一种信仰学习是一种信仰学习是一种信仰"
+                android:textSize="14sp"
+                android:textColor="@color/index_tab_color"/>
+            </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="精英足迹"
+        android:textSize="16sp"
+        android:textColor="#323232"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/id_student_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:text="了深刻的记录的咖啡店"
+        android:textSize="14sp"
+        android:textColor="@color/index_tab_color"/>
+
+    </ScrollView>
+
+</LinearLayout>

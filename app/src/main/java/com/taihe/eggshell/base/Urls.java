@@ -56,6 +56,7 @@ public class Urls {
     public static final String METHOD_DELETE_RESUME = "/Except/resume_del";//删除简历
     public static final String METHOD_RESUME_SCAN = "/Except/resume_preview";//简历预览
     public static final String METHOD_RESUME_USE = "/Except/resume_use";//使用简历
+    public static final String METHOD_GET_VJY = "/Vtalent";//精英
 
     public static final String NEARBY_URL = BASE_HYR_MOBILE_URL + "/Activity/index?";//玩出范
     public static final String RESUME_WORK_URL = BASE_HYR_MOBILE_URL + "/Except/resume_work";//工作经历
@@ -70,6 +71,7 @@ public class Urls {
     public static final String MEETING_LIST_URL = BASE_HYR_MOBILE_URL + "/Cricle";//信息台
     public static final String COMPY_LIST_URL = BASE_HYR_MOBILE_URL + "/Position/recommend_company";//名企推荐
     public static final String COMPY_DETAIL_URL = BASE_HYR_MOBILE_URL + "/Position/company_detail";//名企详情
+
 
     public static final String RESUME_WORK_LIST = "/Except/work_list";//工作
 
