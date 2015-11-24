@@ -25,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="一个具有圈子的就业规划平台"
+        android:visibility="gone"
         android:gravity="center"
         android:textColor="#717171"
         android:id="@+id/textView" />
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
         android:layout_marginBottom="15dp"
+        android:visibility="gone"
         android:gravity="center">
 
         <TextView
@@ -187,7 +189,6 @@
                     android:id="@+id/log_lin_user_tag"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="fill_parent">
 
                     <TextView
@@ -212,7 +213,8 @@
                     android:id="@+id/log_lin_com_tag"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent">
+                    android:layout_height="fill_parent"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_login_com_tag"
