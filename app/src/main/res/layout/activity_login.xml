@@ -21,6 +21,50 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/logo" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="一个具有圈子的就业规划平台"
+        android:gravity="center"
+        android:textColor="#717171"
+        android:id="@+id/textView" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/log_txt_user_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:background="@drawable/border_bg_white"
+            android:text="个人用户"
+            android:textSize="15sp"
+            android:textColor="@color/font_color_red" />
+
+        <TextView
+            android:id="@+id/log_txt_com_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="企业用户"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:textSize="15sp"
+            android:background="@drawable/border_bg_gray"
+            android:textColor="@color/font_color_black" />
+
+    </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
@@ -38,6 +82,7 @@
             android:layout_height="45dp">
 
             <TextView
+                android:id="@+id/txt_login_user_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -54,8 +99,6 @@
                 android:background="@null"
                 android:focusable="true"
                 android:hint="请输入手机号"
-                android:inputType="phone"
-                android:maxLength="11"
                 android:textColor="@color/font_color_black"
                 android:textColorHint="#C8C8C8"
                 android:textSize="@dimen/font_size_26" />
@@ -130,25 +173,60 @@
                 android:layout_alignParentRight="true"
                 android:text="忘记密码？"
                 android:textSize="13sp"
+                android:gravity="center"
                 android:textColor="@color/font_color_red"/>
 
-            <TextView
-                android:id="@+id/tv_login_re"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:text="还没有账号？"
-                android:textSize="13sp"
-                android:textColor="@color/font_color_black"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/tv_login_forgetpassword">
 
-            <TextView
-                android:id="@+id/tv_login_regist"
-                android:layout_toRightOf="@+id/tv_login_re"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="立即注册!"
-                android:textSize="13sp"
-                android:textColor="@color/font_color_red"/>
+                <LinearLayout
+                    android:id="@+id/log_lin_user_tag"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:id="@+id/tv_login_re"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="还没有账号？"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:textColor="@color/font_color_black"/>
+
+                    <TextView
+                        android:id="@+id/tv_login_regist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="立即注册!"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:textColor="@color/font_color_red"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/log_lin_com_tag"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent">
+
+                    <TextView
+                        android:id="@+id/tv_login_com_tag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="访问eggker.cn注册企业账号"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:textColor="@color/font_color_black"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
         </RelativeLayout>
 
     </LinearLayout>

@@ -2,7 +2,12 @@ package com.taihe.eggshell.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +30,7 @@ import android.widget.TextView;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.company.CompanyActivity;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.main.MainActivity;
@@ -56,16 +62,17 @@ public class LoginActivity extends BaseActivity {
     private EditText et_password;
     private Button btn_login;
     private TextView tv_forgetPassword;
-    private TextView tv_regist;
-    private LinearLayout lin_back;
+    private TextView tv_regist,log_txt_user_login,log_txt_com_login,tv_login_com_tag,txt_login_user_tag;
+    private LinearLayout lin_back,log_lin_user_tag,log_lin_com_tag;
     private LoadingProgressDialog loading;
 
     private String userphone;
     private String password;
     private String telphone;
+    private String usertype="1";//1个人 2企业
     private String token;
 
-    private String uid;
+    private String uid,username;
     private Intent intent;
     private String loginTag;
 
@@ -81,13 +88,25 @@ public class LoginActivity extends BaseActivity {
         et_password = (EditText) findViewById(R.id.et_login_password);
         btn_login = (Button) findViewById(R.id.btn_login_login);
         tv_forgetPassword = (TextView) findViewById(R.id.tv_login_forgetpassword);
+        log_txt_user_login = (TextView) findViewById(R.id.log_txt_user_login);
+        log_txt_com_login = (TextView) findViewById(R.id.log_txt_com_login);
+        tv_login_com_tag = (TextView) findViewById(R.id.tv_login_com_tag);
         tv_regist = (TextView) findViewById(R.id.tv_login_regist);
         lin_back = (LinearLayout) findViewById(R.id.lin_back);
+        log_lin_user_tag = (LinearLayout) findViewById(R.id.log_lin_user_tag);
+        log_lin_com_tag = (LinearLayout) findViewById(R.id.log_lin_com_tag);
+        txt_login_user_tag = (TextView) findViewById(R.id.txt_login_user_tag);
 
         lin_back.setOnClickListener(this);
         btn_login.setOnClickListener(this);
         tv_forgetPassword.setOnClickListener(this);
         tv_regist.setOnClickListener(this);
+        log_txt_user_login.setOnClickListener(this);
+        log_txt_com_login.setOnClickListener(this);
+        log_lin_user_tag.setVisibility(View.VISIBLE);
+        log_lin_com_tag.setVisibility(View.GONE);
+        txt_login_user_tag.setInputType(InputType.TYPE_CLASS_PHONE);
+        txt_login_user_tag.setMaxLines(11);
     }
 
     @Override
@@ -111,12 +130,46 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.tv_login_forgetpassword:
                 intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+                intent.putExtra("usertype",usertype);
                 startActivity(intent);
                 break;
             case R.id.tv_login_regist:
                 intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivityForResult(intent, REQUEST_CODE_REGISTER);
 //                this.finish();
+                break;
+            case R.id.log_txt_user_login:
+                log_txt_user_login.setBackgroundResource(R.drawable.border_bg_white);
+                log_txt_com_login.setBackgroundResource(R.drawable.border_bg_gray);
+                et_userphone.setHint("请输入手机号");
+                txt_login_user_tag.setText("手机号");
+                txt_login_user_tag.setInputType(InputType.TYPE_CLASS_PHONE);
+                txt_login_user_tag.setMaxLines(11);
+                EggshellApplication.getApplication().setLoginTag("user");
+                usertype="1";
+                log_lin_user_tag.setVisibility(View.VISIBLE);
+                log_lin_com_tag.setVisibility(View.GONE);
+                log_txt_user_login.setTextColor(getResources().getColor(R.color.font_color_red));
+                log_txt_com_login.setTextColor(getResources().getColor(R.color.font_color_black));
+                break;
+            case R.id.log_txt_com_login:
+                log_txt_com_login.setBackgroundResource(R.drawable.border_bg_white);
+                log_txt_user_login.setBackgroundResource(R.drawable.border_bg_gray);
+                log_txt_com_login.setTextColor(getResources().getColor(R.color.font_color_red));
+                log_txt_user_login.setTextColor(getResources().getColor(R.color.font_color_black));
+                et_userphone.setHint("请输入用户名");
+                txt_login_user_tag.setText("用户名");
+                txt_login_user_tag.setInputType(InputType.TYPE_CLASS_TEXT);
+                EggshellApplication.getApplication().setLoginTag("com");
+                usertype="2";
+                log_lin_com_tag.setVisibility(View.VISIBLE);
+                log_lin_user_tag.setVisibility(View.GONE);
+                String temp="访问eggker.cn注册企业账号";
+                SpannableString mspk = new SpannableString(temp);
+                int k = (temp).length();
+                mspk.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.font_color_red)), 2, 11,
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tv_login_com_tag.setText(mspk);
                 break;
         }
     }
@@ -136,7 +189,7 @@ public class LoginActivity extends BaseActivity {
             ToastUtils.show(getApplicationContext(), R.string.login_login_toast);
             return;
         }
-        if (!FormatUtils.isMobileNO(userphone)) {
+        if (!FormatUtils.isMobileNO(userphone) && "1".equals(usertype)) {
             ToastUtils.show(getApplicationContext(), R.string.login_login_phone_toast);
             return;
         }
@@ -153,6 +206,7 @@ public class LoginActivity extends BaseActivity {
         Map<String, String> dataParams = new HashMap<String, String>();
         dataParams.put("username", userphone);
         dataParams.put("password", password);
+        dataParams.put("usertype", usertype);
 
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
@@ -169,7 +223,11 @@ public class LoginActivity extends BaseActivity {
                         JSONObject data = jsonObject.getJSONObject("data");
 
                         token = data.optString("token");
-                        telphone = data.optString("telphone");
+                        if("1".equals(usertype)) {
+                            telphone = data.optString("telphone");
+                        }else{
+                            username = data.optString("username");
+                        }
                         uid = data.optString("uid");//用户id
                         token = FormatUtils.getMD5(token + uid);
 
@@ -210,16 +268,27 @@ public class LoginActivity extends BaseActivity {
 
     //登录成功保存用户登录信息
     private void loginSuccess() {
-        Map<String, String> datas = new HashMap<String, String>();
-        datas.put("id", uid);//用户id
-        datas.put("phoneNumber", telphone);
-        datas.put("token",token);
+        if("1".equals(usertype)){
+            Map<String, String> datas = new HashMap<String, String>();
+            datas.put("id", uid);//用户id
+            datas.put("phoneNumber", telphone);
+            datas.put("token",token);
 
-        Gson gson = new Gson();
-        // 将对象转换为JSON数据
-        String data = gson.toJson(datas);
-        PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, data);
+            Gson gson = new Gson();
+            // 将对象转换为JSON数据
+            String data = gson.toJson(datas);
+            PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, data);
+        }else {
+            Map<String, String> datas = new HashMap<String, String>();
+            datas.put("c_id", uid);//用户id
+            datas.put("c_phoneNumber", username);
+            datas.put("token",token);
 
+            Gson gson = new Gson();
+            // 将对象转换为JSON数据
+            String data = gson.toJson(datas);
+            PrefUtils.saveStringPreferences(getApplicationContext(), PrefUtils.CONFIG, PrefUtils.KEY_COMPANY_JSON, data);
+        }
         //登录成功后显示界面的判断
 
        loginTag = EggshellApplication.getApplication().getLoginTag();
@@ -254,6 +323,9 @@ public class LoginActivity extends BaseActivity {
             intent.putExtra("ID",jobId);
             intent.putExtra("com_id",com_id);
             startActivity(intent);
+        }else if(loginTag.equals("com")){
+            intent = new Intent(LoginActivity.this, CompanyActivity.class);
+            startActivity(intent);
         }
         LoginActivity.this.finish();
     }
@@ -272,12 +344,13 @@ public class LoginActivity extends BaseActivity {
         if (data != null) {
             telphoneNUM = data.getStringExtra("data");
         }
-        if (telphoneNUM == null || TextUtils.isEmpty(telphoneNUM)) {
-            return;
-        }
-        if (requestCode == REQUEST_CODE_REGISTER ) {
-
-            et_userphone.setText(telphoneNUM);
+        if("1".equals(usertype)) {
+            if (telphoneNUM == null || TextUtils.isEmpty(telphoneNUM)) {
+                return;
+            }
+            if (requestCode == REQUEST_CODE_REGISTER) {
+                et_userphone.setText(telphoneNUM);
+            }
         }
     }
 

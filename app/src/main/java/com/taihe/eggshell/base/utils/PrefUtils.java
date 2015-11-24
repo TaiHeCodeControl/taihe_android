@@ -64,6 +64,7 @@ public class PrefUtils {
 	 * 登录返回用户信息
 	 */
 	public static final String KEY_USER_JSON = "key_user_json";
+    public static final String KEY_COMPANY_JSON = "key_com_json";
 
     public static final String KEY_USER_LOCATION = "user_location";
     public static final String KEY_USER_LOCATION_KEY = "userlocation";
