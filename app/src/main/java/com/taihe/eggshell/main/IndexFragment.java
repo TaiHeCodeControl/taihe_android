@@ -296,15 +296,16 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     }
 
     private void getIndustrys(){
-        String[] type = new String[]{"互联网","金融银行","教育培训"};
+        String[] type = new String[]{"教育培训","互联网","金融银行"};
         int[] id_type = new int[]{35,37,40};
+        String[] media = new String[]{"市场专员","咨询销售","培训讲师","教学管理","教职管理","就业专员"};
+        int[] id_media = new int[]{509,511,524,504,507,521};
         String[] internet = new String[]{"网站策划","网站编辑","运营专员","SEM专员","UI设计师","美工"};
         int[] id_internet = new int[]{131,132,125,141,127,133};
         String[] bank = new String[]{"银行柜员","业务专员","清算员","资金专员","会计","出纳员"};
         int[] id_bank = new int[]{296,285,292,261,251,252};
-        String[] media = new String[]{"市场专员","咨询销售","培训讲师","教学管理","教职管理","就业专员"};
-        int[] id_media = new int[]{509,511,524,504,507,521};
-        int[] img = new int[]{R.drawable.hulianwang,R.drawable.bank,R.drawable.media};
+
+        int[] img = new int[]{R.drawable.jiaoyupeixun,R.drawable.hulianwang,R.drawable.bank};
         industryList = new ArrayList<Industry>();
 
         for(int i=0;i<3;i++){
@@ -316,14 +317,14 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             for(int j=0;j<6;j++){
                 Professional professional = new Professional();
                 if(i==0){
-                    professional.setId(id_internet[j]);
-                    professional.setName(internet[j]);
-                }else if(i==1){
-                    professional.setId(id_bank[j]);
-                    professional.setName(bank[j]);
-                }else if(i==2){
                     professional.setId(id_media[j]);
                     professional.setName(media[j]);
+                }else if(i==1){
+                    professional.setId(id_internet[j]);
+                    professional.setName(internet[j]);
+                }else if(i==2){
+                    professional.setId(id_bank[j]);
+                    professional.setName(bank[j]);
                 }
                 prolist.add(professional);
             }

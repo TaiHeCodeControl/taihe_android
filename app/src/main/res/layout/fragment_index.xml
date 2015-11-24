@@ -77,7 +77,7 @@
                         android:id="@+id/id_information"
                         style="@style/index_tab"
                         android:text="社交圈"
-                        android:drawableTop="@drawable/xinxitai"/>
+                        android:drawableTop="@drawable/shejiaoquan"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -101,7 +101,7 @@
                         android:id="@+id/id_we_chat"
                         style="@style/index_tab"
                         android:text="V达人"
-                        android:drawableTop="@drawable/weishejiao"/>
+                        android:drawableTop="@drawable/vdaren"/>
                     <TextView
                         android:id="@+id/id_public_class"
                         style="@style/index_tab"
@@ -174,12 +174,22 @@
         android:orientation="horizontal"
         android:background="#35383e">
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="北京"
+            android:textSize="18sp"
+            android:textColor="@color/white"/>
+
         <RelativeLayout
             android:id="@+id/id_search_job"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_weight="3.5"
-            android:layout_marginRight="20dp"
+            android:layout_weight="5"
+            android:layout_marginRight="15dp"
             android:layout_marginLeft="10dp"
             android:background="@drawable/search_background">
 
@@ -208,13 +218,14 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
             android:gravity="center"
-            android:padding="5dp"
             android:text="企业版"
             android:textSize="18sp"
-            android:textColor="@color/white"/>
-        <!--android:drawablePadding="5dp"
-        android:drawableRight="@drawable/down_icon"-->
+            android:textColor="@color/white"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/tocompany"
+            android:visibility="gone"/>
 
     </LinearLayout>
 </RelativeLayout>

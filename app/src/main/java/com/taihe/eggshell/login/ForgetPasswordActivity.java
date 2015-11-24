@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
@@ -17,7 +15,6 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.FormatUtils;
-import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
@@ -40,10 +37,10 @@ public class ForgetPasswordActivity extends BaseActivity {
 
     private EditText phone_num;
     private EditText phone_code;
-    private TextView getCode,nextStep;
+    private TextView getCode,nextStep,loginType;
     private LoadingProgressDialog loading;
 
-    private String pwd;
+    private String pwd,ltype;
     private String p_num;
     private String p_code;
     private String confirm_pwd;
@@ -60,6 +57,8 @@ public class ForgetPasswordActivity extends BaseActivity {
         getCode = (TextView) findViewById(R.id.id_get_code);
         nextStep = (TextView) findViewById(R.id.id_next_step);
 
+        loginType = (TextView) findViewById(R.id.id_name_type);
+
         getCode.setOnClickListener(this);
         nextStep.setOnClickListener(this);
     }
@@ -68,6 +67,15 @@ public class ForgetPasswordActivity extends BaseActivity {
     public void initData() {
         super.initData();
         initTitle("找回密码");
+
+        ltype = getIntent().getStringExtra("usertype");
+        if(ltype.equals("1")){//个人
+            loginType.setText("手机号");
+            phone_num.setHint("请输入手机号");
+        }else if(ltype.equals("2")){//企业
+            loginType.setText("邮  箱");
+            phone_num.setHint("请输入企业邮箱");
+        }
 
         loading = new LoadingProgressDialog(mContext, getResources().getString(
                 R.string.submitcertificate_string_wait_dialog));
@@ -78,10 +86,19 @@ public class ForgetPasswordActivity extends BaseActivity {
         super.onClick(v);
         switch (v.getId()) {
             case R.id.id_get_code:
-                getCode();
+                if(ltype.equals("1")){
+                    getCode();
+                }else if(ltype.equals("2")){
+                    getEmailCode();
+                }
                 break;
             case R.id.id_next_step:
-                nextStep();
+                if(ltype.equals("1")){
+                    nextStep();
+                }else if(ltype.equals("2")){
+                    loginType.setText("邮  箱");
+                    phone_num.setHint("请输入企业邮箱");
+                }
                 break;
         }
     }
@@ -99,7 +116,21 @@ public class ForgetPasswordActivity extends BaseActivity {
         }else{
             ToastUtils.show(mContext,R.string.check_network);
         }
+    }
 
+    //获取邮箱验证码
+    private void getEmailCode() {
+        p_num = phone_num.getText().toString();
+        if (!FormatUtils.isEmail(p_num)) {
+            ToastUtils.show(ForgetPasswordActivity.this, "邮箱格式不正确");
+            return;
+        }
+        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+            loading.show();
+            getCodeFromNet();
+        }else{
+            ToastUtils.show(mContext,R.string.check_network);
+        }
     }
 
     private void nextStep() {
@@ -117,7 +148,6 @@ public class ForgetPasswordActivity extends BaseActivity {
             }else{
                 ToastUtils.show(mContext,R.string.check_network);
             }
-
         }
     }
 
@@ -194,6 +224,7 @@ public class ForgetPasswordActivity extends BaseActivity {
                     if(code ==0){
                         Intent intent = new Intent(ForgetPasswordActivity.this,RestPwdActivity.class);
                         intent.putExtra("phonenum",p_num);
+                        intent.putExtra("type",ltype);//1个人，2企业
                         startActivity(intent);
                         ForgetPasswordActivity.this.finish();
                     }else{

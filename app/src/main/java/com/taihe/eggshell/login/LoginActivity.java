@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
@@ -22,25 +24,18 @@ import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.FormatUtils;
-
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.company.CompanyActivity;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobDetailActivity;
-import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.job.activity.MyCollectActivity;
-import com.taihe.eggshell.main.entity.User;
-import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
+import com.taihe.eggshell.main.MainActivity;
+import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
-import com.taihe.eggshell.widget.addressselect.AddressSelectActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;

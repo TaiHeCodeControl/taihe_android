@@ -33,6 +33,7 @@ public class Urls {
     public static final String METHOD_UPLOAD_IMAGE = BASE_HYR_MOBILE_URL+"/basicdata/head";//上传头像
 
     public static final String METHOD_GET_CODE = "/login/send_code";//获取验证码
+    public static final String METHOD_GET_EMAIL_CODE = "/login/send_email_code";//获取企业邮箱验证码
     public static final String METHOD_RESET_PASSWORD = "/login/update_pwd";//重置密码
     public static final String METHOD_CHECK_CODE = "/login/next";//判断验证码
 
