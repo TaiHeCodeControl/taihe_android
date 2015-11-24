@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:background="@color/white"
         android:gravity="left|center"
+        android:visibility="gone"
         android:layout_height="40dp">
 
         <LinearLayout
@@ -75,13 +76,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/background_gray">
+
         <com.handmark.pulltorefresh.library.PullToRefreshGridView
             xmlns:ptr="http://schemas.android.com/apk/res-auto"
             android:id="@+id/id_meeting_listview"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/background_gray"
             android:divider="@color/gray"
             android:numColumns="1"
             android:fadingEdge="none"

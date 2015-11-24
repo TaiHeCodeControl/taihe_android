@@ -66,7 +66,8 @@ public class Urls {
     public static final String RESUME_OTHER_URL = BASE_HYR_MOBILE_URL + "/Except/resume_other";//自我评价
     public static final String VIDEO_LIST_URL = BASE_VIDEO_MOBILE_URL+"/Video/getPageList";//公开课
     public static final String VIDEO_DETAIL_LIST_URL = BASE_VIDEO_MOBILE_URL+"/video/getGroup?id=";//公开课章节
-    public static final String MEETING_LIST_URL = BASE_HYR_MOBILE_URL + "/Infos/index";//信息台
+//    public static final String MEETING_LIST_URL = BASE_HYR_MOBILE_URL + "/Infos/index";//信息台
+    public static final String MEETING_LIST_URL = BASE_HYR_MOBILE_URL + "/Cricle";//信息台
     public static final String COMPY_LIST_URL = BASE_HYR_MOBILE_URL + "/Position/recommend_company";//名企推荐
     public static final String COMPY_DETAIL_URL = BASE_HYR_MOBILE_URL + "/Position/company_detail";//名企详情
 

@@ -18,6 +18,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.main.adapter.PlayAdapter;
 import com.taihe.eggshell.main.mode.PlayInfoMode;
+import com.taihe.eggshell.meetinginfo.adapter.MeetingAdapter;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.umeng.analytics.MobclickAgent;
 
@@ -39,8 +40,8 @@ public class Act_MeetingInfo extends BaseActivity {
     private TextView txt_meetinginfo_top1,txt_meetinginfo_top2;
     private ImageView img_meetinginfo_top1,img_meetinginfo_top2;
     private PullToRefreshGridView meetingView;
-    private PlayAdapter playAdapter;
-    int limit=5,page=1,type=2;
+    private MeetingAdapter playAdapter;
+    int limit=8,page=1,type=2;
     List<PlayInfoMode> list;
     private LoadingProgressDialog loading;
     private Context mContext;
@@ -63,10 +64,10 @@ public class Act_MeetingInfo extends BaseActivity {
 
     public void initData(){
         super.initData();
-        initTitle("信息台");
+        initTitle("社交圈");
         loading = new LoadingProgressDialog(mContext,"正在请求...");
         meetingView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
-        playAdapter = new PlayAdapter(mContext);
+        playAdapter = new MeetingAdapter(mContext);
         list = new ArrayList<PlayInfoMode>();
         getListData();
         meetingView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
@@ -135,17 +136,20 @@ public class Act_MeetingInfo extends BaseActivity {
                                 PlayInfoMode vMode = new PlayInfoMode();
                                 j2 = j1.getJSONObject(i);
                                 vMode.setId(j2.optString("id").toString());
-                                vMode.setTitle(j2.optString("title").toString());
-                                vMode.setAddress(j2.optString("address").toString());
-                                vMode.setOrganizers(j2.optString("organizers").toString());
-                                vMode.setEvery_time("");
-                                vMode.setUser(j2.optString("user").toString());
-                                vMode.setTelphone(j2.optString("phone").toString());
-                                vMode.setTraffic_route(j2.optString("traffic").toString());
-                                vMode.setLogo(j2.optString("logo").toString());
-                                vMode.setContent(j2.optString("body").toString());
-                                vMode.setStarttime(j2.optString("starttime").toString());
-                                vMode.setEndtime(j2.optString("endtime").toString());
+                                vMode.setTitle(j2.optString("name").toString());
+                                vMode.setLogo(j2.optString("photo").toString());
+//                                vMode.setId(j2.optString("id").toString());
+//                                vMode.setTitle(j2.optString("title").toString());
+//                                vMode.setAddress(j2.optString("address").toString());
+//                                vMode.setOrganizers(j2.optString("organizers").toString());
+//                                vMode.setEvery_time("");
+//                                vMode.setUser(j2.optString("user").toString());
+//                                vMode.setTelphone(j2.optString("phone").toString());
+//                                vMode.setTraffic_route(j2.optString("traffic").toString());
+//                                vMode.setLogo(j2.optString("logo").toString());
+//                                vMode.setContent(j2.optString("body").toString());
+//                                vMode.setStarttime(j2.optString("starttime").toString());
+//                                vMode.setEndtime(j2.optString("endtime").toString());
                                 list.add(vMode);
                             }
                             meetingView.setVisibility(View.VISIBLE);
