@@ -80,12 +80,14 @@ public class PlayAdapter extends BaseAdapter{
             viewHolder.txtTitle.setText(list.get(position).getTitle().toString());
             viewHolder.txtAddr.setText(list.get(position).getAddress().toString());
             viewHolder.txtUser.setText(list.get(position).getOrganizers().toString());
-            viewHolder.txtDate.setText(list.get(position).getStarttime().toString());
+//            viewHolder.txtDate.setText(list.get(position).getStarttime().toString());
+            viewHolder.txtDate.setVisibility(View.GONE);
         }else{
             viewHolder.tag2.setVisibility(View.VISIBLE);
             viewHolder.tag1.setVisibility(View.GONE);
             viewHolder.txtTitle2.setText(list.get(position).getTitle().toString());
             viewHolder.txtDate2.setText(list.get(position).getStarttime().toString()+"～"+list.get(position).getEndtime().toString());
+            viewHolder.txtDate.setVisibility(View.VISIBLE);
         }
         FinalBitmap bitmap = FinalBitmap.create(mContext);
         bitmap.display(viewHolder.imgPic,list.get(position).getLogo().toString());

@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="壳粉high翻天"
+                android:text="蛋壳活动"
                 android:textColor="@color/red" />
         </LinearLayout>
         <View
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="蛋壳儿送福利"
+                android:text="往期回顾"
                 android:textColor="@color/black" />
         </LinearLayout>
     </LinearLayout>
