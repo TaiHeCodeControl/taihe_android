@@ -21,6 +21,22 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="company_job_info">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_weight">1.0</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
     <style name="index_tab">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>

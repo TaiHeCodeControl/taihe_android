@@ -112,10 +112,10 @@ public class VActivity extends BaseActivity{
 
                         String d = ej.getString("Envoy");
                         List<PersonModel> ds = gson.fromJson(d,new TypeToken<List<PersonModel>>(){}.getType());
-                        dslist.addAll(jylist);
-                        JYAdapter adapter = new JYAdapter(mContext,dslist);
-                        dashiListView.setAdapter(adapter);
-                        adapter.notifyDataSetChanged();
+                        dslist.addAll(ds);
+                        DRAdapter dadapter = new DRAdapter(mContext,dslist);
+                        dashiListView.setAdapter(dadapter);
+                        dadapter.notifyDataSetChanged();
                     } else {
 
                     }

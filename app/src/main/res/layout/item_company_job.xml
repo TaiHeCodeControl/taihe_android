@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_job"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:background="@color/background_gray"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/id_resume_list"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+
+        <CheckBox
+            android:id="@+id/id_check_box"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:checked="false"
+            android:text="  PHP工程师"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            style="@style/CustomCheckboxBlue"/>
+
+        <TextView
+            android:id="@+id/id_postion_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="招聘中"
+            android:textSize="14sp"
+            android:textColor="@color/index_tab_color"/>
+
+        <View
+            android:id="@+id/id_line_resume"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:background="@color/line_gray"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingBottom="8dp"
+        android:background="@color/white">
+        
+        <TextView
+            android:id="@+id/id_receive"
+            style="@style/company_job_info"
+            android:text="收到100"
+            android:textColor="@color/black"
+            android:drawableTop="@drawable/receiveresume"/>
+
+        <TextView
+            android:id="@+id/id_skip"
+            style="@style/company_job_info"
+            android:text="浏览100"
+            android:textColor="@color/black"
+            android:drawableTop="@drawable/skipnum"/>
+
+        <TextView
+            android:id="@+id/id_refresh"
+            style="@style/company_job_info"
+            android:text="2015.10.10"
+            android:textColor="@color/black"
+            android:drawableTop="@drawable/refreshtime"/>
+
+        <TextView
+            android:id="@+id/id_public"
+            style="@style/company_job_info"
+            android:text="2015.12.12"
+            android:textColor="@color/black"
+            android:drawableTop="@drawable/publictime"/>
+
+        </LinearLayout>
+
+</LinearLayout>

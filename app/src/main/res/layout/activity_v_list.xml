@@ -19,7 +19,7 @@
         android:paddingTop="8dp"
         android:text="蛋壳精英"
         android:textColor="#323232"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:background="@color/white"/>
 
     <com.handmark.pulltorefresh.library.PullToRefreshGridView
@@ -51,7 +51,7 @@
         android:paddingTop="10dp"
         android:text="蛋壳大使"
         android:textColor="#323232"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:background="@color/white"/>
 
     <com.handmark.pulltorefresh.library.PullToRefreshGridView

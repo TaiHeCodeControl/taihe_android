@@ -264,6 +264,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.id_we_chat://V达人
                 intent = new Intent(mContext,VActivity.class);
+//                intent = new Intent(mContext,CompanyJobListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_public_class:

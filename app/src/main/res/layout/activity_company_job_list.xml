@@ -7,29 +7,35 @@
 
     <include layout="@layout/include_title_bar" />
 
+    <View
+        android:id="@+id/id_line_resume"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/line_gray"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <com.handmark.pulltorefresh.library.PullToRefreshGridView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/id_company_job_all"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:divider="@color/gray"
+        android:layout_marginBottom="90dp"
+        android:background="@color/background_gray"
         android:fadingEdge="none"
         android:fastScrollEnabled="false"
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="true"
         android:listSelector="@color/white"
-        android:numColumns="1"
         android:smoothScrollbar="true"
         ptr:ptrAnimationStyle="flip" />
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="90dp"
             android:gravity="center_vertical"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
@@ -40,7 +46,7 @@
                 android:id="@+id/cb_findjob_selectall"
                 style="@style/CustomCheckboxBlue"
                 android:layout_width="60dp"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
                 android:text="  全选"
