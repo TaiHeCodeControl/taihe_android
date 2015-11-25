@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
     android:orientation="vertical"
     android:background="@color/white">
 
@@ -18,7 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:gravity="center"
         android:text="姓名"
         android:textSize="14sp"
         android:textColor="#323232"/>
@@ -28,8 +28,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:gravity="center"
         android:text="学员"
         android:textSize="14sp"
-        android:textColor="#646464"/>
+        android:textColor="#646464"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"/>
 </LinearLayout>

@@ -58,14 +58,17 @@
                 android:layout_centerVertical="true"
                 android:text="学员"
                 android:textSize="14sp"
-                android:textColor="@color/index_tab_color"/>
+                android:textColor="@color/index_tab_color"
+                android:singleLine="true"
+                android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/id_user_faith"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
                 android:singleLine="true"
                 android:maxLines="1"
                 android:ellipsize="end"

@@ -59,7 +59,15 @@ public class VActivity extends BaseActivity{
                 startActivity(intent);
             }
         });
-        dashiListView.setOnClickListener(this);
+        dashiListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(mContext,StudentDetailActivity.class);
+                intent.putExtra("student",dslist.get(i));
+                intent.putExtra("type","蛋壳大使");
+                startActivity(intent);
+            }
+        });
     }
 
     public void initData(){
