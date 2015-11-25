@@ -43,7 +43,7 @@
             android:paddingTop="20dp">
 
             <CheckBox
-                android:id="@+id/cb_findjob_selectall"
+                android:id="@+id/id_select_all"
                 style="@style/CustomCheckboxBlue"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
@@ -63,7 +63,7 @@
                 android:background="@color/white">
 
                 <Button
-                    android:id="@+id/btn_alljob_shenqing"
+                    android:id="@+id/btn_stop"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:layout_alignParentLeft="true"
@@ -73,7 +73,7 @@
                     android:textSize="@dimen/font_size_26" />
 
                 <Button
-                    android:id="@+id/btn_alljob"
+                    android:id="@+id/btn_refresh"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:layout_centerInParent="true"
@@ -83,7 +83,7 @@
                     android:textSize="@dimen/font_size_26" />
 
                 <Button
-                    android:id="@+id/btn_all"
+                    android:id="@+id/btn_del"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"

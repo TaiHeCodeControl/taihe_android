@@ -27,7 +27,7 @@
             android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="15sp"
-            style="@style/CustomCheckboxBlue"/>
+            style="@style/CustomCheckboxRed"/>
 
         <TextView
             android:id="@+id/id_postion_status"

@@ -65,6 +65,18 @@ public class CompanyJobAdapter extends BaseAdapter{
             holder = (ComViewHolder)contentview.getTag();
         }
 
+        if(0==job.getStatus()){
+            holder.statusTextView.setText("招聘中");
+        }else if(1==job.getStatus()){
+            holder.statusTextView.setText("已暂停");
+        }else if(2==job.getStatus()){
+            holder.statusTextView.setText("招聘中");
+        }
+
+        holder.receiveTextView.setText(job.getCount());//收到个数
+        holder.skipTextView.setText(job.getJobhits());//浏览个数
+        holder.refreshTextView.setText(job.getLastupdate());//刷新时间
+        holder.publicTextView.setText(job.getEdate());//结束时间
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean flag) {

@@ -8,23 +8,77 @@ import android.os.Parcelable;
  */
 public class CompanyJob implements Parcelable{
 
-    private String id;
-    private String name;
+    private String cj_id;
+    private String cj_name;
+    private Boolean isSelected;
+    private String jobhits;//点击数
+    private String count;//收到个数
+    private int status;//状态
+    private String lastupdate;//最近刷新时间
+    private String edate;//创建时间
 
-    public String getId() {
-        return id;
+    public String getCj_id() {
+        return cj_id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCj_id(String cj_id) {
+        this.cj_id = cj_id;
     }
 
-    public String getName() {
-        return name;
+    public String getCj_name() {
+        return cj_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCj_name(String cj_name) {
+        this.cj_name = cj_name;
+    }
+
+    public String getJobhits() {
+        return jobhits;
+    }
+
+    public void setJobhits(String jobhits) {
+        this.jobhits = jobhits;
+    }
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getLastupdate() {
+        return lastupdate;
+    }
+
+    public void setLastupdate(String lastupdate) {
+        this.lastupdate = lastupdate;
+    }
+
+    public String getEdate() {
+        return edate;
+    }
+
+    public void setEdate(String edate) {
+        this.edate = edate;
+    }
+
+    public Boolean getIsSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(Boolean isSelected) {
+        this.isSelected = isSelected;
     }
 
     @Override
