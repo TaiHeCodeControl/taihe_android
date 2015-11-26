@@ -1,6 +1,7 @@
 package com.taihe.eggshell.company;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.job.activity.JobDetailActivity;
 
 import java.util.ArrayList;
 
@@ -23,10 +24,19 @@ public class CompanyJobAdapter extends BaseAdapter{
     private Context context;
 
     private ArrayList<CompanyJob> list;
+    private JobCheckClicklistener jobCheckClicklistener;
+
+    public interface JobCheckClicklistener{
+        public void addOrDel(CompanyJob job,boolean flag);
+    }
 
     public CompanyJobAdapter(Context mcontext,ArrayList<CompanyJob> mlist){
         this.context = mcontext;
         this.list = mlist;
+    }
+
+    public void setListener(JobCheckClicklistener listener){
+        this.jobCheckClicklistener = listener;
     }
 
     @Override
@@ -47,7 +57,7 @@ public class CompanyJobAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View contentview, ViewGroup viewGroup) {
 
-        CompanyJob job = list.get(position);
+        final CompanyJob job = list.get(position);
         ComViewHolder holder;
         if(null == contentview){
             holder = new ComViewHolder();
@@ -77,19 +87,27 @@ public class CompanyJobAdapter extends BaseAdapter{
         holder.skipTextView.setText(job.getJobhits());//浏览个数
         holder.refreshTextView.setText(job.getLastupdate());//刷新时间
         holder.publicTextView.setText(job.getEdate());//结束时间
+
+        if(job.getIsSelected()){
+            holder.checkBox.setChecked(true);
+        }else{
+            holder.checkBox.setChecked(false);
+        }
+
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean flag) {
-                if(flag){
-                    ToastUtils.show(context,flag+"");
-                }
+                    jobCheckClicklistener.addOrDel(job,flag);
             }
         });
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastUtils.show(context,"sd");
+                Intent intent = new Intent(context, JobDetailActivity.class);
+                intent.putExtra("ID",job.getCj_id());
+                intent.putExtra("com_id","1869");
+                context.startActivity(intent);
             }
         });
 

@@ -10,7 +10,7 @@ public class CompanyJob implements Parcelable{
 
     private String cj_id;
     private String cj_name;
-    private Boolean isSelected;
+    private Boolean isSelected = false;
     private String jobhits;//点击数
     private String count;//收到个数
     private int status;//状态

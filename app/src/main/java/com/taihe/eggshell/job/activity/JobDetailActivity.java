@@ -19,27 +19,22 @@ import android.widget.TextView;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.GsonUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
-import com.taihe.eggshell.job.bean.JobDetailInfo;
-import com.taihe.eggshell.login.LoginActivity;
-import com.taihe.eggshell.main.entity.User;
-import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
-import com.taihe.eggshell.job.adapter.JobDescAdapter;
+import com.taihe.eggshell.job.bean.JobDetailInfo;
 import com.taihe.eggshell.job.bean.JobInfo;
+import com.taihe.eggshell.login.LoginActivity;
+import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.MyListView;
 import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -256,7 +251,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         super.initData();
         titleView.setText("职位详情");
         collectionImg.setVisibility(View.VISIBLE);
-
 
         //该公司其他职位的点击事件
         moreJobListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

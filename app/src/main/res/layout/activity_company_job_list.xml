@@ -39,12 +39,12 @@
             android:gravity="center_vertical"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
-            android:paddingBottom="20dp"
+            android:paddingBottom="15dp"
             android:paddingTop="20dp">
 
             <CheckBox
                 android:id="@+id/id_select_all"
-                style="@style/CustomCheckboxBlue"
+                style="@style/CustomCheckboxRed"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:paddingRight="10dp"
                 android:paddingLeft="10dp"
-                android:layout_toRightOf="@+id/cb_findjob_selectall"
+                android:layout_toRightOf="@+id/id_select_all"
                 android:gravity="center_vertical"
                 android:background="@color/white">
 
