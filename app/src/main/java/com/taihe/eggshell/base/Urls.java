@@ -75,6 +75,14 @@ public class Urls {
     public static final String COMPY_DETAIL_URL = BASE_HYR_MOBILE_URL + "/Position/company_detail";//名企详情
 
 
+
+
+    public static final String COMPY_GET_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/resumelist";//企业收到的简历
+    public static final String COMPY_LOOK_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/lookedResume";//企业已查看简历
+    public static final String COMPY_NOTICE_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/willNotifeResume";//企业待通知简历
+    public static final String COMPY_NOUSE_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/unAdaptedResume";//企业不合适简历
+
+
     public static final String RESUME_WORK_LIST = "/Except/work_list";//工作
 
 }
