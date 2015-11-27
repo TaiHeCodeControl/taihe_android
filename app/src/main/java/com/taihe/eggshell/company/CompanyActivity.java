@@ -57,7 +57,11 @@ public class CompanyActivity extends BaseActivity{
                 break;
             case R.id.com_lin_topl:
                 intent = new Intent(mContext, CompanyResumeGetActivity.class);
-                intent.putExtra("selid",1);
+                intent.putExtra("type",1);
+                startActivity(intent);
+                break;
+            case R.id.com_lin_topr:
+                intent = new Intent(mContext, CompanyPersonResumeActivity.class);
                 startActivity(intent);
                 break;
             case R.id.com_lin_footl:

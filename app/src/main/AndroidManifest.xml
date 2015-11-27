@@ -308,6 +308,10 @@
             android:name=".company.CompanyResumeGetActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".company.CompanyPersonResumeActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".meetinginfo.VActivity"
