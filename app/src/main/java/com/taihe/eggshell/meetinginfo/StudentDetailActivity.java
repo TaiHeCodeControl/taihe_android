@@ -1,6 +1,8 @@
 package com.taihe.eggshell.meetinginfo;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.Html;
 import android.util.Base64;
 import android.widget.ImageView;
@@ -28,6 +30,7 @@ public class StudentDetailActivity extends BaseActivity{
         setContentView(R.layout.activity_student);
         super.initView();
 
+        mContext = this;
         titleView = (TextView)findViewById(R.id.id_user_type_detail);
         imageView = (ImageView)findViewById(R.id.id_v);
         usernameTextView = (TextView)findViewById(R.id.id_user_name);
@@ -43,8 +46,10 @@ public class StudentDetailActivity extends BaseActivity{
         initTitle("V达人");
         titleView.setText(getIntent().getStringExtra("type"));
         PersonModel personModel = getIntent().getParcelableExtra("student");
+
+        Bitmap defaultmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tu);
         FinalBitmap bitmap = FinalBitmap.create(mContext);
-        bitmap.display(imageView, personModel.getStudentsphoto());
+        bitmap.display(imageView, personModel.getStudentsphoto(),defaultmap,defaultmap);
         usernameTextView.setText(personModel.getStudentsname());
         addressTextView.setText(personModel.getCityname());
         faithTextView.setText(personModel.getMotto());

@@ -1,6 +1,8 @@
 package com.taihe.eggshell.meetinginfo;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,9 +59,9 @@ public class JYAdapter extends BaseAdapter{
         }else{
             holder = (VViewHolder)contentview.getTag();
         }
-
+        Bitmap defaultmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.tu);
         FinalBitmap bitmap = FinalBitmap.create(mContext);
-        bitmap.display(holder.vImageView, personModel.getStudentsphoto());
+        bitmap.display(holder.vImageView, personModel.getStudentsphoto(),defaultmap,defaultmap);
         holder.nameTextView.setText(personModel.getStudentsname());
         holder.typeTextView.setText(personModel.getStudentsnature());
 

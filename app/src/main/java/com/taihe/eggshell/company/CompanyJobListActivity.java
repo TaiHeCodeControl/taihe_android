@@ -72,7 +72,7 @@ public class CompanyJobListActivity extends BaseActivity{
         super.initData();
 
         String title = "";
-        type = getIntent().getIntExtra("type",0);
+        type = getIntent().getIntExtra("type",1);
         if(0==type){
             title = "全部职位";
             stopButton.setText("暂停招聘");
@@ -140,6 +140,7 @@ public class CompanyJobListActivity extends BaseActivity{
             @Override
             public void setTime(String time) {
                 delaytime = time;
+                updateCompanyJobList(status,getSelectedPosition());
             }
         });
     }

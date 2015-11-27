@@ -29,7 +29,6 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.company.CompanyActivity;
-import com.taihe.eggshell.company.CompanyJobListActivity;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobSearchActivity;
 import com.taihe.eggshell.job.bean.JobFilterUtils;
@@ -41,6 +40,7 @@ import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
 import com.taihe.eggshell.meetinginfo.Act_MeetingInfo;
+import com.taihe.eggshell.meetinginfo.VActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
 import com.taihe.eggshell.widget.ImagesGallery;
@@ -263,8 +263,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 changeViewPagerListener.changeViewPager(1);
                 break;
             case R.id.id_we_chat://V达人
-//                intent = new Intent(mContext,VActivity.class);
-                intent = new Intent(mContext,CompanyJobListActivity.class);
+                intent = new Intent(mContext,VActivity.class);
+//                intent = new Intent(mContext,CompanyJobListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_public_class:
@@ -300,7 +300,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
 
     private void getIndustrys(){
         String[] type = new String[]{"教育培训","互联网","金融银行"};
-        int[] id_type = new int[]{88,35,37};
+        int[] id_type = new int[]{958,35,37};
         String[] media = new String[]{"市场专员","咨询销售","培训讲师","教学管理","教质管理","就业专员"};
         int[] id_media = new int[]{953,954,698,955,956,957};
         String[] internet = new String[]{"网站策划","网站编辑","运营专员","SEM专员","UI设计师","美工"};

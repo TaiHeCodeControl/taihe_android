@@ -1,7 +1,6 @@
 package com.taihe.eggshell.widget.datepicker;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -64,7 +62,7 @@ public class TimeDialog extends Dialog{
             @Override
             public void onClick(View view) {
                 if(FormatUtils.datetimeToTimestamp(wheelMain.getTime()) > new Date().getTime()){
-                    ToastUtils.show(mContext,"时间不合理...");
+                    ToastUtils.show(mContext, "时间不合理...");
                 }else{
                     customTimeListener.setTime(wheelMain.getTime());
                 }

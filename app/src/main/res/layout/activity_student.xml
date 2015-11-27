@@ -31,8 +31,8 @@
             android:id="@+id/id_v"
             android:layout_width="180dp"
             android:layout_height="100dp"
-            android:scaleType="centerInside"
-            android:background="@drawable/tu"/>
+            android:scaleType="centerCrop"
+            android:src="@drawable/tu"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
