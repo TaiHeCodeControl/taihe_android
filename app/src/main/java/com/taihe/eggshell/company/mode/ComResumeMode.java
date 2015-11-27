@@ -26,10 +26,9 @@ public class ComResumeMode {
     private String com_id;
     private String datetime;
     private boolean isChecked;
-    public ComResumeMode(boolean isChecked, int job_id) {
-        this.isChecked = isChecked;
-        this.job_id = job_id+"";
-    }
+//    public ComResumeMode(boolean isChecked) {
+//        this.isChecked = isChecked;
+//    }
     public String getId() {
         return id;
     }

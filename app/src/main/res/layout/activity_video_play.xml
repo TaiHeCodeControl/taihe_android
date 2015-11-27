@@ -39,7 +39,7 @@
             android:id="@+id/loadingprogress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
@@ -75,6 +75,14 @@
                 android:visibility="gone"
                 android:background="@drawable/bofang" />
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/video_play"
+            android:background="@drawable/play"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 

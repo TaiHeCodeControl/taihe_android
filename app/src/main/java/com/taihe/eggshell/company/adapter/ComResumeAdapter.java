@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
@@ -75,6 +76,8 @@ public class ComResumeAdapter extends BaseAdapter{
             viewHolder.txtLook = (TextView)convertView.findViewById(R.id.comresume_txt_mb_look);
             viewHolder.txtNotice = (TextView)convertView.findViewById(R.id.comresume_txt_mb_notice);
             viewHolder.txtNoUse = (TextView)convertView.findViewById(R.id.comresume_txt_mb_nouse);
+            viewHolder.com_rel_mb = (RelativeLayout)convertView.findViewById(R.id.com_rel_mb);
+            viewHolder.com_lin_mb = (LinearLayout)convertView.findViewById(R.id.com_lin_mb);
 
             viewHolder.imgCheck = (ImageView)convertView.findViewById(R.id.comresume_img_mb_check);
 
@@ -97,19 +100,7 @@ public class ComResumeAdapter extends BaseAdapter{
         viewHolder.txtJobDate.setText(list.get(position).getExp().toString());
         viewHolder.txtDate.setText(list.get(position).getDatetime().toString());
         viewHolder.txtMoney.setText(list.get(position).getSalary().toString());
-//        viewHolder.imgCheck.setTag("0");
-        viewHolder.imgCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                if ("0".equals(viewHolder.imgCheck.getTag().toString())) {
-//                    viewHolder.imgCheck.setTag("1");
-//                    viewHolder.imgCheck.setBackgroundResource(R.drawable.xuankuang_red);
-//                } else {
-//                    viewHolder.imgCheck.setTag("0");
-//                    viewHolder.imgCheck.setBackgroundResource(R.drawable.xuankuang);
-//                }
-            }
-        });
+
         if (list.get(position).isChecked()) {
             viewHolder.imgCheck.setImageResource(R.drawable.xuankuang_red);
         } else {
@@ -136,7 +127,7 @@ public class ComResumeAdapter extends BaseAdapter{
                 getListData(list.get(position).getCom_id().toString(),list.get(position).getEid().toString(),list.get(position).getJob_id().toString(),position,url);
             }
         });
-        convertView.setOnClickListener(new View.OnClickListener() {
+        viewHolder.com_rel_mb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Resumes resume = new Resumes();
@@ -152,6 +143,8 @@ public class ComResumeAdapter extends BaseAdapter{
         TextView txtUName,txtJob,txtJobDate,txtDate,txtMoney;
         TextView txtLook,txtNotice,txtNoUse;
         ImageView imgCheck;
+        LinearLayout com_lin_mb;
+        RelativeLayout com_rel_mb;
     }
     public void getListData(String comID,String eID,String jobID,final int itemID,String url) {
         //返回监听事件
@@ -191,4 +184,5 @@ public class ComResumeAdapter extends BaseAdapter{
         map.put("job_id",jobID);
         RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
     }
+
 }

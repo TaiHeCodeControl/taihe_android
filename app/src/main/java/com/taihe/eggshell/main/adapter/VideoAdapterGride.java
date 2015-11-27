@@ -2,6 +2,7 @@ package com.taihe.eggshell.main.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -69,7 +70,7 @@ public class VideoAdapterGride extends BaseAdapter{
         viewHolder.txtName.setText(list.get(position).getVideo_teacher().toString());
         viewHolder.txtMoney.setText(list.get(position).getStatus().toString()+"元");
         viewHolder.txtObvious.setText(list.get(position).getVideo_obvious().toString());
-        viewHolder.txtAbout.setText(list.get(position).getVideo_about().toString());
+        viewHolder.txtAbout.setText(Html.fromHtml(list.get(position).getVideo_about().toString()));
         FinalBitmap bitmap = FinalBitmap.create(mContext);
         bitmap.display(viewHolder.imgPic,list.get(position).getVimage().toString());
         convertView.setOnClickListener(new View.OnClickListener() {

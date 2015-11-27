@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -71,6 +73,7 @@ public class VideoPlayActivity extends BaseActivity {
     private ListView lst_video_play;
     private ArrayList<PolyvDownloader> downloaders;
     private DBservice service;
+    private ImageView video_play;
     String[] arrPlist;
     Handler mHandler = new Handler(){
         @Override
@@ -121,6 +124,7 @@ public class VideoPlayActivity extends BaseActivity {
         playTitle = (TextView) findViewById(R.id.txt_video_play_title);
         lin_video_play_top = (LinearLayout) findViewById(R.id.lin_video_play_top);
         lst_video_play = (ListView) findViewById(R.id.lst_video_play);
+        video_play = (ImageView) findViewById(R.id.video_play);
         super.initView();
         super.initData();
     }
@@ -154,26 +158,8 @@ public class VideoPlayActivity extends BaseActivity {
         progressBar = (ProgressBar) findViewById(R.id.loadingprogress);
         videoview = (IjkVideoView) findViewById(R.id.full_videoview);
         mediaController = new MediaController(this, false);
-        videoview.setMediaController(mediaController);
-        videoview.setMediaBufferingIndicator(progressBar);
-        if (RequestUtils.GetWebType(mContext) != 0) {
-        }else{
-            Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
-        }
-        if (encrypt) {
-            try{
-                if (RequestUtils.GetWebType(mContext) != 0) {
-                    videoview.setVid(vid, 1);
-                }else{
-                    Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
-                }
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
 
-        } else {
 
-        }
         changeToPortrait();
 //        videoview.setVideoLayout(IjkVideoView.VIDEO_LAYOUT_STRETCH);
         videoview.setOnPreparedListener(new OnPreparedListener() {
@@ -246,6 +232,32 @@ public class VideoPlayActivity extends BaseActivity {
                     Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
                 }
                 playTitle.setText(listInfo.get(i).getVideo_name());
+            }
+        });
+        video_play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (RequestUtils.GetWebType(mContext) != 0) {
+                }else{
+                    Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
+                }
+                if (encrypt) {
+                    try{
+                        if (RequestUtils.GetWebType(mContext) != 0) {
+                            videoview.setMediaController(mediaController);
+                            videoview.setMediaBufferingIndicator(progressBar);
+                            videoview.setVid(vid, 1);
+                            video_play.setVisibility(View.GONE);
+                        }else{
+                            Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
+                        }
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+
+                } else {
+
+                }
             }
         });
     }
@@ -379,7 +391,7 @@ public class VideoPlayActivity extends BaseActivity {
                         items = new String[]{"流畅", "高清", "超清"};
                     }
 
-                    final Builder selectDialog = new AlertDialog.Builder(
+                    final Builder selectDialog = new Builder(
                             mContext).setTitle("选择下载码率")
                             // 数字2代表的是数组的下标
                             .setSingleChoiceItems(items, 0,
