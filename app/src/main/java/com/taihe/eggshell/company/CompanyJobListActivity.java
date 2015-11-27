@@ -19,6 +19,7 @@ import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
 
 import org.json.JSONException;
@@ -44,6 +45,7 @@ public class CompanyJobListActivity extends BaseActivity{
     private ArrayList<CompanyJob> selectedjoblist = new ArrayList<CompanyJob>();
     private CompanyJobAdapter adapter;
     private TimeDialog timeDialog;
+    private LoadingProgressDialog loadingDialog;
 
     private int pagesize = 10;
     private int pagenum = 1;
@@ -72,7 +74,7 @@ public class CompanyJobListActivity extends BaseActivity{
         super.initData();
 
         String title = "";
-        type = getIntent().getIntExtra("type",1);
+        type = getIntent().getIntExtra("type",0);
         if(0==type){
             title = "全部职位";
             stopButton.setText("暂停招聘");
@@ -114,7 +116,6 @@ public class CompanyJobListActivity extends BaseActivity{
             }
         });
 
-
         adapter = new CompanyJobAdapter(mContext,joblist);
         jobListView.setAdapter(adapter);
         adapter.setListener(new CompanyJobAdapter.JobCheckClicklistener() {
@@ -130,7 +131,10 @@ public class CompanyJobListActivity extends BaseActivity{
             }
         });
 
+        loadingDialog =  new LoadingProgressDialog(mContext,"正在请求...");
+
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+            loadingDialog.show();
             getCompanyJobList("1869");
         }else{
             ToastUtils.show(mContext,R.string.error_network);
@@ -175,7 +179,7 @@ public class CompanyJobListActivity extends BaseActivity{
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-
+                loadingDialog.dismiss();
                 Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
@@ -199,7 +203,7 @@ public class CompanyJobListActivity extends BaseActivity{
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                loadingDialog.dismiss();
             }
         };
 

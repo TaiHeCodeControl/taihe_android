@@ -225,7 +225,7 @@
             android:textColor="@color/white"
             android:drawablePadding="5dp"
             android:drawableRight="@drawable/tocompany"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
     </LinearLayout>
 </RelativeLayout>
