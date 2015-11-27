@@ -222,7 +222,7 @@ public class CompanyJobListActivity extends BaseActivity{
             @Override
             public void onResponse(Object o) {
 
-                Log.v(TAG+"UPDATE",(String)o);
+//                Log.v(TAG+"UPDATE",(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
