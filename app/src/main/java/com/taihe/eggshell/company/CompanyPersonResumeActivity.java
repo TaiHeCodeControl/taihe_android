@@ -249,7 +249,7 @@ public class CompanyPersonResumeActivity extends BaseActivity{
         Map<String,String> map = new HashMap<String,String>();
         map.put("com_id", c_uid);//EggshellApplication.getApplication().getUser().getId()
         map.put("eid",strEid);
-        String url = Urls.PERSON_GET_RESUME_URL;
+        String url = Urls.PERSON_DEL_RESUME_URL;
         RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
     }
 }

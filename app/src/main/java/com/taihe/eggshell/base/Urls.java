@@ -83,6 +83,8 @@ public class Urls {
     public static final String COMPY_NOUSE_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/unAdaptedResume";//企业不合适简历
     public static final String COMPY_DEL_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/deleteResume";//企业删除已收到简历
     public static final String PERSON_GET_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/getRencaiLibList";//企业人才库
+    public static final String PERSON_DEL_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/getRencaiLibList";//企业删除人才库
+    public static final String COM_GET_URL = BASE_HYR_MOBILE_URL + "/Company";//企业首页
 
 
     public static final String RESUME_WORK_LIST = "/Except/work_list";//工作
