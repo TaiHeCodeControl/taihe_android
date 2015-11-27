@@ -1,4 +1,4 @@
-ï»¿package com.taihe.eggshell.company;
+package com.taihe.eggshell.company;
 
 import android.content.Context;
 import android.content.Intent;
@@ -78,11 +78,11 @@ public class CompanyResumeGetActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-        initTitle("è›‹å£³æ‹›è˜");
+        initTitle("µ°¿ÇÕĞÆ¸");
         Intent intent = getIntent();
         type = intent.getIntExtra("is_browse",1);
         meetingView.setMode(PullToRefreshBase.Mode.BOTH);
-        loading = new LoadingProgressDialog(mContext,"æ­£åœ¨è¯·æ±‚...");
+        loading = new LoadingProgressDialog(mContext,"ÕıÔÚÇëÇó...");
         comResumeAdapter = new ComResumeAdapter(mContext);
         list = new ArrayList<ComResumeMode>();
         getListData();
@@ -127,10 +127,10 @@ public class CompanyResumeGetActivity extends BaseActivity{
         });
     }
     private void getListData() {
-        //è¿”å›ç›‘å¬äº‹ä»¶
+        //·µ»Ø¼àÌıÊÂ¼ş
         Response.Listener listener = new Response.Listener() {
             @Override
-            public void onResponse(Object obj) {//è¿”å›å€¼
+            public void onResponse(Object obj) {//·µ»ØÖµ
                 try {
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
@@ -180,9 +180,9 @@ public class CompanyResumeGetActivity extends BaseActivity{
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError volleyError) {//è¿”å›å€¼
+            public void onErrorResponse(VolleyError volleyError) {//·µ»ØÖµ
                 loading.dismiss();
-                ToastUtils.show(mContext, "ç½‘ç»œå¼‚å¸¸");
+                ToastUtils.show(mContext, "ÍøÂçÒì³£");
             }
         };
 
@@ -279,10 +279,10 @@ public class CompanyResumeGetActivity extends BaseActivity{
         }
     }
     private void delResumeData(String c_uid,String strEid,String strJobID) {
-        //è¿”å›ç›‘å¬äº‹ä»¶
+        //·µ»Ø¼àÌıÊÂ¼ş
         Response.Listener listener = new Response.Listener() {
             @Override
-            public void onResponse(Object obj) {//è¿”å›å€¼
+            public void onResponse(Object obj) {//·µ»ØÖµ
                 try {
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
@@ -307,11 +307,12 @@ public class CompanyResumeGetActivity extends BaseActivity{
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError volleyError) {//è¿”å›å€¼
+            public void onErrorResponse(VolleyError volleyError) {//·µ»ØÖµ
                 loading.dismiss();
-                ToastUtils.show(mContext, "ç½‘ç»œå¼‚å¸¸");
+                ToastUtils.show(mContext, "ÍøÂçÒì³£");
             }
         };
+
 
         loading.show();
         Map<String,String> map = new HashMap<String,String>();
@@ -320,5 +321,5 @@ public class CompanyResumeGetActivity extends BaseActivity{
         map.put("job_id",strJobID);
         String url = Urls.COMPY_DEL_RESUME_URL;
         RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
-    }
+    } 
 }
