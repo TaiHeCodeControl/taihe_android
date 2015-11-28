@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
@@ -27,7 +24,6 @@ import com.taihe.eggshell.resume.adapter.ResumeListAdapter;
 import com.taihe.eggshell.resume.entity.Resumes;
 import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
-import com.taihe.eggshell.widget.MyListView;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -251,6 +247,7 @@ public class ResumeManagerActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                     loading.dismiss();
+//                Log.v(TAG,new String(volleyError.networkResponse.data));
                     ToastUtils.show(mContext,volleyError);
             }
         };
@@ -265,7 +262,7 @@ public class ResumeManagerActivity extends BaseActivity{
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-                Log.v(TAG,(String)o);
+//                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");

@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:hint="请填写培训中心"
+                android:hint="请填写技能名称"
                 android:layout_marginRight="13dp"
                 android:textColor="@color/font_color_black"
                 android:textColorHint="@color/hint_color"

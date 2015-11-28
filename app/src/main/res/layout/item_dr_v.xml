@@ -11,7 +11,7 @@
         android:id="@+id/id_v"
         android:layout_width="160dp"
         android:layout_height="90dp"
-        android:scaleType="centerInside"
+        android:scaleType="centerCrop"
         android:src="@drawable/tu"/>
 
     <TextView

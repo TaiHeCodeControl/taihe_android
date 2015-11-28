@@ -4,11 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -17,8 +15,6 @@ import android.widget.TextView;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
@@ -184,7 +180,7 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
             public void onResponse(Object obj) {//返回值
                 loading.dismiss();
                 try {
-                    Log.v(TAG,(String)obj);
+//                    Log.v(TAG,(String)obj);
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
@@ -231,6 +227,9 @@ public class CompanyDetailActivity extends BaseActivity implements View.OnClickL
 //                                upordown.setVisibility(View.VISIBLE);
 //                            }
                             JobInfo vMode;
+                            if(j1.length()==0){
+                                ToastUtils.show(mContext,"没有了");
+                            }
                             for(int i=0;i<j1.length();i++){
                                 vMode = new JobInfo();
                                 j2 = j1.getJSONObject(i);

@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -717,7 +716,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Object o) {
 //                LoadingDialog.dismiss();
                 try {
-                    Log.v(TAG, (String) o);
+//                    Log.v(TAG, (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");

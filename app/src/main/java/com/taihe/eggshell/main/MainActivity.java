@@ -165,7 +165,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             tagSet.add(sTagItme);
         }
         //调用JPush API设置Tag
-        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TAGS, tagSet));
+//        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TAGS, tagSet));
         getStaticDataFromNet();
         getJobStaticDataFromNet();
     }
