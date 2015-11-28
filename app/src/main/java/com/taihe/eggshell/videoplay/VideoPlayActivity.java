@@ -1,15 +1,10 @@
 package com.taihe.eggshell.videoplay;
 
-import tv.danmaku.ijk.media.player.IMediaPlayer;
-
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -49,6 +44,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 /**
  * Created by Thinkpad on 2015/7/24.
@@ -132,6 +129,9 @@ public class VideoPlayActivity extends BaseActivity {
     @Override
     public void initData() {
         initTitle("课程播放");
+
+//        ToastUtils.show(mContext,"当前网络为:"+HttpsUtils.getNetworkType(mContext));
+
         listInfo = new ArrayList<VideoInfoMode>();
         videoAdapter = new VideoInfoAdapter(mContext);
         lst_video_play.setDividerHeight(0);
@@ -228,7 +228,7 @@ public class VideoPlayActivity extends BaseActivity {
                 videoAdapter.notifyDataSetInvalidated();
                 if (RequestUtils.GetWebType(mContext) != 0) {
                     videoview.setVid(listInfo.get(i).getVideo_id(), 1);
-                }else{
+                } else {
                     Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
                 }
                 playTitle.setText(listInfo.get(i).getVideo_name());
@@ -238,20 +238,20 @@ public class VideoPlayActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (RequestUtils.GetWebType(mContext) != 0) {
-                }else{
+                } else {
                     Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
                 }
                 if (encrypt) {
-                    try{
+                    try {
                         if (RequestUtils.GetWebType(mContext) != 0) {
                             videoview.setMediaController(mediaController);
                             videoview.setMediaBufferingIndicator(progressBar);
                             videoview.setVid(vid, 1);
                             video_play.setVisibility(View.GONE);
-                        }else{
+                        } else {
                             Toast.makeText(mContext, "网络连接异常,请检查网络是否正常！", Toast.LENGTH_LONG).show();
                         }
-                    }catch (Exception ex){
+                    } catch (Exception ex) {
                         ex.printStackTrace();
                     }
 

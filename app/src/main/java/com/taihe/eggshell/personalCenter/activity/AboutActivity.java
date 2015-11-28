@@ -3,7 +3,6 @@ package com.taihe.eggshell.personalCenter.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -53,4 +52,5 @@ public class AboutActivity extends BaseActivity{
         super.onPause();
         MobclickAgent.onPause(mContext);
     }
+
 }

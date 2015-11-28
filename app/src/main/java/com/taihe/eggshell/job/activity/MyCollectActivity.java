@@ -6,15 +6,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
@@ -42,7 +37,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -59,7 +53,7 @@ public class MyCollectActivity extends BaseActivity {
     private CheckBox cb_selectAll;
 
     private LoadingProgressDialog dialog;
-    private List<JobInfo> jobInfos = null;
+    private List<JobInfo> jobInfos = new ArrayList<JobInfo>();
     private JobInfo jobInfo;
 
     private PullToRefreshGridView list_job_all;
@@ -74,7 +68,7 @@ public class MyCollectActivity extends BaseActivity {
     private int selectSize = 0;
     private int postednum = 0;
     private TextView tv_collect_num;//收藏个数
-    private StringBuilder sb = new StringBuilder();
+    private StringBuilder sb = new StringBuilder("");
 
     private User user;
     private String userId = "";
@@ -100,6 +94,10 @@ public class MyCollectActivity extends BaseActivity {
                         collectCount = jsonObject.getString("count");
                         String data = jsonObject.getString("data");
                         if (data.equals("[]")) {
+                            jobInfos.clear();
+                            if(null!=adapter){
+                                adapter.notifyDataSetChanged();
+                            }
                             ToastUtils.show(mContext,"没有收藏的职位了");
                         }else{
                             cb_selectAll.setChecked(false);
@@ -165,7 +163,7 @@ public class MyCollectActivity extends BaseActivity {
         if (user != null) {
             userId = user.getId() + "";
         }
-        jobInfos = new ArrayList<JobInfo>();
+
         tv_collect_num = (TextView) findViewById(R.id.tv_collect_num);//收藏职位记录
         list_job_all = (PullToRefreshGridView) findViewById(R.id.list_job);
 
@@ -210,19 +208,24 @@ public class MyCollectActivity extends BaseActivity {
         cb_selectAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!cb_selectAll.isChecked()) {
+                if(jobInfos.size()>0){
+                    if (!cb_selectAll.isChecked()) {
+                        cb_selectAll.setChecked(false);
+                        for (JobInfo info : jobInfos) {
+                            info.setIsChecked(false);
+                        }
+                    } else {
+                        cb_selectAll.setChecked(true);
+                        selectSize = jobInfos.size();
+                        for (JobInfo info : jobInfos) {
+                            info.setIsChecked(true);
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }else{
                     cb_selectAll.setChecked(false);
-                    for (JobInfo info : jobInfos) {
-                        info.setIsChecked(false);
-                    }
-                } else {
-                    cb_selectAll.setChecked(true);
-                    selectSize = jobInfos.size();
-                    for (JobInfo info : jobInfos) {
-                        info.setIsChecked(true);
-                    }
                 }
-                adapter.notifyDataSetChanged();
+
             }
         });
     }
@@ -288,7 +291,6 @@ public class MyCollectActivity extends BaseActivity {
 
     }
 
-
     @Override
     public void onClick(View view) {
         super.onClick(view);
@@ -310,10 +312,14 @@ public class MyCollectActivity extends BaseActivity {
                     }
                 }
                 if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-                    dialog = new LoadingProgressDialog(mContext, getResources().getString(
-                            R.string.submitcertificate_string_wait_dialog));
-                    dialog.show();
-                    deletePositin();
+
+                    if(!sb.toString().equals("")){
+                        dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                                R.string.submitcertificate_string_wait_dialog));
+                        dialog.show();
+                        deletePositin();
+                    }
+
                 } else {
                     ToastUtils.show(mContext, R.string.check_network);
                 }
@@ -323,10 +329,20 @@ public class MyCollectActivity extends BaseActivity {
                 //申请职位
 //                JobApplyDialogUtil.isApplyJob(mContext, selectSize, 2);
                 if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-                    dialog = new LoadingProgressDialog(mContext, getResources().getString(
-                            R.string.submitcertificate_string_wait_dialog));
-                    dialog.show();
-                    postJob();//申请职位
+                    StringBuilder sb = new StringBuilder();//选择的职位
+                    for (JobInfo jobInfo : jobInfos) {
+                        if (jobInfo.isChecked()) {
+                            sb.append(jobInfo.getJob_Id());
+                            sb.append(",");
+                        }
+                    }
+                    if(!sb.toString().equals("")){
+                        dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                                R.string.submitcertificate_string_wait_dialog));
+                        dialog.show();
+                        postJob(sb);//申请职位
+                    }
+
                 } else {
                     ToastUtils.show(mContext, R.string.check_network);
                 }
@@ -387,17 +403,7 @@ public class MyCollectActivity extends BaseActivity {
 
 
     //申请职位
-    public void postJob() {
-
-
-        StringBuilder sb = new StringBuilder();//选择的职位
-        for (JobInfo jobInfo : jobInfos) {
-            System.out.println(jobInfo.getJob_Id() + "======" + jobInfo.isChecked());
-            if (jobInfo.isChecked()) {
-                sb.append(jobInfo.getJob_Id());
-                sb.append(",");
-            }
-        }
+    public void postJob(StringBuilder sbs) {
 
         Response.Listener listener = new Response.Listener() {
             @Override
@@ -439,7 +445,7 @@ public class MyCollectActivity extends BaseActivity {
             }
         };
 
-        String jobIds = sb.toString();
+        String jobIds = sbs.toString();
         Map<String, String> param = new HashMap<String, String>();
 //        param.put("uid", 6 + "");//UserID       userId
         param.put("uid", userId + "");//UserID       userId
