@@ -432,7 +432,7 @@ public class MyPostActivity extends BaseActivity {
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-//                    Log.v(TAG, (String) o);
+                    Log.v(TAG, (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
@@ -480,7 +480,7 @@ public class MyPostActivity extends BaseActivity {
 //        param.put("uid", 6 + "");//UserID       userId
         param.put("uid", userId + "");//UserID       userId
         param.put("job_id", jobIds);
-        RequestUtils.createRequest(mContext, "", strUrlList, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
 
     }
 
