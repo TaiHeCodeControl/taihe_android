@@ -300,9 +300,11 @@ public class LoginActivity extends BaseActivity {
             startActivity(intent);
         } else if (loginTag.equals("myPost")) {
             intent = new Intent(LoginActivity.this, MyPostActivity.class);
+            intent.putExtra("type",1);
             startActivity(intent);
         } else if (loginTag.equals("myCollect")) {
             intent = new Intent(LoginActivity.this, MyCollectActivity.class);
+            intent.putExtra("type",2);
             startActivity(intent);
         } else if (loginTag.equals("myResume")) {
             intent = new Intent(LoginActivity.this, ResumeManagerActivity.class);
