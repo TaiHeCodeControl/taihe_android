@@ -132,9 +132,7 @@
                         android:layout_marginLeft="10dp"
                         android:textSize="@dimen/font_size_15"
                         android:textColor="@color/black"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:maxLines="1"/>
+                        android:maxLines="2"/>
                 </LinearLayout>
 
                 <LinearLayout

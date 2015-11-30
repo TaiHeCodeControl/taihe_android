@@ -1,6 +1,5 @@
 package com.taihe.eggshell.job.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -175,7 +174,7 @@ public class PositionActivity extends BaseActivity {
     private WhereBuilder getBuilder(String id) {
         WhereBuilder builder = WhereBuilder.b();
         StringBuilder sb = new StringBuilder();
-        sb.append(" keyid = '" + id + "'");
+        sb.append(" keyid = '" + id + "' order by id desc");
         return builder.expr(sb.toString());
     }
 

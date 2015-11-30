@@ -393,7 +393,6 @@ public class MyCollectActivity extends BaseActivity {
 
     }
 
-
     private void goBack() {
         Intent intent = new Intent(MyCollectActivity.this, MainActivity.class);
         intent.putExtra("MeFragment", "MeFragment");

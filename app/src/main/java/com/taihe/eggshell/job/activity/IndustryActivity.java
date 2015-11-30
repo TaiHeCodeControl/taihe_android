@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.db.sqlite.Selector;
@@ -175,7 +174,7 @@ public class IndustryActivity extends BaseActivity {
     private WhereBuilder getBuilder(String id) {
         WhereBuilder builder = WhereBuilder.b();
         StringBuilder sb = new StringBuilder();
-        sb.append(" keyid = '" + id + "'");
+        sb.append(" keyid = '" + id + "' order by id desc");
         return builder.expr(sb.toString());
     }
 
@@ -187,7 +186,7 @@ public class IndustryActivity extends BaseActivity {
 
                 Selector selector = Selector.from(StaticData.class).where(builder).limit(PAGE_SIZE).offset(offset);
 
-                Log.v("SELE:",selector.toString());
+//                Log.v("SELE:",selector.toString());
                 List<StaticData> list = null;
                 try {
                     list = DbHelper.getDbUtils(DbHelper.DB_TYPE_USER).findAll(selector);

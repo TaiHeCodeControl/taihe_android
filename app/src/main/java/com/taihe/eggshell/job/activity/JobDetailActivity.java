@@ -119,6 +119,8 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                             type = "全职";
                         } else if (type.equals("56")) {
                             type = "兼职";
+                        } else if(type.equals("129")){
+                            type = "实习";
                         } else {
                             type = "不限";
                         }

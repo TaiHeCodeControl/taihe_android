@@ -188,7 +188,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         JSONObject data = jsonObject.getJSONObject("data");
-                        String hy = data.getString("hy");
+                        String hy = data.getString("hy");//行业
                         Gson gson = new Gson();
                         List<StaticData> industryList = gson.fromJson(hy, new TypeToken<List<StaticData>>() {
                         }.getType());
@@ -200,7 +200,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         hylist.addAll(industryList);
 //                        db.saveOrUpdateAll(industryList);
 
-                        String pay = data.getString("pay");
+                        String pay = data.getString("pay");//薪资
                         List<StaticData> salaryList = gson.fromJson(pay, new TypeToken<List<StaticData>>() {
                         }.getType());
                         for (int i = 0; i < salaryList.size(); i++) {
@@ -210,7 +210,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         paylist.addAll(salaryList);
 //                        db.saveOrUpdateAll(salaryList);
 
-                        String type = data.getString("type");
+                        String type = data.getString("type");//工作类型，兼职，全职
                         if (!type.equals("false")) {
                             List<StaticData> workTypeList = gson.fromJson(type, new TypeToken<List<StaticData>>() {
                             }.getType());
@@ -222,7 +222,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                            db.saveOrUpdateAll(workTypeList);
                         }
 
-                        String workexper = data.getString("experience");
+                        String workexper = data.getString("experience");//工作经验
                         List<StaticData> workExperinceList = gson.fromJson(workexper, new TypeToken<List<StaticData>>() {
                         }.getType());
                         for (int i = 0; i < workExperinceList.size(); i++) {
@@ -232,7 +232,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         experiencelist.addAll(workExperinceList);
 //                        db.saveOrUpdateAll(workExperinceList);
 
-                        String dgtime = data.getString("dgtime");
+                        String dgtime = data.getString("dgtime");//到岗时间
                         List<StaticData> dgTimeList = gson.fromJson(dgtime, new TypeToken<List<StaticData>>() {
                         }.getType());
                         for (int i = 0; i < dgTimeList.size(); i++) {
@@ -242,7 +242,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         dgtimelist.addAll(dgTimeList);
 //                        db.saveOrUpdateAll(dgTimeList);
 
-                        String status = data.getString("jobstatus");
+                        String status = data.getString("jobstatus");//工作状态，离职，在职
                         List<StaticData> jobStatusList = gson.fromJson(status, new TypeToken<List<StaticData>>() {
                         }.getType());
                         for (int i = 0; i < jobStatusList.size(); i++) {
@@ -252,7 +252,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         jobstatuslist.addAll(jobStatusList);
 //                        db.saveOrUpdateAll(jobStatusList);
 
-                        String education = data.getString("education");
+                        String education = data.getString("education");//学历
                         List<StaticData> educationList = gson.fromJson(education, new TypeToken<List<StaticData>>() {
                         }.getType());
                         for (int i = 0; i < educationList.size(); i++) {
@@ -296,7 +296,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         }.getType());
                         db.saveOrUpdateAll(cityBJList);
 
-                        String job_classid = data.getString("job_classid");
+                        String job_classid = data.getString("job_classid");//职位类别
                         List<StaticData> joblist = gson.fromJson(job_classid, new TypeToken<List<StaticData>>() {
                         }.getType());
                         for (int i = 0; i < joblist.size(); i++) {
@@ -361,7 +361,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                         job_paylist.addAll(salaryList);
 //                        db.saveOrUpdateAll(salaryList);
 
-                        String type = data.getString("type");
+                        String type = data.getString("type");//工作类型，全职，兼职
                         if (!type.equals("false")) {
                             List<StaticData> workTypeList = gson.fromJson(type, new TypeToken<List<StaticData>>() {
                             }.getType());
