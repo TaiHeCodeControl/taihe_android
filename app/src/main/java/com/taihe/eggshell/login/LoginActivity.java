@@ -303,7 +303,7 @@ public class LoginActivity extends BaseActivity {
             intent.putExtra("type",1);
             startActivity(intent);
         } else if (loginTag.equals("myCollect")) {
-            intent = new Intent(LoginActivity.this, MyCollectActivity.class);
+            intent = new Intent(LoginActivity.this, MyPostActivity.class);//MyCollectActivity
             intent.putExtra("type",2);
             startActivity(intent);
         } else if (loginTag.equals("myResume")) {
