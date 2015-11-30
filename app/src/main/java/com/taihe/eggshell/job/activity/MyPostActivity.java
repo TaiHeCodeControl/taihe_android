@@ -69,6 +69,10 @@ public class MyPostActivity extends BaseActivity {
     //选中条数的统计
     public int selectSize = 0;
 
+    private int type=1;
+    private String strType="";
+    private String strUrlList="";
+    private String strUrlDel="";
 
     private int userId;
     private User user;
@@ -97,11 +101,13 @@ public class MyPostActivity extends BaseActivity {
                         collectCount= jsonObject.getString("count");
                         String data = jsonObject.getString("data");
                         if (data.equals("[]")) {
-                            jobInfos.clear();
-                            if(null!=adapter){
-                                adapter.notifyDataSetChanged();
+                            if(jobInfos.size()==0) {
+                                jobInfos.clear();
+                                if (null != adapter) {
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
-                            ToastUtils.show(mContext,"没有投递的职位了");
+                            ToastUtils.show(mContext,"没有"+strType+"的职位了");
                         }else{
                             cb_selectAll.setChecked(false);
                             Gson gson = new Gson();
@@ -151,9 +157,18 @@ public class MyPostActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        type = getIntent().getIntExtra("type",1);
+        if(type==1){
+            strType="投递";
+            strUrlList=Urls.METHOD_JOB_LIST_POST;
+            strUrlDel=Urls.METHOD_JOB_LIST_POST_DELETE;
+        }else{
+            strType="收藏";
+            strUrlList=Urls.METHOD_JOB_LIST_COLLECT;
+            strUrlDel=Urls.METHOD_JOB_LIST_COLLECT_DELETE;
+        }
         super.initData();
-        super.initTitle("投递职位");
-
+        super.initTitle(strType+"职位");
         initListView();
         initListData();
     }
@@ -290,7 +305,7 @@ public class MyPostActivity extends BaseActivity {
 //        param.put("uid", 6 + "");//UserID
         param.put("uid", userId + "");//UserID
 
-        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_POST, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "", strUrlList, false, param, true, listener, errorListener);
 
     }
 
@@ -398,7 +413,7 @@ public class MyPostActivity extends BaseActivity {
         param.put("job_id", ss);
         param.put("uid", userId + "");//用户id
 //        Log.i("postDelete",param.toString());
-        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST_POST_DELETE, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "", strUrlDel, false, param, true, listener, errorListener);
 
     }
 
@@ -465,7 +480,7 @@ public class MyPostActivity extends BaseActivity {
 //        param.put("uid", 6 + "");//UserID       userId
         param.put("uid", userId + "");//UserID       userId
         param.put("job_id", jobIds);
-        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, "", strUrlList, false, param, true, listener, errorListener);
 
     }
 
