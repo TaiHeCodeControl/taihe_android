@@ -89,6 +89,7 @@ public class MyPostActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 101://删除职位成功
+                    jobInfos.clear();
                     getList();
                     cb_selectAll.setChecked(false);
                     tv_collect_num.setText(Integer.parseInt(collectCount) - delectNum + "条记录");

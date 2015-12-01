@@ -300,9 +300,9 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
 
     private void getIndustrys(){
         String[] type = new String[]{"教育培训","互联网","金融银行"};
-        int[] id_type = new int[]{958,35,37};
+        int[] id_type = new int[]{960,35,37};
         String[] media = new String[]{"市场专员","咨询销售","培训讲师","教学管理","教质管理","就业专员"};
-        int[] id_media = new int[]{953,954,698,955,956,957};
+        int[] id_media = new int[]{962,994,988,986,995,996};
         String[] internet = new String[]{"网站策划","网站编辑","运营专员","SEM专员","UI设计师","美工"};
         int[] id_internet = new int[]{131,132,125,141,127,133};
         String[] bank = new String[]{"银行柜员","业务专员","清算员","资金专员","会计","出纳员"};

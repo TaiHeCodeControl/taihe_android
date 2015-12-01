@@ -37,7 +37,6 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateHelper;
-import com.taihe.eggshell.job.activity.MyCollectActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.entity.User;
@@ -175,7 +174,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         super.setUserVisibleHint(isVisibleToUser);
 
         if(isVisibleToUser && getUserVisibleHint()){
-            if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+            if (NetWorkDetectionUtils.checkNetworkAvailable(mContext) && null!=EggshellApplication.getApplication().getUser()) {
                 getBasic();//获取用户基本信息，投递职位个数，简历个数，头像等
             }
         }
@@ -206,7 +205,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         } else {
             userId = user.getId();
             token = user.getToken();
-            if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+            if (NetWorkDetectionUtils.checkNetworkAvailable(mContext) && null!=EggshellApplication.getApplication().getUser()) {
                 getBasic();//获取用户基本信息，投递职位个数，简历个数，头像等
             } else {
                 ToastUtils.show(mContext, R.string.check_network);
@@ -716,16 +715,13 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-//                LoadingDialog.dismiss();
                 try {
 //                    Log.v(TAG, (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");
-                    System.out.println("code=========" + code);
 
                     if (code == 0) {//退出成功
-
                         ToastUtils.show(mContext, "成功退出");
                         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
                         Intent intent = new Intent(mContext, MainActivity.class);
