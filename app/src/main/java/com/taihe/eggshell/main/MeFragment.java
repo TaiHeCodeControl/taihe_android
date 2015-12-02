@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.chinaway.framework.swordfish.network.http.RequestQueue;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.network.http.toolbox.ImageLoader;
+import com.chinaway.framework.swordfish.network.http.toolbox.Volley;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -68,6 +70,7 @@ import java.util.Map;
  */
 public class MeFragment extends Fragment implements View.OnClickListener {
 
+
     private static final String TAG = "MeFragment";
     private Context mContext;
 
@@ -106,6 +109,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         mContext = getActivity();
         rootView = inflater.inflate(R.layout.fragment_me, null);
+        // 初始化Image-load
+        initImageLoad();
         return rootView;
     }
 
@@ -135,6 +140,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         tv_mine_collectnum = (TextView) rootView.findViewById(R.id.tv_mine_collectnum);
         tv_mine_jianlinum = (TextView) rootView.findViewById(R.id.tv_mine_jianlinum);
 
+
         rl_mine_checkupdate.setOnClickListener(this);
         rl_mine_feedback.setOnClickListener(this);
         tv_logintxt.setOnClickListener(this);
@@ -146,9 +152,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         rl_about.setOnClickListener(this);
         rl_hezuo.setOnClickListener(this);
         rl_logout.setOnClickListener(this);
-
-        // 初始化Image-load
-        imageLoader = new ImageLoader(RequestUtils.getRequestQueue(mContext), new BitmapCache());
 
         dialog = new ChoiceDialog(mContext, new View.OnClickListener() {
             @Override
@@ -169,6 +172,49 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         dialog.getRightButton().setText("确认退出");
     }
 
+
+    //初始化ImageLoad(volley)
+    private void initImageLoad() {
+        mQueue = Volley.newRequestQueue(mContext);
+        imageLoader = new ImageLoader(mQueue, new BitmapCache());
+    }
+
+    private void initView() {
+
+        //初始化选择图片popWindow
+        initImageSelect();
+        user = EggshellApplication.getApplication().getUser();
+
+        if (null == user) {
+
+            //退出登录，清空用户头像，职位个数等信息
+            userImagePath = "";
+            imageLoader.get(userImagePath, ImageLoader.getImageListener(
+                    circleiv_mine_icon, R.drawable.touxiang,
+                    R.drawable.touxiang));
+            tv_mine_postnum.setText("(" + 0 + ")");
+            tv_mine_collectnum.setText("(" + 0 + ")");
+            tv_mine_jianlinum.setText("(" + 0 + ")");
+
+            tv_logintxt.setVisibility(View.VISIBLE);
+            ll_userinfo.setVisibility(View.GONE);
+            rl_logout.setVisibility(View.GONE);
+
+        } else {
+            userId = user.getId();
+            token = user.getToken();
+            if (NetWorkDetectionUtils.checkNetworkAvailable(mContext) && null!=EggshellApplication.getApplication().getUser()) {
+                getBasic();//获取用户基本信息，投递职位个数，简历个数，头像等
+            } else {
+                ToastUtils.show(mContext, R.string.check_network);
+            }
+
+            tv_logintxt.setVisibility(View.GONE);
+            ll_userinfo.setVisibility(View.VISIBLE);
+            rl_logout.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -186,37 +232,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         initView();
     }
 
-    private void initView() {
-        //初始化选择图片popWindow
-        initImageSelect();
-        user = EggshellApplication.getApplication().getUser();
-        if (null == user) {
-            //退出登录，清空用户头像，职位个数等信息
-            userImagePath = "";
-            imageLoader.get(userImagePath, ImageLoader.getImageListener(
-                    circleiv_mine_icon, R.drawable.touxiang,R.drawable.touxiang));
-            tv_mine_postnum.setText("(" + 0 + ")");
-            tv_mine_collectnum.setText("(" + 0 + ")");
-            tv_mine_jianlinum.setText("(" + 0 + ")");
-
-            tv_logintxt.setVisibility(View.VISIBLE);
-            ll_userinfo.setVisibility(View.GONE);
-            rl_logout.setVisibility(View.GONE);
-        } else {
-            userId = user.getId();
-            token = user.getToken();
-            if (NetWorkDetectionUtils.checkNetworkAvailable(mContext) && null!=EggshellApplication.getApplication().getUser()) {
-                getBasic();//获取用户基本信息，投递职位个数，简历个数，头像等
-            } else {
-                ToastUtils.show(mContext, R.string.check_network);
-            }
-
-            tv_logintxt.setVisibility(View.GONE);
-            ll_userinfo.setVisibility(View.VISIBLE);
-            rl_logout.setVisibility(View.VISIBLE);
-        }
-    }
-
     //获取用户基本信息，投递职位个数，简历个数，头像等
     private void getBasic() {
 
@@ -229,7 +244,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");
 
-                    if (code == 0) {// expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
+                    if (code == 0) {//
+                        // expect 简历条数   favjob 投递职位条数  usejob收藏职位条数   resume_photo头像
                         JSONObject data = jsonObject.getJSONObject("data");
                         postNum = data.optString("favjob");
                         collectNum = data.optString("usejob");
@@ -238,7 +254,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         qianming = data.optString("description");
                         userImagePath = data.optString("resume_photo");
                         // 加载头像
-                        imageLoader.get(userImagePath, ImageLoader.getImageListener(circleiv_mine_icon, R.drawable.touxiang,R.drawable.touxiang));
+                        Log.i("userImagePath", userImagePath);
+                        imageLoader.get(userImagePath, ImageLoader.getImageListener(
+                                circleiv_mine_icon, R.drawable.touxiang,
+                                R.drawable.touxiang));
                         //手机号
                         String phoneNum = user.getPhoneNumber();
 
@@ -291,12 +310,14 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         param.put("uid", userId + "");
         param.put("token", token);
         RequestUtils.createRequest(mContext, Urls.METHOD_MINE_BASIC, "", true, param, true, listener, errorListener);
+
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_mine_logintxt://登录
+
                 EggshellApplication.getApplication().setLoginTag("meFragment");
                 intent = new Intent(mContext, LoginActivity.class);
                 startActivity(intent);
@@ -311,6 +332,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     intent = new Intent(mContext, LoginActivity.class);
                     startActivity(intent);
                 }
+
                 break;
             case R.id.rl_mine_postposition://我的投递
                 if (null != EggshellApplication.getApplication().getUser()) {
@@ -322,10 +344,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     EggshellApplication.getApplication().setLoginTag("myPost");
                     startActivity(intent);
                 }
+
                 break;
+
             case R.id.rl_mine_collectpostion://我的收藏
                 if (null != EggshellApplication.getApplication().getUser()) {
-                    intent = new Intent(mContext, MyPostActivity.class);//MyCollectActivity
+                    intent = new Intent(mContext, MyPostActivity.class);
                     intent.putExtra("type",2);
                     startActivity(intent);
                 } else {
@@ -333,7 +357,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     EggshellApplication.getApplication().setLoginTag("myCollect");
                     startActivity(intent);
                 }
+
                 break;
+
             case R.id.rl_mine_jianliguanli://简历管理
                 if (null != EggshellApplication.getApplication().getUser()) {
                     intent = new Intent(mContext, ResumeManagerActivity.class);
@@ -354,18 +380,22 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.rl_mine_logout://退出登录
                 dialog.show();
+
                 break;
 //            case R.id.rl_mine_setting:
 //                intent = new Intent(mContext, SetUpActivity.class);
 //                startActivity(intent);
 //                break;
+
             case R.id.rl_mine_feedback:
                 intent = new Intent(mContext, FeedbackActivity.class);
                 startActivity(intent);
                 break;
+
             case R.id.rl_mine_checkupdate://检查更新
                 getVersionCode();
                 break;
+
             case R.id.circleiv_mine_icon:
                 //判断登录状态，
                 if (null == user) {//登录
@@ -376,18 +406,30 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     UserId = EggshellApplication.getApplication().getUser().getId();
                     showCameraPopWindow();
                 }
+
+
                 break;
-            case R.id.tv_camera:// 以下是修改头像中的点击事件
+
+            // 以下是修改头像中的点击事件
+            case R.id.tv_camera:
+
                 intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "temp.jpg")));
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
+                        Environment.getExternalStorageDirectory(), "temp.jpg")));
                 startActivityForResult(intent, PHOTOHRAPH);
+
                 camera_pop_window.dismiss();
                 break;
+
             case R.id.tv_album:
                 intent = new Intent(Intent.ACTION_PICK, null);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,IMAGE_UNSPECIFIED);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        IMAGE_UNSPECIFIED);
+
                 startActivityForResult(intent, PHOTOZOOM);
+
                 camera_pop_window.dismiss();
+
             case R.id.tv_cancel:
                 camera_pop_window.dismiss();
                 break;
@@ -399,6 +441,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
+
 //                Log.v(TAG, (String) o);
                 try {
                     JSONObject jsonObject = new JSONObject((String) o);
@@ -479,18 +522,21 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     // -----选择图片-------
     private PopupWindow camera_pop_window;
     private View camera_pop_view;
+    private LayoutInflater mInflater;
     private Context context;
     private TextView tv_camera, tv_album, tv_cancel;
 
     private void initImageSelect() {
         // -选择图片------
-        camera_pop_view = LayoutInflater.from(mContext).inflate(R.layout.camera_option_pop, null);
+        mInflater = LayoutInflater.from(mContext);
+        camera_pop_view = mInflater.inflate(R.layout.camera_option_pop, null);
         tv_camera = (TextView) camera_pop_view.findViewById(R.id.tv_camera);
         tv_album = (TextView) camera_pop_view.findViewById(R.id.tv_album);
         tv_cancel = (TextView) camera_pop_view.findViewById(R.id.tv_cancel);
         tv_camera.setOnClickListener(this);
         tv_album.setOnClickListener(this);
         tv_cancel.setOnClickListener(this);
+
     }
 
     // -------------------弹出选择图片对话框--------------------------------
@@ -502,7 +548,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         if (camera_pop_window.isShowing()) {
             camera_pop_window.dismiss();
         } else {
-            camera_pop_window.showAtLocation(camera_pop_view, Gravity.BOTTOM, 0, 0);
+            camera_pop_window.showAtLocation(camera_pop_view, Gravity.BOTTOM,
+                    0, 0);
             camera_pop_window.update();
         }
         backgroundAlpha(0.5f);
@@ -513,29 +560,42 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     //选择图片Pop
     private void initCameraPopWindow() {
-        camera_pop_window = new PopupWindow(camera_pop_view,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        camera_pop_window = new PopupWindow(camera_pop_view,
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         camera_pop_window.setAnimationStyle(R.style.pop_ani);
         ColorDrawable c = new ColorDrawable();
         camera_pop_window.setBackgroundDrawable(c);
         camera_pop_window.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
             @Override
-            public void onDismiss() {}
+            public void onDismiss() {
+
+            }
         });
+
+
     }
+
 
     /**
      * 弹出的popWin关闭的事件，主要是为了将背景透明度改回来
+     *
+     * @author cg
      */
     class poponDismissListener implements PopupWindow.OnDismissListener {
 
         @Override
         public void onDismiss() {
+            //Log.v("List_noteTypeActivity:", "我是关闭事件");
             backgroundAlpha(1f);
         }
+
     }
 
     /**
      * 设置添加屏幕的背景透明度
+     *
+     * @param bgAlpha
      */
     public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
@@ -543,12 +603,18 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         getActivity().getWindow().setAttributes(lp);
     }
 
+    //
+    private String uploadFile = Environment.getDataDirectory()
+            + "/data/com.taihe.eggshell/temp.jpg";
+    private PopupWindow pw;
     private Bitmap lastPhoto = null;
     public static final int NONE = 0;
     public static final int PHOTOHRAPH = 1;// 拍照
     public static final int PHOTOZOOM = 2; // 缩放
     public static final int PHOTORESOULT = 3;// 结果
     public static final String IMAGE_UNSPECIFIED = "image/*";
+    private FileInputStream fStream;
+    private String fString;
 
     /**
      * ********************* 从相机或者本地选图片到ImageView的method *********
@@ -556,27 +622,44 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode == NONE || data == null)
+        if (resultCode == NONE)
+
             return;
 
         // 拍照
+
         if (requestCode == PHOTOHRAPH) {
+
             // 设置文件保存路径这里放在跟目录下
-            File picture = new File(Environment.getExternalStorageDirectory() + "/temp.jpg");
+
+            File picture = new File(Environment.getExternalStorageDirectory()
+                    + "/temp.jpg");
             startPhotoZoom(Uri.fromFile(picture));
+
         }
 
+        if (data == null)
+
+            return;
+
         // 读取相册缩放图片
+
         if (requestCode == PHOTOZOOM) {
             startPhotoZoom(data.getData());
+
         }
 
         // 处理结果
+
         if (requestCode == PHOTORESOULT) {
+
             Bundle extras = data.getExtras();
 
             if (extras != null) {
+
                 lastPhoto = extras.getParcelable("data");
+                extras.getParcelable("data");
+
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();// 字节数组输出
                 lastPhoto.compress(Bitmap.CompressFormat.JPEG, 75, stream);//
                 FileOutputStream fos = null;
@@ -585,7 +668,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 // **************将截取后的图片保存到SD卡的temp.jpg文件
                 byte[] byteArray = stream.toByteArray();// 字节数组输出流转换成字节数组
 
-                File file = new File(Environment.getExternalStorageDirectory() + "/eggkerImage.JPEG");
+                File file = new File(Environment.getExternalStorageDirectory()
+                        + "/eggkerImage.JPEG");
                 String filePath = Environment.getExternalStorageDirectory() + "/eggkerImage.JPEG";
 
                 // 将字节数组写入到刚创建的图片文件
@@ -617,8 +701,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 } else {
                     ToastUtils.show(mContext, R.string.check_network);
                 }
+
+
             }
+
         }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -642,7 +730,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         ToastUtils.show(mContext, "头像上传成功");
 
                         userImagePath = imagePath;
-                        imageLoader.get(imagePath, ImageLoader.getImageListener(circleiv_mine_icon, R.drawable.touxiang,R.drawable.touxiang));
+                        Log.i("LOADimagePath", "");
+                        imageLoader.get(imagePath, ImageLoader.getImageListener(
+                                circleiv_mine_icon, R.drawable.touxiang,
+                                R.drawable.touxiang));
                     } else {
                         ToastUtils.show(mContext, "上传失败");
                     }
@@ -692,21 +783,34 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             e.printStackTrace();
             return null;
         }
+
     }
 
     //图片裁剪
     public void startPhotoZoom(Uri uri) {
 
         Intent intent = new Intent("com.android.camera.action.CROP");
+
         intent.setDataAndType(uri, IMAGE_UNSPECIFIED);
+
         intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 1);// aspectX aspectY 是宽高的比例
+
+        // aspectX aspectY 是宽高的比例
+
+        intent.putExtra("aspectX", 1);
+
         intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 200);// outputX outputY 是裁剪图片宽
+
+        // outputX outputY 是裁剪图片宽
+
+        intent.putExtra("outputX", 200);
+
         intent.putExtra("outputY", 200);
+
         intent.putExtra("return-data", true);
 
         startActivityForResult(intent, PHOTORESOULT);
+
     }
 
     //退出登录
@@ -715,6 +819,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
+//                LoadingDialog.dismiss();
                 try {
 //                    Log.v(TAG, (String) o);
 
@@ -722,6 +827,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     int code = jsonObject.getInt("code");
 
                     if (code == 0) {//退出成功
+
                         ToastUtils.show(mContext, "成功退出");
                         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
                         Intent intent = new Intent(mContext, MainActivity.class);

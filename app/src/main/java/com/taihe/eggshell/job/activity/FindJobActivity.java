@@ -6,10 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -28,22 +24,16 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import com.lidroid.xutils.view.annotation.ViewInject;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
-import com.taihe.eggshell.base.utils.GsonUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
-import com.taihe.eggshell.job.bean.JobDetailInfo;
 import com.taihe.eggshell.job.bean.JobInfo;
-import com.taihe.eggshell.job.fragment.AllJobFragment;
-import com.taihe.eggshell.job.fragment.FujinFragment;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.entity.User;
-import com.taihe.eggshell.widget.CustomViewPager;
 import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.umeng.analytics.MobclickAgent;
@@ -322,7 +312,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v("JOB:", (String) o);
+//                    Log.v("JOB:", (String) o);
                     JSONObject jsonObject = new JSONObject((String) o);
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {
@@ -390,7 +380,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("three_cityid", cityid);//
         param.put("job1", job1);
 
-        Log.v(TAG, param.toString());
+//        Log.v(TAG, param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
     }
 

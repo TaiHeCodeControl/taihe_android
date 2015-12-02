@@ -3,9 +3,6 @@ package com.taihe.eggshell.job.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +13,8 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
-import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.main.entity.CityBJ;
-import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.widget.CityDialog;
 import com.umeng.analytics.MobclickAgent;
@@ -187,7 +182,7 @@ public class JobFilterActivity extends BaseActivity {
                 keyword = et_keyWord.getText().toString().trim();
 
                 //保存职位筛选的字段
-                JobFilterUtils.filterJob(mContext,keyword,type,"",hy,job_post,salary,edu,exp,city,pubtime,"搜索结果");
+                JobFilterUtils.filterJob(mContext,keyword,type,hy,"",job_post,salary,edu,exp,city,pubtime,"搜索结果");
 
                 intent = new Intent();
                 setResult(101,intent);

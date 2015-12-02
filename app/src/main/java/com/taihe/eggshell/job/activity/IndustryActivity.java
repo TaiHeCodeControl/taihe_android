@@ -82,7 +82,13 @@ public class IndustryActivity extends BaseActivity {
             selectString = "请选择您的职位";
             initTitle(title);
             tv_select.setText(selectString);
-            getPositionFromDB(getBuilder("0"));
+            selectedDataList.addAll(MainActivity.job_hylist);
+            for(StaticData sd : selectedDataList){
+                if(sd.getId()==842){
+                    sd.setId(960);
+                }
+            }
+//            getPositionFromDB(getBuilder("0"));
         }else{
             initListView();
         }
