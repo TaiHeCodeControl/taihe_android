@@ -63,7 +63,7 @@ public class DRAdapter extends BaseAdapter {
         FinalBitmap bitmap = FinalBitmap.create(mContext);
         bitmap.display(holder.vImageView, personModel.getStudentsphoto(),defaultmap,defaultmap);
         holder.nameTextView.setText(personModel.getStudentsname());
-        holder.typeTextView.setText(personModel.getStudentsnature());
+        holder.typeTextView.setText(personModel.getMotto());
 
         return contentview;
     }

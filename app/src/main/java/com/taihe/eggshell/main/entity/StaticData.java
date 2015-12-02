@@ -19,6 +19,7 @@ public class StaticData implements Parcelable{
     private String name;
     private String typese;
     private String keyid;
+    private int sort;
 
     public int getId() {
         return id;
@@ -52,6 +53,14 @@ public class StaticData implements Parcelable{
         this.keyid = keyid;
     }
 
+    public int getsort() {
+        return sort;
+    }
+
+    public void setsort(int sort) {
+        this.sort = sort;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -62,6 +71,7 @@ public class StaticData implements Parcelable{
         parcel.writeInt(id);
         parcel.writeString(name);
         parcel.writeString(keyid);
+        parcel.writeInt(sort);
     }
 
     public static final Creator<StaticData> CREATOR = new Creator<StaticData>() {
@@ -71,6 +81,7 @@ public class StaticData implements Parcelable{
             data.id = source.readInt();
             data.name = source.readString();
             data.keyid = source.readString();
+            data.sort = source.readInt();
             return data;
         }
 

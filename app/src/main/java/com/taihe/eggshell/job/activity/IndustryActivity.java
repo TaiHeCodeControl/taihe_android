@@ -82,13 +82,7 @@ public class IndustryActivity extends BaseActivity {
             selectString = "请选择您的职位";
             initTitle(title);
             tv_select.setText(selectString);
-            selectedDataList.addAll(MainActivity.job_hylist);
-            for(StaticData sd : selectedDataList){
-                if(sd.getId()==842){
-                    sd.setId(960);
-                }
-            }
-//            getPositionFromDB(getBuilder("0"));
+            getPositionFromDB(getBuilder("0"));
         }else{
             initListView();
         }
@@ -180,7 +174,7 @@ public class IndustryActivity extends BaseActivity {
     private WhereBuilder getBuilder(String id) {
         WhereBuilder builder = WhereBuilder.b();
         StringBuilder sb = new StringBuilder();
-        sb.append(" keyid = '" + id + "' order by id desc");
+        sb.append(" keyid = '" + id + "' order by sort desc");
         return builder.expr(sb.toString());
     }
 
