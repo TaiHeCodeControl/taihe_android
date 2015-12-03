@@ -1,7 +1,9 @@
 package com.taihe.eggshell.meetinginfo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -84,6 +86,15 @@ public class Act_MeetingInfo extends BaseActivity {
                 page++;
                 getListData();
                 meetingView.onRefreshComplete();
+            }
+        });
+        meetingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(mContext,Act_MeetingInfoImage.class);
+                intent.putExtra("title",list.get(i).getTitle());
+                intent.putExtra("pic",list.get(i).getLogo());
+                startActivity(intent);
             }
         });
     }

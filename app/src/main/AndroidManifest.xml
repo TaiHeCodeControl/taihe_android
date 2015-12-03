@@ -298,6 +298,10 @@
             android:name=".meetinginfo.Act_MeetingInfo"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".meetinginfo.Act_MeetingInfoImage"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".company.CompanyActivity"
