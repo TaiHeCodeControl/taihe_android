@@ -81,7 +81,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         return v ;
     }
     void init(){
-        id_title.setText("公开课");
+        id_title.setText("去学习");
         lin_back.setVisibility(View.GONE);
         videoAdapter = new VideoAdapterGride(getActivity());
         listInfo = new ArrayList<VideoInfoMode>();

@@ -228,29 +228,40 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 intent.putExtra("From","Index");
                 startActivity(intent);
                 break;
-            case R.id.id_look_job://找工作
-                //搜索职位
+            case R.id.id_look_job://社交圈
+                intent = new Intent(mContext,Act_MeetingInfo.class);
+                startActivity(intent);
+                break;
+            case R.id.id_look_jianzhi://玩出范
+                changeViewPagerListener.changeViewPager(1);
+                break;
+            case R.id.id_look_shixi://V达人
+                intent = new Intent(mContext,VActivity.class);
+//                intent = new Intent(mContext,CompanyJobListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.id_information://去学习
+                changeViewPagerListener.changeViewPager(2);
+                break;
+            case R.id.id_write_resume:
+                //搜索职位  全职
                 JobFilterUtils.filterJob(mContext, "", "55", "", "", "", "", "", "", "", "","");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.id_look_jianzhi://找兼职
-                //搜索职位
-                JobFilterUtils.filterJob(mContext, "", "56", "", "", "", "", "", "", "", "","");
+            case R.id.id_play_mode:
+                //搜索职位  兼职
+                JobFilterUtils.filterJob(mContext, "", "56", "", "", "", "", "", "", "", "", "");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.id_look_shixi://找实习
-                //搜索职位
+            case R.id.id_we_chat://找实习
+                //搜索职位 实习
                 JobFilterUtils.filterJob(mContext, "", "129", "", "", "", "", "", "", "", "","");
                 intent = new Intent(mContext,FindJobActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.id_information://社交圈
-                intent = new Intent(mContext,Act_MeetingInfo.class);
-                startActivity(intent);
-                break;
-            case R.id.id_write_resume:
+            case R.id.id_public_class:
                 if(null!= EggshellApplication.getApplication().getUser()){
                     intent = new Intent(mContext,ResumeManagerActivity.class);
                     startActivity(intent);
@@ -258,17 +269,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                     intent = new Intent(mContext,LoginActivity.class);
                     startActivity(intent);
                 }
-                break;
-            case R.id.id_play_mode:
-                changeViewPagerListener.changeViewPager(1);
-                break;
-            case R.id.id_we_chat://V达人
-                intent = new Intent(mContext,VActivity.class);
-//                intent = new Intent(mContext,CompanyJobListActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.id_public_class:
-                changeViewPagerListener.changeViewPager(2);
                 break;
         }
     }

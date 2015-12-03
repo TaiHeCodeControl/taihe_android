@@ -61,23 +61,23 @@
                     <TextView
                         android:id="@+id/id_look_job"
                         style="@style/index_tab"
-                        android:text="找工作"
-                        android:drawableTop="@drawable/lookjob"/>
+                        android:text="社交圈"
+                        android:drawableTop="@drawable/shejiaoquan"/>
                     <TextView
                         android:id="@+id/id_look_jianzhi"
                         style="@style/index_tab"
-                        android:text="找兼职"
-                        android:drawableTop="@drawable/jianzhi"/>
+                        android:text="玩出范"
+                        android:drawableTop="@drawable/wanchufan"/>
                     <TextView
                         android:id="@+id/id_look_shixi"
                         style="@style/index_tab"
-                        android:text="实习生"
-                        android:drawableTop="@drawable/shixi"/>
+                        android:text="V达人"
+                        android:drawableTop="@drawable/vdaren"/>
                     <TextView
                         android:id="@+id/id_information"
                         style="@style/index_tab"
-                        android:text="社交圈"
-                        android:drawableTop="@drawable/shejiaoquan"/>
+                        android:text="去学习"
+                        android:drawableTop="@drawable/gongkaike"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -90,23 +90,23 @@
                     <TextView
                         android:id="@+id/id_write_resume"
                         style="@style/index_tab"
-                        android:text="写简历"
-                        android:drawableTop="@drawable/xiejianli"/>
+                        android:text="找工作"
+                        android:drawableTop="@drawable/lookjob"/>
                     <TextView
                         android:id="@+id/id_play_mode"
                         style="@style/index_tab"
-                        android:text="玩出范"
-                        android:drawableTop="@drawable/wanchufan"/>
+                        android:text="找兼职"
+                        android:drawableTop="@drawable/jianzhi"/>
                     <TextView
                         android:id="@+id/id_we_chat"
                         style="@style/index_tab"
-                        android:text="V达人"
-                        android:drawableTop="@drawable/vdaren"/>
+                        android:text="找实习"
+                        android:drawableTop="@drawable/shixi"/>
                     <TextView
                         android:id="@+id/id_public_class"
                         style="@style/index_tab"
-                        android:text="公开课"
-                        android:drawableTop="@drawable/gongkaike"/>
+                        android:text="写简历"
+                        android:drawableTop="@drawable/xiejianli"/>
                 </LinearLayout>
             </LinearLayout>
 

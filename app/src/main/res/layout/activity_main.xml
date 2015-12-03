@@ -43,7 +43,7 @@
             android:id="@+id/id_radio_openclass"
             style="@style/main_tab"
             android:drawableTop="@drawable/tab_openclass_background"
-            android:text="公开课"/>
+            android:text="去学习"/>
 
         <RadioButton
             android:id="@+id/id_radio_me"

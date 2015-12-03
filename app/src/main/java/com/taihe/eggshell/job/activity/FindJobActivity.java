@@ -263,7 +263,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                     String com_id = job.getUid();
                     intent.putExtra("ID", jobId);
                     intent.putExtra("com_id", com_id);
-                    Log.i("ID", jobId + "");
                     startActivity(intent);
                 }
 
@@ -377,7 +376,11 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("exp", exp);//工作年限
         param.put("type", type);//工作性质
         param.put("fbtime", fbtime);//
-        param.put("three_cityid", cityid);//
+        if("0".equals(cityid)){
+            param.put("provinceid", "2");
+        }else{
+            param.put("three_cityid", cityid);//
+        }
         param.put("job1", job1);
 
 //        Log.v(TAG, param.toString());

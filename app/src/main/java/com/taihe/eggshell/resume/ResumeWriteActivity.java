@@ -3,7 +3,6 @@ package com.taihe.eggshell.resume;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -327,7 +326,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-                Log.v(TAG,(String)o);
+//                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
