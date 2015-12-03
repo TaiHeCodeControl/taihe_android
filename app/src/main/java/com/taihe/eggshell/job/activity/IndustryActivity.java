@@ -33,6 +33,7 @@ public class IndustryActivity extends BaseActivity {
     private ListView list_industry;
     private List<StaticData> staticDataList = new ArrayList<StaticData>();
     private List<StaticData> selectedDataList = new ArrayList<StaticData>();
+    private List<StaticData> clickDataList = new ArrayList<StaticData>();
     private TextView tv_select;
     private Intent intent;
     private String filterString,title,selectString,types;
@@ -61,6 +62,7 @@ public class IndustryActivity extends BaseActivity {
 
                 if(filterString.equals("position")){
                     staticdata = selectedDataList.get(position);
+                    clickDataList.add(staticdata);
                     getPositionFromDB(getBuilder(selectedDataList.get(position).getId()+""));
                 }else{
                     Intent intent = new Intent();
@@ -89,6 +91,37 @@ public class IndustryActivity extends BaseActivity {
 
         industrysAdapter = new IndustrysAdapter();
         list_industry.setAdapter(industrysAdapter);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.lin_back:
+
+                if(clickDataList.size()==0){
+                    finish();
+                }else if(clickDataList.size()==1){
+                    getPositionFromDB(getBuilder("0"));
+                    clickDataList.clear();
+                }else{
+                    getPositionFromDB(getBuilder(clickDataList.get(clickDataList.size()-1).getKeyid()));
+                    clickDataList.remove(clickDataList.size()-1);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(clickDataList.size()==0){
+            finish();
+        }else if(clickDataList.size()==1){
+            getPositionFromDB(getBuilder("0"));
+            clickDataList.clear();
+        }else{
+            getPositionFromDB(getBuilder(clickDataList.get(clickDataList.size()-1).getKeyid()));
+            clickDataList.remove(clickDataList.size()-1);
+        }
     }
 
     private void initListView() {

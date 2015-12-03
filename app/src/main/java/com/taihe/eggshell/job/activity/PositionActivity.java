@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,11 +33,13 @@ public class PositionActivity extends BaseActivity {
     private ListView list_industry;
     private List<StaticData> staticDataList = new ArrayList<StaticData>();
     private List<StaticData> selectedDataList = new ArrayList<StaticData>();
+    private List<StaticData> clickDataList = new ArrayList<StaticData>();
     private TextView tv_select;
     private Intent intent;
     private String filterString,title,selectString,types;
     private IndustrysAdapter industrysAdapter;
     private StaticData staticdata;
+    private LinearLayout lin_back;
 
     private int page = 0;
     private int PAGE_SIZE = 5000;
@@ -53,7 +56,7 @@ public class PositionActivity extends BaseActivity {
         filterString = intent.getStringExtra("Filter");
 
         tv_select = (TextView) findViewById(R.id.tv_industry_select);
-
+        lin_back = (LinearLayout)findViewById(R.id.lin_back);
         list_industry = (ListView) findViewById(R.id.list_industry_industry);
         list_industry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -61,6 +64,7 @@ public class PositionActivity extends BaseActivity {
 
                 if(filterString.equals("position")){
                     staticdata = selectedDataList.get(position);
+                    clickDataList.add(staticdata);
                     getPositionFromDB(getBuilder(selectedDataList.get(position).getId()+""));
                 }else{
                     Intent intent = new Intent();
@@ -83,12 +87,44 @@ public class PositionActivity extends BaseActivity {
             initTitle(title);
             tv_select.setText(selectString);
             getPositionFromDB(getBuilder("0"));
+
         }else{
             initListView();
         }
 
         industrysAdapter = new IndustrysAdapter();
         list_industry.setAdapter(industrysAdapter);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.lin_back:
+
+                if(clickDataList.size()==0){
+                    finish();
+                }else if(clickDataList.size()==1){
+                    getPositionFromDB(getBuilder("0"));
+                    clickDataList.clear();
+                }else{
+                    getPositionFromDB(getBuilder(clickDataList.get(clickDataList.size()-1).getKeyid()));
+                    clickDataList.remove(clickDataList.size()-1);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(clickDataList.size()==0){
+            finish();
+        }else if(clickDataList.size()==1){
+            getPositionFromDB(getBuilder("0"));
+            clickDataList.clear();
+        }else{
+            getPositionFromDB(getBuilder(clickDataList.get(clickDataList.size()-1).getKeyid()));
+            clickDataList.remove(clickDataList.size()-1);
+        }
     }
 
     private void initListView() {
