@@ -39,6 +39,7 @@ public class JobDetailInfo {
         public String salary;
         public String type;
         public String uid;
+        public String number;
 
         public List<otherPositions> lists;
 

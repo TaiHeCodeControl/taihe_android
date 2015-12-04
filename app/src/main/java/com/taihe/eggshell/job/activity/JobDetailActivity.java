@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -65,7 +64,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
     private Intent intent;
 
-    private String address, cj_name, com_name, content, description, edu, exp, hy, id, lastupdate, linkmail, linktel, mun, name, provinceid, salary, type;
+    private String address, cj_name, com_name, content, description, edu, exp, hy, id, lastupdate, linkmail, linktel, mun, name, provinceid, salary, type,number;
     private String collect;
 
     private TextView tv_jobdetail_description;
@@ -101,7 +100,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         com_name = jobDetaiInfo.data.com_name;
                         content = jobDetaiInfo.data.content;
                         description = jobDetaiInfo.data.cj_description;
-                        Log.i("desctiption", description);
                         edu = jobDetaiInfo.data.edu;
                         exp = jobDetaiInfo.data.exp;
                         hy = jobDetaiInfo.data.hy;
@@ -114,6 +112,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         provinceid = jobDetaiInfo.data.provinceid;
                         salary = jobDetaiInfo.data.salary;
                         type = jobDetaiInfo.data.type;
+                        number = jobDetaiInfo.data.number;
                         //54不限 55全职 56兼职
                         if (type.equals("55")) {
                             type = "全职";
@@ -143,7 +142,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         jobyears.setText(exp);//工作年限
                         jobaddress.setText(address);
                         jobmoney.setText(salary);
-                        jobnum.setText(hy);//招聘人数
+                        jobnum.setText(number);//招聘人数
 
 
                         byte[] bytes = Base64.decode(content, Base64.DEFAULT);
@@ -201,7 +200,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         user = EggshellApplication.getApplication().getUser();
         if (user != null) {
             UserId = EggshellApplication.getApplication().getUser().getId();
-            Log.i("USERID", UserId + "");
         }
 
         dialog = new LoadingProgressDialog(mContext, getResources().getString(
@@ -292,7 +290,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v(TAG, (String) o);
+//                    Log.v(TAG, (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
@@ -407,10 +405,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v(TAG, (String) o);
+//                    Log.v(TAG, (String) o);
                     JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");
-                    System.out.println("collectCode=========" + code);
                     if (code == 0) {
                         String data = jsonObject.getString("data");
                         Message msg = new Message();
@@ -449,7 +446,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v(TAG, (String) o);
+//                    Log.v(TAG, (String) o);
 
                     JobDetailInfo jobDetaiInfo = GsonUtils
                             .changeGsonToBean(o.toString(),
@@ -483,8 +480,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         param.put("id", com_id + "");//职位列表中的uid
         param.put("pid", jobId + "");
         param.put("uid", UserId + "");
-        Log.i("ID", jobId + "");
-        Log.i("com_id", com_id);
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
 
     }

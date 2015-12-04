@@ -164,8 +164,8 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:background="@color/white"
-        android:paddingBottom="20dp"
-        android:paddingTop="20dp">
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
 
         <CheckBox
             android:id="@+id/cb_findjob_selectall"
