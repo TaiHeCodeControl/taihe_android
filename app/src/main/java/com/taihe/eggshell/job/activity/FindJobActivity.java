@@ -169,8 +169,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 tv_findjob_title.setText("互联网");
             }else if(job1.equals("37")){
                 tv_findjob_title.setText("金融银行");
-            }else if(job1.equals("40")){
-                tv_findjob_title.setText("广告媒体");
+            }else if(job1.equals("960")){
+                tv_findjob_title.setText("教育培训");
             }else if(job_post.equals("131")){
                 tv_findjob_title.setText("网站策划");
             }else if(job_post.equals("132")){
@@ -195,18 +195,18 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 tv_findjob_title.setText("会计");
             }else if(job_post.equals("252")){
                 tv_findjob_title.setText("出纳员");
-            }else if(job_post.equals("509")){
-                tv_findjob_title.setText("文案策划");
-            }else if(job_post.equals("511")){
-                tv_findjob_title.setText("企业策划");
-            }else if(job_post.equals("524")){
-                tv_findjob_title.setText("活动策划");
-            }else if(job_post.equals("504")){
-                tv_findjob_title.setText("客户专员");
-            }else if(job_post.equals("507")){
-                tv_findjob_title.setText("创意专员");
-            }else if(job_post.equals("521")){
-                tv_findjob_title.setText("媒介专员");
+            }else if(job_post.equals("962")){
+                tv_findjob_title.setText("市场专员");
+            }else if(job_post.equals("994")){
+                tv_findjob_title.setText("咨询销售");
+            }else if(job_post.equals("988")){
+                tv_findjob_title.setText("培训讲师");
+            }else if(job_post.equals("986")){
+                tv_findjob_title.setText("教学管理");
+            }else if(job_post.equals("995")){
+                tv_findjob_title.setText("教质管理");
+            }else if(job_post.equals("996")){
+                tv_findjob_title.setText("就业专员");
             }
         }
 

@@ -233,7 +233,9 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_look_jianzhi://玩出范
-                changeViewPagerListener.changeViewPager(1);
+//                changeViewPagerListener.changeViewPager(1);
+                intent = new Intent(mContext,PlayStarActivity.class);
+                startActivity(intent);
                 break;
             case R.id.id_look_shixi://V达人
                 intent = new Intent(mContext,VActivity.class);

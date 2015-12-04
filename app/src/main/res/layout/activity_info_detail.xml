@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@drawable/tu"
-                android:scaleType="fitXY"/>
+                android:scaleType="centerCrop"/>
 
             <View
                 android:layout_width="match_parent"
