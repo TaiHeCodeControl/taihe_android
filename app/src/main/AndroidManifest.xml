@@ -293,6 +293,11 @@
             android:name=".videoplay.VideoPlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name" />
+        <!--去学习-->
+        <activity
+            android:name=".main.InternshipActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
         <!--信息台-->
         <activity
             android:name=".meetinginfo.Act_MeetingInfo"
