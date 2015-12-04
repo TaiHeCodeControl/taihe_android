@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -470,7 +469,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
         StringBuilder sb = new StringBuilder();//选择的职位
         for (JobInfo jobInfo : jobInfos) {
-            System.out.println(jobInfo.getJob_Id() + "======" + jobInfo.isChecked());
             if (jobInfo.isChecked()) {
                 sb.append(jobInfo.getJob_Id());
                 sb.append(",");
@@ -482,7 +480,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v(TAG, (String) o);
+//                    Log.v(TAG, (String) o);
                     JSONObject jsonObject = new JSONObject((String) o);
                     int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {//申请成功

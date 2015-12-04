@@ -15,37 +15,25 @@ import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.DbUtils;
 import com.chinaway.framework.swordfish.db.sqlite.Selector;
-import com.chinaway.framework.swordfish.db.sqlite.WhereBuilder;
 import com.chinaway.framework.swordfish.exception.DbException;
-import com.chinaway.framework.swordfish.network.http.Response;
-import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.DbHelper;
 import com.taihe.eggshell.base.utils.PrefUtils;
-import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.HotJobAdapter;
 import com.taihe.eggshell.job.adapter.SearchHistoryAdapter;
 import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.job.bean.SearchHistory;
-import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by huan on 2015/8/11.
@@ -81,7 +69,6 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         fromTags = intents.getStringExtra("From");
         Longitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Longitude", "");
         Latitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Latitude", "");
-        Log.i("job--Longitude ", Longitude + "Latitude====" + Latitude);
         jobTextView = (TextView) findViewById(R.id.tv_jobsearch_city);
         searchWork = (EditText) findViewById(R.id.et_jobsearch_position);
         searchButton = (Button) findViewById(R.id.btn_jobsearch_search);

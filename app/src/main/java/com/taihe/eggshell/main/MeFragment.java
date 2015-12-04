@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -254,7 +253,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         qianming = data.optString("description");
                         userImagePath = data.optString("resume_photo");
                         // 加载头像
-                        Log.i("userImagePath", userImagePath);
                         imageLoader.get(userImagePath, ImageLoader.getImageListener(
                                 circleiv_mine_icon, R.drawable.touxiang,
                                 R.drawable.touxiang));
@@ -586,7 +584,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         @Override
         public void onDismiss() {
-            //Log.v("List_noteTypeActivity:", "我是关闭事件");
             backgroundAlpha(1f);
         }
 
@@ -730,7 +727,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                         ToastUtils.show(mContext, "头像上传成功");
 
                         userImagePath = imagePath;
-                        Log.i("LOADimagePath", "");
                         imageLoader.get(imagePath, ImageLoader.getImageListener(
                                 circleiv_mine_icon, R.drawable.touxiang,
                                 R.drawable.touxiang));

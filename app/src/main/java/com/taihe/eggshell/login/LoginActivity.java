@@ -7,8 +7,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +28,6 @@ import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.company.CompanyActivity;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobDetailActivity;
-import com.taihe.eggshell.job.activity.MyCollectActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
@@ -209,10 +206,9 @@ public class LoginActivity extends BaseActivity {
             public void onResponse(Object obj) {//返回值
                 loading.dismiss();
                 try {
-                    Log.v(TAG, (String) obj);
+//                    Log.v(TAG, (String) obj);
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
-                    System.out.println("code=========" + code);
                     if (code == 0) {
                         ToastUtils.show(mContext, "登录成功");
                         JSONObject data = jsonObject.getJSONObject("data");
@@ -247,7 +243,7 @@ public class LoginActivity extends BaseActivity {
                 loading.dismiss();
                 try {
                     if (null != volleyError.networkResponse.data) {
-                        Log.v("Login:", new String(volleyError.networkResponse.data));
+//                        Log.v("Login:", new String(volleyError.networkResponse.data));
                     }
                     ToastUtils.show(mContext, "网络异常");
                 } catch (Exception e) {
