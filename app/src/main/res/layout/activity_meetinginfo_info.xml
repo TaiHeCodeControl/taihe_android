@@ -10,7 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/line_gray"/>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/codeimageinfo"
+        android:layout_gravity="center_horizontal" />
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
