@@ -1,35 +1,46 @@
 package com.taihe.eggshell.main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.Display;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
-import com.taihe.eggshell.main.adapter.VideoAdapterGride;
-import com.taihe.eggshell.main.adapter.VideoAdapterHead;
-import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
+import com.taihe.eggshell.job.activity.JobDetailActivity;
+import com.taihe.eggshell.job.adapter.AllJobAdapter;
+import com.taihe.eggshell.job.bean.JobInfo;
+import com.taihe.eggshell.login.LoginActivity;
+import com.taihe.eggshell.main.entity.User;
+import com.taihe.eggshell.widget.JobApplyDialogUtil;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
-import com.taihe.eggshell.widget.MyGridView;
 import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,168 +50,351 @@ import java.util.List;
 import java.util.Map;
 
 public class InternshipFragment extends Fragment implements View.OnClickListener{
-    private LinearLayout lin_back,lin_head_video,id_lin_more,lin_fragment_top1,lin_fragment_top2,lin_fragment_video;
-    private ImageView img_fragment_top1,img_fragment_top2;
-    private TextView id_title,txt_fragment_top1,txt_fragment_top2;
-    private MyGridView videoGrideView;
-    private VideoAdapterGride videoAdapter;
-    private  GridView grid_head_video;
-    private int viewwidth1 = 0,index=0;
-    private ScrollView scroll_hotnotes;
-    List<VideoInfoMode> listInfo,listTopInfo;
-    int pagesize=6,page=1;
-    private ProgressBar progressBar;
-    private LoadingProgressDialog loading;
-    Handler mHandler = new Handler(){
+
+    private static final String TAG = "FindJobFragemnt";
+    private static final int REQUEST_CODE_KEYWORDSEARCH = 1001;
+    private static final int REQUEST_CODE_FILTER = 1002;
+    public static final int MSG_FIND_JOB_REFRESH = 1010;
+
+    private Context mContext;
+    private Intent intent;
+
+    private View rootView;
+    private TextView tv_allJob, tv_fujin;
+    private TextView tv_findjob_title;//标题名称
+    private ImageView iv_quancheng, iv_fujin, iv_filter, iv_search;
+    private Button btn_shenqing;
+    private RelativeLayout rl_qc, rl_fujin, iv_back;
+    private AllJobAdapter adapter;
+    public CheckBox cb_selectAll;
+    private PullToRefreshGridView list_job_all;
+    private LoadingProgressDialog dialog;
+
+    private int page = 1;
+    private int selectSize = 0;
+    private int postednum = 0;
+    private int userId;
+    private String Longitude = "";
+    private String Latitude = "";
+    private String keyword = "";
+    private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "", cityid = "", fbtime = "";
+    private String job1 = "";
+    private String TitleString = "";
+    private User user;
+    private JobInfo jobInfo;
+    public List<JobInfo> jobInfos = new ArrayList<JobInfo>();
+
+    private RefreshJobListListener jobListListener;
+
+    public interface RefreshJobListListener{
+        public void refreshJobList(int i);
+    }
+
+    private Handler jobListHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            switch (msg.what) {
+                case 1002:
+                    ToastUtils.show(mContext, "没有职位");
+                    adapter = new AllJobAdapter(mContext, jobInfos, true);
+                    list_job_all.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    break;
+                case 1001:
+                    cb_selectAll.setChecked(false);
+                    List<JobInfo> joblist = (List<JobInfo>) msg.obj;
+                    jobInfos.addAll(joblist);
+                    adapter = new AllJobAdapter(mContext, jobInfos, true);
+                    adapter.setCheckedListener(new AllJobAdapter.checkedListener() {
+                        @Override
+                        public void checkedPosition(int position, boolean isChecked) {
+                            jobInfos.get(position).setIsChecked(isChecked);
+                            //如果有listview没有被选中，全选按钮状态为false
+                            if (jobInfos.get(position).isChecked()) {
+                                selectSize += 1;
+                                if (selectSize == jobInfos.size()) {
+                                    cb_selectAll.setChecked(true);
+                                }
+                            } else {
+                                selectSize -= 1;
+                                cb_selectAll.setChecked(false);
+                            }
+                        }
+                    });
+
+                    list_job_all.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    list_job_all.setSelection(adapter.getCount() - 9);
+                    break;
+            }
         }
     };
-	@Override
-	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
-		View v = inflater.inflate(R.layout.fragment_intertship, null) ;
-        lin_back = (LinearLayout)v.findViewById(R.id.lin_back);
-        lin_head_video = (LinearLayout)v.findViewById(R.id.lin_head_video);
-        lin_fragment_top1 = (LinearLayout)v.findViewById(R.id.lin_fragment_top1);
-        lin_fragment_top2 = (LinearLayout)v.findViewById(R.id.lin_fragment_top2);
-        lin_fragment_video = (LinearLayout)v.findViewById(R.id.lin_fragment_video);
-        id_title = (TextView) v.findViewById(R.id.id_title);
-        txt_fragment_top1 = (TextView) v.findViewById(R.id.txt_fragment_top1);
-        txt_fragment_top2 = (TextView) v.findViewById(R.id.txt_fragment_top2);
-        img_fragment_top1 = (ImageView) v.findViewById(R.id.img_fragment_top1);
-        img_fragment_top2 = (ImageView) v.findViewById(R.id.img_fragment_top2);
-        id_lin_more = (LinearLayout) v.findViewById(R.id.id_lin_more);
-        grid_head_video = (GridView) v.findViewById(R.id.grid_head_video);
-        videoGrideView = (MyGridView) v.findViewById(R.id.id_video_grideview);
-        scroll_hotnotes = (ScrollView) v.findViewById(R.id.scroll_hotnotes);
-        progressBar = (ProgressBar) v.findViewById(R.id.loadingmore);
 
-        init();
+    public Handler refreshHandle = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case MSG_FIND_JOB_REFRESH:
+                    jobInfos.clear();
+                    page = 1;
+                    initView();
+                    initData();
+                    break;
+            }
+        }
+    };
+
+    public void setHandles(){
+        jobInfos.clear();
+        page = 1;
+        initView();
         initData();
-        return v ;
     }
-    void init(){
-        id_title.setText("去学习");
-        lin_back.setVisibility(View.GONE);
-        videoAdapter = new VideoAdapterGride(getActivity());
-        listInfo = new ArrayList<VideoInfoMode>();
-        listTopInfo = new ArrayList<VideoInfoMode>();
-        id_lin_more.setOnClickListener(this);
-        lin_fragment_top1.setOnClickListener(this);
-        lin_fragment_top2.setOnClickListener(this);
-        lin_fragment_video.setVisibility(View.GONE);
-        Display dw = getActivity().getWindowManager().getDefaultDisplay();
-        viewwidth1 = dw.getWidth();
-        loading = new LoadingProgressDialog(getActivity(),"正在请求...");
-        // 滑动加载
-        scroll_hotnotes.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // TODO Auto-generated method stub
 
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-//                        System.out.print("ACTION_DOWN:"+index);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        index++;
-                        break;
-                    default:
-                        break;
-                }
-                if (event.getAction() == MotionEvent.ACTION_UP && index > 0) {
-                    index = 0;
-                    View view = ((ScrollView) v).getChildAt(0);
-                    if (view.getMeasuredHeight() <= v.getScrollY()
-                            + v.getHeight()) {
-                        // 加载数据代码
-                        if (listInfo.size() <= 3) {
-                            listInfo.clear();
-                            page = 1;
-                        } else {
-                            page++;
-                        }
-                        id_lin_more.setVisibility(View.VISIBLE);
-                        updataUI();
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        ((MainActivity)context).setRefreshHandle(refreshHandle);
+        try{
+            jobListListener = (RefreshJobListListener)context;
+        }catch(ClassCastException e){
+            throw new ClassCastException(context.toString()+"must implement OnArticleSelectedListener");
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if(isVisibleToUser && getUserVisibleHint()){
+            /*hy = "";
+            job_post = "";
+            salary = "";
+            edu = "";
+            exp = "";
+            type = "";
+            cityid = "0";
+            fbtime = "";
+            job1 = "";
+            keyword = "";
+            page = 1;
+            Longitude = "";
+            Latitude = "";
+            JobFilterUtils.filterJob(mContext, keyword, type, hy, "", job_post, salary, edu, exp, cityid, fbtime, "搜索结果");*/
+        }
+    }
+
+    @Override
+	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
+		rootView = inflater.inflate(R.layout.activity_findjob, null) ;
+
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mContext = getActivity();
+        tv_findjob_title = (TextView) rootView.findViewById(R.id.tv_findjob_title);
+        list_job_all = (PullToRefreshGridView) rootView.findViewById(R.id.list_alljob_all);
+        rl_fujin = (RelativeLayout) rootView.findViewById(R.id.rl_findjob_fujin);
+        rl_qc = (RelativeLayout) rootView.findViewById(R.id.rl_findjob_qc);
+        tv_allJob = (TextView) rootView.findViewById(R.id.tv_findjob_all);
+        tv_fujin = (TextView) rootView.findViewById(R.id.tv_findjob_fujin);
+        iv_search = (ImageView) rootView.findViewById(R.id.iv_findjob_search);
+        iv_filter = (ImageView) rootView.findViewById(R.id.iv_findjob_filter);
+        iv_back = (RelativeLayout) rootView.findViewById(R.id.iv_findjob_back);
+        iv_fujin = (ImageView) rootView.findViewById(R.id.iv_findjob_fj);
+        iv_quancheng = (ImageView) rootView.findViewById(R.id.iv_findjob_qc);
+        btn_shenqing = (Button) rootView.findViewById(R.id.btn_alljob_shenqing);
+        cb_selectAll = (CheckBox) rootView.findViewById(R.id.cb_findjob_selectall);
+        iv_back.setVisibility(View.GONE);
+
+        iv_search.setOnClickListener(this);
+        iv_filter.setOnClickListener(this);
+        rl_fujin.setOnClickListener(this);
+        rl_qc.setOnClickListener(this);
+        btn_shenqing.setOnClickListener(this);
+
+        initView();
+        initData();
+    }
+
+    private void initView(){
+
+        TitleString = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "titleString", "");
+        keyword = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "keyword", "");
+        hy = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "hy", "");
+        job_post = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job_post", "");
+        salary = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "salary", "");
+        edu = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "edu", "");
+        exp = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "exp", "");
+        type = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "type", "");
+        cityid = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "three_cityid", "");
+        fbtime = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "fbtime", "");
+        job1 = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job1", "");
+
+        if (TitleString.equals("搜索结果")) {
+            tv_findjob_title.setText("搜索结果");
+        } else {
+            //根据type判断是兼职还是实习还是全职职位
+            if (type.equals("56")) {
+                tv_findjob_title.setText("兼职职位");
+            } else if (type.equals("129")) {
+                tv_findjob_title.setText("实习职位");
+            } else if(type.equals("55")) {
+                tv_findjob_title.setText("全职职位");
+            }else if(job1.equals("35")){
+                tv_findjob_title.setText("互联网");
+            }else if(job1.equals("37")){
+                tv_findjob_title.setText("金融银行");
+            }else if(job1.equals("960")){
+                tv_findjob_title.setText("教育培训");
+            }else if(job_post.equals("131")){
+                tv_findjob_title.setText("网站策划");
+            }else if(job_post.equals("132")){
+                tv_findjob_title.setText("网站编辑");
+            }else if(job_post.equals("125")){
+                tv_findjob_title.setText("运营专员");
+            }else if(job_post.equals("141")){
+                tv_findjob_title.setText("SEM专员");
+            }else if(job_post.equals("127")){
+                tv_findjob_title.setText("UI设计师");
+            }else if(job_post.equals("133")){
+                tv_findjob_title.setText("美工");
+            }else if(job_post.equals("296")){
+                tv_findjob_title.setText("银行柜员");
+            }else if(job_post.equals("285")){
+                tv_findjob_title.setText("业务专员");
+            }else if(job_post.equals("292")){
+                tv_findjob_title.setText("清算员");
+            }else if(job_post.equals("261")){
+                tv_findjob_title.setText("资金专员");
+            }else if(job_post.equals("251")){
+                tv_findjob_title.setText("会计");
+            }else if(job_post.equals("252")){
+                tv_findjob_title.setText("出纳员");
+            }else if(job_post.equals("962")){
+                tv_findjob_title.setText("市场专员");
+            }else if(job_post.equals("994")){
+                tv_findjob_title.setText("咨询销售");
+            }else if(job_post.equals("988")){
+                tv_findjob_title.setText("培训讲师");
+            }else if(job_post.equals("986")){
+                tv_findjob_title.setText("教学管理");
+            }else if(job_post.equals("995")){
+                tv_findjob_title.setText("教质管理");
+            }else if(job_post.equals("996")){
+                tv_findjob_title.setText("就业专员");
+            }
+        }
+
+        cb_selectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!cb_selectAll.isChecked()) {
+                    cb_selectAll.setChecked(false);
+                    for (JobInfo info : jobInfos) {
+                        info.setIsChecked(false);
+                    }
+                } else {
+                    cb_selectAll.setChecked(true);
+                    selectSize = jobInfos.size();
+                    for (JobInfo info : jobInfos) {
+                        info.setIsChecked(true);
                     }
                 }
-                return false;
+                adapter.notifyDataSetChanged();
             }
         });
+
+        list_job_all.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
+        list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+                page++;
+                getList();
+                list_job_all.onRefreshComplete();
+            }
+        });
+
+        list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                //listviewItem点击事件
+                if (position < jobInfos.size()) {
+                    JobInfo job = jobInfos.get(position);
+                    Intent intent = new Intent(mContext, JobDetailActivity.class);
+                    int jobId = job.getJob_Id();
+                    String com_id = job.getUid();
+                    intent.putExtra("ID", jobId);
+                    intent.putExtra("com_id", com_id);
+                    startActivity(intent);
+                }
+            }
+        });
+
     }
 
-   void initData(){
-       updataUI();
-   }
-    public void updataUI(){
-    //返回监听事件
+    private void initData(){
+
+        user = EggshellApplication.getApplication().getUser();
+
+        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+            dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
+            dialog.show();
+            getList();
+        } else {
+            ToastUtils.show(mContext, R.string.check_network);
+        }
+    }
+
+    //全城职位列表
+    private void getList() {
         Response.Listener listener = new Response.Listener() {
             @Override
-            public void onResponse(Object obj) {//返回值
+            public void onResponse(Object o) {
+                dialog.dismiss();
                 try {
-                    loading.dismiss();
-//                    Log.v("VIDEO:",(String)obj);
-                    JSONObject jsonObject = new JSONObject((String) obj);
-                    int code = jsonObject.getInt("code");
+//                    Log.v("JOB:", (String) o);
+                    JSONObject jsonObject = new JSONObject((String) o);
+                    int code = Integer.valueOf(jsonObject.getString("code"));
                     if (code == 0) {
-                        try{
-                            JSONObject jo = jsonObject.getJSONObject("data");
-                            JSONArray j1 = jo.getJSONArray("list");
-                            JSONArray jt = jo.getJSONArray("teacher");
-                            JSONObject j2;
-                            VideoInfoMode vMode;
-                            int tmpImg = R.drawable.video_top1;
-                            listTopInfo.clear();
-                            for (int i = 0; i < jt.length(); i++) {
-                                vMode = new VideoInfoMode();
-                                j2 = jt.getJSONObject(i);
-                                vMode.setId(j2.optString("id").toString());
-                                vMode.setC_id(j2.optString("c_id").toString());
-                                vMode.setVideo_id(j2.optString("video_id").toString());
-                                vMode.setVideo_name(j2.optString("video_name").toString());
-                                vMode.setVideo_hour(j2.optString("video_hour").toString());
-                                vMode.setVideo_teacher(j2.optString("video_teacher").toString());
-                                vMode.setVideo_about(j2.optString("video_about").toString());
-                                vMode.setVideo_obvious(j2.optString("video_obvious").toString());
-                                vMode.setStatus(j2.optString("status").toString());
-                                vMode.setVimage((tmpImg+i)+"");
-                                vMode.setPlist(j2.optString("plist").toString());
-                                listTopInfo.add(vMode);
+                        String data = jsonObject.getString("data");
+                        if ("[]".equals(data)) {
+                            if (page == 1) {
+                                jobInfos.clear();
+                                adapter = new AllJobAdapter(mContext, jobInfos, true);
+                                list_job_all.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+                                ToastUtils.show(mContext, "没有了");
+                            } else {
+                                ToastUtils.show(mContext, "没有了");
                             }
-                            for(int i=0;i<j1.length();i++){
-                                vMode = new VideoInfoMode();
-                                j2 = j1.getJSONObject(i);
-                                vMode.setId(j2.optString("id").toString());
-                                vMode.setC_id(j2.optString("c_id").toString());
-                                vMode.setVideo_id(j2.optString("video_id").toString());
-                                vMode.setVideo_name(j2.optString("video_name").toString());
-                                vMode.setVideo_hour(j2.optString("video_hour").toString());
-                                vMode.setVideo_teacher(j2.optString("video_teacher").toString());
-                                vMode.setVideo_about(j2.optString("video_about").toString());
-                                vMode.setVideo_obvious(j2.optString("video_obvious").toString());
-                                vMode.setStatus(j2.optString("status").toString());
-                                vMode.setVimage(j2.optString("vimage").toString());
-                                vMode.setPlist(j2.optString("plist").toString());
-                                listInfo.add(vMode);
-                            }
-                            if(j1.length()<1 && page>1){
-                                page--;
-                            }
-                            videoAdapter.setVideoData(listInfo);
-                            videoGrideView.setAdapter(videoAdapter);
-                            //更新头部名师风采
-                            VideoAdapterHead headAdapter = new VideoAdapterHead(getActivity());
-                            headAdapter.setVideoData(listTopInfo);
-                            grid_head_video.setAdapter(headAdapter);
+                        } else {
+                            Gson gson = new Gson();
+                            List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
+                            }.getType());
 
-                        }catch (Exception ex){
-                            ex.printStackTrace();
+                            Message msg = new Message();
+                            msg.obj = joblist;
+                            msg.what = 1001;
+                            jobListHandler.sendMessage(msg);
                         }
-                        // Log.e("data",data);
+                    } else if (code == 4001) {
+                        Message msg = new Message();
+                        msg.what = 1002;
+                        jobListHandler.sendMessage(msg);
+
                     } else {
-                        String msg = jsonObject.getString("msg");
-//                        ToastUtils.show(mContext, msg);
+                        ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -210,58 +404,168 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
 
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError volleyError) {//返回值
-                loading.dismiss();
-                ToastUtils.show(getActivity(), "网络异常");
-//                    String err = new String(volleyError.networkResponse.data);
-//                    Log.v("EEE:",new String(volleyError.networkResponse.data));
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+//                Log.v(TAG,new String(volleyError.networkResponse.data));
+                ToastUtils.show(mContext, volleyError);
             }
         };
 
-        Map<String,String> map = new HashMap<String,String>();
-//        map.put("pagesize",""+pagesize);
-//        map.put("page",""+page);
-        String sWhere="";
-        sWhere="?page="+page+"&pagesize="+pagesize;
-        String url = Urls.VIDEO_LIST_URL+sWhere;
-        RequestUtils.createRequest(getActivity(), url, "", true, map, true, listener, errorListener);
-    }
-    public void updataUIFL(){
+        // longitude=116.404916&dimensionality=39.927471&keyword=工程师&page=1
+        //    传值项： longitude=>经度  dimensionality=>纬度 keyword=>关键字
+        //    page=>页数 hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp
+        // 工作性质=>type
 
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("longitude", Longitude);
+        param.put("dimensionality", Latitude);
+        param.put("keyword", keyword);//关键字
+        param.put("page", page + "");
+        param.put("hy", hy);//工作行业
+        param.put("job_post", job_post);//职位类别
+        param.put("salary", salary);
+        param.put("edu", edu);
+        param.put("exp", exp);//工作年限
+        param.put("type", type);//工作性质
+        param.put("fbtime", fbtime);//
+        if("0".equals(cityid)){
+            param.put("provinceid", "2");
+        }else{
+            param.put("three_cityid", cityid);//
+        }
+        param.put("job1", job1);
+
+        Log.v(TAG, param.toString());
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
     }
+
+    //申请职位
+    public void postJob() {
+
+        StringBuilder sb = new StringBuilder();//选择的职位
+        for (JobInfo jobInfo : jobInfos) {
+            if (jobInfo.isChecked()) {
+                sb.append(jobInfo.getJob_Id());
+                sb.append(",");
+            }
+        }
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                dialog.dismiss();
+                try {
+//                    Log.v(TAG, (String) o);
+                    JSONObject jsonObject = new JSONObject((String) o);
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if (code == 0) {//申请成功
+                        int sucNum = Integer.valueOf(jsonObject.getString("data"));
+                        postednum = selectSize - sucNum;
+                        JobApplyDialogUtil.isApplyJob(mContext, selectSize, postednum);
+                    } else if (code == 1) {//请先创建简历
+                        ToastUtils.show(mContext, "请先创建简历");
+                    } else if (code == 2) {//不能重复申请
+                        ToastUtils.show(mContext, "你选的职位已申请过，一周内不能重复申请");
+                    } else {
+                        ToastUtils.show(mContext, "申请失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                ToastUtils.show(mContext, "网络异常");
+            }
+        };
+
+        String jobIds = sb.toString();
+        Map<String, String> param = new HashMap<String, String>();
+//        param.put("uid", 6 + "");//UserID       userId
+        param.put("uid", userId + "");//UserID       userId
+        param.put("job_id", jobIds);
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_POST, false, param, true, listener, errorListener);
+    }
+
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.id_lin_more:
-                loading.show();
-                page++;
-                updataUI();
+        switch (view.getId()) {
+            case R.id.rl_findjob_qc://全城
+                cb_selectAll.setChecked(false);
+                jobInfos.clear();
+                //选中条数的统计
+                selectSize = 0;
+                page = 1;
+                Longitude = "";
+                Latitude = "";
+
+                initData();
+                iv_quancheng.setImageResource(R.drawable.quancheng01);
+                iv_fujin.setImageResource(R.drawable.fujin01);
+
+                tv_allJob.setTextColor(getResources().getColor(R.color.font_color_red));
+                tv_fujin.setTextColor(getResources().getColor(R.color.font_color_black));
                 break;
-            case R.id.lin_fragment_top1:
-                listInfo.clear();
-                scroll_hotnotes.setVisibility(View.VISIBLE);
-                lin_fragment_video.setVisibility(View.GONE);
-                img_fragment_top1.setBackgroundResource(R.drawable.shipin);
-                img_fragment_top2.setBackgroundResource(R.drawable.yuyinck);
-                txt_fragment_top1.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
-                txt_fragment_top2.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
-                loading.show();
-                page=1;
-                updataUI();
+            case R.id.rl_findjob_fujin://附近
+                cb_selectAll.setChecked(false);
+                jobInfos.clear();
+                //选中条数的统计
+                selectSize = 0;
+                page = 1;
+                Longitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Longitude", "");
+                Latitude = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "Latitude", "");
+                initData();
+                iv_quancheng.setImageResource(R.drawable.quancheng02);
+                iv_fujin.setImageResource(R.drawable.fujin02);
+
+                tv_allJob.setTextColor(getResources().getColor(R.color.font_color_black));
+                tv_fujin.setTextColor(getResources().getColor(R.color.font_color_red));
                 break;
-            case R.id.lin_fragment_top2:
-                scroll_hotnotes.setVisibility(View.GONE);
-                lin_fragment_video.setVisibility(View.VISIBLE);
-                img_fragment_top1.setBackgroundResource(R.drawable.shipinck);
-                img_fragment_top2.setBackgroundResource(R.drawable.yuyin);
-                txt_fragment_top2.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
-                txt_fragment_top1.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
-                loading.show();
-                page=1;
-                updataUIFL();
+            case R.id.iv_findjob_search://关键字搜索
+                jobListListener.refreshJobList(1);
+                /*intent = new Intent(mContext, JobSearchActivity.class);
+                intent.putExtra("From", "findjob");
+                startActivityForResult(intent, REQUEST_CODE_KEYWORDSEARCH);*/
+                break;
+
+            case R.id.iv_findjob_filter://职位筛选
+                jobListListener.refreshJobList(2);
+                /*intent = new Intent(mContext, JobFilterActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_FILTER);*/
+                break;
+
+            case R.id.btn_alljob_shenqing:
+                //判断登录状态，
+
+                if (null == user) {//登录
+                    EggshellApplication.getApplication().setLoginTag("findJob");
+                    intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    userId = EggshellApplication.getApplication().getUser().getId();
+
+                    if (selectSize > 0) {
+                        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                            dialog = new LoadingProgressDialog(mContext, getResources().getString(
+                                    R.string.submitcertificate_string_wait_dialog));
+                            dialog.show();
+                            postJob();//申请职位
+                        } else {
+                            ToastUtils.show(mContext, R.string.check_network);
+                        }
+
+                    } else {
+                        ToastUtils.show(mContext, "请选择您想要申请的职位");
+                    }
+                }
                 break;
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();

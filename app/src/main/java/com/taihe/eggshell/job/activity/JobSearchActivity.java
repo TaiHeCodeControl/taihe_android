@@ -109,12 +109,11 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                     setResult(201, intent);
                 }
 
-                JobSearchActivity.this.finish();
+                finish();
             }
         });
 
         getDataFromDatabase();
-
 
         historyAdapter = new SearchHistoryAdapter(mContext, historyList);
         lv_searchHistory.setAdapter(historyAdapter);

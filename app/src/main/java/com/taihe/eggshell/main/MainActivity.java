@@ -37,6 +37,8 @@ import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.job.activity.JobFilterActivity;
+import com.taihe.eggshell.job.activity.JobSearchActivity;
 import com.taihe.eggshell.main.entity.CityBJ;
 import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.widget.CustomViewPager;
@@ -58,7 +60,7 @@ import java.util.regex.Pattern;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 
-public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, IndexFragment.ChangeViewPagerListener {
+public class MainActivity extends FragmentActivity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, IndexFragment.ChangeViewPagerListener,InternshipFragment.RefreshJobListListener {
 
     private static final String TAG = "MainActivity";
     private Context mContext;
@@ -70,6 +72,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     private ArrayList<Fragment> fragmentList;
     private DbUtils db;
     private int current = 0;
+    private Handler refreshHandle;
 
     public static List<StaticData> hylist = new ArrayList<StaticData>();
     public static List<StaticData> paylist = new ArrayList<StaticData>();
@@ -96,6 +99,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     public static boolean isForeground = false;
     private static final int MSG_SET_ALIAS = 1001;
     private static final int MSG_SET_TAGS = 1002;
+    private static final int REQUEST_CODE_KEYWORDSEARCH = 1001;
+    private static final int REQUEST_CODE_FILTER = 1002;
 
     private final Handler mHandler = new Handler() {
         @Override
@@ -495,6 +500,19 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
     }
 
+    @Override
+    public void refreshJobList(int i) {
+        if(1==i){
+            Intent intent = new Intent(mContext, JobSearchActivity.class);
+            intent.putExtra("From", "findjob");
+            startActivityForResult(intent, REQUEST_CODE_KEYWORDSEARCH);
+        }else if(2==i){
+            Intent intent = new Intent(mContext, JobFilterActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_FILTER);
+        }
+
+    }
+
     public class MyAdapter extends FragmentPagerAdapter {
         ArrayList<Fragment> list;
 
@@ -548,79 +566,29 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
     }
 
-    private boolean isExit = false;
-
     @Override
-    public void onBackPressed() {
-        if (isExit) {
-            finish();
-        } else {
-            isExit = true;
-            ToastUtils.show(mContext, "再按一次退出应用");
-
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    isExit = false;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 201) {
+            if(main_viewPager.getCurrentItem()==2){
+                if(null!=getSupportFragmentManager().getFragments().get(2)){
+                    InternshipFragment fragemnt = (InternshipFragment)(fragmentList.get(2));
+                    fragemnt.setHandles();
                 }
-            }, 2000);
-
+            }
+        }else if(resultCode == 101){
+            if(main_viewPager.getCurrentItem()==2){
+                if(null!=getSupportFragmentManager().getFragments().get(2)){
+                    /*InternshipFragment fragemnt = (InternshipFragment)(fragmentList.get(2));
+                    fragemnt.setHandles();*/
+                    refreshHandle.sendEmptyMessage(InternshipFragment.MSG_FIND_JOB_REFRESH);
+                }
+            }
         }
     }
 
-    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
-
-        @Override
-        public void gotResult(int code, String alias, Set<String> tags) {
-            String logs ;
-            switch (code) {
-                case 0:
-                    logs = "Set tag and alias success";
-                    Log.i(TAG, logs);
-                    break;
-                case 6002:
-                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
-                    Log.i(TAG, logs);
-                    if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
-                    } else {
-                        Log.i(TAG, "No network");
-                    }
-                    break;
-                default:
-                    logs = "Failed with errorCode = " + code;
-                    Log.e(TAG, logs);
-            }
-        }
-    };
-
-    private final TagAliasCallback mTagsCallback = new TagAliasCallback() {
-
-        @Override
-        public void gotResult(int code, String alias, Set<String> tags) {
-            String logs ;
-            switch (code) {
-                case 0:
-                    logs = "Set tag and alias success";
-                    Log.i(TAG, logs);
-                    break;
-                case 6002:
-                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
-                    Log.i(TAG, logs);
-                    if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_TAGS, tags), 1000 * 60);
-                    } else {
-                        Log.i(TAG, "No network");
-                    }
-                    break;
-                default:
-                    logs = "Failed with errorCode = " + code;
-                    Log.e(TAG, logs);
-            }
-        }
-    };
-
+    public void setRefreshHandle(Handler handle){
+            this.refreshHandle = handle;
+    }
 
     //====================定位-----------==============
     public LocationClient mLocationClient;
@@ -722,4 +690,76 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
     }
 
+    private boolean isExit = false;
+
+    @Override
+    public void onBackPressed() {
+        if (isExit) {
+            finish();
+        } else {
+            isExit = true;
+            ToastUtils.show(mContext, "再按一次退出应用");
+
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false;
+                }
+            }, 2000);
+
+        }
+    }
+
+    private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs ;
+            switch (code) {
+                case 0:
+                    logs = "Set tag and alias success";
+                    Log.i(TAG, logs);
+                    break;
+                case 6002:
+                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+                    Log.i(TAG, logs);
+                    if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_ALIAS, alias), 1000 * 60);
+                    } else {
+                        Log.i(TAG, "No network");
+                    }
+                    break;
+                default:
+                    logs = "Failed with errorCode = " + code;
+                    Log.e(TAG, logs);
+            }
+        }
+    };
+
+    private final TagAliasCallback mTagsCallback = new TagAliasCallback() {
+
+        @Override
+        public void gotResult(int code, String alias, Set<String> tags) {
+            String logs ;
+            switch (code) {
+                case 0:
+                    logs = "Set tag and alias success";
+                    Log.i(TAG, logs);
+                    break;
+                case 6002:
+                    logs = "Failed to set alias and tags due to timeout. Try again after 60s.";
+                    Log.i(TAG, logs);
+                    if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                        mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG_SET_TAGS, tags), 1000 * 60);
+                    } else {
+                        Log.i(TAG, "No network");
+                    }
+                    break;
+                default:
+                    logs = "Failed with errorCode = " + code;
+                    Log.e(TAG, logs);
+            }
+        }
+    };
 }

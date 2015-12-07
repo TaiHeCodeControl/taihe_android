@@ -186,7 +186,7 @@ public class JobFilterActivity extends BaseActivity {
 
                 intent = new Intent();
                 setResult(101,intent);
-                this.finish();
+                finish();
                 break;
         }
     }
