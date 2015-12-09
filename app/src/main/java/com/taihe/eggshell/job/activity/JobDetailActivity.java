@@ -45,7 +45,6 @@ import java.util.Map;
  * Created by wang on 2015/8/10.
  */
 public class JobDetailActivity extends BaseActivity implements View.OnClickListener {
-
     private static final String TAG = "JobDetailActivity";
     private Context mContext;
     private TextView titleView, jobtitle, jobcompany, jobstart, jobend, jobtype, joblevel, jobyears, jobaddress, jobmoney, jobnum, updown, shouqi, company_jieshao;
@@ -526,4 +525,5 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         super.onPause();
         MobclickAgent.onPause(mContext);
     }
+
 }

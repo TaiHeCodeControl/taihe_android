@@ -40,6 +40,9 @@ public class JobDetailInfo {
         public String type;
         public String uid;
         public String number;
+        public String daogang;
+        public String sex;
+        public String marriage;
 
         public List<otherPositions> lists;
 
@@ -52,6 +55,9 @@ public class JobDetailInfo {
             public String provinceid;
             public String salary;
             public String uid;
+            public String daogang;
+            public String sex;
+            public String marriage;
         }
     }
 }
