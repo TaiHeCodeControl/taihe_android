@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
-            android:text="全职职位"
+            android:text="找工作"
             android:textColor="@color/font_color_black"
             android:textSize="18dp" />
 

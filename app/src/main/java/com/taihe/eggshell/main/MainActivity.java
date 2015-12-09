@@ -572,15 +572,15 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             if(main_viewPager.getCurrentItem()==2){
                 if(null!=getSupportFragmentManager().getFragments().get(2)){
                     InternshipFragment fragemnt = (InternshipFragment)(fragmentList.get(2));
-                    fragemnt.setHandles();
+                    fragemnt.setHandles("");//data.getStringExtra("jobtype")
                 }
             }
         }else if(resultCode == 101){
             if(main_viewPager.getCurrentItem()==2){
                 if(null!=getSupportFragmentManager().getFragments().get(2)){
-                    /*InternshipFragment fragemnt = (InternshipFragment)(fragmentList.get(2));
-                    fragemnt.setHandles();*/
-                    refreshHandle.sendEmptyMessage(InternshipFragment.MSG_FIND_JOB_REFRESH);
+                    InternshipFragment fragemnt = (InternshipFragment)(fragmentList.get(2));
+                    fragemnt.setHandles("");
+//                    refreshHandle.sendEmptyMessage(InternshipFragment.MSG_FIND_JOB_REFRESH);
                 }
             }
         }

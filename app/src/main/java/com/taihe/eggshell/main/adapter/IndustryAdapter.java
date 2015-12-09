@@ -12,12 +12,9 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.utils.PrefUtils;
-import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.main.entity.Industry;
-import com.taihe.eggshell.main.entity.Professional;
 
 import java.util.List;
 
@@ -75,9 +72,10 @@ public class IndustryAdapter extends BaseAdapter {
             public void onClick(View v) {
                 String job1 = industry.getId() + "";
                 //搜索职位
-                JobFilterUtils.filterJob(context, "", "", "", job1, "", "", "", "", "", "", "");
-
-                context.startActivity(new Intent(context,FindJobActivity.class));
+                JobFilterUtils.filterJob(context, "", "", job1,"" , "", "", "", "", "", "", "");
+                Intent intent = new Intent(context,FindJobActivity.class);
+                intent.putExtra("jobtype",industry.getName());
+                context.startActivity(intent);
             }
         });
         viewHolder.gridView.setAdapter(new ProfessionalAdapter(context,industry.getProfessionalList()));
@@ -88,8 +86,9 @@ public class IndustryAdapter extends BaseAdapter {
                 String job_post = industry.getProfessionalList().get(position).getId() + "";
                 //搜索职位
                 JobFilterUtils.filterJob(context, "", "", "", "", job_post, "", "", "", "", "","");
-
-                context.startActivity(new Intent(context,FindJobActivity.class));
+                Intent intent = new Intent(context,FindJobActivity.class);
+                intent.putExtra("jobtype",industry.getProfessionalList().get(position).getName());
+                context.startActivity(intent);
             }
         });
 

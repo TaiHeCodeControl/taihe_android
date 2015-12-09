@@ -110,6 +110,39 @@
                 </LinearLayout>
             </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:text="热门职位"
+                    android:textSize="16sp"
+                    android:textColor="#323232"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/line_gray"/>
+
+                <com.taihe.eggshell.widget.MyListView
+                    android:id="@+id/id_position_listview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:listSelector="@color/white"
+                    android:divider="#F3F3F1"
+                    android:dividerHeight="1dp"
+                    android:scrollbars="none"
+                    android:background="@color/white">
+                </com.taihe.eggshell.widget.MyListView>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
@@ -147,19 +180,6 @@
                 </GridView>
 
             </LinearLayout>
-
-            <com.taihe.eggshell.widget.MyListView
-                android:id="@+id/id_position_listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:listSelector="@color/white"
-                android:scrollbars="none"
-                android:divider="#F3F3F1"
-                android:dividerHeight="15dp"
-                android:background="@color/white">
-            </com.taihe.eggshell.widget.MyListView>
 
         </LinearLayout>
     </com.taihe.eggshell.widget.MyScrollView>

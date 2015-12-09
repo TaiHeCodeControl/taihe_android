@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,11 +145,12 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         }
     };
 
-    public void setHandles(){
+    public void setHandles(String title){
         jobInfos.clear();
         page = 1;
         initView();
         initData();
+//        tv_findjob_title.setText(title);
     }
 
     @Override
@@ -182,14 +182,13 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
             page = 1;
             Longitude = "";
             Latitude = "";
-            JobFilterUtils.filterJob(mContext, keyword, type, hy, "", job_post, salary, edu, exp, cityid, fbtime, "搜索结果");*/
+            JobFilterUtils.filterJob(mContext, keyword, type, hy, "", job_post, salary, edu, exp, cityid, fbtime, "找工作");*/
         }
     }
 
     @Override
 	public View onCreateView(LayoutInflater inflater , ViewGroup container , Bundle savedInstanceState){
 		rootView = inflater.inflate(R.layout.activity_findjob, null) ;
-
         return rootView;
     }
 
@@ -224,6 +223,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     }
 
     private void initView(){
+        tv_findjob_title.setText("找工作");
 
         TitleString = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "titleString", "");
         keyword = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "keyword", "");
@@ -236,61 +236,6 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         cityid = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "three_cityid", "");
         fbtime = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "fbtime", "");
         job1 = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job1", "");
-
-        if (TitleString.equals("搜索结果")) {
-            tv_findjob_title.setText("搜索结果");
-        } else {
-            //根据type判断是兼职还是实习还是全职职位
-            if (type.equals("56")) {
-                tv_findjob_title.setText("兼职职位");
-            } else if (type.equals("129")) {
-                tv_findjob_title.setText("实习职位");
-            } else if(type.equals("55")) {
-                tv_findjob_title.setText("全职职位");
-            }else if(job1.equals("35")){
-                tv_findjob_title.setText("互联网");
-            }else if(job1.equals("37")){
-                tv_findjob_title.setText("金融银行");
-            }else if(job1.equals("960")){
-                tv_findjob_title.setText("教育培训");
-            }else if(job_post.equals("131")){
-                tv_findjob_title.setText("网站策划");
-            }else if(job_post.equals("132")){
-                tv_findjob_title.setText("网站编辑");
-            }else if(job_post.equals("125")){
-                tv_findjob_title.setText("运营专员");
-            }else if(job_post.equals("141")){
-                tv_findjob_title.setText("SEM专员");
-            }else if(job_post.equals("127")){
-                tv_findjob_title.setText("UI设计师");
-            }else if(job_post.equals("133")){
-                tv_findjob_title.setText("美工");
-            }else if(job_post.equals("296")){
-                tv_findjob_title.setText("银行柜员");
-            }else if(job_post.equals("285")){
-                tv_findjob_title.setText("业务专员");
-            }else if(job_post.equals("292")){
-                tv_findjob_title.setText("清算员");
-            }else if(job_post.equals("261")){
-                tv_findjob_title.setText("资金专员");
-            }else if(job_post.equals("251")){
-                tv_findjob_title.setText("会计");
-            }else if(job_post.equals("252")){
-                tv_findjob_title.setText("出纳员");
-            }else if(job_post.equals("962")){
-                tv_findjob_title.setText("市场专员");
-            }else if(job_post.equals("994")){
-                tv_findjob_title.setText("咨询销售");
-            }else if(job_post.equals("988")){
-                tv_findjob_title.setText("培训讲师");
-            }else if(job_post.equals("986")){
-                tv_findjob_title.setText("教学管理");
-            }else if(job_post.equals("995")){
-                tv_findjob_title.setText("教质管理");
-            }else if(job_post.equals("996")){
-                tv_findjob_title.setText("就业专员");
-            }
-        }
 
         cb_selectAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,11 +290,10 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
 
     private void initData(){
 
+        dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
         user = EggshellApplication.getApplication().getUser();
 
         if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-            dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
-            dialog.show();
             getList();
         } else {
             ToastUtils.show(mContext, R.string.check_network);
@@ -374,7 +318,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                                 adapter = new AllJobAdapter(mContext, jobInfos, true);
                                 list_job_all.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
-                                ToastUtils.show(mContext, "没有了");
+//                                ToastUtils.show(mContext, "没有了");
                             } else {
                                 ToastUtils.show(mContext, "没有了");
                             }
@@ -435,7 +379,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         }
         param.put("job1", job1);
 
-        Log.v(TAG, param.toString());
+//        Log.v(TAG, param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
     }
 

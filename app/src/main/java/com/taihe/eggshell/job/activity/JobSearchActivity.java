@@ -94,18 +94,20 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (prolist.get(position).getName().equals("银行柜员")) {
                     //搜索职位
-                    JobFilterUtils.filterJob(mContext, "柜员", "", "", "", "", "", "", "", "", "","搜索结果");
+                    JobFilterUtils.filterJob(mContext, "柜员", "", "", "", "", "", "", "", "", "","找工作");
                 } else {
                     String keyword = prolist.get(position).getName();
                     //搜索职位
-                    JobFilterUtils.filterJob(mContext, keyword, "", "", "", "", "", "", "", "", "","搜索结果");
+                    JobFilterUtils.filterJob(mContext, keyword, "", "", "", "", "", "", "", "", "","找工作");
                 }
 
                 if (fromTags.equals("Index")) {
                     Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
+                    intent.putExtra("jobtype",prolist.get(position).getName());
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent();
+                    intent.putExtra("jobtype",prolist.get(position).getName());
                     setResult(201, intent);
                 }
 
@@ -121,23 +123,22 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //搜索职位
-                JobFilterUtils.filterJob(mContext, historyList.get(position).getName(), "", "", "", "", "", "", "", "", "","搜索结果");
+                JobFilterUtils.filterJob(mContext, historyList.get(position).getName(), "", "", "", "", "", "", "", "", "","找工作");
 
                 if (fromTags.equals("Index")) {
                     Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
+                    intent.putExtra("jobtype",historyList.get(position).getName());
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent();
+                    intent.putExtra("jobtype",historyList.get(position).getName());
                     setResult(201, intent);
                 }
 
                 JobSearchActivity.this.finish();
             }
         });
-
-
     }
-
 
     @Override
     public void onClick(View v) {
@@ -160,13 +161,15 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                         }
                         getDataFromDatabase();
                         //搜索职位
-                        JobFilterUtils.filterJob(mContext, word, "", "", "", "", "", "", "", "", "","搜索结果");
+                        JobFilterUtils.filterJob(mContext, word, "", "", "", "", "", "", "", "", "","找工作");
 
                         if (fromTags.equals("Index")) {
                             Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
+                            intent.putExtra("jobtype",word);
                             startActivity(intent);
                         } else {
                             Intent intent = new Intent();
+                            intent.putExtra("jobtype",word);
                             setResult(201, intent);
                         }
                         this.finish();
@@ -179,7 +182,6 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                 break;
         }
     }
-
 
     private void getHotSearch() {
         String[] media = new String[]{"网站编辑", "运营专员", "美工", "银行柜员", "会计", "出纳员", "文案策划", "媒介专员"};
@@ -211,7 +213,6 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
 
-
                 if (list != null) {
                     int size = list.size();
                     for (int i = 0; i < size - 1; i++) {
@@ -223,7 +224,6 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                                 break;
                             }
                         }
-
                     }
                     if (size > 10) {
                         for (int i = 0; i < size - 10; i++) {
@@ -232,8 +232,6 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                     }
                     Collections.reverse(list);
                 }
-
-
                 return list;
             }
 

@@ -155,62 +155,14 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
         tv_findjob_title = (TextView) findViewById(R.id.tv_findjob_title);
 
-        if (TitleString.equals("搜索结果")) {
-            tv_findjob_title.setText("搜索结果");
-        } else {
-            //根据type判断是兼职还是实习还是全职职位
-            if (type.equals("56")) {
-                tv_findjob_title.setText("兼职职位");
-            } else if (type.equals("129")) {
-                tv_findjob_title.setText("实习职位");
-            } else if(type.equals("55")) {
-                tv_findjob_title.setText("全职职位");
-            }else if(job1.equals("35")){
-                tv_findjob_title.setText("互联网");
-            }else if(job1.equals("37")){
-                tv_findjob_title.setText("金融银行");
-            }else if(job1.equals("960")){
-                tv_findjob_title.setText("教育培训");
-            }else if(job_post.equals("131")){
-                tv_findjob_title.setText("网站策划");
-            }else if(job_post.equals("132")){
-                tv_findjob_title.setText("网站编辑");
-            }else if(job_post.equals("125")){
-                tv_findjob_title.setText("运营专员");
-            }else if(job_post.equals("141")){
-                tv_findjob_title.setText("SEM专员");
-            }else if(job_post.equals("127")){
-                tv_findjob_title.setText("UI设计师");
-            }else if(job_post.equals("133")){
-                tv_findjob_title.setText("美工");
-            }else if(job_post.equals("296")){
-                tv_findjob_title.setText("银行柜员");
-            }else if(job_post.equals("285")){
-                tv_findjob_title.setText("业务专员");
-            }else if(job_post.equals("292")){
-                tv_findjob_title.setText("清算员");
-            }else if(job_post.equals("261")){
-                tv_findjob_title.setText("资金专员");
-            }else if(job_post.equals("251")){
-                tv_findjob_title.setText("会计");
-            }else if(job_post.equals("252")){
-                tv_findjob_title.setText("出纳员");
-            }else if(job_post.equals("962")){
-                tv_findjob_title.setText("市场专员");
-            }else if(job_post.equals("994")){
-                tv_findjob_title.setText("咨询销售");
-            }else if(job_post.equals("988")){
-                tv_findjob_title.setText("培训讲师");
-            }else if(job_post.equals("986")){
-                tv_findjob_title.setText("教学管理");
-            }else if(job_post.equals("995")){
-                tv_findjob_title.setText("教质管理");
-            }else if(job_post.equals("996")){
-                tv_findjob_title.setText("就业专员");
-            }
+        if(null!=getIntent().getStringExtra("jobtype")){
+            tv_findjob_title.setText(getIntent().getStringExtra("jobtype"));
+        }else{
+            tv_findjob_title.setText("找工作");
         }
 
         user = EggshellApplication.getApplication().getUser();
+        dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
 
         rl_fujin = (RelativeLayout) findViewById(R.id.rl_findjob_fujin);
         rl_qc = (RelativeLayout) findViewById(R.id.rl_findjob_qc);
@@ -294,8 +246,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
 
     private void initData() {
         if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-            dialog = new LoadingProgressDialog(mContext, getResources().getString(
-                    R.string.submitcertificate_string_wait_dialog));
             dialog.show();
             getList();
         } else {
@@ -522,6 +472,11 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             page = 1;
             initView();
             initData();
+            if(null!=data.getStringExtra("jobtype")){
+                tv_findjob_title.setText(data.getStringExtra("jobtype"));
+            }else{
+                tv_findjob_title.setText("找工作");
+            }
         }
     }
 

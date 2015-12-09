@@ -230,6 +230,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.id_look_job://社交圈
                 intent = new Intent(mContext,Act_MeetingInfo.class);
+//                intent = new Intent(mContext,SwipecardsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_look_jianzhi://玩出范
@@ -251,18 +252,21 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 //搜索职位  全职
                 JobFilterUtils.filterJob(mContext, "", "55", "", "", "", "", "", "", "", "","");
                 intent = new Intent(mContext,FindJobActivity.class);
+                intent.putExtra("jobtype","全职");
                 startActivity(intent);
                 break;
             case R.id.id_play_mode:
                 //搜索职位  兼职
                 JobFilterUtils.filterJob(mContext, "", "56", "", "", "", "", "", "", "", "", "");
                 intent = new Intent(mContext,FindJobActivity.class);
+                intent.putExtra("jobtype","兼职");
                 startActivity(intent);
                 break;
             case R.id.id_we_chat://找实习
                 //搜索职位 实习
                 JobFilterUtils.filterJob(mContext, "", "129", "", "", "", "", "", "", "", "","");
                 intent = new Intent(mContext,FindJobActivity.class);
+                intent.putExtra("jobtype","实习");
                 startActivity(intent);
                 break;
             case R.id.id_public_class:
@@ -303,19 +307,17 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
     }
 
     private void getIndustrys(){
-        String[] type = new String[]{"教育培训","互联网","金融银行"};
-        int[] id_type = new int[]{960,35,37};
+        String[] type = new String[]{"教育培训","综合类"};
+        int[] id_type = new int[]{842,0};
         String[] media = new String[]{"市场专员","咨询销售","培训讲师","教学管理","教质管理","就业专员"};
         int[] id_media = new int[]{962,994,988,986,995,996};
-        String[] internet = new String[]{"网站策划","网站编辑","运营专员","SEM专员","UI设计师","美工"};
-        int[] id_internet = new int[]{131,132,125,141,127,133};
-        String[] bank = new String[]{"银行柜员","业务专员","清算员","资金专员","会计","出纳员"};
-        int[] id_bank = new int[]{296,285,292,261,251,252};
+        String[] internet = new String[]{"网站策划","网站编辑","运营专员","银行柜员","会计","出纳员"};
+        int[] id_internet = new int[]{131,132,125,296,251,252};
 
-        int[] img = new int[]{R.drawable.jiaoyupeixun,R.drawable.hulianwang,R.drawable.bank};
+        int[] img = new int[]{R.drawable.jiaoyupeixun,R.drawable.zonghe};
         industryList = new ArrayList<Industry>();
 
-        for(int i=0;i<3;i++){
+        for(int i=0;i<2;i++){
             List<Professional> prolist = new ArrayList<Professional>();
             Industry industry = new Industry();
             industry.setId(id_type[i]);
@@ -329,9 +331,6 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 }else if(i==1){
                     professional.setId(id_internet[j]);
                     professional.setName(internet[j]);
-                }else if(i==2){
-                    professional.setId(id_bank[j]);
-                    professional.setName(bank[j]);
                 }
                 prolist.add(professional);
             }
@@ -419,7 +418,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Object obj) {//返回值
 
-//                Log.v(TAG,(String)obj);
+//                Log.v(TAG, (String) obj);
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
