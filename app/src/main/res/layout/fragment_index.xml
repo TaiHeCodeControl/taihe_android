@@ -145,7 +145,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical"
                 android:background="@color/white">
@@ -164,10 +164,10 @@
                     android:layout_height="0.5dp"
                     android:background="@color/line_gray"/>
 
-                <GridView
+                <com.taihe.eggshell.widget.MyGridView
                     android:id="@+id/id_company_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:gravity="center_vertical"
                     android:listSelector="@color/white"
@@ -177,7 +177,7 @@
                     android:horizontalSpacing="1dp"
                     android:verticalSpacing="12dp"
                     android:background="@color/white">
-                </GridView>
+                </com.taihe.eggshell.widget.MyGridView>
 
             </LinearLayout>
 
