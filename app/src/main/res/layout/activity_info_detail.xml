@@ -183,7 +183,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:gravity="center"
-                        android:text="招聘会介绍:"
+                        android:text="活动介绍:"
                         android:textColor="@color/font_color_black"
                         android:textSize="16sp"/>
 
