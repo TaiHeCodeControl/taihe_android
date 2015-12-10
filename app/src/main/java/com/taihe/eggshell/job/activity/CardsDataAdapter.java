@@ -48,14 +48,6 @@ public class CardsDataAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View userListItem = inflater.inflate(R.layout.card_content, parent, false);
 
-        linearLayout = (LinearLayout)userListItem.findViewById(R.id.id_linear);
-        imageView = (ImageView)userListItem.findViewById(R.id.id_card_view);
-        TextView v = (TextView)(userListItem.findViewById(R.id.content));
-        v1 = (TextView)(userListItem.findViewById(R.id.content1));
-        TextView v2 = (TextView)(userListItem.findViewById(R.id.content2));
-        v.setText(jblist.get(position).getName());
-        v1.setText(jblist.get(position).getAge());
-        v2.setText(jblist.get(position).getId()+"");
         return userListItem;
     }
 

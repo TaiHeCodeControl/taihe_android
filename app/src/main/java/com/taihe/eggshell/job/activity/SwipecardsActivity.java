@@ -24,7 +24,7 @@ public class SwipecardsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.activity_swipecard);
         context = this;
         for(int i=0;i<10;i++){
             JobInfo ji = new JobInfo();

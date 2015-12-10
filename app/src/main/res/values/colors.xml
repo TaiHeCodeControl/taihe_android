@@ -31,5 +31,8 @@
     <color name="darkred">#9e1923</color>
     <color name="darkblue">#1874CD</color>
     <color name="txt_job_bg">#F0F8FA</color>
+    <color name="card_text_bg">#F0F8FA</color>
+    <color name="font_hui_se">#ADADAD</color>
+    <color name="font_text_like">#3CCA3F</color>
 
 </resources>

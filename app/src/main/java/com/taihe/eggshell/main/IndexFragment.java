@@ -30,6 +30,7 @@ import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.company.CompanyActivity;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobSearchActivity;
+import com.taihe.eggshell.job.activity.SwipecardsActivity;
 import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
@@ -38,7 +39,6 @@ import com.taihe.eggshell.main.adapter.RecommendAdapter;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
-import com.taihe.eggshell.meetinginfo.Act_MeetingInfo;
 import com.taihe.eggshell.meetinginfo.VActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
@@ -229,8 +229,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_look_job://社交圈
-                intent = new Intent(mContext,Act_MeetingInfo.class);
-//                intent = new Intent(mContext,SwipecardsActivity.class);
+//                intent = new Intent(mContext,Act_MeetingInfo.class);
+                intent = new Intent(mContext,SwipecardsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_look_jianzhi://玩出范

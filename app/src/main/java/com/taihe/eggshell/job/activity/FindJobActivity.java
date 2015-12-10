@@ -472,7 +472,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             page = 1;
             initView();
             initData();
-            if(null!=data.getStringExtra("jobtype")){
+            if(null!=data && null!=data.getStringExtra("jobtype")){
                 tv_findjob_title.setText(data.getStringExtra("jobtype"));
             }else{
                 tv_findjob_title.setText("找工作");
