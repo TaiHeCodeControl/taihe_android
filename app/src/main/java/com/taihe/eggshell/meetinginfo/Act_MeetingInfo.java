@@ -94,6 +94,7 @@ public class Act_MeetingInfo extends BaseActivity {
                 Intent intent = new Intent(mContext,Act_MeetingInfoImage.class);
                 intent.putExtra("title",list.get(i).getTitle());
                 intent.putExtra("pic",list.get(i).getLogo());
+                intent.putExtra("content",list.get(i).getContent());
                 startActivity(intent);
             }
         });
@@ -149,6 +150,7 @@ public class Act_MeetingInfo extends BaseActivity {
                                 vMode.setId(j2.optString("id").toString());
                                 vMode.setTitle(j2.optString("name").toString());
                                 vMode.setLogo(j2.optString("photo").toString());
+                                vMode.setContent(j2.optString("content").toString());
 //                                vMode.setId(j2.optString("id").toString());
 //                                vMode.setTitle(j2.optString("title").toString());
 //                                vMode.setAddress(j2.optString("address").toString());

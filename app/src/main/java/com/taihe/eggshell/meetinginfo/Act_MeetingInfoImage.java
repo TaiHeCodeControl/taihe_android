@@ -1,6 +1,7 @@
 package com.taihe.eggshell.meetinginfo;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -38,7 +39,8 @@ import java.util.Map;
 public class Act_MeetingInfoImage extends BaseActivity {
     private ImageView meetinginfo_img;
     private Context mContext;
-    private String title,pic;
+    private String title,pic,content;
+    private TextView meetinginfo_content;
 
     @Override
     public void initView() {
@@ -46,6 +48,7 @@ public class Act_MeetingInfoImage extends BaseActivity {
         super.initView();
         mContext = this;
         meetinginfo_img = (ImageView)findViewById(R.id.meetinginfo_img);
+        meetinginfo_content = (TextView)findViewById(R.id.meetinginfo_content);
     }
 
     public void initData(){
@@ -53,9 +56,11 @@ public class Act_MeetingInfoImage extends BaseActivity {
 
         title = getIntent().getStringExtra("title");
         pic = getIntent().getStringExtra("pic");
+        content = getIntent().getStringExtra("content");
         initTitle(title);
         FinalBitmap bitmap = FinalBitmap.create(mContext);
         bitmap.display(meetinginfo_img,pic);
+        meetinginfo_content.setText(Html.fromHtml(content));
     }
 
     @Override
