@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -81,7 +82,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     private String Latitude = "";
     private String keyword = "";
     private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "", cityid = "", fbtime = "";
-    private String job1 = "";
+    private String job1 = "",job1_son;
     private String TitleString = "";
     private User user;
     private int userId;
@@ -152,6 +153,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         cityid = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "three_cityid", "");
         fbtime = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "fbtime", "");
         job1 = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job1", "");
+        job1_son = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job1_son", "");
 
         tv_findjob_title = (TextView) findViewById(R.id.tv_findjob_title);
 
@@ -331,8 +333,8 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             param.put("three_cityid", cityid);//
         }
         param.put("job1", job1);
-
-//        Log.v(TAG, param.toString());
+        param.put("job1_son",job1_son);
+        Log.v(TAG, param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
     }
 

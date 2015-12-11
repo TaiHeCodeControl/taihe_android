@@ -12,7 +12,7 @@ public class JobFilterUtils {
     //hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp
     // 工作性质=>type
     public static void filterJob(Context mContext,String keyword,String type,String hy,String job1,String job_post,
-                          String salary,String edu,String exp,String city,String pubtime,String titleString){
+                          String salary,String edu,String exp,String city,String pubtime,String titleString,String job1_son){
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "keyword", keyword);
         PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,"type",type);
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "hy", hy);//工作行业
@@ -23,7 +23,7 @@ public class JobFilterUtils {
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "exp", exp);//工作年限
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "three_cityid", city);//工作城市
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "fbtime", pubtime);//发布时间
-
+        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "job1_son", job1_son);//发布时间
         PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "titleString", titleString);//搜索职位
     }
 }

@@ -182,7 +182,7 @@ public class JobFilterActivity extends BaseActivity {
                 keyword = et_keyWord.getText().toString().trim();
 
                 //保存职位筛选的字段
-                JobFilterUtils.filterJob(mContext,keyword,type,hy,"",job_post,salary,edu,exp,city,pubtime,"找工作");
+                JobFilterUtils.filterJob(mContext,keyword,type,hy,"",job_post,salary,edu,exp,city,pubtime,"找工作","");
 
                 intent = new Intent();
                 intent.putExtra("jobtype","找工作");

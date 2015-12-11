@@ -30,7 +30,6 @@ import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.company.CompanyActivity;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobSearchActivity;
-import com.taihe.eggshell.job.activity.SwipecardsActivity;
 import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
@@ -39,6 +38,7 @@ import com.taihe.eggshell.main.adapter.RecommendAdapter;
 import com.taihe.eggshell.main.entity.Industry;
 import com.taihe.eggshell.main.entity.Professional;
 import com.taihe.eggshell.main.entity.RecommendCompany;
+import com.taihe.eggshell.meetinginfo.Act_MeetingInfo;
 import com.taihe.eggshell.meetinginfo.VActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.videoplay.mode.VideoInfoMode;
@@ -229,8 +229,7 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_look_job://社交圈
-//                intent = new Intent(mContext,Act_MeetingInfo.class);
-                intent = new Intent(mContext,SwipecardsActivity.class);
+                intent = new Intent(mContext,Act_MeetingInfo.class);
                 startActivity(intent);
                 break;
             case R.id.id_look_jianzhi://玩出范
@@ -250,21 +249,22 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.id_write_resume:
                 //搜索职位  全职
-                JobFilterUtils.filterJob(mContext, "", "55", "", "", "", "", "", "", "", "","");
+                JobFilterUtils.filterJob(mContext, "", "55", "", "", "", "", "", "", "", "","","");
                 intent = new Intent(mContext,FindJobActivity.class);
+//                intent = new Intent(mContext,SwipecardsActivity.class);
                 intent.putExtra("jobtype","全职");
                 startActivity(intent);
                 break;
             case R.id.id_play_mode:
                 //搜索职位  兼职
-                JobFilterUtils.filterJob(mContext, "", "56", "", "", "", "", "", "", "", "", "");
+                JobFilterUtils.filterJob(mContext, "", "56", "", "", "", "", "", "", "", "", "","");
                 intent = new Intent(mContext,FindJobActivity.class);
                 intent.putExtra("jobtype","兼职");
                 startActivity(intent);
                 break;
             case R.id.id_we_chat://找实习
                 //搜索职位 实习
-                JobFilterUtils.filterJob(mContext, "", "129", "", "", "", "", "", "", "", "","");
+                JobFilterUtils.filterJob(mContext, "", "129", "", "", "", "", "", "", "", "","","");
                 intent = new Intent(mContext,FindJobActivity.class);
                 intent.putExtra("jobtype","实习");
                 startActivity(intent);
@@ -308,11 +308,11 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
 
     private void getIndustrys(){
         String[] type = new String[]{"教育培训","综合类"};
-        int[] id_type = new int[]{842,0};
+        int[] id_type = new int[]{842,1048};
         String[] media = new String[]{"市场专员","咨询销售","培训讲师","教学管理","教质管理","就业专员"};
-        int[] id_media = new int[]{962,994,988,986,995,996};
-        String[] internet = new String[]{"网站策划","网站编辑","运营专员","银行柜员","会计","出纳员"};
-        int[] id_internet = new int[]{131,132,125,296,251,252};
+        int[] id_media = new int[]{962,994,1050,1029,1032,1027};
+        String[] internet = new String[]{"互联网","金融证券","公关媒介","市场营销","销售管理","人事管理"};
+        int[] id_internet = new int[]{48,58,74,75,53,634};
 
         int[] img = new int[]{R.drawable.jiaoyupeixun,R.drawable.zonghe};
         industryList = new ArrayList<Industry>();

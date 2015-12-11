@@ -94,11 +94,11 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (prolist.get(position).getName().equals("银行柜员")) {
                     //搜索职位
-                    JobFilterUtils.filterJob(mContext, "柜员", "", "", "", "", "", "", "", "", "","找工作");
+                    JobFilterUtils.filterJob(mContext, "柜员", "", "", "", "", "", "", "", "", "","找工作","");
                 } else {
                     String keyword = prolist.get(position).getName();
                     //搜索职位
-                    JobFilterUtils.filterJob(mContext, keyword, "", "", "", "", "", "", "", "", "","找工作");
+                    JobFilterUtils.filterJob(mContext, keyword, "", "", "", "", "", "", "", "", "","找工作","");
                 }
 
                 if (fromTags.equals("Index")) {
@@ -123,7 +123,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //搜索职位
-                JobFilterUtils.filterJob(mContext, historyList.get(position).getName(), "", "", "", "", "", "", "", "", "","找工作");
+                JobFilterUtils.filterJob(mContext, historyList.get(position).getName(), "", "", "", "", "", "", "", "", "","找工作","");
 
                 if (fromTags.equals("Index")) {
                     Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
@@ -161,7 +161,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                         }
                         getDataFromDatabase();
                         //搜索职位
-                        JobFilterUtils.filterJob(mContext, word, "", "", "", "", "", "", "", "", "","找工作");
+                        JobFilterUtils.filterJob(mContext, word, "", "", "", "", "", "", "", "", "","找工作","");
 
                         if (fromTags.equals("Index")) {
                             Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);

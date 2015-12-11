@@ -72,7 +72,12 @@ public class IndustryAdapter extends BaseAdapter {
             public void onClick(View v) {
                 String job1 = industry.getId() + "";
                 //搜索职位
-                JobFilterUtils.filterJob(context, "", "", job1,"" , "", "", "", "", "", "", "");
+                if("842".equals(job1)){
+                    JobFilterUtils.filterJob(context, "", "", job1,"" , "", "", "", "", "", "", "","");
+                } else if("1048".equals(job1)){
+                    JobFilterUtils.filterJob(context, "", "", "",job1 , "", "", "", "", "", "", "","");
+                }
+
                 Intent intent = new Intent(context,FindJobActivity.class);
                 intent.putExtra("jobtype",industry.getName());
                 context.startActivity(intent);
@@ -85,7 +90,7 @@ public class IndustryAdapter extends BaseAdapter {
 
                 String job_post = industry.getProfessionalList().get(position).getId() + "";
                 //搜索职位
-                JobFilterUtils.filterJob(context, "", "", "", "", job_post, "", "", "", "", "","");
+                JobFilterUtils.filterJob(context, "", "", "", "", "", "", "", "", "", "","",job_post);
                 Intent intent = new Intent(context,FindJobActivity.class);
                 intent.putExtra("jobtype",industry.getProfessionalList().get(position).getName());
                 context.startActivity(intent);

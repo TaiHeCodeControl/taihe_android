@@ -5,42 +5,94 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.PrefUtils;
+import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.job.adapter.CardsDataAdapter;
+import com.taihe.eggshell.job.bean.JobInfo;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.swipecard.SwipeFlingAdapterView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SwipecardsActivity extends Activity {
 
+    private static final String TAG = "SwipecardsActivity";
+    private Context mContext;
+
     private ArrayList<JobInfo> al = new ArrayList<JobInfo>();
-    private  CardsDataAdapter arrayAdapter;
-    private int i;
-    private Context context;
+    private CardsDataAdapter arrayAdapter;
+    private LoadingProgressDialog dialog;
+
+    private int page = 1;
+    private String Longitude = "";
+    private String Latitude = "";
+    private String keyword = "";
+    private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "", cityid = "", fbtime = "";
+    private String job1 = "";
+    public List<JobInfo> jobInfos = new ArrayList<JobInfo>();
 
     private SwipeFlingAdapterView flingContainer;
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipecard);
-        context = this;
-        for(int i=0;i<10;i++){
-            JobInfo ji = new JobInfo();
-            ji.setId(i);
-            ji.setName("CARD " + i);
-            ji.setAge("2"+i);
-            al.add(ji);
-        }
+        mContext = this;
+
+        initView();
+        initData();
+    }
+
+    private void initView(){
+
+        dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
         flingContainer = (SwipeFlingAdapterView)findViewById(R.id.frame);
-        arrayAdapter =  new CardsDataAdapter(getApplicationContext(),al);
+        final FrameLayout frameLayout = (FrameLayout)findViewById(R.id.id_monogo);
+        if(!PrefUtils.getBooleanData(mContext,PrefUtils.CONFIG,true)){
+            frameLayout.setVisibility(View.GONE);
+        }
+        frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                frameLayout.setVisibility(View.GONE);
+                PrefUtils.saveBooleanData(mContext,PrefUtils.CONFIG,false);
+            }
+        });
+    }
+
+    private void initData(){
+
+        getList();
+
+        arrayAdapter =  new CardsDataAdapter(mContext,al);
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
-                Log.d("LIST", "removed object!");
+//                Log.d("LIST", "removed object!");
                 al.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
@@ -50,68 +102,130 @@ public class SwipecardsActivity extends Activity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                makeToast(SwipecardsActivity.this, "Left!");
+//                makeToast(SwipecardsActivity.this, "Left!");
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                makeToast(SwipecardsActivity.this, "Right!");
+//                makeToast(SwipecardsActivity.this, "Right!");
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
-                for(int i=10;i<20;i++){
-                    JobInfo ji = new JobInfo();
-                    ji.setId(i);
-                    ji.setName("CARD " + i);
-                    ji.setAge("3"+i);
-                    al.add(ji);
-                }
-//                al.add("XML ".concat(String.valueOf(i)));
+                page +=1;
+                Log.v(TAG,page+"");
+                getList();
                 arrayAdapter.notifyDataSetChanged();
-                Log.d("LIST", "notified");
-                i++;
             }
 
             @Override
             public void onScroll(float scrollProgressPercent) {
                 View view = flingContainer.getSelectedView();
-                view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-                view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+
+                LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.id_transprent_card);
+                linearLayout.setVisibility(View.VISIBLE);
+                if(scrollProgressPercent < 0){
+                    linearLayout.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                }else{
+                    linearLayout.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+                }
+
+                TextView rightView = (TextView)view.findViewById(R.id.item_swipe_right_indicator);
+                rightView.setVisibility(View.VISIBLE);
+                rightView.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+
+                TextView leftView = (TextView)view.findViewById(R.id.item_swipe_left_indicator);
+                leftView.setVisibility(View.VISIBLE);
+                leftView.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+
             }
         });
-
 
         // Optionally add an OnItemClickListener
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                makeToast(SwipecardsActivity.this, "Clicked!");
+//                makeToast(SwipecardsActivity.this, "Clicked!");
             }
         });
-
     }
 
-    static void makeToast(Context ctx, String s){
-        Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
+    //全城职位列表
+    private void getList() {
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                dialog.dismiss();
+                try {
+//                    Log.v("JOB:", (String) o);
+                    JSONObject jsonObject = new JSONObject((String) o);
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if (code == 0) {
+                        String data = jsonObject.getString("data");
+                        if ("[]".equals(data)) {
+                            if (page == 1) {
+                                jobInfos.clear();
+//                                adapter = new AllJobAdapter(mContext, jobInfos, true);
+//                                list_job_all.setAdapter(adapter);
+//                                adapter.notifyDataSetChanged();
+//                                ToastUtils.show(mContext, "没有了");
+                            } else {
+                                ToastUtils.show(mContext, "没有了");
+                            }
+                        } else {
+                            Gson gson = new Gson();
+                            List<JobInfo> joblist = gson.fromJson(data, new TypeToken<List<JobInfo>>() {
+                            }.getType());
+                            al.addAll(joblist);
+                            arrayAdapter.notifyDataSetChanged();
+
+                        }
+                    } else if (code == 4001) {
+
+                    } else {
+                        ToastUtils.show(mContext, "获取失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+//                Log.v(TAG,new String(volleyError.networkResponse.data));
+                ToastUtils.show(mContext, volleyError);
+            }
+        };
+
+        // longitude=116.404916&dimensionality=39.927471&keyword=工程师&page=1
+        //    传值项： longitude=>经度  dimensionality=>纬度 keyword=>关键字
+        //    page=>页数 hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp
+        // 工作性质=>type
+
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("longitude", Longitude);
+        param.put("dimensionality", Latitude);
+        param.put("keyword", keyword);//关键字
+        param.put("page", page + "");
+        param.put("hy", hy);//工作行业
+        param.put("job_post", job_post);//职位类别
+        param.put("salary", salary);
+        param.put("edu", edu);
+        param.put("exp", exp);//工作年限
+        param.put("type", type);//工作性质
+        param.put("fbtime", fbtime);//
+        if("0".equals(cityid)){
+            param.put("provinceid", "2");
+        }else{
+            param.put("three_cityid", cityid);//
+        }
+        param.put("job1", job1);
+
+        Log.v(TAG, param.toString());
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
     }
-
-
-   /* @OnClick(R.id.right)
-    public void right() {
-        *//**
-         * Trigger the right event manually.
-         *//*
-        flingContainer.getTopCardListener().selectRight();
-    }
-
-    @OnClick(R.id.left)
-    public void left() {
-        flingContainer.getTopCardListener().selectLeft();
-    }*/
-
-
-
-
 }

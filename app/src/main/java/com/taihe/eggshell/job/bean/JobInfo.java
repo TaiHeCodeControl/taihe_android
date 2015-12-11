@@ -17,6 +17,14 @@ public class JobInfo {
     private String lastupdate;
     private String com_name;
     private String uid;
+    private String type;
+    private String number;
+    private String exp;
+    private String report;
+    private String sex;
+    private String marriage;
+    private String com_logo;
+
 
     public JobInfo() {
     }
@@ -108,5 +116,77 @@ public class JobInfo {
 
     public void setCom_name(String com_name) {
         this.com_name = com_name;
+    }
+
+    public int getJob_id() {
+        return job_id;
+    }
+
+    public void setJob_id(int job_id) {
+        this.job_id = job_id;
+    }
+
+    public String getJob_name() {
+        return job_name;
+    }
+
+    public void setJob_name(String job_name) {
+        this.job_name = job_name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getExp() {
+        return exp;
+    }
+
+    public void setExp(String exp) {
+        this.exp = exp;
+    }
+
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getMarriage() {
+        return marriage;
+    }
+
+    public void setMarriage(String marriage) {
+        this.marriage = marriage;
+    }
+
+    public String getCom_logo() {
+        return com_logo;
+    }
+
+    public void setCom_logo(String com_logo) {
+        this.com_logo = com_logo;
     }
 }
