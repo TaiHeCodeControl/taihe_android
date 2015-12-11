@@ -225,8 +225,10 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.id_search_job://搜索
                 intent = new Intent(mContext, JobSearchActivity.class);
-                intent.putExtra("From","Index");
+                intent.putExtra("From", "Index");
                 startActivity(intent);
+//                getActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                getActivity().overridePendingTransition(R.anim.anim_transition_alpha_in,R.anim.anim_transition_alpha_out);
                 break;
             case R.id.id_look_job://社交圈
                 intent = new Intent(mContext,Act_MeetingInfo.class);

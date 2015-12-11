@@ -2,6 +2,7 @@ package com.taihe.eggshell.job.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,12 +15,15 @@ import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.adapter.CardsDataAdapter;
 import com.taihe.eggshell.job.bean.JobInfo;
+import com.taihe.eggshell.login.LoginActivity;
+import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.swipecard.SwipeFlingAdapterView;
 
@@ -46,8 +50,10 @@ public class SwipecardsActivity extends Activity {
     private String keyword = "";
     private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "", cityid = "", fbtime = "";
     private String job1 = "";
+    private boolean islogin = false;
     public List<JobInfo> jobInfos = new ArrayList<JobInfo>();
-
+    private JobInfo jobInfo;
+    private User user;
     private SwipeFlingAdapterView flingContainer;
 
     @Override
@@ -85,15 +91,20 @@ public class SwipecardsActivity extends Activity {
     private void initData(){
 
         getList();
-
+        user = EggshellApplication.getApplication().getUser();
         arrayAdapter =  new CardsDataAdapter(mContext,al);
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
-//                Log.d("LIST", "removed object!");
-                al.remove(0);
+                if(islogin){
+                    jobInfo = al.get(0);
+                   al.remove(0);
+                }else{
+                   Intent intent = new Intent(mContext, LoginActivity.class);
+                   startActivity(intent);
+                }
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -102,19 +113,19 @@ public class SwipecardsActivity extends Activity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-//                makeToast(SwipecardsActivity.this, "Left!");
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-//                makeToast(SwipecardsActivity.this, "Right!");
+                if(islogin){
+                    collectPosition();
+                }
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
                 page +=1;
-                Log.v(TAG,page+"");
                 getList();
                 arrayAdapter.notifyDataSetChanged();
             }
@@ -125,10 +136,18 @@ public class SwipecardsActivity extends Activity {
 
                 LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.id_transprent_card);
                 linearLayout.setVisibility(View.VISIBLE);
-                if(scrollProgressPercent < 0){
+                if(scrollProgressPercent < 0){//left
                     linearLayout.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-                }else{
+                    islogin = true;
+                }else{//right
                     linearLayout.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+                    if (null == user) {//登录
+                        EggshellApplication.getApplication().setLoginTag("findJobCard");
+                        islogin = false;
+                    } else {
+                        islogin = true;
+                        int userId = EggshellApplication.getApplication().getUser().getId();
+                    }
                 }
 
                 TextView rightView = (TextView)view.findViewById(R.id.item_swipe_right_indicator);
@@ -146,9 +165,48 @@ public class SwipecardsActivity extends Activity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-//                makeToast(SwipecardsActivity.this, "Clicked!");
+                Intent intent = new Intent(mContext, JobInfoActivity.class);
+                intent.putExtra("ID", al.get(0).getJob_Id());
+                intent.putExtra("com_id", al.get(0).getUid());
+                startActivity(intent);
             }
         });
+    }
+
+    //收藏职位
+    private void collectPosition() {
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                dialog.dismiss();
+                try {
+//                    Log.v(TAG, (String) o);
+                    JSONObject jsonObject = new JSONObject((String) o);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        ToastUtils.show(mContext, "收藏成功");
+                    } else {
+                        ToastUtils.show(mContext, "收藏失败");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
+                ToastUtils.show(mContext, "网络异常");
+            }
+        };
+
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("uid", user.getId() + "");
+        param.put("job_id", jobInfo.getJob_Id() + "");
+
+        RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_COLLECT, false, param, true, listener, errorListener);
+
     }
 
     //全城职位列表

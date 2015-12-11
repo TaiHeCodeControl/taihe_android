@@ -66,7 +66,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         setContentView(R.layout.activity_job_search);
         super.initView();
         mContext = this;
-        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+//        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 
         intents = getIntent();
         fromTags = intents.getStringExtra("From");

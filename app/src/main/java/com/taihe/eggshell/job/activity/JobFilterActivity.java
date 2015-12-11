@@ -55,6 +55,7 @@ public class JobFilterActivity extends BaseActivity {
     private String type = "";
     private String pubtime = "";
     private String city = "";
+    private String job1_son = "";
 
     @Override
     public void initView() {
@@ -182,7 +183,7 @@ public class JobFilterActivity extends BaseActivity {
                 keyword = et_keyWord.getText().toString().trim();
 
                 //保存职位筛选的字段
-                JobFilterUtils.filterJob(mContext,keyword,type,hy,"",job_post,salary,edu,exp,city,pubtime,"找工作","");
+                JobFilterUtils.filterJob(mContext,keyword,type,hy,"",job_post,salary,edu,exp,city,pubtime,"找工作",job1_son);
 
                 intent = new Intent();
                 intent.putExtra("jobtype","找工作");
@@ -207,7 +208,11 @@ public class JobFilterActivity extends BaseActivity {
                     break;
                 case REQUEST_CODE_POSITION:
                     tv_position.setText(result.getName());//职位类别
-                    job_post = result.getId()+"";
+                    if(0 == result.getsort()){
+                        job_post = result.getId()+"";
+                    }else{
+                        job1_son = result.getId()+"";
+                    }
                     break;
                 case REQUEST_CODE_JOBYEAR:
                     tv_jobyears.setText(result.getName());//工作年限

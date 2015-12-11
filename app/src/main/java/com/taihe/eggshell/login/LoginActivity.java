@@ -29,6 +29,7 @@ import com.taihe.eggshell.company.CompanyActivity;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.job.activity.MyPostActivity;
+import com.taihe.eggshell.job.activity.SwipecardsActivity;
 import com.taihe.eggshell.main.MainActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
@@ -72,9 +73,8 @@ public class LoginActivity extends BaseActivity {
     public void initView() {
         setContentView(R.layout.activity_login);
         super.initView();
-        overridePendingTransition(R.anim.activity_right_to_center, R.anim.activity_center_to_left);
+//        overridePendingTransition(R.anim.activity_right_to_center, R.anim.activity_center_to_left);
         mContext = this;
-
 
         et_userphone = (EditText) findViewById(R.id.et_login_userphone);
         et_password = (EditText) findViewById(R.id.et_login_password);
@@ -111,14 +111,10 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
+        super.onClick(v);
         switch (v.getId()) {
-            case R.id.lin_back:
-                goBack();
-                break;
             case R.id.btn_login_login:
-
-                    login();
-
+                login();
                 break;
             case R.id.tv_login_forgetpassword:
                 intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
@@ -164,14 +160,6 @@ public class LoginActivity extends BaseActivity {
                 tv_login_com_tag.setText(mspk);
                 break;
         }
-    }
-
-    private void goBack() {
-
-        LoginActivity.this.finish();
-
-        //overridePendingTransition(int enterAnim, int exitAnim)
-        overridePendingTransition(R.anim.activity_left_to_center, R.anim.activity_center_to_right);
     }
 
     public void login() {
@@ -308,6 +296,9 @@ public class LoginActivity extends BaseActivity {
         }else if(loginTag.equals("findJob")){
             intent = new Intent(LoginActivity.this, FindJobActivity.class);
             startActivity(intent);
+        }else if(loginTag.equals("findJobCard")){
+            intent = new Intent(LoginActivity.this, SwipecardsActivity.class);
+            startActivity(intent);
         }else if(loginTag.equals("jobDetail")){
             Intent intents = getIntent();
             int  jobId = intents.getIntExtra("ID", 1);
@@ -322,13 +313,6 @@ public class LoginActivity extends BaseActivity {
         }
         LoginActivity.this.finish();
     }
-
-    //监听返回按钮
-    @Override
-    public void onBackPressed() {
-        goBack();
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
