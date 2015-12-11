@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -334,7 +333,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         }
         param.put("job1", job1);
         param.put("job1_son",job1_son);
-        Log.v(TAG, param.toString());
+//        Log.v(TAG, param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
     }
 

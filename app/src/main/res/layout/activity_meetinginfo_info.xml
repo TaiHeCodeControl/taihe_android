@@ -28,11 +28,11 @@
             android:layout_gravity="center_horizontal" />
 
         <TextView
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:text="New Text"
+            android:gravity="center|left"
+            android:padding="40dp"
+            android:text=""
             android:id="@+id/meetinginfo_content" />
     </LinearLayout>
 

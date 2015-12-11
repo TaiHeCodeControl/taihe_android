@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
     private Button searchButton;
     private GridView gv_hotjob;
     private ListView lv_searchHistory;
+    private LinearLayout lin_back;
     private List<Professional> prolist = new ArrayList<Professional>();
     private List<SearchHistory> historyList = new ArrayList<SearchHistory>();
     private SearchHistoryAdapter historyAdapter;
@@ -64,6 +66,7 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         setContentView(R.layout.activity_job_search);
         super.initView();
         mContext = this;
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 
         intents = getIntent();
         fromTags = intents.getStringExtra("From");
