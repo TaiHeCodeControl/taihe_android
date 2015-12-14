@@ -33,6 +33,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.JobDetailActivity;
 import com.taihe.eggshell.job.adapter.AllJobAdapter;
+import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.entity.User;
@@ -77,7 +78,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     private String Latitude = "";
     private String keyword = "";
     private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "", cityid = "", fbtime = "";
-    private String job1 = "";
+    private String job1 = "",job1_son;
     private String TitleString = "";
     private User user;
     private JobInfo jobInfo;
@@ -169,7 +170,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         super.setUserVisibleHint(isVisibleToUser);
 
         if(isVisibleToUser && getUserVisibleHint()){
-            /*hy = "";
+            hy = "";
             job_post = "";
             salary = "";
             edu = "";
@@ -182,7 +183,9 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
             page = 1;
             Longitude = "";
             Latitude = "";
-            JobFilterUtils.filterJob(mContext, keyword, type, hy, "", job_post, salary, edu, exp, cityid, fbtime, "找工作");*/
+            job1_son = "";
+            JobFilterUtils.filterJob(mContext, keyword, type, hy, "", job_post, salary, edu, exp, cityid, fbtime, "找工作",job1_son);
+            setHandles("");
         }
     }
 
@@ -195,7 +198,6 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         mContext = getActivity();
         tv_findjob_title = (TextView) rootView.findViewById(R.id.tv_findjob_title);
         list_job_all = (PullToRefreshGridView) rootView.findViewById(R.id.list_alljob_all);
@@ -236,6 +238,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         cityid = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "three_cityid", "");
         fbtime = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "fbtime", "");
         job1 = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job1", "");
+        job1_son = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job1_son", "");
 
         cb_selectAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,7 +303,10 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    //全城职位列表
+    //全城职位列表//这里修改了，记得修改FindJobActivity类，这两套代码是一样的
+    /**
+     * 这里修改了，记得修改FindJobActivity类，这两套代码是一样的
+     */
     private void getList() {
         Response.Listener listener = new Response.Listener() {
             @Override
@@ -373,11 +379,12 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         param.put("type", type);//工作性质
         param.put("fbtime", fbtime);//
         if("0".equals(cityid)){
-            param.put("provinceid", "2");
+            param.put("provinceid", "2");//全城，北京
         }else{
             param.put("three_cityid", cityid);//
         }
         param.put("job1", job1);
+        param.put("job1_son",job1_son);
 
 //        Log.v(TAG, param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);

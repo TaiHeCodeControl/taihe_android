@@ -255,6 +255,9 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
     }
 
     //全城职位列表
+    /**
+     * 这里修改了，记得修改FindJobActivity类，这两套代码是一样的
+     */
     private void getList() {
         Response.Listener listener = new Response.Listener() {
             @Override
@@ -327,7 +330,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         param.put("type", type);//工作性质
         param.put("fbtime", fbtime);//
         if("0".equals(cityid)){
-            param.put("provinceid", "2");
+            param.put("provinceid", "2");//全城，北京
         }else{
             param.put("three_cityid", cityid);//
         }

@@ -100,7 +100,7 @@ public class SwipecardsActivity extends Activity {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 if(islogin){
                     jobInfo = al.get(0);
-                   al.remove(0);
+                    al.remove(0);
                 }else{
                    Intent intent = new Intent(mContext, LoginActivity.class);
                    startActivity(intent);
