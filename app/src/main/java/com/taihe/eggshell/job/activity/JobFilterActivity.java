@@ -3,6 +3,7 @@ package com.taihe.eggshell.job.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +57,7 @@ public class JobFilterActivity extends BaseActivity {
     private String pubtime = "";
     private String city = "";
     private String job1_son = "";
+    private String paramtype = "";
 
     @Override
     public void initView() {
@@ -198,6 +200,10 @@ public class JobFilterActivity extends BaseActivity {
 
         if(resultCode == RESULT_OK){
             result = data.getParcelableExtra("data");
+            if(null!=data.getStringExtra("type")){
+                paramtype = data.getStringExtra("type");
+            }
+
             if(null == result){
                 return;
             }
@@ -208,10 +214,12 @@ public class JobFilterActivity extends BaseActivity {
                     break;
                 case REQUEST_CODE_POSITION:
                     tv_position.setText(result.getName());//职位类别
-                    if(0 == result.getsort()){
-                        job_post = result.getId()+"";
-                    }else{
-                        job1_son = result.getId()+"";
+                    if(!TextUtils.isEmpty(paramtype)){
+                        if("job_post".equals(paramtype)){
+                            job_post = result.getId()+"";//综合类
+                        }else if("job1_son".equals(paramtype)){
+                            job1_son = result.getId()+"";//教育行业
+                        }
                     }
                     break;
                 case REQUEST_CODE_JOBYEAR:
@@ -254,4 +262,5 @@ public class JobFilterActivity extends BaseActivity {
         super.onPause();
         MobclickAgent.onPause(mContext);
     }
+
 }

@@ -43,6 +43,7 @@ public class PositionActivity extends BaseActivity {
 
     private int page = 0;
     private int PAGE_SIZE = 5000;
+    private String paramtype = "";
 
     private Context mContext;
 
@@ -65,6 +66,11 @@ public class PositionActivity extends BaseActivity {
                 if(filterString.equals("position")){
                     staticdata = selectedDataList.get(position);
                     clickDataList.add(staticdata);
+                    if(staticdata.getId()==1048 && "0".equals(staticdata.getKeyid())){
+                        paramtype = "job_post";//综合
+                    }else if(staticdata.getId()!=1048 && "0".equals(staticdata.getKeyid())){
+                        paramtype = "job1_son";
+                    }
                     getPositionFromDB(getBuilder(selectedDataList.get(position).getId()+""));
                 }else{
                     Intent intent = new Intent();
@@ -242,6 +248,7 @@ public class PositionActivity extends BaseActivity {
                 } else {
                     Intent intent = new Intent();
                     intent.putExtra("data", staticdata);
+                    intent.putExtra("type",paramtype);
                     setResult(RESULT_OK,intent);
                     finish();
                     Log.v("搜索：", "空");
