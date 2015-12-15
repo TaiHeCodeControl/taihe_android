@@ -47,7 +47,7 @@ import java.util.Map;
 public class JobDetailActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "JobDetailActivity";
     private Context mContext;
-    private TextView titleView, jobtitle, jobcompany, jobstart, jobend, jobtype, joblevel, jobyears, jobaddress, jobmoney, jobnum, updown, shouqi, company_jieshao;
+    private TextView titleView, jobtitle, jobcompany, jobstart, jobend, jobtype, joblevel, jobyears, jobaddress, jobmoney, jobnum, updown, shouqi, company_jieshao,jobdaogang,jobsex,jobmarriage;
     private Button applyButton;
     private MyListView jobDescListView, moreJobListView;
     private ImageView collectionImg;
@@ -63,7 +63,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
     private Intent intent;
 
-    private String address, cj_name, com_name, content, description, edu, exp, hy, id, lastupdate, linkmail, linktel, mun, name, provinceid, salary, type,number;
+    private String address, cj_name, com_name, content, description, edu, exp, hy, id, lastupdate, linkmail, linktel, mun, name, provinceid, salary, type,number,daogang,sex,marriage;
     private String collect;
 
     private TextView tv_jobdetail_description;
@@ -90,9 +90,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                     try {
                         JobDetailInfo jobDetaiInfo = (JobDetailInfo) msg.obj;
                         address = jobDetaiInfo.data.address;
-                        if (address.length() > 6) {
+                        if (address.length() > 2) {
 
-                            address = address.substring(0, 6);
+                            address = address.substring(0, 2);
                         }
 //                        address = jobDetaiInfo.data.address.split("区")[0].toString();
                         cj_name = jobDetaiInfo.data.cj_name;
@@ -112,6 +112,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         salary = jobDetaiInfo.data.salary;
                         type = jobDetaiInfo.data.type;
                         number = jobDetaiInfo.data.number;
+                        daogang = jobDetaiInfo.data.daogang;
+                        sex = jobDetaiInfo.data.sex;
+                        marriage = jobDetaiInfo.data.marriage;
                         //54不限 55全职 56兼职
                         if (type.equals("55")) {
                             type = "全职";
@@ -142,7 +145,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         jobaddress.setText(address);
                         jobmoney.setText(salary);
                         jobnum.setText(number);//招聘人数
-
+                        jobdaogang.setText(daogang);//到岗时间
+                        jobsex.setText(sex);//性别
+                        jobmarriage.setText(marriage);//婚姻情况
 
                         byte[] bytes = Base64.decode(content, Base64.DEFAULT);
                         content = new String(bytes, "UTF-8");
@@ -191,7 +196,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void initView() {
 
-        setContentView(R.layout.activity_job_detail);
+        setContentView(R.layout.activity_job_info);
         super.initView();
         mContext = this;
         jobInfos = new ArrayList<JobInfo>();
@@ -206,42 +211,45 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         intent = getIntent();
         jobId = intent.getIntExtra("ID", 1);
         com_id = intent.getStringExtra("com_id");
-        tv_companyAddress = (TextView) findViewById(R.id.tv_jobdetail_company_address);
+        tv_companyAddress = (TextView) findViewById(R.id.tv_jobinfo_company_address);
         titleView = (TextView) findViewById(R.id.id_title);
         collectionImg = (ImageView) findViewById(R.id.id_other);
-        jobtitle = (TextView) findViewById(R.id.id_job_name);
-        jobcompany = (TextView) findViewById(R.id.id_job_company);
-        jobstart = (TextView) findViewById(R.id.id_start_time);
-        jobend = (TextView) findViewById(R.id.id_end_time);
-        jobtype = (TextView) findViewById(R.id.id_job_type);
-        joblevel = (TextView) findViewById(R.id.id_school_leve);
-        jobyears = (TextView) findViewById(R.id.id_work_time);
-        jobaddress = (TextView) findViewById(R.id.id_job_addres);
-        jobmoney = (TextView) findViewById(R.id.id_money);
-        jobnum = (TextView) findViewById(R.id.id_pepple_num);
-        updown = (TextView) findViewById(R.id.id_see_all);
-        shouqi = (TextView) findViewById(R.id.id_see_shouqi);
-        company_jieshao = (TextView) findViewById(R.id.id_company_jieshao);
+        jobtitle = (TextView) findViewById(R.id.id_jobinfo_name);
+        jobcompany = (TextView) findViewById(R.id.id_jobinfo_company);
+        jobstart = (TextView) findViewById(R.id.id_jobinfo_start_time);
+        jobend = (TextView) findViewById(R.id.id_jobinfo_end_time);
+        jobtype = (TextView) findViewById(R.id.id_jobinfo_type);
+        joblevel = (TextView) findViewById(R.id.id_jobinfo_school_leve);
+        jobyears = (TextView) findViewById(R.id.id_jobinfo_work_time);
+        jobaddress = (TextView) findViewById(R.id.id_jobinfo_addres);
+        jobmoney = (TextView) findViewById(R.id.id_jobInfo_money);
+        jobnum = (TextView) findViewById(R.id.id_jobinfo_pepple_num);
+        updown = (TextView) findViewById(R.id.id_jobinfo_see_all);
+        shouqi = (TextView) findViewById(R.id.id_jobinfo_see_shouqi);
+        jobdaogang = (TextView) findViewById(R.id.id_jobinfo_daogang);
+        jobsex = (TextView) findViewById(R.id.id_jobinfo_sex);
+        jobmarriage = (TextView) findViewById(R.id.id_jobinfo_marriage);
+        company_jieshao = (TextView) findViewById(R.id.id_jobinfo_company_jieshao);
 
-        jobDescListView = (MyListView) findViewById(R.id.id_job_desc);
-        moreJobListView = (MyListView) findViewById(R.id.id_other_position);
+        jobDescListView = (MyListView) findViewById(R.id.id_jobinfo_desc);
+        moreJobListView = (MyListView) findViewById(R.id.id_jobinfo_other_position);
         moreJobListView.setFocusable(false);
-        applyButton = (Button) findViewById(R.id.id_apply_button);
+        applyButton = (Button) findViewById(R.id.id_jobinfo_apply_button);
 
         applyButton.setOnClickListener(this);
         collectionImg.setOnClickListener(this);
         updown.setOnClickListener(this);
         shouqi.setOnClickListener(this);
 
-        tv_jobdetail_description = (TextView) findViewById(R.id.tv_jobdetail_description);
-        tv_allzhiwei = (TextView) findViewById(R.id.id_see_allzhize);
+        tv_jobdetail_description = (TextView) findViewById(R.id.tv_jobinfo_description);
+        tv_allzhiwei = (TextView) findViewById(R.id.id_jobinfo_see_allzhize);
         tv_allzhiwei.setOnClickListener(this);
 
-        tv_shouqizhiwei = (TextView) findViewById(R.id.id_see_shouqizhize);
+        tv_shouqizhiwei = (TextView) findViewById(R.id.id_jobinfo_see_shouqizhize);
         tv_shouqizhiwei.setOnClickListener(this);
-        ll_moreposition = (LinearLayout) findViewById(R.id.ll_jobdetail_moreposition);
+        ll_moreposition = (LinearLayout) findViewById(R.id.ll_jobinfo_moreposition);
 
-        sc_detail = (ScrollView) findViewById(R.id.sv_detail);
+        sc_detail = (ScrollView) findViewById(R.id.sv_jobinfo);
         sc_detail.smoothScrollTo(0, 20);
     }
 
@@ -333,7 +341,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.id_apply_button://申请职位
+            case R.id.id_jobinfo_apply_button://申请职位
 
                 if (user == null) {
                     EggshellApplication.getApplication().setLoginTag("jobDetail");
@@ -354,22 +362,22 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 }
 
                 break;
-            case R.id.id_see_all:
+            case R.id.id_jobinfo_see_all:
                 company_jieshao.setMaxLines(Integer.MAX_VALUE);
                 updown.setVisibility(View.GONE);
                 shouqi.setVisibility(View.VISIBLE);
                 break;
-            case R.id.id_see_shouqi:
+            case R.id.id_jobinfo_see_shouqi:
                 company_jieshao.setMaxLines(3);
                 updown.setVisibility(View.VISIBLE);
                 shouqi.setVisibility(View.GONE);
                 break;
-            case R.id.id_see_allzhize:
+            case R.id.id_jobinfo_see_allzhize:
                 tv_jobdetail_description.setMaxLines(Integer.MAX_VALUE);
                 tv_allzhiwei.setVisibility(View.GONE);
                 tv_shouqizhiwei.setVisibility(View.VISIBLE);
                 break;
-            case R.id.id_see_shouqizhize:
+            case R.id.id_jobinfo_see_shouqizhize:
                 tv_jobdetail_description.setMaxLines(3);
                 tv_allzhiwei.setVisibility(View.VISIBLE);
                 tv_shouqizhiwei.setVisibility(View.GONE);
