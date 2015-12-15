@@ -19,7 +19,6 @@ import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateUtils;
-import com.taihe.eggshell.widget.ChoiceDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -76,9 +75,7 @@ public class FeedbackActivity extends BaseActivity{
         super.onClick(v);
         switch (v.getId()){
             case R.id.btn_feedback_submit:
-
                 submitFeed();
-
                 break;
         }
     }

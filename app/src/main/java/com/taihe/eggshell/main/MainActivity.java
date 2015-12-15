@@ -5,7 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
@@ -13,10 +16,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -33,6 +38,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.DbHelper;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
@@ -42,10 +48,17 @@ import com.taihe.eggshell.job.activity.JobSearchActivity;
 import com.taihe.eggshell.main.entity.CityBJ;
 import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.widget.CustomViewPager;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.umeng.analytics.MobclickAgent;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -500,6 +513,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
     }
 
+    //实现职位界面监听跳转界面
     @Override
     public void refreshJobList(int i) {
         if(1==i){
@@ -550,6 +564,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
     }
 
+    //MainAtivity实现IndexFragment监听事件
     @Override
     public void changeViewPager(int position) {
         main_viewPager.setCurrentItem(position, false);
@@ -566,8 +581,18 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         }
     }
 
+    private PopupWindow pw;
+    private Bitmap lastPhoto = null;
+    private static final int NONE = 0;
+    private static final int PHOTOHRAPH = 1;// 拍照
+    private static final int PHOTOZOOM = 2; // 缩放
+    private static final int PHOTORESOULT = 3;// 结果
+    private static final String IMAGE_UNSPECIFIED = "image/*";
+    private LoadingProgressDialog uploadImageDialog;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (resultCode == 201) {
             if(main_viewPager.getCurrentItem()==2){
                 if(null!=getSupportFragmentManager().getFragments().get(2)){
@@ -584,6 +609,183 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
                 }
             }
         }
+
+        // 拍照
+        if (requestCode == PHOTOHRAPH) {
+
+            // 设置文件保存路径这里放在跟目录下
+
+            File picture = new File(Environment.getExternalStorageDirectory()
+                    + "/temp.jpg");
+            startPhotoZoom(Uri.fromFile(picture));
+
+        }
+
+        if (data == null)
+
+            return;
+
+        // 读取相册缩放图片
+
+        if (requestCode == PHOTOZOOM) {
+            startPhotoZoom(data.getData());
+        }
+
+        // 处理结果
+
+        if (requestCode == PHOTORESOULT) {
+
+            Bundle extras = data.getExtras();
+
+            if (extras != null) {
+
+                lastPhoto = extras.getParcelable("data");
+                extras.getParcelable("data");
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();// 字节数组输出
+                lastPhoto.compress(Bitmap.CompressFormat.JPEG, 75, stream);//
+                FileOutputStream fos = null;
+                BufferedOutputStream bos = null;
+
+                // **************将截取后的图片保存到SD卡的temp.jpg文件
+                byte[] byteArray = stream.toByteArray();// 字节数组输出流转换成字节数组
+
+                File file = new File(Environment.getExternalStorageDirectory()
+                        + "/eggkerImage.JPEG");
+                String filePath = Environment.getExternalStorageDirectory() + "/eggkerImage.JPEG";
+
+                // 将字节数组写入到刚创建的图片文件
+                try {
+                    fos = new FileOutputStream(file);
+                    bos = new BufferedOutputStream(fos);
+                    bos.write(byteArray);
+
+                    if (stream != null)
+                        stream.close();
+                    if (bos != null)
+                        bos.close();
+                    if (fos != null)
+                        fos.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                //用户头像图片显示==================================================
+                if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                    uploadImageDialog = new LoadingProgressDialog(mContext, "头像上传中...");
+                    uploadImageDialog.show();
+                    String ImageString = getPstr(filePath);
+//                    上传用户图片
+                    upLoadImage(ImageString);
+                } else {
+                    ToastUtils.show(mContext, R.string.check_network);
+                }
+            }
+        }
+    }
+
+    //图片裁剪
+    public void startPhotoZoom(Uri uri) {
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+
+        intent.setDataAndType(uri, IMAGE_UNSPECIFIED);
+
+        intent.putExtra("crop", "true");
+
+        // aspectX aspectY 是宽高的比例
+
+        intent.putExtra("aspectX", 1);
+
+        intent.putExtra("aspectY", 1);
+
+        // outputX outputY 是裁剪图片宽
+
+        intent.putExtra("outputX", 200);
+
+        intent.putExtra("outputY", 200);
+
+        intent.putExtra("return-data", true);
+
+        startActivityForResult(intent, PHOTORESOULT);
+
+    }
+
+    //上传头像
+    private void upLoadImage(String ImageString) {
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                uploadImageDialog.dismiss();
+                try {
+//                    Log.v("upLoadImage:", (String) o);
+
+                    JSONObject jsonObject = new JSONObject((String) o);
+
+                    int code = Integer.valueOf(jsonObject.getString("code"));
+                    if (code == 0) {//图片上传成功
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        String imagePath = data.getString("resume_photo");
+
+                        ToastUtils.show(mContext, "头像上传成功");
+
+                        if(main_viewPager.getCurrentItem()==3){
+                            if(null!=getSupportFragmentManager().getFragments().get(3)){
+                                MeFragment fragemnt = (MeFragment)(fragmentList.get(3));
+                                fragemnt.setHandles("");
+                            }
+                        }
+                    } else {
+                        ToastUtils.show(mContext, "上传失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                uploadImageDialog.dismiss();
+                ToastUtils.show(mContext, "网络异常");
+            }
+        };
+
+        Map<String, String> param = new HashMap<String, String>();
+        param.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
+        param.put("photo", ImageString);
+        param.put("token", EggshellApplication.getApplication().getUser().getToken());
+        RequestUtils.createRequest(mContext, Urls.METHOD_UPLOAD_IMAGE, "", true, param, true, listener, errorListener);
+
+    }
+
+    //将头像转换成Base64编码
+    public String getPstr(String pathname) {
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(pathname);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            int i;
+            // 转化为字节数组流
+            while ((i = fileInputStream.read()) != -1) {
+                byteArrayOutputStream.write(i);
+            }
+            fileInputStream.close();
+            // 把文件存在一个字节数组中
+            byte[] buff = byteArrayOutputStream.toByteArray();
+            byteArrayOutputStream.close();
+            // 将图片的字节数组进行BASE64编码
+
+            String pstr = new String(Base64.encodeToString(buff, Base64.DEFAULT));
+            return pstr;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     public void setRefreshHandle(Handler handle){

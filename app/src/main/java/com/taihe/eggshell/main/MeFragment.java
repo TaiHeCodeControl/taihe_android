@@ -55,11 +55,9 @@ import com.taihe.eggshell.widget.UpdateDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -171,6 +169,9 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         dialog.getRightButton().setText("确认退出");
     }
 
+    public void setHandles(String str){
+        getBasic();
+    }
 
     //初始化ImageLoad(volley)
     private void initImageLoad() {
@@ -386,8 +387,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 //                break;
 
             case R.id.rl_mine_feedback:
-                intent = new Intent(mContext, FeedbackActivity.class);
-                startActivity(intent);
+                if(null!= EggshellApplication.getApplication().getUser()){
+                    intent = new Intent(mContext, FeedbackActivity.class);
+                    startActivity(intent);
+                }else{
+                    ToastUtils.show(mContext,"请登录");
+                }
                 break;
 
             case R.id.rl_mine_checkupdate://检查更新
@@ -414,18 +419,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(
                         Environment.getExternalStorageDirectory(), "temp.jpg")));
-                startActivityForResult(intent, PHOTOHRAPH);
+                getActivity().startActivityForResult(intent, PHOTOHRAPH);
 
                 camera_pop_window.dismiss();
                 break;
 
             case R.id.tv_album:
-                intent = new Intent(Intent.ACTION_PICK, null);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        IMAGE_UNSPECIFIED);
-
-                startActivityForResult(intent, PHOTOZOOM);
-
+                intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
+                getActivity().startActivityForResult(intent, PHOTOZOOM);
                 camera_pop_window.dismiss();
 
             case R.id.tv_cancel:
@@ -571,7 +573,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-
     }
 
 
@@ -605,23 +606,23 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             + "/data/com.taihe.eggshell/temp.jpg";
     private PopupWindow pw;
     private Bitmap lastPhoto = null;
-    public static final int NONE = 0;
-    public static final int PHOTOHRAPH = 1;// 拍照
-    public static final int PHOTOZOOM = 2; // 缩放
-    public static final int PHOTORESOULT = 3;// 结果
-    public static final String IMAGE_UNSPECIFIED = "image/*";
+    private static final int NONE = 0;
+    private static final int PHOTOHRAPH = 1;// 拍照
+    private static final int PHOTOZOOM = 2; // 缩放
+    private static final int PHOTORESOULT = 3;// 结果
+    private static final String IMAGE_UNSPECIFIED = "image/*";
     private FileInputStream fStream;
     private String fString;
 
     /**
      * ********************* 从相机或者本地选图片到ImageView的method *********
      */
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode == NONE)
-
+        if (resultCode == NONE){
             return;
+        }
 
         // 拍照
 
@@ -643,7 +644,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
         if (requestCode == PHOTOZOOM) {
             startPhotoZoom(data.getData());
-
         }
 
         // 处理结果
@@ -705,7 +705,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 
     //上传头像
     private void upLoadImage(String ImageString) {
