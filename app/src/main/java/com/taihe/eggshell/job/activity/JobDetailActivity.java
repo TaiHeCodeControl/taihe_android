@@ -34,6 +34,8 @@ import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.MyListView;
 import com.umeng.analytics.MobclickAgent;
 
+import net.tsz.afinal.FinalBitmap;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private TextView titleView, jobtitle, jobcompany, jobstart, jobend, jobtype, joblevel, jobyears, jobaddress, jobmoney, jobnum, updown, shouqi, company_jieshao,jobdaogang,jobsex,jobmarriage;
     private Button applyButton;
     private MyListView jobDescListView, moreJobListView;
-    private ImageView collectionImg;
+    private ImageView collectionImg,id_jobinfo_logo;
     private LoadingProgressDialog dialog;
     private int jobId;
     private String com_id;
@@ -63,7 +65,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
     private Intent intent;
 
-    private String address, cj_name, com_name, content, description, edu, exp, hy, id, lastupdate, linkmail, linktel, mun, name, provinceid, salary, type,number,daogang,sex,marriage;
+    private String address, cj_name, com_name, content, description, edu, exp, hy, id, lastupdate, linkmail, linktel, mun, name, provinceid, salary, type,number,daogang,sex,marriage,imgLogo;
     private String collect;
 
     private TextView tv_jobdetail_description;
@@ -115,6 +117,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         daogang = jobDetaiInfo.data.daogang;
                         sex = jobDetaiInfo.data.sex;
                         marriage = jobDetaiInfo.data.marriage;
+                        imgLogo = jobDetaiInfo.data.logo;
                         //54不限 55全职 56兼职
                         if (type.equals("55")) {
                             type = "全职";
@@ -156,7 +159,8 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         byte[] descriptionbytes = Base64.decode(description, Base64.DEFAULT);
                         description = new String(descriptionbytes, "UTF-8");
                         tv_jobdetail_description.setText(Html.fromHtml(description));//职责描述
-
+                        FinalBitmap bitmap = FinalBitmap.create(mContext);
+                        bitmap.display(id_jobinfo_logo,imgLogo);
 
                         int size = jobDetaiInfo.data.lists.size();
                         if (size < 1) {//如果没有更多职位，隐藏更多职位
@@ -235,6 +239,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         moreJobListView = (MyListView) findViewById(R.id.id_jobinfo_other_position);
         moreJobListView.setFocusable(false);
         applyButton = (Button) findViewById(R.id.id_jobinfo_apply_button);
+        id_jobinfo_logo = (ImageView) findViewById(R.id.id_jobinfo_logo);
 
         applyButton.setOnClickListener(this);
         collectionImg.setOnClickListener(this);

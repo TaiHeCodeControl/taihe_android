@@ -43,6 +43,7 @@ public class JobDetailInfo {
         public String daogang;
         public String sex;
         public String marriage;
+        public String logo;
 
         public List<otherPositions> lists;
 
@@ -55,9 +56,6 @@ public class JobDetailInfo {
             public String provinceid;
             public String salary;
             public String uid;
-            public String daogang;
-            public String sex;
-            public String marriage;
         }
     }
 }
