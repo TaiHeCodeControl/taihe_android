@@ -3,6 +3,7 @@ package com.taihe.eggshell.job.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -96,9 +97,9 @@ public class SwipecardsActivity extends Activity {
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
-            public void removeFirstObjectInAdapter() {
+            public void removeFirstObjectInAdapter() {//先执行
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
-                if(islogin){
+                if(islogin){//如果登录了删除否则跳转到登录页，且不删除最前边的卡
                     jobInfo = al.get(0);
                     al.remove(0);
                 }else{
@@ -109,7 +110,7 @@ public class SwipecardsActivity extends Activity {
             }
 
             @Override
-            public void onLeftCardExit(Object dataObject) {
+            public void onLeftCardExit(Object dataObject) {//后执行
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
@@ -117,8 +118,8 @@ public class SwipecardsActivity extends Activity {
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                if(islogin){
-                    collectPosition();
+                if(islogin){//如果登录了直接收藏
+                    new ColllectionAsynTask().execute();
                 }
             }
 
@@ -165,12 +166,37 @@ public class SwipecardsActivity extends Activity {
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                Intent intent = new Intent(mContext, JobInfoActivity.class);
+                Intent intent = new Intent(mContext, JobDetailActivity.class);
                 intent.putExtra("ID", al.get(0).getJob_Id());
                 intent.putExtra("com_id", al.get(0).getUid());
                 startActivity(intent);
             }
         });
+    }
+
+
+    private class ColllectionAsynTask extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            collectPosition();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
     }
 
     //收藏职位

@@ -30,6 +30,7 @@ import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.company.CompanyActivity;
 import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobSearchActivity;
+import com.taihe.eggshell.job.activity.SwipecardsActivity;
 import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.adapter.ImgAdapter;
@@ -252,8 +253,8 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             case R.id.id_write_resume:
                 //搜索职位  全职
                 JobFilterUtils.filterJob(mContext, "", "55", "", "", "", "", "", "", "", "","","");
-                intent = new Intent(mContext,FindJobActivity.class);
-//                intent = new Intent(mContext,SwipecardsActivity.class);
+//                intent = new Intent(mContext,FindJobActivity.class);
+                intent = new Intent(mContext,SwipecardsActivity.class);
                 intent.putExtra("jobtype","全职");
                 startActivity(intent);
                 break;
