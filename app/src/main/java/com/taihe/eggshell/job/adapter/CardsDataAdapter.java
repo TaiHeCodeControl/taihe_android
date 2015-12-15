@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
@@ -22,10 +21,6 @@ public class CardsDataAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<JobInfo> jblist;
-    private TextView v1;
-    private ImageView imageView;
-    private LinearLayout linearLayout;
-    private int resourceId;
 
     public CardsDataAdapter(Context context,ArrayList<JobInfo> list){
         this.mContext = context;
@@ -76,7 +71,7 @@ public class CardsDataAdapter extends BaseAdapter {
             holder = (CardViewHolder)contentView.getTag();
         }
 
-            Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.tu);
+            Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.no_logo_company);
             FinalBitmap finalBitmap = FinalBitmap.create(mContext);
             finalBitmap.display(holder.comImageView,jobInfo.getCom_logo(),bitmap,bitmap);
             holder.positionView.setText(jobInfo.getJob_name());

@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
@@ -36,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SwipecardsActivity extends Activity {
+public class SwipecardsActivity extends Activity implements View.OnClickListener{
 
     private static final String TAG = "SwipecardsActivity";
     private Context mContext;
@@ -50,12 +52,14 @@ public class SwipecardsActivity extends Activity {
     private String Latitude = "";
     private String keyword = "";
     private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "", cityid = "", fbtime = "";
-    private String job1 = "";
+    private String job1 = "",job1_son = "";
     private boolean islogin = false;
     public List<JobInfo> jobInfos = new ArrayList<JobInfo>();
     private JobInfo jobInfo;
     private User user;
     private SwipeFlingAdapterView flingContainer;
+    private ImageView iv_search,iv_filter;
+    private RelativeLayout backLayout;
 
     @Override
     public void onAttachedToWindow() {
@@ -75,7 +79,16 @@ public class SwipecardsActivity extends Activity {
     private void initView(){
 
         dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
+        backLayout = (RelativeLayout) findViewById(R.id.iv_findjob_back);
+        iv_search = (ImageView) findViewById(R.id.iv_findjob_search);
+        iv_filter = (ImageView) findViewById(R.id.iv_findjob_filter);
         flingContainer = (SwipeFlingAdapterView)findViewById(R.id.frame);
+
+        iv_search.setOnClickListener(this);
+        iv_filter.setOnClickListener(this);
+        backLayout.setOnClickListener(this);
+
+        //蒙层，提示用，只显示一次
         final FrameLayout frameLayout = (FrameLayout)findViewById(R.id.id_monogo);
         if(!PrefUtils.getBooleanData(mContext,PrefUtils.CONFIG,true)){
             frameLayout.setVisibility(View.GONE);
@@ -90,6 +103,8 @@ public class SwipecardsActivity extends Activity {
     }
 
     private void initData(){
+        //首页传的type类型
+        type = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "type", "");
 
         getList();
         user = EggshellApplication.getApplication().getUser();
@@ -174,6 +189,23 @@ public class SwipecardsActivity extends Activity {
         });
     }
 
+    public void onClick(View v) {
+        Intent intent;
+        switch (v.getId()){
+            case R.id.iv_findjob_search://关键字搜索
+                intent = new Intent(mContext, JobSearchActivity.class);
+                intent.putExtra("From", "findjob");
+                startActivity(intent);
+                break;
+            case R.id.iv_findjob_filter://职位筛选
+                intent = new Intent(mContext, JobFilterActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.iv_findjob_back:
+                finish();
+                break;
+        }
+    }
 
     private class ColllectionAsynTask extends AsyncTask<Void,Void,Void>{
 
@@ -255,7 +287,7 @@ public class SwipecardsActivity extends Activity {
 //                                adapter.notifyDataSetChanged();
 //                                ToastUtils.show(mContext, "没有了");
                             } else {
-                                ToastUtils.show(mContext, "没有了");
+//                                ToastUtils.show(mContext, "没有了");
                             }
                         } else {
                             Gson gson = new Gson();
@@ -265,9 +297,7 @@ public class SwipecardsActivity extends Activity {
                             arrayAdapter.notifyDataSetChanged();
 
                         }
-                    } else if (code == 4001) {
-
-                    } else {
+                    }else {
                         ToastUtils.show(mContext, "获取失败");
                     }
                 } catch (JSONException e) {
@@ -308,6 +338,7 @@ public class SwipecardsActivity extends Activity {
             param.put("three_cityid", cityid);//
         }
         param.put("job1", job1);
+        param.put("job1_son",job1_son);
 
         Log.v(TAG, param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);

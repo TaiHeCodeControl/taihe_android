@@ -28,7 +28,6 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.company.CompanyActivity;
-import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.job.activity.JobSearchActivity;
 import com.taihe.eggshell.job.activity.SwipecardsActivity;
 import com.taihe.eggshell.job.bean.JobFilterUtils;
@@ -261,14 +260,14 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
             case R.id.id_play_mode:
                 //搜索职位  兼职
                 JobFilterUtils.filterJob(mContext, "", "56", "", "", "", "", "", "", "", "", "","");
-                intent = new Intent(mContext,FindJobActivity.class);
+                intent = new Intent(mContext,SwipecardsActivity.class);
                 intent.putExtra("jobtype","兼职");
                 startActivity(intent);
                 break;
             case R.id.id_we_chat://找实习
                 //搜索职位 实习
                 JobFilterUtils.filterJob(mContext, "", "129", "", "", "", "", "", "", "", "","","");
-                intent = new Intent(mContext,FindJobActivity.class);
+                intent = new Intent(mContext,SwipecardsActivity.class);
                 intent.putExtra("jobtype","实习");
                 startActivity(intent);
                 break;

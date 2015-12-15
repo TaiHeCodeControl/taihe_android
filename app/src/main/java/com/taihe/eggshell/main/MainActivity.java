@@ -593,14 +593,14 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode == 201) {
+        if (resultCode == 101 || resultCode == 201) {
             if(main_viewPager.getCurrentItem()==2){
                 if(null!=getSupportFragmentManager().getFragments().get(2)){
                     InternshipFragment fragemnt = (InternshipFragment)(fragmentList.get(2));
                     fragemnt.setHandles("");//data.getStringExtra("jobtype")
                 }
             }
-        }else if(resultCode == 101){
+        }/*else if(resultCode == 101){
             if(main_viewPager.getCurrentItem()==2){
                 if(null!=getSupportFragmentManager().getFragments().get(2)){
                     InternshipFragment fragemnt = (InternshipFragment)(fragmentList.get(2));
@@ -608,7 +608,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 //                    refreshHandle.sendEmptyMessage(InternshipFragment.MSG_FIND_JOB_REFRESH);
                 }
             }
-        }
+        }*/
 
         // 拍照
         if (requestCode == PHOTOHRAPH) {

@@ -122,7 +122,7 @@ public class JobFilterActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.lin_back:
-                JobFilterActivity.this.finish();
+                finish();
                 break;
             case R.id.iv_jobfilter_clear:
                 et_keyWord.setText("");
@@ -181,15 +181,15 @@ public class JobFilterActivity extends BaseActivity {
             case R.id.btn_jobfilter_chaxun://查询职位
 
                 //keyword=>关键字 page=>页数 hy=>工作行业 职位类别=>job_post 月薪范围=>salary 学历要求=>edu 工作年限=>exp 工作性质=>type
-
                 keyword = et_keyWord.getText().toString().trim();
 
                 //保存职位筛选的字段
                 JobFilterUtils.filterJob(mContext,keyword,type,hy,"",job_post,salary,edu,exp,city,pubtime,"找工作",job1_son);
 
-                intent = new Intent();
+                intent = new Intent(mContext,FindJobActivity.class);
                 intent.putExtra("jobtype","找工作");
-                setResult(101,intent);
+                startActivity(intent);
+//                setResult(101,intent);
                 finish();
                 break;
         }
@@ -200,13 +200,13 @@ public class JobFilterActivity extends BaseActivity {
 
         if(resultCode == RESULT_OK){
             result = data.getParcelableExtra("data");
+            if(null == result){
+                return;
+            }
             if(null!=data.getStringExtra("type")){
                 paramtype = data.getStringExtra("type");
             }
 
-            if(null == result){
-                return;
-            }
             switch (requestCode){
                 case REQUEST_CODE_INDUSTRYTYPE:
                     tv_industry.setText(result.getName()); //行业类型

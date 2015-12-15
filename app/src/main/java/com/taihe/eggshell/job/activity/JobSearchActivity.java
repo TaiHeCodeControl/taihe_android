@@ -66,7 +66,6 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
         setContentView(R.layout.activity_job_search);
         super.initView();
         mContext = this;
-//        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 
         intents = getIntent();
         fromTags = intents.getStringExtra("From");
@@ -104,17 +103,21 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                     JobFilterUtils.filterJob(mContext, keyword, "", "", "", "", "", "", "", "", "","找工作","");
                 }
 
-                if (fromTags.equals("Index")) {
-                    Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
-                    intent.putExtra("jobtype",prolist.get(position).getName());
+                Intent intent = new Intent(mContext, FindJobActivity.class);
+                intent.putExtra("jobtype",prolist.get(position).getName());//标题栏显示的搜索名称
+                startActivity(intent);
+                finish();
+                /*if (fromTags.equals("Index")) {
+                    Intent intent = new Intent(mContext, FindJobActivity.class);
+                    intent.putExtra("jobtype",prolist.get(position).getName());//标题栏显示的搜索名称
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent();
+                    Intent intent = new Intent(mContext, FindJobActivity.class);
                     intent.putExtra("jobtype",prolist.get(position).getName());
-                    setResult(201, intent);
-                }
+                    startActivity(intent);
+//                    setResult(201, intent);
+                }*/
 
-                finish();
             }
         });
 
@@ -128,17 +131,20 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                 //搜索职位
                 JobFilterUtils.filterJob(mContext, historyList.get(position).getName(), "", "", "", "", "", "", "", "", "","找工作","");
 
-                if (fromTags.equals("Index")) {
-                    Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
+                Intent intent = new Intent(mContext, FindJobActivity.class);
+                intent.putExtra("jobtype",historyList.get(position).getName());
+                startActivity(intent);
+                finish();
+                /*if (fromTags.equals("Index")) {
+                    Intent intent = new Intent(mContext, FindJobActivity.class);
                     intent.putExtra("jobtype",historyList.get(position).getName());
                     startActivity(intent);
                 } else {
-                    Intent intent = new Intent();
+                    Intent intent = new Intent(mContext, FindJobActivity.class);
                     intent.putExtra("jobtype",historyList.get(position).getName());
-                    setResult(201, intent);
-                }
-
-                JobSearchActivity.this.finish();
+                    startActivity(intent);
+//                    setResult(201, intent);
+                }*/
             }
         });
     }
@@ -166,16 +172,20 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                         //搜索职位
                         JobFilterUtils.filterJob(mContext, word, "", "", "", "", "", "", "", "", "","找工作","");
 
-                        if (fromTags.equals("Index")) {
-                            Intent intent = new Intent(JobSearchActivity.this, FindJobActivity.class);
+                        Intent intent = new Intent(mContext, FindJobActivity.class);
+                        intent.putExtra("jobtype",word);
+                        startActivity(intent);
+                        finish();
+                        /*if (fromTags.equals("Index")) {
+                            Intent intent = new Intent(mContext, FindJobActivity.class);
                             intent.putExtra("jobtype",word);
                             startActivity(intent);
                         } else {
-                            Intent intent = new Intent();
+                            Intent intent = new Intent(mContext, FindJobActivity.class);
                             intent.putExtra("jobtype",word);
-                            setResult(201, intent);
-                        }
-                        this.finish();
+                            startActivity(intent);
+//                            setResult(201, intent);
+                        }*/
                     } else {
                         ToastUtils.show(mContext, "请输入内容");
                     }
