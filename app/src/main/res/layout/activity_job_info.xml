@@ -35,7 +35,7 @@
                     android:layout_width="150dp"
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"
-                    android:background="@drawable/tu" />
+                    android:background="@drawable/no_logo_company" />
             </LinearLayout>
 
             <LinearLayout
