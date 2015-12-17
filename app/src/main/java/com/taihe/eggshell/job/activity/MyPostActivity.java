@@ -319,14 +319,20 @@ public class MyPostActivity extends BaseActivity {
                 break;
             case R.id.btn_collectjob_delete://删除职位
                 Iterator<JobInfo> it = jobInfos.iterator();
+                boolean ischeck = false;
                 while (it.hasNext()) {
                     JobInfo jobinfo = it.next();
                     if (jobinfo.isChecked()) {
+                        ischeck = true;
                         sb.append(jobinfo.getJob_Id());
                         sb.append(",");
                         delectNum++;
                         it.remove();
                     }
+                }
+                if(!ischeck){
+                    ToastUtils.show(mContext, "请选择要删除的职位");
+                    break;
                 }
                 if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
                     if(!sb.toString().equals("")){
@@ -345,12 +351,18 @@ public class MyPostActivity extends BaseActivity {
                 //申请职位
                 if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
                     StringBuilder sb = new StringBuilder();//选择的职位
+                    ischeck = false;
                     for (JobInfo jobInfo : jobInfos) {
                         System.out.println(jobInfo.getJob_Id() + "======" + jobInfo.isChecked());
                         if (jobInfo.isChecked()) {
+                            ischeck = true;
                             sb.append(jobInfo.getJob_Id());
                             sb.append(",");
                         }
+                    }
+                    if(!ischeck){
+                        ToastUtils.show(mContext, "请选择要申请的职位");
+                        break;
                     }
                     if(!sb.toString().equals("")){
                         dialog = new LoadingProgressDialog(mContext, getResources().getString(

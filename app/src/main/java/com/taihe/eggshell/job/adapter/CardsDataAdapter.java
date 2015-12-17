@@ -21,10 +21,13 @@ public class CardsDataAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<JobInfo> jblist;
-
+    Bitmap bitmap;
+    FinalBitmap finalBitmap;
     public CardsDataAdapter(Context context,ArrayList<JobInfo> list){
         this.mContext = context;
         this.jblist = list;
+        bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.no_logo_company);
+        finalBitmap = FinalBitmap.create(mContext);
     }
 
     @Override
@@ -71,8 +74,7 @@ public class CardsDataAdapter extends BaseAdapter {
             holder = (CardViewHolder)contentView.getTag();
         }
 
-            Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(),R.drawable.no_logo_company);
-            FinalBitmap finalBitmap = FinalBitmap.create(mContext);
+
             finalBitmap.display(holder.comImageView,jobInfo.getCom_logo(),bitmap,bitmap);
             holder.positionView.setText(jobInfo.getJob_name());
             holder.companyNameView.setText(jobInfo.getCom_name());

@@ -101,7 +101,7 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
             }
         });
     }
-
+    LinearLayout linearLayout;
     private void initData(){
         //首页传的type类型
         type = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "type", "");
@@ -150,7 +150,7 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
             public void onScroll(float scrollProgressPercent) {
                 View view = flingContainer.getSelectedView();
 
-                LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.id_transprent_card);
+                linearLayout = (LinearLayout)view.findViewById(R.id.id_transprent_card);
                 linearLayout.setVisibility(View.VISIBLE);
                 if(scrollProgressPercent < 0){//left
                     linearLayout.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
