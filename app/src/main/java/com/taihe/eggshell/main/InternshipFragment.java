@@ -283,31 +283,31 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
             @Override
             public void onScroll(float scrollProgressPercent) {
                 View view = flingContainer.getSelectedView();
-
-                LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.id_transprent_card);
-                linearLayout.setVisibility(View.VISIBLE);
-                if(scrollProgressPercent < 0){//left
-                    linearLayout.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-                    islogin = true;
-                }else{//right
-                    linearLayout.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
-                    if (null == user) {//登录
-                        EggshellApplication.getApplication().setLoginTag("findJobCard");
-                        islogin = false;
-                    } else {
+                if(null!=view){
+                    LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.id_transprent_card);
+                    linearLayout.setVisibility(View.VISIBLE);
+                    if(scrollProgressPercent < 0){//left
+                        linearLayout.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
                         islogin = true;
-                        int userId = EggshellApplication.getApplication().getUser().getId();
+                    }else{//right
+                        linearLayout.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+                        if (null == user) {//登录
+                            EggshellApplication.getApplication().setLoginTag("findJobCard");
+                            islogin = false;
+                        } else {
+                            islogin = true;
+                            int userId = EggshellApplication.getApplication().getUser().getId();
+                        }
                     }
+
+                    TextView rightView = (TextView)view.findViewById(R.id.item_swipe_right_indicator);
+                    rightView.setVisibility(View.VISIBLE);
+                    rightView.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+
+                    TextView leftView = (TextView)view.findViewById(R.id.item_swipe_left_indicator);
+                    leftView.setVisibility(View.VISIBLE);
+                    leftView.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
                 }
-
-                TextView rightView = (TextView)view.findViewById(R.id.item_swipe_right_indicator);
-                rightView.setVisibility(View.VISIBLE);
-                rightView.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-
-                TextView leftView = (TextView)view.findViewById(R.id.item_swipe_left_indicator);
-                leftView.setVisibility(View.VISIBLE);
-                leftView.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
-
             }
         });
 
@@ -366,9 +366,9 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                     JSONObject jsonObject = new JSONObject((String) o);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
-                        ToastUtils.show(mContext, "收藏成功");
+//                        ToastUtils.show(mContext, "收藏成功");
                     } else {
-                        ToastUtils.show(mContext, "收藏失败");
+//                        ToastUtils.show(mContext, "收藏失败");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
