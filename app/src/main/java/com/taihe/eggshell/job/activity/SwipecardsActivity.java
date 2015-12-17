@@ -248,6 +248,7 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", user.getId() + "");
         param.put("job_id", jobInfo.getJob_Id() + "");
+        param.put("card","1");//收藏、取消收藏
 
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_COLLECT, false, param, true, listener, errorListener);
 

@@ -368,18 +368,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.easefun.polyvsdk.server.AndroidService"></service>
-
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" >
-            <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2" >
-                </action>
-            </intent-filter>
-        </service>
-
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="VGhZOotiRWGkZjsiosu0wyI4" />
@@ -387,6 +375,14 @@
         <meta-data android:value="55f247e867e58ede09003291" android:name="UMENG_APPKEY"></meta-data>
         <meta-data android:value="${channel_value}" android:name="UMENG_CHANNEL"/>
 
+        <service android:name="com.easefun.polyvsdk.server.AndroidService"></service>
+
+        <service android:name=".main.LocationService">
+            <intent-filter android:priority="1000"><!--提高优先级，对broadcast有效，对service可能无效-->
+                <action android:name="com.taihe.eggshell.main.LocationService"></action>
+            </intent-filter>
+        </service>
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
@@ -396,7 +392,6 @@
                 </action>
             </intent-filter>
         </service>
-
 
         <service
             android:name="cn.jpush.android.service.DownloadService"

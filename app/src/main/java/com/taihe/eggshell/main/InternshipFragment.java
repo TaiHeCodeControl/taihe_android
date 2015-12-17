@@ -146,7 +146,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
         initView();
-        initData();
+//        initData();
     }
 
     private void initView(){
@@ -173,67 +173,6 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                 PrefUtils.saveBooleanData(mContext,PrefUtils.CONFIG,false);
             }
         });
-
-        /*keyword = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "keyword", "");
-        hy = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "hy", "");
-        job_post = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job_post", "");
-        salary = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "salary", "");
-        edu = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "edu", "");
-        exp = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "exp", "");
-        type = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "type", "");
-        cityid = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "three_cityid", "");
-        fbtime = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "fbtime", "");
-        job1 = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job1", "");
-        job1_son = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "job1_son", "");
-
-        cb_selectAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!cb_selectAll.isChecked()) {
-                    cb_selectAll.setChecked(false);
-                    for (JobInfo info : jobInfos) {
-                        info.setIsChecked(false);
-                    }
-                } else {
-                    cb_selectAll.setChecked(true);
-                    selectSize = jobInfos.size();
-                    for (JobInfo info : jobInfos) {
-                        info.setIsChecked(true);
-                    }
-                }
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        list_job_all.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
-        list_job_all.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
-                page++;
-                getList();
-                list_job_all.onRefreshComplete();
-            }
-        });
-
-        list_job_all.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                //listviewItem点击事件
-                if (position < jobInfos.size()) {
-                    JobInfo job = jobInfos.get(position);
-                    Intent intent = new Intent(mContext, JobDetailActivity.class);
-                    int jobId = job.getJob_Id();
-                    String com_id = job.getUid();
-                    intent.putExtra("ID", jobId);
-                    intent.putExtra("com_id", com_id);
-                    startActivity(intent);
-                }
-            }
-        });*/
 
     }
 
@@ -322,14 +261,6 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
             }
         });
 
-        /*dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
-        user = EggshellApplication.getApplication().getUser();
-
-        if (NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
-            getList();
-        } else {
-            ToastUtils.show(mContext, R.string.check_network);
-        }*/
     }
 
     private class ColllectionAsynTask extends AsyncTask<Void,Void,Void> {
@@ -385,6 +316,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         Map<String, String> param = new HashMap<String, String>();
         param.put("uid", user.getId() + "");
         param.put("job_id", jobInfo.getJob_Id() + "");
+        param.put("card","1");
 
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_COLLECT, false, param, true, listener, errorListener);
 

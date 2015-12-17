@@ -1,6 +1,5 @@
 package com.taihe.eggshell.main;
 
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -26,10 +24,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.chinaway.framework.swordfish.DbUtils;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
@@ -40,7 +34,6 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.DbHelper;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
-import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.JobFilterActivity;
@@ -792,50 +785,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             this.refreshHandle = handle;
     }
 
-    //====================定位-----------==============
-    public LocationClient mLocationClient;
-    public MyLocationListener mMyLocationListener;
-
-    private String Longitude = "";
-    private String Latitude = "";
-
-    public Vibrator mVibrator;
-
-    private void initLocation() {
-        mLocationClient = new LocationClient(this.getApplicationContext());
-        mMyLocationListener = new MyLocationListener();
-        mLocationClient.registerLocationListener(mMyLocationListener);
-        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
-
-        LocationClientOption option = new LocationClientOption();
-        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//设置定位模式
-        option.setCoorType("gcj02");//返回的定位结果是百度经纬度，默认值gcj02
-        int span = 60000;
-        option.setScanSpan(span);//设置发起定位请求的间隔时间为 1min
-        option.setIsNeedAddress(true);
-        mLocationClient.start();
-        mLocationClient.setLocOption(option);
-    }
-
-    /**
-     * 实现实时位置回调监听
-     */
-    public class MyLocationListener implements BDLocationListener {
-
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            //Receive Location
-            Longitude = Double.toString(location.getLongitude());
-            Latitude = Double.toString(location.getLatitude());
-
-            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "Longitude", Longitude);
-            PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, "Latitude", Latitude);
-        }
-    }
-
     @Override
     protected void onStop() {
-        mLocationClient.stop();
         super.onStop();
     }
 
@@ -844,7 +795,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         isForeground = true;
         super.onResume();
         MobclickAgent.onResume(mContext);
-        initLocation();
+        startService(new Intent(LocationService.ACTION_NAME));
     }
 
     @Override
@@ -857,6 +808,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     @Override
     protected void onDestroy() {
         unregisterReceiver(mMessageReceiver);
+        startService(new Intent(LocationService.ACTION_NAME));
         super.onDestroy();
     }
 
