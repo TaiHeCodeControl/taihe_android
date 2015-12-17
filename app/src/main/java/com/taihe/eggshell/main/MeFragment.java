@@ -266,7 +266,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                             tv_username.setText(phoneNum);
                         }
                         if (TextUtils.isEmpty(qianming)) {
-                            tv_qianming.setText("学习是一种信仰！");
+                            tv_qianming.setText("个性签名");
                         } else {
                             tv_qianming.setText(qianming);
                         }

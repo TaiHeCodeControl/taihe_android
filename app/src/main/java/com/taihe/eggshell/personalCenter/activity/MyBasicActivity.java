@@ -1,6 +1,7 @@
 package com.taihe.eggshell.personalCenter.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +11,14 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
@@ -34,22 +40,15 @@ import com.taihe.eggshell.widget.datepicker.ScreenInfo;
 import com.taihe.eggshell.widget.datepicker.WheelMain;
 import com.umeng.analytics.MobclickAgent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-
-import android.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * 基本资料界面，个人基本信息的查看和编辑
@@ -105,7 +104,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
                     oldjianjie = basicBean.description;
 
                     if (TextUtils.isEmpty(oldjianjie)) {
-                        tv_mybasic_jianjie.setHint("学习是一种信仰");
+                        tv_mybasic_jianjie.setHint("个性签名");
                     } else {
                         tv_mybasic_jianjie.setText(oldjianjie);
                     }
@@ -158,7 +157,6 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
         et_qq = (EditText) findViewById(R.id.et_mybasic_qq);
         et_email = (EditText) findViewById(R.id.et_mybasic_email);
 
-
         rl_city = (RelativeLayout) findViewById(R.id.rl_mybasic_city);
         rl_city.setOnClickListener(this);
         rl_date = (RelativeLayout) findViewById(R.id.rl_mybasic_date);
@@ -167,7 +165,6 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
         rl_jianjie.setOnClickListener(this);
         rl_sex = (RelativeLayout) findViewById(R.id.rl_mybasic_sex);
         rl_sex.setOnClickListener(this);
-
 
         //初始化当前时间
         Calendar calendar = Calendar.getInstance();
@@ -178,14 +175,10 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
         tv_birthdate.setText(CurrentTime);
         verTime = CurrentTime;
 
-
         iv_back.setOnClickListener(this);
         tv_birthdate.setOnClickListener(this);
 
-
         initData();
-
-
     }
 
     private void initData() {
@@ -242,7 +235,6 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
 
         RequestUtils.createRequest(mContext, "", Urls.METHOD_BASIC, true, param, true, listener, errorListener);
 
-
     }
 
 
@@ -294,7 +286,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
             public void onResponse(Object o) {
                 LoadingDialog.dismiss();
                 try {
-                    Log.v("SAVEBASIC:", (String) o);
+//                    Log.v("SAVEBASIC:", (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
@@ -339,7 +331,6 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
         param.put("email", newemail);
         param.put("token", token);
 
-//
         RequestUtils.createRequest(mContext, Urls.METHOD_BASIC_SAVE, "", true, param, true, listener, errorListener);
 
     }

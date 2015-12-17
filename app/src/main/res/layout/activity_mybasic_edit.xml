@@ -249,7 +249,7 @@
                     android:maxLength="15"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="学习是一种信仰学习是一种信仰"
+                    android:text="个性签名"
                     android:textColor="@color/font_color_gray"
                     android:textSize="@dimen/font_size_26" />
 

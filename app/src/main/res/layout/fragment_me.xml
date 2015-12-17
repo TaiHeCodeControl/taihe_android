@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:maxLength="15"
-                    android:text="学习是一种信仰"
+                    android:text="个性签名"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_size_26" />
 

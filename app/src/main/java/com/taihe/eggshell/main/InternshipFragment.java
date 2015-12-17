@@ -56,8 +56,10 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
 
     private View rootView;
     private TextView findjob_title;
+    private TextView rightView,leftView;
     private ImageView iv_search,iv_filter;
     private RelativeLayout backLayout;
+    private LinearLayout linearLayout;
 
     private int page = 1;
     private String Longitude = "";
@@ -190,6 +192,9 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                 if(islogin){//如果登录了删除否则跳转到登录页，且不删除最前边的卡
                     jobInfo = al.get(0);
                     al.remove(0);
+                    if(al.size()==0){
+                        flingContainer.setBackgroundResource(R.drawable.no_data);
+                    }
                 }else{
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     startActivity(intent);
@@ -223,7 +228,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
             public void onScroll(float scrollProgressPercent) {
                 View view = flingContainer.getSelectedView();
                 if(null!=view){
-                    LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.id_transprent_card);
+                    linearLayout = (LinearLayout)view.findViewById(R.id.id_transprent_card);
                     linearLayout.setVisibility(View.VISIBLE);
                     if(scrollProgressPercent < 0){//left
                         linearLayout.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
@@ -235,15 +240,15 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                             islogin = false;
                         } else {
                             islogin = true;
-                            int userId = EggshellApplication.getApplication().getUser().getId();
+//                            int userId = EggshellApplication.getApplication().getUser().getId();
                         }
                     }
 
-                    TextView rightView = (TextView)view.findViewById(R.id.item_swipe_right_indicator);
+                    rightView = (TextView)view.findViewById(R.id.item_swipe_right_indicator);
                     rightView.setVisibility(View.VISIBLE);
                     rightView.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
 
-                    TextView leftView = (TextView)view.findViewById(R.id.item_swipe_left_indicator);
+                    leftView = (TextView)view.findViewById(R.id.item_swipe_left_indicator);
                     leftView.setVisibility(View.VISIBLE);
                     leftView.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
                 }

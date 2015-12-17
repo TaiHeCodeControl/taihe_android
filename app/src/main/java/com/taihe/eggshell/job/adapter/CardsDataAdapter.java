@@ -21,8 +21,8 @@ public class CardsDataAdapter extends BaseAdapter {
 
     private Context mContext;
     private ArrayList<JobInfo> jblist;
-    Bitmap bitmap;
-    FinalBitmap finalBitmap;
+    private Bitmap bitmap;
+    private FinalBitmap finalBitmap;
     public CardsDataAdapter(Context context,ArrayList<JobInfo> list){
         this.mContext = context;
         this.jblist = list;
@@ -73,7 +73,6 @@ public class CardsDataAdapter extends BaseAdapter {
         }else{
             holder = (CardViewHolder)contentView.getTag();
         }
-
 
             finalBitmap.display(holder.comImageView,jobInfo.getCom_logo(),bitmap,bitmap);
             holder.positionView.setText(jobInfo.getJob_name());
