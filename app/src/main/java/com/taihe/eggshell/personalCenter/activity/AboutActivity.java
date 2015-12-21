@@ -22,9 +22,10 @@ public class AboutActivity extends BaseActivity{
     @Override
     public void initView() {
         setContentView(R.layout.activity_about);
-        txt_about_tell = (TextView)findViewById(R.id.txt_about_tell);
         super.initView();
         mContext = this;
+
+        txt_about_tell = (TextView)findViewById(R.id.txt_about_tell);
         txt_about_tell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,6 +40,11 @@ public class AboutActivity extends BaseActivity{
     public void initData() {
         super.initData();
         super.initTitle("关于蛋壳儿");
+//        WebView webView = (WebView)findViewById(R.id.id_webview);
+//        webView.getSettings().setJavaScriptEnabled(true);
+//        webView.getSettings().setAllowFileAccessFromFileURLs(true);
+//        webView.loadUrl("file:///android_asset/asdd.htm");
+//        webView.loadUrl("http://www.baidu.com");
     }
 
     @Override

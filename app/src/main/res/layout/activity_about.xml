@@ -12,6 +12,11 @@
         android:layout_height="0.5dp"
         android:background="@color/line_gray" />
 
+    <!--<WebView
+        android:id="@+id/id_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>-->
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -59,7 +64,7 @@
                 android:layout_marginLeft="15dip"
                 android:layout_marginRight="15dip"
                 android:lineSpacingExtra="5dp"
-                android:text="联系我们\n蛋壳儿之家"
+                android:text="联系我们"
                 android:textColor="@color/font_color_black"
                 android:textSize="12dp" />
             <LinearLayout
@@ -100,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12dp"
                 android:textColor="@color/font_color_gray_jobsearch"
-                android:text="北京太和百富管理咨询有限公司   版权所有"/>
+                android:text="北京蛋壳无限科技有限公司   版权所有"/>
         </LinearLayout>
 
     </ScrollView>
