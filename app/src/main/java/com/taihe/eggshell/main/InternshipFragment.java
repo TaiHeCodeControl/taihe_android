@@ -35,6 +35,7 @@ import com.taihe.eggshell.job.bean.JobFilterUtils;
 import com.taihe.eggshell.job.bean.JobInfo;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.entity.User;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.swipecard.SwipeFlingAdapterView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -74,6 +75,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     private CardsDataAdapter arrayAdapter;
     public List<JobInfo> jobInfos = new ArrayList<JobInfo>();
     private SwipeFlingAdapterView flingContainer;
+    private LoadingProgressDialog dialog;
 
     private RefreshJobListListener jobListListener;
 
@@ -153,6 +155,8 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
 
     private void initView(){
 
+        dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
+
         backLayout = (RelativeLayout) rootView.findViewById(R.id.iv_findjob_back);
         findjob_title = (TextView) rootView.findViewById(R.id.tv_findjob_title);
         iv_search = (ImageView) rootView.findViewById(R.id.iv_findjob_search);
@@ -181,6 +185,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     private void initData(){
         findjob_title.setText("找工作");
 
+        dialog.show();
         getList();
         user = EggshellApplication.getApplication().getUser();
         arrayAdapter =  new CardsDataAdapter(mContext,al);
@@ -336,6 +341,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
+                dialog.dismiss();
                 try {
 //                    Log.v("JOB:", (String) o);
                     JSONObject jsonObject = new JSONObject((String) o);
@@ -372,6 +378,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                dialog.dismiss();
 //                Log.v(TAG,new String(volleyError.networkResponse.data));
 //                ToastUtils.show(mContext, volleyError);
             }

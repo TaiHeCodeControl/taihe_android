@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -107,7 +106,7 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
     private void initData(){
         //首页传的type类型
         type = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "type", "");
-
+        dialog.show();
         getList();
         user = EggshellApplication.getApplication().getUser();
         arrayAdapter =  new CardsDataAdapter(mContext,al);
@@ -227,7 +226,6 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-                dialog.dismiss();
                 try {
 //                    Log.v(TAG, (String) o);
                     JSONObject jsonObject = new JSONObject((String) o);
@@ -245,7 +243,6 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                dialog.dismiss();
                 ToastUtils.show(mContext, "网络异常");
             }
         };
@@ -332,7 +329,7 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
         param.put("job1", job1);
         param.put("job1_son",job1_son);
 
-        Log.v(TAG, param.toString());
+//        Log.v(TAG, param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_LIST, false, param, true, listener, errorListener);
     }
 }
