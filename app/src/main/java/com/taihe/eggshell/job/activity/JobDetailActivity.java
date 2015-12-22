@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.ant.liao.GifView;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
@@ -70,7 +71,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
     private TextView tv_jobdetail_description;
     private TextView tv_companyAddress;
-
+    GifView gf1;
     private int UserId;
     private User user;
 
@@ -240,6 +241,19 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         moreJobListView.setFocusable(false);
         applyButton = (Button) findViewById(R.id.id_jobinfo_apply_button);
         id_jobinfo_logo = (ImageView) findViewById(R.id.id_jobinfo_logo);
+
+//        // 从xml中得到GifView的句柄
+//        gf1 = (GifView) findViewById(R.id.gif1);
+//        // 设置Gif图片源
+//        gf1.setGifImage(R.drawable.gif1);
+//        // 添加监听器
+////        gf1.setOnClickListener(this);
+//        // 设置显示的大小，拉伸或者压缩
+////        gf1.setShowDimension(300, 300);
+//        // 设置加载方式：先加载后显示、边加载边显示、只显示第一帧再显示
+//        gf1.setGifImageType(GifView.GifImageType.COVER);
+
+
 
         applyButton.setOnClickListener(this);
         collectionImg.setOnClickListener(this);
