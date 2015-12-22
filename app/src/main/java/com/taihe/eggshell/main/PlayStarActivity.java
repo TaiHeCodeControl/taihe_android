@@ -93,6 +93,7 @@ public class PlayStarActivity extends BaseActivity{
                 playView.onRefreshComplete();
             }
         });
+        loading.show();
         getListData();
     }
 

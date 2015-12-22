@@ -128,7 +128,8 @@ public class InternshipActivity extends BaseActivity implements View.OnClickList
                 return false;
             }
         });
-       updataUI();
+        loading.show();
+        updataUI();
    }
     public void updataUI(){
     //返回监听事件
