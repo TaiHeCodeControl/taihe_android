@@ -28,7 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="20dp"
         android:gravity="center_horizontal"
-        android:text="北京太和百富管理咨询有限公司   版权所有"
+        android:text="北京蛋壳无限科技有限公司   版权所有"
         android:textColor="#646464"
         android:textSize="12sp" />
 </RelativeLayout>

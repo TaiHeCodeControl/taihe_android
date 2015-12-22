@@ -284,7 +284,9 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
                             }.getType());
                             al.addAll(joblist);
                             arrayAdapter.notifyDataSetChanged();
-
+                            if(al.size()>0){
+                                flingContainer.setBackgroundResource(R.drawable.card_stack_background);
+                            }
                         }
                     }else {
                         ToastUtils.show(mContext, "获取失败");

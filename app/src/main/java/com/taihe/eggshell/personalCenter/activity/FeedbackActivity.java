@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -108,7 +107,9 @@ public class FeedbackActivity extends BaseActivity{
     private void toSubmit() {
 
         Map<String,String> dataParams = new HashMap<String, String>();
-        dataParams.put("uid","" + EggshellApplication.getApplication().getUser().getId());
+        if(null!=EggshellApplication.getApplication().getUser()){
+            dataParams.put("uid","" + EggshellApplication.getApplication().getUser().getId());
+        }
         dataParams.put("source","3");
 //        dataParams.put("version",version);
         dataParams.put("opinion",content);
@@ -121,10 +122,9 @@ public class FeedbackActivity extends BaseActivity{
             public void onResponse(Object obj) {
 
                 try {
-                    Log.v(TAG, (String) obj);
+//                    Log.v(TAG, (String) obj);
                     JSONObject jsonObject = new JSONObject((String) obj);
                     int code = jsonObject.getInt("code");
-                    System.out.println("code=========" + code);
                     if (code == 0) {
 
                         String msg = jsonObject.getString("message");
@@ -146,7 +146,7 @@ public class FeedbackActivity extends BaseActivity{
             public void onErrorResponse(VolleyError volleyError) {
                 try {
                     if (null != volleyError.networkResponse.data) {
-                        Log.v("FEEDBACK:", new String(volleyError.networkResponse.data));
+//                        Log.v("FEEDBACK:", new String(volleyError.networkResponse.data));
                     }
                     ToastUtils.show(mContext, "网络异常");
                 } catch (Exception e) {

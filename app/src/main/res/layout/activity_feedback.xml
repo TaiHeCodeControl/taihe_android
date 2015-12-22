@@ -24,7 +24,8 @@
             android:gravity="top"
             android:hint="请留下您的宝贵意见，我们会尽快处理..."
             android:padding="10dp"
-            android:textColor="#C8C8C8"
+            android:textColor="#323232"
+            android:textColorHint="#C8C8C8"
             android:textSize="13sp" />
 
         <TextView
@@ -77,7 +78,8 @@
         android:gravity="top"
         android:hint="QQ号码"
         android:padding="10dp"
-        android:textColor="#C8C8C8"
+        android:textColorHint="#C8C8C8"
+        android:textColor="#323232"
         android:textSize="13sp" />
 
     <EditText
@@ -91,13 +93,14 @@
         android:gravity="top"
         android:hint="邮箱地址"
         android:padding="10dp"
-        android:textColor="#C8C8C8"
+        android:textColorHint="#C8C8C8"
+        android:textColor="#323232"
         android:textSize="13sp" />
 
     <Button
         android:id="@+id/btn_feedback_submit"
         android:layout_width="150dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginTop="15dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/lanniu"

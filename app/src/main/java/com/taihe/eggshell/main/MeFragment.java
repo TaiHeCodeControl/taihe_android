@@ -387,12 +387,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 //                break;
 
             case R.id.rl_mine_feedback:
-                if(null!= EggshellApplication.getApplication().getUser()){
-                    intent = new Intent(mContext, FeedbackActivity.class);
-                    startActivity(intent);
-                }else{
-                    ToastUtils.show(mContext,"请登录");
-                }
+                intent = new Intent(mContext, FeedbackActivity.class);
+                startActivity(intent);
                 break;
 
             case R.id.rl_mine_checkupdate://检查更新
