@@ -58,7 +58,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
     private View rootView;
     private TextView findjob_title;
     private TextView rightView,leftView;
-    private ImageView iv_search,iv_filter;
+    private ImageView iv_search,iv_filter,iv_no_data;
     private RelativeLayout backLayout;
     private LinearLayout linearLayout;
 
@@ -162,6 +162,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         iv_search = (ImageView) rootView.findViewById(R.id.iv_findjob_search);
         iv_filter = (ImageView) rootView.findViewById(R.id.iv_findjob_filter);
         flingContainer = (SwipeFlingAdapterView)rootView.findViewById(R.id.frame);
+        iv_no_data = (ImageView) rootView.findViewById(R.id.id_no_data);
 
         iv_search.setOnClickListener(this);
         iv_filter.setOnClickListener(this);
@@ -198,7 +199,8 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                     jobInfo = al.get(0);
                     al.remove(0);
                     if(al.size()==0){
-                        flingContainer.setBackgroundResource(R.drawable.no_data);
+                        flingContainer.setBackgroundResource(R.color.white);
+                        iv_no_data.setVisibility(View.VISIBLE);
                     }
                 }else{
                     Intent intent = new Intent(mContext, LoginActivity.class);
@@ -236,10 +238,18 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                     linearLayout = (LinearLayout)view.findViewById(R.id.id_transprent_card);
                     linearLayout.setVisibility(View.VISIBLE);
                     if(scrollProgressPercent < 0){//left
-                        linearLayout.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                        if(scrollProgressPercent<-0.6){
+                            linearLayout.setAlpha(0.6f);
+                        }else{
+                            linearLayout.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                        }
                         islogin = true;
                     }else{//right
-                        linearLayout.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+                        if(scrollProgressPercent > 0.6){
+                            linearLayout.setAlpha(0.6f);
+                        }else {
+                            linearLayout.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+                        }
                         if (null == user) {//登录
                             EggshellApplication.getApplication().setLoginTag("findJobCard");
                             islogin = false;
@@ -366,6 +376,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                             arrayAdapter.notifyDataSetChanged();
                             if(al.size()>0){
                                 flingContainer.setBackgroundResource(R.drawable.card_stack_background);
+                                iv_no_data.setVisibility(View.GONE);
                             }
                         }
                     } else {
