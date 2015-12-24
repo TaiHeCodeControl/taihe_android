@@ -92,14 +92,14 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
 
         //蒙层，提示用，只显示一次
         final FrameLayout frameLayout = (FrameLayout)findViewById(R.id.id_monogo);
-        if(!PrefUtils.getBooleanData(mContext,PrefUtils.CONFIG,true)){
+        if(!PrefUtils.getBooleanData(mContext,PrefUtils.KEY_FIRST_IN,true)){
             frameLayout.setVisibility(View.GONE);
         }
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 frameLayout.setVisibility(View.GONE);
-                PrefUtils.saveBooleanData(mContext,PrefUtils.CONFIG,false);
+                PrefUtils.saveBooleanData(mContext,PrefUtils.KEY_FIRST_IN,false);
             }
         });
     }

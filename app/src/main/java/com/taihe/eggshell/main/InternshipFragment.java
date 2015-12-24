@@ -168,23 +168,23 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
         iv_filter.setOnClickListener(this);
         backLayout.setVisibility(View.GONE);
 
+    }
+
+    private void initData(){
+        findjob_title.setText("找工作");
+
         //蒙层，提示用，只显示一次
         final FrameLayout frameLayout = (FrameLayout) rootView.findViewById(R.id.id_monogo);
-        if(!PrefUtils.getBooleanData(mContext,PrefUtils.CONFIG,true)){
+        if(!PrefUtils.getBooleanData(mContext, PrefUtils.KEY_FIRST_IN, true)){
             frameLayout.setVisibility(View.GONE);
         }
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 frameLayout.setVisibility(View.GONE);
-                PrefUtils.saveBooleanData(mContext,PrefUtils.CONFIG,false);
+                PrefUtils.saveBooleanData(mContext,PrefUtils.KEY_FIRST_IN,false);
             }
         });
-
-    }
-
-    private void initData(){
-        findjob_title.setText("找工作");
 
         dialog.show();
         getList();

@@ -39,9 +39,9 @@ public class PrefUtils {
 	public static final String KEY_APP_DEBUG = "key_app_debug";
 
 	/**
-	 * 第一次登录
+	 * 第一次
 	 */
-	public static final String KEY_FIRST_LOGIN = "key_first_login";
+	public static final String KEY_FIRST_IN = "key_first_in";
 
     /**
      * 第一次使用应用
