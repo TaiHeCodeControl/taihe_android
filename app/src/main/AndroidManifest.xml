@@ -204,6 +204,11 @@
             android:name=".resume.ResumeManagerActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".resume.ResumeListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".resume.ResumeTechScanActivity"
             android:label="@string/app_name"

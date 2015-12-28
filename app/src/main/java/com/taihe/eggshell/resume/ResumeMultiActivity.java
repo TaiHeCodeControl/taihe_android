@@ -68,37 +68,43 @@ public class ResumeMultiActivity extends BaseActivity{
                 startActivity(intent);
                 break;
             case R.id.id_work_exper:
-                intent = new Intent(mContext,ResumeWorkActivity.class);
+                //intent = new Intent(mContext,ResumeWorkActivity.class);
+                intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
                 intent.putExtra("title","工作经历");
                 startActivity(intent);
                 break;
             case R.id.id_edu_exper:
-                intent = new Intent(mContext,ResumeEduActivity.class);
+//                intent = new Intent(mContext,ResumeEduActivity.class);
+                intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
                 intent.putExtra("title","教育经历");
                 startActivity(intent);
                 break;
             case R.id.id_train_exper:
-                intent = new Intent(mContext,ResumeTrainActivity.class);
+//                intent = new Intent(mContext,ResumeTrainActivity.class);
+                intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
                 intent.putExtra("title","培训经历");
                 startActivity(intent);
                 break;
             case R.id.id_industy_tech:
-                intent = new Intent(mContext,ResumeTechActivity.class);
+//                intent = new Intent(mContext,ResumeTechActivity.class);
+                intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
                 intent.putExtra("title","专业技能");
                 startActivity(intent);
                 break;
             case R.id.id_project_exper:
-                intent = new Intent(mContext,ResumeProjectActivity.class);
+//                intent = new Intent(mContext,ResumeProjectActivity.class);
+                intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
                 intent.putExtra("title","项目经历");
                 startActivity(intent);
                 break;
             case R.id.id_conver_book:
-                intent = new Intent(mContext,ResumeBookActivity.class);
+//                intent = new Intent(mContext,ResumeBookActivity.class);
+                intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
                 intent.putExtra("title","证书");
                 startActivity(intent);
