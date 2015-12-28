@@ -3,14 +3,12 @@ package com.taihe.eggshell.main;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
@@ -111,7 +109,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 loading.show();
                 img_around_tag1.setBackgroundResource(R.drawable.high);
                 img_around_tag2.setBackgroundResource(R.drawable.fulick);
-                txt_around_tag1.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
+                txt_around_tag1.setTextColor(getActivity().getResources().getColor(R.color.include_title_color));
                 txt_around_tag2.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
                 page=1;
                 playView.setVisibility(View.VISIBLE);
@@ -124,7 +122,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 loading.show();
                 img_around_tag1.setBackgroundResource(R.drawable.highck);
                 img_around_tag2.setBackgroundResource(R.drawable.fuli);
-                txt_around_tag2.setTextColor(getActivity().getResources().getColor(R.color.font_color_red));
+                txt_around_tag2.setTextColor(getActivity().getResources().getColor(R.color.include_title_color));
                 txt_around_tag1.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
                 page=1;
 //                playView.setVisibility(View.GONE);

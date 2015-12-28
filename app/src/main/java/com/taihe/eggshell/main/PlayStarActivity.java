@@ -108,7 +108,7 @@ public class PlayStarActivity extends BaseActivity{
                 loading.show();
                 img_around_tag1.setBackgroundResource(R.drawable.high);
                 img_around_tag2.setBackgroundResource(R.drawable.fulick);
-                txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.font_color_red));
+                txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.include_title_color));
                 txt_around_tag2.setTextColor(mContext.getResources().getColor(R.color.font_color_black));
                 page=1;
                 playView.setVisibility(View.VISIBLE);
@@ -121,7 +121,7 @@ public class PlayStarActivity extends BaseActivity{
                 loading.show();
                 img_around_tag1.setBackgroundResource(R.drawable.highck);
                 img_around_tag2.setBackgroundResource(R.drawable.fuli);
-                txt_around_tag2.setTextColor(mContext.getResources().getColor(R.color.font_color_red));
+                txt_around_tag2.setTextColor(mContext.getResources().getColor(R.color.include_title_color));
                 txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.font_color_black));
                 page=1;
 //                playView.setVisibility(View.GONE);

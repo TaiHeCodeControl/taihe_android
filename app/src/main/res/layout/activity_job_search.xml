@@ -54,7 +54,7 @@
             android:background="@null"
             android:text="搜索职位"
             android:textSize="@dimen/font_size_32"
-            android:textColor="@color/font_color_red"/>
+            android:textColor="@color/origin"/>
     </RelativeLayout>
 
     <TextView
