@@ -82,12 +82,13 @@ public class ResumeListActivity extends BaseActivity{
         }
         id_resume_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int posion, long l) {
                 switch (strType){
                     case "1":
                         intent = new Intent(mContext,ResumeWorkActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","1");
+                        intent.putExtra("posion",posion);
                         intent.putExtra("strJson",worklist);
                         intent.putExtra("title","工作经历");
                         startActivity(intent);
@@ -96,6 +97,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent = new Intent(mContext,ResumeEduActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","2");
+                        intent.putExtra("posion",posion);
                         intent.putExtra("strJson",worklist);
                         intent.putExtra("title","教育经历");
                         startActivity(intent);
@@ -104,6 +106,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent = new Intent(mContext,ResumeTrainActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","3");
+                        intent.putExtra("posion",posion);
                         intent.putExtra("strJson",worklist);
                         intent.putExtra("title","培训经历");
                         startActivity(intent);
@@ -112,6 +115,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent = new Intent(mContext,ResumeTechActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","4");
+                        intent.putExtra("posion",posion);
                         intent.putExtra("strJson",worklist);
                         intent.putExtra("title","专业技能");
                         startActivity(intent);
@@ -120,6 +124,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent = new Intent(mContext,ResumeProjectActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","5");
+                        intent.putExtra("posion",posion);
                         intent.putExtra("strJson",worklist);
                         intent.putExtra("title","项目经验");
                         startActivity(intent);
@@ -128,6 +133,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent = new Intent(mContext,ResumeBookActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","6");
+                        intent.putExtra("posion",posion);
                         intent.putExtra("strJson",worklist);
                         intent.putExtra("title","证书");
                         startActivity(intent);
@@ -147,6 +153,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent = new Intent(mContext,ResumeWorkActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
+                        intent.putExtra("posion",0);
                         intent.putExtra("strJson","");
                         intent.putExtra("title","工作经历");
                         startActivity(intent);
@@ -155,6 +162,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent = new Intent(mContext,ResumeEduActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
+                        intent.putExtra("posion",0);
                         intent.putExtra("strJson","");
                         intent.putExtra("title","教育经历");
                         startActivity(intent);
@@ -163,6 +171,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent = new Intent(mContext,ResumeTrainActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
+                        intent.putExtra("posion",0);
                         intent.putExtra("strJson","");
                         intent.putExtra("title","培训经历");
                         startActivity(intent);
@@ -171,6 +180,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent = new Intent(mContext,ResumeTechActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
+                        intent.putExtra("posion",0);
                         intent.putExtra("strJson","");
                         intent.putExtra("title","专业技能");
                         startActivity(intent);
@@ -179,6 +189,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent = new Intent(mContext,ResumeProjectActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
+                        intent.putExtra("posion",0);
                         intent.putExtra("strJson","");
                         intent.putExtra("title","项目经验");
                         startActivity(intent);
@@ -187,6 +198,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent = new Intent(mContext,ResumeBookActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
+                        intent.putExtra("posion",0);
                         intent.putExtra("strJson","");
                         intent.putExtra("title","证书");
                         startActivity(intent);

@@ -13,12 +13,15 @@ import android.widget.Toast;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
@@ -29,6 +32,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,12 +44,13 @@ public class ResumeWorkActivity extends BaseActivity{
 
     private Context mContext;
 
-    private TextView commitText,resetText,workTimeStart,workTimeEnd,resumename;
+    private TextView commitText,deleteText,workTimeStart,workTimeEnd,resumename;
     private EditText companyEdit,departEdit,positionEdit,contextEdit;
     private CheckBox radioButton;
-    private String companyName,startTime,endTime,departName,positionName,contextWord;
+    private String companyName,startTime,endTime,departName,positionName,contextWord,strJson,strType;
     private TimeDialog timeDialog;
     private LoadingProgressDialog loading;
+    private int positionnum;
     private boolean isStart = false;
     private Resumes eid;
     private TimeDialog.CustomTimeListener customTimeListener = new TimeDialog.CustomTimeListener() {
@@ -70,7 +75,7 @@ public class ResumeWorkActivity extends BaseActivity{
 
         resumename = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_commit);
-        resetText = (TextView)findViewById(R.id.id_reset);
+        deleteText = (TextView)findViewById(R.id.id_delete);
         companyEdit = (EditText)findViewById(R.id.id_company_name);
         departEdit = (EditText)findViewById(R.id.id_department);
         positionEdit = (EditText)findViewById(R.id.id_position);
@@ -83,7 +88,7 @@ public class ResumeWorkActivity extends BaseActivity{
         workTimeStart.setOnClickListener(this);
         workTimeEnd.setOnClickListener(this);
         commitText.setOnClickListener(this);
-        resetText.setOnClickListener(this);
+        deleteText.setOnClickListener(this);
         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -103,9 +108,17 @@ public class ResumeWorkActivity extends BaseActivity{
         super.initData();
         initTitle("写简历");
         eid=getIntent().getParcelableExtra("eid");
+        strJson=getIntent().getStringExtra("strJson");
+        strType=getIntent().getStringExtra("type");
+        positionnum=getIntent().getIntExtra("posion",0);
         resumename.setText(eid.getName()+"-工作经历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
         loading = new LoadingProgressDialog(mContext,"正在提交...");
+        if(!"".equals(strType)){
+            Gson gson = new Gson();
+            List<ResumeData> worklists = gson.fromJson(strJson,new TypeToken<List<ResumeData>>(){}.getType());
+            companyEdit.setText(worklists.get(positionnum).getName());
+        }
     }
 
     @Override
@@ -136,13 +149,8 @@ public class ResumeWorkActivity extends BaseActivity{
                     }
                 }
                 break;
-            case R.id.id_reset:
-                companyEdit.setText("");
-                workTimeStart.setText("");
-                workTimeEnd.setText("");
-                departEdit.setText("");
-                positionEdit.setText("");
-                contextEdit.setText("");
+            case R.id.id_delete:
+                ToastUtils.show(mContext,"id_delete");
                 break;
         }
     }

@@ -59,6 +59,7 @@ public class ResumeCenterAdapter extends BaseAdapter{
         }
 
         viewHolder.tag1.setText(work.getName());
+
         switch (stateposition){
             case "1":
                 viewHolder.tag2.setText(work.getTitle());
