@@ -71,7 +71,7 @@ public class ResumeProjectActivity extends BaseActivity{
 
         resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_commit);
-        resetText = (TextView)findViewById(R.id.id_reset);
+        resetText = (TextView)findViewById(R.id.id_delete);
         projectEdit = (EditText)findViewById(R.id.id_tech_name);
         invaraEdit = (EditText)findViewById(R.id.id_tech_level);
         departEdit = (EditText)findViewById(R.id.id_department);
@@ -138,14 +138,13 @@ public class ResumeProjectActivity extends BaseActivity{
 
                 }
                 break;
-            case R.id.id_reset:
+            case R.id.id_delete:
                 projectEdit.setText("");
                 schoolTimeStart.setText("");
                 schoolTimeEnd.setText("");
                 invaraEdit.setText("");
                 departEdit.setText("");
                 contextEdit.setText("");
-
                 break;
         }
     }

@@ -3,7 +3,6 @@ package com.taihe.eggshell.resume;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -198,7 +197,7 @@ public class ResumeScanActivity extends BaseActivity{
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-                Log.v(TAG,(String)o);
+//                Log.v(TAG,(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");

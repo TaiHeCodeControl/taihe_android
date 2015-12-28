@@ -95,4 +95,6 @@ public class Urls {
     public static final String RESUME_PROJECT_LIST = BASE_HYR_MOBILE_URL +"/Except/project_list";//项目经验
     public static final String RESUME_CERT_LIST = BASE_HYR_MOBILE_URL +"/Except/cert_list";//简历证书
 
+
+    public static final String METHOD_GET_SELF = "";//自我评价
 }

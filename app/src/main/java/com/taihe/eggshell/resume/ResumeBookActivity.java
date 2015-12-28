@@ -2,7 +2,6 @@ package com.taihe.eggshell.resume;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,7 +36,7 @@ public class ResumeBookActivity extends BaseActivity{
 
     private Context mContext;
 
-    private TextView commitText,resetText,timeEdit,resume_name;
+    private TextView commitText,deleteText,timeEdit,resume_name;
     private EditText bookEdit,techLevelEdit,contextEdit;
     private TimeDialog timeDialog;
     private LoadingProgressDialog loading;
@@ -61,7 +60,7 @@ public class ResumeBookActivity extends BaseActivity{
 
         resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_commit);
-        resetText = (TextView)findViewById(R.id.id_reset);
+        deleteText = (TextView)findViewById(R.id.id_delete);
         bookEdit = (EditText)findViewById(R.id.id_tech_name);
         timeEdit = (TextView)findViewById(R.id.id_tech_type);
         techLevelEdit = (EditText)findViewById(R.id.id_tech_level);
@@ -70,7 +69,7 @@ public class ResumeBookActivity extends BaseActivity{
         commitText.setVisibility(View.VISIBLE);
         timeEdit.setOnClickListener(this);
         commitText.setOnClickListener(this);
-        resetText.setOnClickListener(this);
+        deleteText.setOnClickListener(this);
     }
 
     @Override
@@ -105,7 +104,7 @@ public class ResumeBookActivity extends BaseActivity{
 
                 }
                 break;
-            case R.id.id_reset:
+            case R.id.id_delete:
                 bookEdit.setHint("");
                 timeEdit.setHint("");
                 techLevelEdit.setHint("");
@@ -143,7 +142,6 @@ public class ResumeBookActivity extends BaseActivity{
                 loading.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
-                    Log.d("work", jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
