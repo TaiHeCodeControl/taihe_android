@@ -7,6 +7,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left|center"
+            android:paddingTop="10dp"
             android:paddingLeft="15dp"
             android:orientation="vertical">
             <TextView
@@ -50,7 +51,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     android:id="@+id/id_edit"
