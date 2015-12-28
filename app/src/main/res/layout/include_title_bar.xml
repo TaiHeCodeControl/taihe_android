@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:scaleType="fitStart"
-            android:src="@drawable/fanhui"/>
+            android:src="@drawable/top_return_icon"/>
     </LinearLayout>
 
     <TextView

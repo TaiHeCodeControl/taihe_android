@@ -359,7 +359,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 iv_quancheng.setImageResource(R.drawable.quancheng01);
                 iv_fujin.setImageResource(R.drawable.fujin01);
 
-                tv_allJob.setTextColor(getResources().getColor(R.color.font_color_red));
+                tv_allJob.setTextColor(getResources().getColor(R.color.include_title_color));
                 tv_fujin.setTextColor(getResources().getColor(R.color.font_color_black));
                 break;
             case R.id.rl_findjob_fujin://附近
@@ -375,7 +375,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 iv_fujin.setImageResource(R.drawable.fujin02);
 
                 tv_allJob.setTextColor(getResources().getColor(R.color.font_color_black));
-                tv_fujin.setTextColor(getResources().getColor(R.color.font_color_red));
+                tv_fujin.setTextColor(getResources().getColor(R.color.include_title_color));
                 break;
             case R.id.iv_findjob_search://关键字搜索
 
