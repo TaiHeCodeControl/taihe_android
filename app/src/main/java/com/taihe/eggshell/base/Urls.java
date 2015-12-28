@@ -88,6 +88,11 @@ public class Urls {
     public static final String COM_GET_URL = BASE_HYR_MOBILE_URL + "/Company";//企业首页
 
 
-    public static final String RESUME_WORK_LIST = "/Except/work_list";//工作
+    public static final String RESUME_WORK_LIST = BASE_HYR_MOBILE_URL +"/Except/work_list";//工作
+    public static final String RESUME_EDU_LIST = BASE_HYR_MOBILE_URL +"/Except/edu_list";//教育
+    public static final String RESUME_TRAINING_LIST = BASE_HYR_MOBILE_URL +"/Except/training_list";//专业技能
+    public static final String RESUME_SKILL_LIST = BASE_HYR_MOBILE_URL +"/Except/skill_list";//专业技能
+    public static final String RESUME_PROJECT_LIST = BASE_HYR_MOBILE_URL +"/Except/project_list";//项目经验
+    public static final String RESUME_CERT_LIST = BASE_HYR_MOBILE_URL +"/Except/cert_list";//简历证书
 
 }

@@ -79,6 +79,7 @@ public class ResumeEduActivity extends BaseActivity{
         schoolTimeEnd = (TextView)findViewById(R.id.id_end_time);
         radioButton = (CheckBox)findViewById(R.id.id_gender);
 
+        commitText.setVisibility(View.VISIBLE);
         schoolTimeStart.setOnClickListener(this);
         schoolTimeEnd.setOnClickListener(this);
         commitText.setOnClickListener(this);

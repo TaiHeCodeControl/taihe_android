@@ -2,17 +2,37 @@ package com.taihe.eggshell.resume;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.resume.adapter.ResumeAdapter;
+import com.taihe.eggshell.resume.adapter.ResumeCenterAdapter;
+import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
+import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.umeng.analytics.MobclickAgent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wang on 2015/8/13.
@@ -25,8 +45,9 @@ public class ResumeListActivity extends BaseActivity{
     private TextView resumeName,id_resume_list_add;
     private ListView id_resume_list;
     private Intent intent;
-    private String strTypeTitle;
+    private String strTypeTitle,strType,strUrl;
     private Resumes resume;
+    private LoadingProgressDialog loading;
 
     @Override
     public void initView() {
@@ -37,28 +58,138 @@ public class ResumeListActivity extends BaseActivity{
         resumeName = (TextView)findViewById(R.id.id_resume_list_title);
         id_resume_list = (ListView)findViewById(R.id.id_resume_list);
         id_resume_list_add = (TextView)findViewById(R.id.id_resume_list_add);
-
+        id_resume_list_add.setOnClickListener(this);
     }
 
     @Override
     public void initData() {
         super.initData();
         initTitle("写简历");
-        resume = getIntent().getParcelableExtra("resume");
+        resume = getIntent().getParcelableExtra("eid");
+        strType = getIntent().getStringExtra("type");
+        strUrl = getIntent().getStringExtra("url");
         strTypeTitle = getIntent().getStringExtra("title");
         resumeName.setText(resume.getName()+"-"+strTypeTitle);
+        loading = new LoadingProgressDialog(mContext,"正在请求...");
+        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+            loading.show();
+            getData();
+        }else{
+            ToastUtils.show(mContext, R.string.check_network);
+        }
     }
 
     @Override
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()){
-
+            case R.id.id_resume_list_add:
+                switch (strType){
+                    case "1":
+                        intent = new Intent(mContext,ResumeWorkActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","1");
+                        intent.putExtra("url", Urls.RESUME_WORK_LIST);
+                        intent.putExtra("title","工作经历");
+                        startActivity(intent);
+                        break;
+                    case "2":
+                        intent = new Intent(mContext,ResumeEduActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","2");
+                        intent.putExtra("url", Urls.RESUME_EDU_LIST);
+                        intent.putExtra("title","教育经历");
+                        startActivity(intent);
+                        break;
+                    case "3":
+                        intent = new Intent(mContext,ResumeListActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","3");
+                        intent.putExtra("url", Urls.RESUME_TRAINING_LIST);
+                        intent.putExtra("title","培训经历");
+                        startActivity(intent);
+                        break;
+                    case "4":
+                        intent = new Intent(mContext,ResumeTechActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","4");
+                        intent.putExtra("url", Urls.RESUME_SKILL_LIST);
+                        intent.putExtra("title","专业技能");
+                        startActivity(intent);
+                        break;
+                    case "5":
+                        intent = new Intent(mContext,ResumeProjectActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","5");
+                        intent.putExtra("url", Urls.RESUME_PROJECT_LIST);
+                        intent.putExtra("title","项目经验");
+                        startActivity(intent);
+                        break;
+                    case "6":
+                        intent = new Intent(mContext,ResumeBookActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","6");
+                        intent.putExtra("url", Urls.RESUME_CERT_LIST);
+                        intent.putExtra("title","证书");
+                        startActivity(intent);
+                        break;
+                }
+                break;
         }
     }
+
+    private void getData() {
+        //返回监听事件
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object obj) {//返回值
+                loading.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject((String) obj);
+                    Log.d("edu", jsonObject.toString());
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        try{
+                            Gson gson = new Gson();
+                            String worklist = jsonObject.toString();
+                            List<ResumeData> worklists = gson.fromJson(worklist,new TypeToken<List<ResumeData>>(){}.getType());
+                            switch (strType){
+                                case "1":
+                                    id_resume_list.setAdapter(new ResumeCenterAdapter(mContext,worklists,strType));
+                                break;
+                            }
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        String msg = jsonObject.getString("message");
+                        Toast.makeText(mContext, msg.toString(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {//返回值
+                loading.dismiss();
+                ToastUtils.show(mContext, "网络异常");
+            }
+        };
+
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
+        map.put("eid",resume.getRid()+"");
+
+        RequestUtils.createRequest(mContext, strUrl, "", true, map, true, listener, errorListener);
+    }
+
     @Override
     public void onResume() {
         super.onResume();
+        getData();
         MobclickAgent.onResume(mContext);
     }
 

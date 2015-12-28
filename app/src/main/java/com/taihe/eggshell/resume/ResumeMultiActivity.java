@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.resume.entity.Resumes;
 import com.umeng.analytics.MobclickAgent;
 
@@ -71,6 +72,8 @@ public class ResumeMultiActivity extends BaseActivity{
                 //intent = new Intent(mContext,ResumeWorkActivity.class);
                 intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
+                intent.putExtra("type","1");
+                intent.putExtra("url", Urls.RESUME_WORK_LIST);
                 intent.putExtra("title","工作经历");
                 startActivity(intent);
                 break;
@@ -78,6 +81,8 @@ public class ResumeMultiActivity extends BaseActivity{
 //                intent = new Intent(mContext,ResumeEduActivity.class);
                 intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
+                intent.putExtra("type","2");
+                intent.putExtra("url", Urls.RESUME_EDU_LIST);
                 intent.putExtra("title","教育经历");
                 startActivity(intent);
                 break;
@@ -85,6 +90,8 @@ public class ResumeMultiActivity extends BaseActivity{
 //                intent = new Intent(mContext,ResumeTrainActivity.class);
                 intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
+                intent.putExtra("type","3");
+                intent.putExtra("url", Urls.RESUME_TRAINING_LIST);
                 intent.putExtra("title","培训经历");
                 startActivity(intent);
                 break;
@@ -92,6 +99,8 @@ public class ResumeMultiActivity extends BaseActivity{
 //                intent = new Intent(mContext,ResumeTechActivity.class);
                 intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
+                intent.putExtra("type","4");
+                intent.putExtra("url", Urls.RESUME_SKILL_LIST);
                 intent.putExtra("title","专业技能");
                 startActivity(intent);
                 break;
@@ -99,13 +108,17 @@ public class ResumeMultiActivity extends BaseActivity{
 //                intent = new Intent(mContext,ResumeProjectActivity.class);
                 intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
-                intent.putExtra("title","项目经历");
+                intent.putExtra("type","5");
+                intent.putExtra("url", Urls.RESUME_PROJECT_LIST);
+                intent.putExtra("title","项目经验");
                 startActivity(intent);
                 break;
             case R.id.id_conver_book:
 //                intent = new Intent(mContext,ResumeBookActivity.class);
                 intent = new Intent(mContext,ResumeListActivity.class);
                 intent.putExtra("eid",resume);
+                intent.putExtra("type","6");
+                intent.putExtra("url", Urls.RESUME_CERT_LIST);
                 intent.putExtra("title","证书");
                 startActivity(intent);
                 break;
