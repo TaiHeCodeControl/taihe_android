@@ -187,20 +187,31 @@
                 android:paddingTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="求职意向"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/red"/>
+                    android:padding="13dp"
+                    android:background="@color/scan_button_color">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/line_gray"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="求职意向"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/id_job_intention"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="编辑"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/edit_icon"/>
+                    </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -314,42 +325,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="工作经历"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/red"/>
+                    android:padding="13dp"
+                    android:background="@color/scan_button_color">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/line_gray"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="工作经历"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/id_to_add_work"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="新增"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/add_icon"/>
+                </RelativeLayout>
 
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_work_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="@color/white"
+                    android:divider="@color/line_gray"
                     android:dividerHeight="0.5dp"
                     android:background="@color/white"/>
-
-                <TextView
-                    android:id="@+id/id_to_add_work"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="暂时没有内容...点击添加"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/font_color_gray"
-                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -357,24 +368,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="教育经历"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/red"/>
+                    android:padding="13dp"
+                    android:background="@color/scan_button_color">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/line_gray"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="教育经历"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/id_to_add_edu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="新增"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/add_icon"/>
+                </RelativeLayout>
 
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_edu_list"
@@ -384,16 +405,6 @@
                     android:dividerHeight="0.5dp"
                     android:background="@color/white"/>
 
-                <TextView
-                    android:id="@+id/id_to_add_edu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="暂时没有内容...点击添加"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/font_color_gray"
-                    android:visibility="gone"/>
-
             </LinearLayout>
 
             <LinearLayout
@@ -403,20 +414,31 @@
                 android:background="@color/white"
                 android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:textColor="@color/red"
-                    android:text="专业技能"
-                    android:textSize="@dimen/font_size_15"/>
+                    android:padding="13dp"
+                    android:background="@color/scan_button_color">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/line_gray"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="专业技能"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/id_to_add_tech"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="新增"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/add_icon"/>
+                </RelativeLayout>
 
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_tech_list"
@@ -426,40 +448,40 @@
                     android:dividerHeight="0.5dp"
                     android:background="@color/white"/>
 
-                <TextView
-                    android:id="@+id/id_to_add_tech"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="暂时没有内容...点击添加"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/font_color_gray"
-                    android:visibility="gone"/>
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="项目经验"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/red"/>
+                    android:padding="13dp"
+                    android:background="@color/scan_button_color">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/line_gray"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="项目经验"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/id_to_add_project"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="新增"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/add_icon"/>
+                </RelativeLayout>
 
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_project_list"
@@ -469,40 +491,40 @@
                     android:dividerHeight="0.5dp"
                     android:background="@color/white"/>
 
-                <TextView
-                    android:id="@+id/id_to_add_project"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="暂时没有内容...点击添加"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/font_color_gray"
-                    android:visibility="gone"/>
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="证书"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/red"/>
+                    android:padding="13dp"
+                    android:background="@color/scan_button_color">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/line_gray"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="证书"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/id_to_add_book"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="新增"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/add_icon"/>
+                </RelativeLayout>
 
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_book_list"
@@ -512,40 +534,40 @@
                     android:dividerHeight="0.5dp"
                     android:background="@color/white"/>
 
-                <TextView
-                    android:id="@+id/id_to_add_book"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="暂时没有内容...点击添加"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/font_color_gray"
-                    android:visibility="gone"/>
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="培训经历"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/red"/>
+                    android:padding="13dp"
+                    android:background="@color/scan_button_color">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/line_gray"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="培训经历"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/id_to_add_train"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="新增"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/add_icon"/>
+                </RelativeLayout>
 
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_train_list"
@@ -555,41 +577,41 @@
                     android:dividerHeight="0.5dp"
                     android:background="@color/white"/>
 
-                <TextView
-                    android:id="@+id/id_to_add_train"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="暂时没有内容...点击添加"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/font_color_gray"
-                    android:visibility="gone"/>
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="20dp"
                 android:orientation="vertical">
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="自我评价"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/red"/>
+                    android:padding="13dp"
+                    android:background="@color/scan_button_color">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@color/line_gray"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="自我评价"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/id_to_add_self"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="编辑"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/add_icon"/>
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/id_self_desc"
@@ -600,15 +622,6 @@
                     android:text=""
                     android:textColor="@color/black"/>
 
-                <TextView
-                    android:id="@+id/id_to_add_self"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:text="暂时没有内容...点击添加"
-                    android:textSize="@dimen/font_size_15"
-                    android:textColor="@color/font_color_gray"
-                    android:visibility="gone"/>
             </LinearLayout>
 
             </LinearLayout>

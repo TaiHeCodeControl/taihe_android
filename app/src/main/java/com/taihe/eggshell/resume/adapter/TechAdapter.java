@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.resume.entity.ResumeData;
 
 import java.util.List;
@@ -52,6 +51,8 @@ public class TechAdapter extends BaseAdapter{
             viewHolder.techyears = (TextView)convertView.findViewById(R.id.id_contron_time);
             viewHolder.techlevel = (TextView)convertView.findViewById(R.id.id_hot_level);
             viewHolder.techn = (TextView)convertView.findViewById(R.id.id_tech);
+            viewHolder.delite = (TextView)convertView.findViewById(R.id.id_delite);
+            viewHolder.edit = (TextView)convertView.findViewById(R.id.id_edit);
 
             convertView.setTag(viewHolder);
         }else{
@@ -62,6 +63,19 @@ public class TechAdapter extends BaseAdapter{
         viewHolder.techyears.setText(skill.getLongtime()+"年");
         viewHolder.techname.setText(skill.getName());
         viewHolder.techn.setText(skill.getSkill());
+        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        viewHolder.delite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
         return convertView;
     }
@@ -70,6 +84,6 @@ public class TechAdapter extends BaseAdapter{
         TextView techname;
         TextView techyears;
         TextView techlevel;
-        TextView techn;
+        TextView techn,delite,edit;
     }
 }

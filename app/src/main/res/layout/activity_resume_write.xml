@@ -31,12 +31,12 @@
         <TextView
             android:id="@+id/id_create_resume"
             android:layout_width="60dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:gravity="center"
             android:text="必填"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:background="@drawable/chongzhi"
+            android:background="@color/origin"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />

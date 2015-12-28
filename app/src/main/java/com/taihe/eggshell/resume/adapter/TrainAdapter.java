@@ -53,6 +53,8 @@ public class TrainAdapter extends BaseAdapter{
             viewHolder.traindirection = (TextView)convertView.findViewById(R.id.id_train_direction);
             viewHolder.traincompnay = (TextView)convertView.findViewById(R.id.id_train_company);
             viewHolder.trainbrief = (TextView)convertView.findViewById(R.id.id_train_brief);
+            viewHolder.delite = (TextView)convertView.findViewById(R.id.id_delite);
+            viewHolder.edit = (TextView)convertView.findViewById(R.id.id_edit);
 
             convertView.setTag(viewHolder);
         }else{
@@ -63,7 +65,19 @@ public class TrainAdapter extends BaseAdapter{
         viewHolder.traincompnay.setText(train.getName());
         viewHolder.traindirection.setText(train.getTitle());
         viewHolder.trainbrief.setText(train.getContent());
+        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
+
+        viewHolder.delite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return convertView;
     }
 
@@ -71,6 +85,6 @@ public class TrainAdapter extends BaseAdapter{
         TextView traintime;
         TextView traincompnay;
         TextView traindirection;
-        TextView trainbrief;
+        TextView trainbrief,delite,edit;
     }
 }

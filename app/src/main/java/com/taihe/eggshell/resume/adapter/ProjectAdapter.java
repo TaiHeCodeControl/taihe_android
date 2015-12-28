@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.resume.entity.ResumeData;
 
@@ -53,6 +52,8 @@ public class ProjectAdapter extends BaseAdapter{
             viewHolder.projectpostion = (TextView)convertView.findViewById(R.id.id_own_posion);
             viewHolder.projectname = (TextView)convertView.findViewById(R.id.id_project_name);
             viewHolder.projectbrief = (TextView)convertView.findViewById(R.id.id_content);
+            viewHolder.delite = (TextView)convertView.findViewById(R.id.id_delite);
+            viewHolder.edit = (TextView)convertView.findViewById(R.id.id_edit);
 
             convertView.setTag(viewHolder);
         }else{
@@ -63,7 +64,19 @@ public class ProjectAdapter extends BaseAdapter{
         viewHolder.projectname.setText(project.getName());
         viewHolder.projectbrief.setText(project.getContent());
         viewHolder.projectpostion.setText(project.getTitle());
+        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
+
+        viewHolder.delite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return convertView;
     }
 
@@ -71,6 +84,6 @@ public class ProjectAdapter extends BaseAdapter{
         TextView projecttime;
         TextView projectname;
         TextView projectbrief;
-        TextView projectpostion;
+        TextView projectpostion,delite,edit;
     }
 }

@@ -79,6 +79,7 @@ public class ResumeWorkActivity extends BaseActivity{
         workTimeEnd = (TextView)findViewById(R.id.id_end_time);
         radioButton = (CheckBox)findViewById(R.id.id_gender);
 
+        commitText.setVisibility(View.VISIBLE);
         workTimeStart.setOnClickListener(this);
         workTimeEnd.setOnClickListener(this);
         commitText.setOnClickListener(this);

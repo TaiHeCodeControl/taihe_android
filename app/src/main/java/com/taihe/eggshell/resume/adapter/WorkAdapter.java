@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.resume.entity.ResumeData;
 
@@ -52,6 +51,8 @@ public class WorkAdapter extends BaseAdapter{
             viewHolder.workposition = (TextView)convertView.findViewById(R.id.id_position);
             viewHolder.workcompany = (TextView)convertView.findViewById(R.id.id_company_name);
             viewHolder.workcontent = (TextView)convertView.findViewById(R.id.id_work_content);
+            viewHolder.delite = (TextView)convertView.findViewById(R.id.id_delite);
+            viewHolder.edit = (TextView)convertView.findViewById(R.id.id_edit);
 
             convertView.setTag(viewHolder);
         }else{
@@ -63,6 +64,19 @@ public class WorkAdapter extends BaseAdapter{
         viewHolder.workcompany.setText(work.getDepartment());
         viewHolder.workcontent.setText(work.getContent());
 
+        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        viewHolder.delite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return convertView;
     }
 
@@ -70,6 +84,6 @@ public class WorkAdapter extends BaseAdapter{
         TextView worktime;
         TextView workposition;
         TextView workcompany;
-        TextView workcontent;
+        TextView workcontent,delite,edit;
     }
 }

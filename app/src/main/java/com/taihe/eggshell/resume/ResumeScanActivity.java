@@ -50,7 +50,7 @@ public class ResumeScanActivity extends BaseActivity{
     private TextView selfbrief;
     private LoadingProgressDialog loading;
     private MyListView worklistview,edulistview,techlistview,projectlistview,booklistview,trainlistview;
-    private TextView addWork,addEdu,addTech,addProject,addBook,addTrain,addSelf;
+    private TextView addWork,addEdu,addTech,addProject,addBook,addTrain,addSelf,jobIntention;
     private Resumes eid;
     private Intent intent;
     private ScrollView scrollView;
@@ -75,6 +75,7 @@ public class ResumeScanActivity extends BaseActivity{
         telphone = (TextView)findViewById(R.id.id_telphone);
         email = (TextView)findViewById(R.id.id_email);
         //期望
+        jobIntention = (TextView)findViewById(R.id.id_job_intention);
         hopeposition = (TextView)findViewById(R.id.id_hope_position);
         hopeindustry = (TextView)findViewById(R.id.id_hope_industy);
         hopemoney = (TextView)findViewById(R.id.id_want_money);
@@ -82,6 +83,7 @@ public class ResumeScanActivity extends BaseActivity{
         hopetime = (TextView)findViewById(R.id.id_come_time);
         staus = (TextView)findViewById(R.id.id_status);
         positiontype = (TextView)findViewById(R.id.id_position_type);
+        jobIntention.setOnClickListener(this);
         //工作
         worklistview = (MyListView)findViewById(R.id.id_work_list);
         addWork = (TextView)findViewById(R.id.id_to_add_work);
@@ -147,6 +149,11 @@ public class ResumeScanActivity extends BaseActivity{
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()){
+            case R.id.id_job_intention:
+                intent = new Intent(mContext,ResumeWriteActivity.class);
+                intent.putExtra("eid",eid.getRid()+"");
+                startActivity(intent);
+                break;
             case R.id.id_to_add_work:
                 intent = new Intent(mContext,ResumeWorkActivity.class);
                 intent.putExtra("eid",eid);
@@ -248,59 +255,39 @@ public class ResumeScanActivity extends BaseActivity{
                         if(!worklist.equals("[]")){
                             List<ResumeData> worklists = gson.fromJson(worklist,new TypeToken<List<ResumeData>>(){}.getType());
                             worklistview.setAdapter(new WorkAdapter(mContext,worklists));
-                            addWork.setVisibility(View.GONE);
-                        }else{
-                            addWork.setVisibility(View.VISIBLE);
                         }
                         String jylist = data.getString("jy");//教育
                         if(!jylist.equals("[]")){
                             List<ResumeData> jylists = gson.fromJson(jylist,new TypeToken<List<ResumeData>>(){}.getType());
                             edulistview.setAdapter(new EduAdapter(mContext,jylists));
-                            addEdu.setVisibility(View.GONE);
-                        }else{
-                            addEdu.setVisibility(View.VISIBLE);
                         }
                         String skilllist = data.getString("skill");//技能
                         if(!skilllist.equals("[]")){
                             List<ResumeData> skilllists = gson.fromJson(skilllist,new TypeToken<List<ResumeData>>(){}.getType());
                             techlistview.setAdapter(new TechAdapter(mContext,skilllists));
-                            addTech.setVisibility(View.GONE);
-                        }else{
-                            addTech.setVisibility(View.VISIBLE);
                         }
                         String projectlist = data.getString("project");//项目
                         if(!projectlist.equals("[]")){
                             List<ResumeData> projectlists = gson.fromJson(projectlist,new TypeToken<List<ResumeData>>(){}.getType());
                             projectlistview.setAdapter(new ProjectAdapter(mContext,projectlists));
-                            addProject.setVisibility(View.GONE);
-                        }else{
-                            addProject.setVisibility(View.VISIBLE);
                         }
                         String trainlist = data.getString("training");//培训
                         if(!trainlist.equals("[]")){
                             List<ResumeData> trainlists = gson.fromJson(trainlist,new TypeToken<List<ResumeData>>(){}.getType());
                             trainlistview.setAdapter(new TrainAdapter(mContext,trainlists));
-                            addTrain.setVisibility(View.GONE);
-                        }else{
-                            addTrain.setVisibility(View.VISIBLE);
                         }
                         String booklist = data.getString("cert");//证书
                         if(!booklist.equals("[]")){
                             List<ResumeData> booklists = gson.fromJson(booklist,new TypeToken<List<ResumeData>>(){}.getType());
                             booklistview.setAdapter(new BookAdapter(mContext,booklists));
-                            addBook.setVisibility(View.GONE);
-                        }else{
-                            addBook.setVisibility(View.VISIBLE);
                         }
                         String ohter = data.getString("other");//自我评价
                         if(!ohter.equals("[]")){
                             JSONObject other = data.getJSONObject("other");
                             selfbrief.setText(other.getString("content"));
-                            addSelf.setVisibility(View.GONE);
                             selfbrief.setVisibility(View.VISIBLE);
                         }else{
                             selfbrief.setVisibility(View.GONE);
-                            addSelf.setVisibility(View.VISIBLE);
                         }
 
                         scrollView.post(new Runnable() {

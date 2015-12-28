@@ -51,6 +51,8 @@ public class BookAdapter extends BaseAdapter{
             viewHolder.bookname = (TextView)convertView.findViewById(R.id.id_book_name);
             viewHolder.bookcompany = (TextView)convertView.findViewById(R.id.id_book_from);
             viewHolder.bookbrief = (TextView)convertView.findViewById(R.id.id_book_brief);
+            viewHolder.delite = (TextView)convertView.findViewById(R.id.id_delite);
+            viewHolder.edit = (TextView)convertView.findViewById(R.id.id_edit);
 
             convertView.setTag(viewHolder);
         }else{
@@ -61,7 +63,19 @@ public class BookAdapter extends BaseAdapter{
         viewHolder.bookcompany.setText(book.getTitle());
         viewHolder.bookname.setText(book.getName());
         viewHolder.bookbrief.setText(book.getContent());
+        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
+
+        viewHolder.delite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return convertView;
     }
 
@@ -69,6 +83,6 @@ public class BookAdapter extends BaseAdapter{
         TextView booktime;
         TextView bookcompany;
         TextView bookname;
-        TextView bookbrief;
+        TextView bookbrief,delite,edit;
     }
 }

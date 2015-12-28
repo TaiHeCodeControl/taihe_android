@@ -53,6 +53,8 @@ public class EduAdapter extends BaseAdapter{
             viewHolder.eduschool = (TextView)convertView.findViewById(R.id.id_school_name);
             viewHolder.eduposition = (TextView)convertView.findViewById(R.id.id_school_posion);
             viewHolder.edubrief = (TextView)convertView.findViewById(R.id.id_prof_brief);
+            viewHolder.delite = (TextView)convertView.findViewById(R.id.id_delite);
+            viewHolder.edit = (TextView)convertView.findViewById(R.id.id_edit);
 
             convertView.setTag(viewHolder);
         }else{
@@ -65,6 +67,19 @@ public class EduAdapter extends BaseAdapter{
         viewHolder.eduschool.setText(work.getName());
         viewHolder.edubrief.setText(work.getContent());
 
+        viewHolder.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        viewHolder.delite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return convertView;
     }
 
@@ -73,6 +88,6 @@ public class EduAdapter extends BaseAdapter{
         TextView eduindusty;
         TextView eduschool;
         TextView eduposition;
-        TextView edubrief;
+        TextView edubrief,delite,edit;
     }
 }
