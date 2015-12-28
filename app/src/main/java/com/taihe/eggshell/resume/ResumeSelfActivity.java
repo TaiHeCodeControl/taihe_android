@@ -50,11 +50,10 @@ public class ResumeSelfActivity extends BaseActivity{
 
         resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_commit);
-        resetText = (TextView)findViewById(R.id.id_reset);
         contextEdit = (EditText)findViewById(R.id.id_context);
 
+        commitText.setVisibility(View.VISIBLE);
         commitText.setOnClickListener(this);
-        resetText.setOnClickListener(this);
     }
 
     @Override
@@ -64,6 +63,12 @@ public class ResumeSelfActivity extends BaseActivity{
         resume_name.setText(eid.getName()+"-自我评价");
         initTitle("写简历");
         loading = new LoadingProgressDialog(mContext,"正在提交...");
+        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+            loading.show();
+//            getSelfInfoFromNet();
+        }else{
+            ToastUtils.show(mContext, R.string.check_network);
+        }
     }
 
     @Override
@@ -82,9 +87,6 @@ public class ResumeSelfActivity extends BaseActivity{
 
                 }
                 break;
-            case R.id.id_reset:
-                contextEdit.setText("");
-                break;
         }
     }
     private boolean isCheck(){
@@ -95,6 +97,28 @@ public class ResumeSelfActivity extends BaseActivity{
         }
         return true;
     }
+
+    private void getSelfInfoFromNet(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                contextEdit.setText("");
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        };
+
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("eid",eid.getRid()+"");
+
+        RequestUtils.createRequest(mContext,Urls.getMopHostUrl(),Urls.METHOD_GET_SELF,true,params,true,listener,errorListener);
+    }
+
     private void getInsertData() {
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
