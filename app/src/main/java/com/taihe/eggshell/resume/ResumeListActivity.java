@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -57,6 +58,7 @@ public class ResumeListActivity extends BaseActivity{
 
         resumeName = (TextView)findViewById(R.id.id_resume_list_title);
         id_resume_list = (ListView)findViewById(R.id.id_resume_list);
+        id_resume_list.setDividerHeight(0);
         id_resume_list_add = (TextView)findViewById(R.id.id_resume_list_add);
         id_resume_list_add.setOnClickListener(this);
     }
@@ -69,6 +71,7 @@ public class ResumeListActivity extends BaseActivity{
         strType = getIntent().getStringExtra("type");
         strUrl = getIntent().getStringExtra("url");
         strTypeTitle = getIntent().getStringExtra("title");
+        id_resume_list_add.setText("+添加"+strTypeTitle);
         resumeName.setText(resume.getName()+"-"+strTypeTitle);
         loading = new LoadingProgressDialog(mContext,"正在请求...");
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
@@ -77,6 +80,61 @@ public class ResumeListActivity extends BaseActivity{
         }else{
             ToastUtils.show(mContext, R.string.check_network);
         }
+        id_resume_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (strType){
+                    case "1":
+                        intent = new Intent(mContext,ResumeWorkActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","1");
+                        intent.putExtra("strJson",worklist);
+                        intent.putExtra("title","工作经历");
+                        startActivity(intent);
+                        break;
+                    case "2":
+                        intent = new Intent(mContext,ResumeEduActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","2");
+                        intent.putExtra("strJson",worklist);
+                        intent.putExtra("title","教育经历");
+                        startActivity(intent);
+                        break;
+                    case "3":
+                        intent = new Intent(mContext,ResumeTrainActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","3");
+                        intent.putExtra("strJson",worklist);
+                        intent.putExtra("title","培训经历");
+                        startActivity(intent);
+                        break;
+                    case "4":
+                        intent = new Intent(mContext,ResumeTechActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","4");
+                        intent.putExtra("strJson",worklist);
+                        intent.putExtra("title","专业技能");
+                        startActivity(intent);
+                        break;
+                    case "5":
+                        intent = new Intent(mContext,ResumeProjectActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","5");
+                        intent.putExtra("strJson",worklist);
+                        intent.putExtra("title","项目经验");
+                        startActivity(intent);
+                        break;
+                    case "6":
+                        intent = new Intent(mContext,ResumeBookActivity.class);
+                        intent.putExtra("eid",resume);
+                        intent.putExtra("type","6");
+                        intent.putExtra("strJson",worklist);
+                        intent.putExtra("title","证书");
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -88,48 +146,48 @@ public class ResumeListActivity extends BaseActivity{
                     case "1":
                         intent = new Intent(mContext,ResumeWorkActivity.class);
                         intent.putExtra("eid",resume);
-                        intent.putExtra("type","1");
-                        intent.putExtra("url", Urls.RESUME_WORK_LIST);
+                        intent.putExtra("type","");
+                        intent.putExtra("strJson","");
                         intent.putExtra("title","工作经历");
                         startActivity(intent);
                         break;
                     case "2":
                         intent = new Intent(mContext,ResumeEduActivity.class);
                         intent.putExtra("eid",resume);
-                        intent.putExtra("type","2");
-                        intent.putExtra("url", Urls.RESUME_EDU_LIST);
+                        intent.putExtra("type","");
+                        intent.putExtra("strJson","");
                         intent.putExtra("title","教育经历");
                         startActivity(intent);
                         break;
                     case "3":
-                        intent = new Intent(mContext,ResumeListActivity.class);
+                        intent = new Intent(mContext,ResumeTrainActivity.class);
                         intent.putExtra("eid",resume);
-                        intent.putExtra("type","3");
-                        intent.putExtra("url", Urls.RESUME_TRAINING_LIST);
+                        intent.putExtra("type","");
+                        intent.putExtra("strJson","");
                         intent.putExtra("title","培训经历");
                         startActivity(intent);
                         break;
                     case "4":
                         intent = new Intent(mContext,ResumeTechActivity.class);
                         intent.putExtra("eid",resume);
-                        intent.putExtra("type","4");
-                        intent.putExtra("url", Urls.RESUME_SKILL_LIST);
+                        intent.putExtra("type","");
+                        intent.putExtra("strJson","");
                         intent.putExtra("title","专业技能");
                         startActivity(intent);
                         break;
                     case "5":
                         intent = new Intent(mContext,ResumeProjectActivity.class);
                         intent.putExtra("eid",resume);
-                        intent.putExtra("type","5");
-                        intent.putExtra("url", Urls.RESUME_PROJECT_LIST);
+                        intent.putExtra("type","");
+                        intent.putExtra("strJson","");
                         intent.putExtra("title","项目经验");
                         startActivity(intent);
                         break;
                     case "6":
                         intent = new Intent(mContext,ResumeBookActivity.class);
                         intent.putExtra("eid",resume);
-                        intent.putExtra("type","6");
-                        intent.putExtra("url", Urls.RESUME_CERT_LIST);
+                        intent.putExtra("type","");
+                        intent.putExtra("strJson","");
                         intent.putExtra("title","证书");
                         startActivity(intent);
                         break;
@@ -137,7 +195,7 @@ public class ResumeListActivity extends BaseActivity{
                 break;
         }
     }
-
+    String worklist;
     private void getData() {
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
@@ -151,13 +209,11 @@ public class ResumeListActivity extends BaseActivity{
                     if (code == 0) {
                         try{
                             Gson gson = new Gson();
-                            String worklist = jsonObject.toString();
+                            worklist = jsonObject.getString("data");
                             List<ResumeData> worklists = gson.fromJson(worklist,new TypeToken<List<ResumeData>>(){}.getType());
-                            switch (strType){
-                                case "1":
-                                    id_resume_list.setAdapter(new ResumeCenterAdapter(mContext,worklists,strType));
-                                break;
-                            }
+
+                            id_resume_list.setAdapter(new ResumeCenterAdapter(mContext,worklists,strType));
+
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }

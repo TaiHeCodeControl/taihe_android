@@ -78,6 +78,7 @@ public class ResumeTrainActivity extends BaseActivity{
         workTimeEnd = (TextView)findViewById(R.id.id_end_time);
         radioButton = (CheckBox)findViewById(R.id.id_gender);
 
+        commitText.setVisibility(View.VISIBLE);
         workTimeStart.setOnClickListener(this);
         workTimeEnd.setOnClickListener(this);
         commitText.setOnClickListener(this);
@@ -182,15 +183,15 @@ public class ResumeTrainActivity extends BaseActivity{
                     if (code == 0) {
                         try{
                             Toast.makeText(mContext,"添加成功!",Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(mContext,ResumeWorkScanActivity.class);
-                            intent.putExtra("eid",eid);
-                            intent.putExtra("name",companyName);
-                            intent.putExtra("sdate",startTime);
-                            intent.putExtra("edate",endTime);
-                            intent.putExtra("title",positionName);
-                            intent.putExtra("content",contextWord);
-                            intent.putExtra("acttitle","train");
-                            startActivity(intent);
+//                            Intent intent = new Intent(mContext,ResumeWorkScanActivity.class);
+//                            intent.putExtra("eid",eid);
+//                            intent.putExtra("name",companyName);
+//                            intent.putExtra("sdate",startTime);
+//                            intent.putExtra("edate",endTime);
+//                            intent.putExtra("title",positionName);
+//                            intent.putExtra("content",contextWord);
+//                            intent.putExtra("acttitle","train");
+//                            startActivity(intent);
                             finish();
                         }catch (Exception ex){
                             ex.printStackTrace();

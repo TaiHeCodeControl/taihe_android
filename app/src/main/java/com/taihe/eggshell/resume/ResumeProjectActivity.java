@@ -80,6 +80,7 @@ public class ResumeProjectActivity extends BaseActivity{
         schoolTimeEnd = (TextView)findViewById(R.id.id_end_time);
         checkBox = (CheckBox)findViewById(R.id.id_gender);
 
+        commitText.setVisibility(View.VISIBLE);
         schoolTimeStart.setOnClickListener(this);
         schoolTimeEnd.setOnClickListener(this);
         commitText.setOnClickListener(this);
@@ -192,15 +193,15 @@ public class ResumeProjectActivity extends BaseActivity{
                     if (code == 0) {
                         try{
                             ToastUtils.show(mContext,"添加成功!");
-                            Intent intent = new Intent(mContext,ResumeProjectScanActivity.class);
-                            intent.putExtra("eid",eid);
-                            intent.putExtra("name",techName);
-                            intent.putExtra("sdate",startTime);
-                            intent.putExtra("edate",endTime);
-                            intent.putExtra("specialty",techLevel);
-                            intent.putExtra("title",departName);
-                            intent.putExtra("content",contextWord);
-                            startActivity(intent);
+//                            Intent intent = new Intent(mContext,ResumeProjectScanActivity.class);
+//                            intent.putExtra("eid",eid);
+//                            intent.putExtra("name",techName);
+//                            intent.putExtra("sdate",startTime);
+//                            intent.putExtra("edate",endTime);
+//                            intent.putExtra("specialty",techLevel);
+//                            intent.putExtra("title",departName);
+//                            intent.putExtra("content",contextWord);
+//                            startActivity(intent);
                             finish();
                         }catch (Exception ex){
                             ex.printStackTrace();

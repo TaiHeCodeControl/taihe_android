@@ -59,8 +59,32 @@ public class ResumeCenterAdapter extends BaseAdapter{
         }
 
         viewHolder.tag1.setText(work.getName());
-        viewHolder.tag2.setText(work.getTitle());
-        viewHolder.tag3.setText(FormatUtils.timestampToDatetime(work.getSdate())+"——"+FormatUtils.timestampToDatetime(work.getEdate()));
+        switch (stateposition){
+            case "1":
+                viewHolder.tag2.setText(work.getTitle());
+                viewHolder.tag3.setText(work.getSdate() + "到" + work.getEdate());
+                break;
+            case "2":
+                viewHolder.tag2.setText(work.getSpecialty());
+                viewHolder.tag3.setText(work.getSdate() + "到" + work.getEdate());
+                break;
+            case "3":
+                viewHolder.tag2.setText(work.getTitle());
+                viewHolder.tag3.setText(work.getSdate() + "到" + work.getEdate());
+                break;
+            case "4":
+                viewHolder.tag2.setText(work.getSkill());
+                viewHolder.tag3.setText("熟练程度：" + work.getIng());
+                break;
+            case "5":
+                viewHolder.tag2.setText(work.getTitle());
+                viewHolder.tag3.setText(work.getSdate() + "到" + work.getEdate());
+                break;
+            case "6":
+                viewHolder.tag2.setText(work.getTitle());
+                viewHolder.tag3.setText("颁发时间："+work.getSdate());
+                break;
+        }
 
         return convertView;
     }

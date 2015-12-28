@@ -64,6 +64,7 @@ public class ResumeTechActivity extends BaseActivity{
         levelEdit = (TextView)findViewById(R.id.id_tech_level);
         techYear = (EditText)findViewById(R.id.id_year);
 
+        commitText.setVisibility(View.VISIBLE);
         techtypeEdit.setOnClickListener(this);
         levelEdit.setOnClickListener(this);
         commitText.setOnClickListener(this);
@@ -142,13 +143,13 @@ public class ResumeTechActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if(code == 0){
                         ToastUtils.show(mContext,"创建成功");
-                        Intent intent = new Intent(mContext,ResumeTechScanActivity.class);
-                        intent.putExtra("eid",resume);
-                        intent.putExtra("name",techName);
-                        intent.putExtra("specialty",strLB);
-                        intent.putExtra("title",strSLD);
-                        intent.putExtra("sdate",years);
-                        startActivity(intent);
+//                        Intent intent = new Intent(mContext,ResumeTechScanActivity.class);
+//                        intent.putExtra("eid",resume);
+//                        intent.putExtra("name",techName);
+//                        intent.putExtra("specialty",strLB);
+//                        intent.putExtra("title",strSLD);
+//                        intent.putExtra("sdate",years);
+//                        startActivity(intent);
                         finish();
                     }else{
                         ToastUtils.show(mContext,"创建失败");

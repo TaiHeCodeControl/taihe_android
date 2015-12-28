@@ -67,6 +67,7 @@ public class ResumeBookActivity extends BaseActivity{
         techLevelEdit = (EditText)findViewById(R.id.id_tech_level);
         contextEdit = (EditText)findViewById(R.id.id_context);
 
+        commitText.setVisibility(View.VISIBLE);
         timeEdit.setOnClickListener(this);
         commitText.setOnClickListener(this);
         resetText.setOnClickListener(this);
@@ -146,13 +147,14 @@ public class ResumeBookActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
-                            Intent intent = new Intent(mContext,ResumeBookScanActivity.class);
-                            intent.putExtra("eid",eid);
-                            intent.putExtra("name",techName);
-                            intent.putExtra("sdate",years);
-                            intent.putExtra("title",techType);
-                            intent.putExtra("content",contextWord);
-                            startActivity(intent);
+                            Toast.makeText(mContext,"添加成功!",Toast.LENGTH_LONG).show();
+//                            Intent intent = new Intent(mContext,ResumeBookScanActivity.class);
+//                            intent.putExtra("eid",eid);
+//                            intent.putExtra("name",techName);
+//                            intent.putExtra("sdate",years);
+//                            intent.putExtra("title",techType);
+//                            intent.putExtra("content",contextWord);
+//                            startActivity(intent);
                             finish();
                         }catch (Exception ex){
                             ex.printStackTrace();
