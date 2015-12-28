@@ -20,7 +20,7 @@ public class ResumeMultiActivity extends BaseActivity{
 
     private Context mContext;
     private TextView resumeName;
-    private RelativeLayout workExper,educationExper,trainExper,industryTech,projectExper,certBook,selfEvaluation;
+    private RelativeLayout userInfo, workExper,educationExper,trainExper,industryTech,projectExper,certBook,selfEvaluation;
     private Intent intent;
     private Resumes resume;
 
@@ -31,6 +31,7 @@ public class ResumeMultiActivity extends BaseActivity{
         mContext = this;
 
         resumeName = (TextView)findViewById(R.id.id_resume_name);
+        userInfo = (RelativeLayout)findViewById(R.id.id_user_info);
         workExper = (RelativeLayout)findViewById(R.id.id_work_exper);
         educationExper = (RelativeLayout)findViewById(R.id.id_edu_exper);
         trainExper = (RelativeLayout)findViewById(R.id.id_train_exper);
@@ -39,6 +40,7 @@ public class ResumeMultiActivity extends BaseActivity{
         certBook = (RelativeLayout)findViewById(R.id.id_conver_book);
         selfEvaluation = (RelativeLayout)findViewById(R.id.id_self_evalu);
 
+        userInfo.setOnClickListener(this);
         workExper.setOnClickListener(this);
         educationExper.setOnClickListener(this);
         trainExper.setOnClickListener(this);
@@ -60,6 +62,11 @@ public class ResumeMultiActivity extends BaseActivity{
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()){
+            case R.id.id_user_info:
+                intent = new Intent(mContext,ResumeWriteActivity.class);
+                intent.putExtra("eid",resume.getRid()+"");
+                startActivity(intent);
+                break;
             case R.id.id_work_exper:
                 intent = new Intent(mContext,ResumeWorkActivity.class);
                 intent.putExtra("eid",resume);

@@ -115,16 +115,14 @@ public class ResumeManagerActivity extends BaseActivity{
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()){
-            /*case R.id.lin_back:
-                break;*/
             case R.id.id_create_resume:
                 intent = new Intent(mContext,ResumeWriteActivity.class);
                 startActivity(intent);
                 break;
             case R.id.id_edt:
                 if(selectedresumelist.size()==1){
-                    intent = new Intent(mContext,ResumeWriteActivity.class);
-                    intent.putExtra("eid",selectedresumelist.get(0).getRid()+"");
+                    intent = new Intent(mContext,ResumeMultiActivity.class);
+                    intent.putExtra("resume",selectedresumelist.get(0));
                     startActivity(intent);
                 }else{
                     ToastUtils.show(mContext,"请选择一份简历");

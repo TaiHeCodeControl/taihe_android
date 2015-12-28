@@ -589,18 +589,6 @@
                     android:layout_height="0.5dp"
                     android:background="@color/line_gray"/>
             </LinearLayout>
-                <TextView
-                    android:id="@+id/id_commit"
-                    android:layout_width="150dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:text="保存"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:background="@drawable/txt_background" />
         </LinearLayout>
     </ScrollView>
 

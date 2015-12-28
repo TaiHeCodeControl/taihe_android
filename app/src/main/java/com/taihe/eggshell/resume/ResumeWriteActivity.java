@@ -109,6 +109,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         boyRadio = (RadioButton)findViewById(R.id.id_gender_boy);
         girlRadio = (RadioButton)findViewById(R.id.id_gender_girl);
 
+        commitTextView.setVisibility(View.VISIBLE);
         radioGroup.setOnCheckedChangeListener(this);
         forIndusty.setOnClickListener(this);
         forPosition.setOnClickListener(this);
