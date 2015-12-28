@@ -9,14 +9,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
-        android:background="@color/white">
+        android:background="@color/include_title_color">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="我的"
-            android:textColor="@color/font_color_black"
+            android:textColor="@color/white"
             android:textSize="@dimen/font_size_title" />
     </RelativeLayout>
 

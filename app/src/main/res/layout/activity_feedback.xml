@@ -60,7 +60,7 @@
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_marginLeft="5dp"
-            android:background="@drawable/feed_select_bg"
+            android:background="#EF7A06"
             android:text="可选项"
             android:textColor="@color/white"
             android:textSize="10sp" />
@@ -100,10 +100,10 @@
     <Button
         android:id="@+id/btn_feedback_submit"
         android:layout_width="150dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginTop="15dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/lanniu"
+        android:background="@drawable/next_step_background"
         android:text="提交"
         android:textColor="@color/white"
         android:textSize="13sp" />

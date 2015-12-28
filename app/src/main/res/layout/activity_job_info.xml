@@ -456,7 +456,7 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:text="查看全部"
-                    android:textColor="@color/font_color_red"
+                    android:textColor="@color/include_title_color"
                     android:textSize="14sp" />
 
                 <TextView
@@ -562,7 +562,7 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:text="查看全部"
-                    android:textColor="@color/font_color_red"
+                    android:textColor="@color/include_title_color"
                     android:textSize="14sp" />
 
                 <TextView

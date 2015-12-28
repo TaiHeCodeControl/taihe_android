@@ -175,7 +175,7 @@
                         android:gravity="center"
                         android:text="查看全部"
                         android:textSize="@dimen/font_size_15"
-                        android:textColor="@color/red"
+                        android:textColor="@color/include_title_color"
                         android:drawableRight="@drawable/down_detail_icon"
                         android:drawablePadding="8dp"
                         android:background="@drawable/see_all_updown"/>

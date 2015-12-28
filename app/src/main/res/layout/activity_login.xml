@@ -157,7 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="15dp"
-            android:background="@drawable/hongniu"
+            android:background="@drawable/next_step_background"
             android:onClick="login"
             android:text="登录"
             android:textSize="15sp"
@@ -178,7 +178,7 @@
                 android:text="忘记密码？"
                 android:textSize="13sp"
                 android:gravity="center"
-                android:textColor="@color/font_color_red"/>
+                android:textColor="@color/origin"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -209,7 +209,7 @@
                         android:text="立即注册!"
                         android:textSize="13sp"
                         android:gravity="center"
-                        android:textColor="@color/font_color_red"/>
+                        android:textColor="@color/origin"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/log_lin_com_tag"
