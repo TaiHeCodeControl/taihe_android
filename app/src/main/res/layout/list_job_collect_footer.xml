@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="40dp"
     android:background="@color/white">
     <View
        style="@style/line_fill"
@@ -25,11 +25,9 @@
         android:text="全选" />
 
     <LinearLayout
-        android:layout_marginRight="80dp"
-        android:layout_marginLeft="100dp"
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_marginLeft="100dp">
 
         <Button
             android:id="@+id/btn_alljob_shenqing"
@@ -39,19 +37,17 @@
             android:text="申请职位"
             android:textColor="@color/white"
             android:textSize="@dimen/font_size_26"
-            android:background="@drawable/lanniux"/>
+            android:background="@drawable/down_button_green"/>
 
         <Button
-
             android:id="@+id/btn_collectjob_delete"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="40dp"
-            android:layout_marginLeft="15dp"
             android:text="删除职位"
             android:textColor="@color/white"
             android:textSize="@dimen/font_size_26"
-            android:background="@drawable/hongniux"/>
+            android:background="@drawable/down_button_origin"/>
     </LinearLayout>
 
 </RelativeLayout>

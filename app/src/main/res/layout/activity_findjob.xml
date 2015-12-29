@@ -161,15 +161,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:background="@color/white"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
+        android:background="@color/white">
 
         <CheckBox
             android:id="@+id/cb_findjob_selectall"
             style="@style/CustomCheckboxRed"
             android:layout_width="30dp"
-            android:layout_height="48dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp" />
 
@@ -184,11 +182,11 @@
 
         <Button
             android:id="@+id/btn_alljob_shenqing"
-            android:layout_width="120dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="112dp"
-            android:background="@drawable/next_step_background"
+            android:background="@drawable/down_button_green"
             android:text="申请职位"
             android:textColor="@color/white"
             android:textSize="@dimen/font_size_26" />

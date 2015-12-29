@@ -62,7 +62,7 @@ public class ResumeScanActivity extends BaseActivity{
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what){
-                case 1:
+                case 1://删除一个item后刷新页面
                     if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
                         loading.show();
                         getResumeData(eid.getRid()+"");
