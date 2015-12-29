@@ -1,7 +1,7 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
-import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -77,9 +77,16 @@ public class ResumeBookActivity extends BaseActivity{
         super.initData();
         initTitle("写简历");
         eid=getIntent().getParcelableExtra("eid");
+        String type = getIntent().getStringExtra("type");
         resume_name.setText(eid.getName()+"-证书");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
         loading = new LoadingProgressDialog(mContext,"正在提交...");
+
+        if(TextUtils.isEmpty(type)){
+            deleteText.setVisibility(View.GONE);
+        }else{
+            deleteText.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -105,10 +112,10 @@ public class ResumeBookActivity extends BaseActivity{
                 }
                 break;
             case R.id.id_delete:
-                bookEdit.setHint("");
-                timeEdit.setHint("");
-                techLevelEdit.setHint("");
-                contextEdit.setHint("");
+                if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+                    loading.show();
+                    deleteBook();
+                }
                 break;
         }
     }
@@ -134,6 +141,31 @@ public class ResumeBookActivity extends BaseActivity{
         }
         return true;
     }
+
+    private void deleteBook(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                loading.dismiss();
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                    loading.dismiss();
+            }
+        };
+
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("eid",eid.getRid()+"");
+        params.put("id","");
+        params.put("type","6");
+
+        RequestUtils.createRequest(mContext,Urls.getMopHostUrl(),Urls.METHOD_DELETE_RESUME_ITEM,true,params,true,listener,errorListener);
+    }
+
     private void getInsertData() {
         //返回监听事件
         Response.Listener listener = new Response.Listener() {

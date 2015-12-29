@@ -97,4 +97,5 @@ public class Urls {
 
 
     public static final String METHOD_GET_SELF = "";//自我评价
+    public static final String METHOD_DELETE_RESUME_ITEM = "/Except/resume_type_del";//删除简历中的各个item,如某个工作经历
 }
