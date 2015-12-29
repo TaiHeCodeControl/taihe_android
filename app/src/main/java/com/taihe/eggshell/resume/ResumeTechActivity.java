@@ -68,7 +68,6 @@ public class ResumeTechActivity extends BaseActivity{
         techYear = (EditText)findViewById(R.id.id_year);
 
         commitText.setVisibility(View.VISIBLE);
-        commitText.setVisibility(View.VISIBLE);
         techtypeEdit.setOnClickListener(this);
         levelEdit.setOnClickListener(this);
         commitText.setOnClickListener(this);
@@ -163,6 +162,7 @@ public class ResumeTechActivity extends BaseActivity{
                 deleteDialog.getTitleText().setText("确定要删除吗？");
                 deleteDialog.getRightButton().setText("确定");
                 deleteDialog.getLeftButton().setText("取消");
+                deleteDialog.show();
                 break;
         }
     }

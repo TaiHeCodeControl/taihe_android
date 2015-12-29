@@ -179,6 +179,7 @@ public class ResumeWorkActivity extends BaseActivity{
                 deleteDialog.getTitleText().setText("确定要删除吗？");
                 deleteDialog.getRightButton().setText("确定");
                 deleteDialog.getLeftButton().setText("取消");
+                deleteDialog.show();
 
                 break;
         }
