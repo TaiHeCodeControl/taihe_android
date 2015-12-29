@@ -2,6 +2,7 @@ package com.taihe.eggshell.resume;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
@@ -41,6 +43,7 @@ public class ResumeBookActivity extends BaseActivity{
     private TimeDialog timeDialog;
     private LoadingProgressDialog loading;
 
+    private int itemid = -1;
     private String techName,years,techType,contextWord;
     private Resumes eid;
     private TimeDialog.CustomTimeListener customTimeListener = new TimeDialog.CustomTimeListener() {
@@ -87,6 +90,16 @@ public class ResumeBookActivity extends BaseActivity{
         }else{
             deleteText.setVisibility(View.VISIBLE);
         }
+
+        if(null!=getIntent().getParcelableExtra("listobj")){
+            ResumeData resumeData = getIntent().getParcelableExtra("listobj");
+            itemid = resumeData.getId();
+            bookEdit.setText(resumeData.getName());
+            timeEdit.setText(resumeData.getSdate());
+            techLevelEdit.setText(resumeData.getTitle());
+            contextEdit.setText(resumeData.getContent());
+        }
+
     }
 
     @Override
@@ -145,9 +158,20 @@ public class ResumeBookActivity extends BaseActivity{
     private void deleteBook(){
         Response.Listener listener = new Response.Listener() {
             @Override
-            public void onResponse(Object o) {
+            public void onResponse(Object obj) {
                 loading.dismiss();
-
+                try {
+                    JSONObject jsonObject = new JSONObject((String) obj);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        ToastUtils.show(mContext,"删除成功");
+                        finish();
+                    }else{
+                        ToastUtils.show(mContext,"删除失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -159,8 +183,9 @@ public class ResumeBookActivity extends BaseActivity{
         };
 
         Map<String,String> params = new HashMap<String,String>();
+        params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
         params.put("eid",eid.getRid()+"");
-        params.put("id","");
+        params.put("id",itemid+"");
         params.put("type","6");
 
         RequestUtils.createRequest(mContext,Urls.getMopHostUrl(),Urls.METHOD_DELETE_RESUME_ITEM,true,params,true,listener,errorListener);
@@ -203,6 +228,7 @@ public class ResumeBookActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
                 loading.dismiss();
+                Log.v(TAG, new String(volleyError.networkResponse.data));
                 ToastUtils.show(mContext,"网络异常");
             }
         };
@@ -210,6 +236,9 @@ public class ResumeBookActivity extends BaseActivity{
         Map<String,String> map = new HashMap<String,String>();
         map.put("uid", EggshellApplication.getApplication().getUser().getId()+"");//EggshellApplication.getApplication().getUser().getId()+""
         map.put("eid",eid.getRid()+"");
+        if(-1 != itemid){
+            map.put("id",itemid+"");
+        }
         map.put("name",techName);
         map.put("sdate",years);
         map.put("title",techType);

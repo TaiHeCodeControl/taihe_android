@@ -1,7 +1,7 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
-import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -19,6 +19,7 @@ import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
@@ -46,6 +47,7 @@ public class ResumeProjectActivity extends BaseActivity{
     private TimeDialog timeDialog;
     private LoadingProgressDialog loading;
 
+    private int itemId = -1;
     private String techName,startTime,endTime,techLevel,departName,contextWord;
     private boolean isStart = false;
     private Resumes eid;
@@ -104,9 +106,27 @@ public class ResumeProjectActivity extends BaseActivity{
         super.initData();
         initTitle("写简历");
         eid=getIntent().getParcelableExtra("eid");
+        String type = getIntent().getStringExtra("type");
         resume_name.setText(eid.getName()+"-项目经验");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
         loading = new LoadingProgressDialog(mContext,"正在提交...");
+
+        if(TextUtils.isEmpty(type)){
+            resetText.setVisibility(View.GONE);
+        }else{
+            resetText.setVisibility(View.VISIBLE);
+        }
+
+        if(null!=getIntent().getParcelableExtra("listobj")){
+            ResumeData resumeData = getIntent().getParcelableExtra("listobj");
+            itemId = resumeData.getId();
+            projectEdit.setText(resumeData.getName());
+            schoolTimeStart.setText(resumeData.getSdate());
+            schoolTimeEnd.setText(resumeData.getEdate());
+            invaraEdit.setText(resumeData.getSys());
+            departEdit.setText(resumeData.getTitle());
+            contextEdit.setText(resumeData.getContent());
+        }
     }
 
     @Override
@@ -139,12 +159,10 @@ public class ResumeProjectActivity extends BaseActivity{
                 }
                 break;
             case R.id.id_delete:
-                projectEdit.setText("");
-                schoolTimeStart.setText("");
-                schoolTimeEnd.setText("");
-                invaraEdit.setText("");
-                departEdit.setText("");
-                contextEdit.setText("");
+                if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+                    loading.show();
+                    deleteBook();
+                }
                 break;
         }
     }
@@ -179,6 +197,43 @@ public class ResumeProjectActivity extends BaseActivity{
         }
         return true;
     }
+
+    private void deleteBook(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object obj) {
+                loading.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject((String) obj);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        ToastUtils.show(mContext,"删除成功");
+                        finish();
+                    }else{
+                        ToastUtils.show(mContext,"删除失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                loading.dismiss();
+            }
+        };
+
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
+        params.put("eid",eid.getRid()+"");
+        params.put("id",itemId+"");
+        params.put("type","5");
+
+        RequestUtils.createRequest(mContext,Urls.getMopHostUrl(),Urls.METHOD_DELETE_RESUME_ITEM,true,params,true,listener,errorListener);
+    }
+
     private void getInsertData() {
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
@@ -187,7 +242,6 @@ public class ResumeProjectActivity extends BaseActivity{
                 loading.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
-                    Log.d("project", jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
@@ -219,6 +273,7 @@ public class ResumeProjectActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {//返回值
                 loading.dismiss();
+                Log.v(TAG,new String(volleyError.networkResponse.data));
                 ToastUtils.show(mContext,"网络异常");
             }
         };
@@ -226,6 +281,9 @@ public class ResumeProjectActivity extends BaseActivity{
         Map<String,String> map = new HashMap<String,String>();
         map.put("uid", EggshellApplication.getApplication().getUser().getId()+"");//EggshellApplication.getApplication().getUser().getId()+""
         map.put("eid",eid.getRid()+"");
+        if(-1!=itemId){
+            map.put("id",itemId+"");
+        }
         map.put("name",techName);
         map.put("sdate",startTime);
         map.put("edate",endTime);

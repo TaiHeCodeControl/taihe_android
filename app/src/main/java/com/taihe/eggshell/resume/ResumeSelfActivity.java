@@ -1,7 +1,6 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -65,7 +64,7 @@ public class ResumeSelfActivity extends BaseActivity{
         loading = new LoadingProgressDialog(mContext,"正在提交...");
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             loading.show();
-//            getSelfInfoFromNet();
+            getSelfInfoFromNet();
         }else{
             ToastUtils.show(mContext, R.string.check_network);
         }
@@ -102,6 +101,7 @@ public class ResumeSelfActivity extends BaseActivity{
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
+                loading.dismiss();
                 contextEdit.setText("");
             }
         };
@@ -109,7 +109,7 @@ public class ResumeSelfActivity extends BaseActivity{
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-
+                loading.dismiss();
             }
         };
 
@@ -127,7 +127,6 @@ public class ResumeSelfActivity extends BaseActivity{
                 loading.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
-                    Log.d("work", jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
