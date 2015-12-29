@@ -85,6 +85,7 @@ public class ResumeWorkActivity extends BaseActivity{
         workTimeEnd = (TextView)findViewById(R.id.id_end_time);
         radioButton = (CheckBox)findViewById(R.id.id_gender);
 
+        commitText.setVisibility(View.VISIBLE);
         workTimeStart.setOnClickListener(this);
         workTimeEnd.setOnClickListener(this);
         commitText.setOnClickListener(this);
@@ -114,7 +115,6 @@ public class ResumeWorkActivity extends BaseActivity{
         loading = new LoadingProgressDialog(mContext,"正在提交...");
         ResumeData worklists;
         if(!"".equals(strType)){
-            commitText.setVisibility(View.VISIBLE);
             deleteText.setVisibility(View.VISIBLE);
             worklists =  getIntent().getParcelableExtra("listobj");
             jobID = worklists.getId()+"";
@@ -125,7 +125,6 @@ public class ResumeWorkActivity extends BaseActivity{
             positionEdit.setText(worklists.getTitle());
             contextEdit.setText(worklists.getContent());
         }else{
-            commitText.setVisibility(View.GONE);
             deleteText.setVisibility(View.GONE);
         }
     }

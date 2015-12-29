@@ -112,7 +112,6 @@ public class ResumeEduActivity extends BaseActivity{
         loading = new LoadingProgressDialog(mContext,"正在请求...");
         ResumeData worklists;
         if(!"".equals(strType)){
-            commitText.setVisibility(View.VISIBLE);
             deleteText.setVisibility(View.VISIBLE);
             worklists =  getIntent().getParcelableExtra("listobj");
             jobID = worklists.getId()+"";
@@ -123,7 +122,6 @@ public class ResumeEduActivity extends BaseActivity{
             positionEdit.setText(worklists.getTitle());
             contextEdit.setText(worklists.getContent());
         }else{
-            commitText.setVisibility(View.GONE);
             deleteText.setVisibility(View.GONE);
         }
     }

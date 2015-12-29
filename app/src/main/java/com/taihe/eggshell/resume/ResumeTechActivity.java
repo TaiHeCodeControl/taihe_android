@@ -68,6 +68,7 @@ public class ResumeTechActivity extends BaseActivity{
         techYear = (EditText)findViewById(R.id.id_year);
 
         commitText.setVisibility(View.VISIBLE);
+        commitText.setVisibility(View.VISIBLE);
         techtypeEdit.setOnClickListener(this);
         levelEdit.setOnClickListener(this);
         commitText.setOnClickListener(this);
@@ -85,7 +86,6 @@ public class ResumeTechActivity extends BaseActivity{
         loading = new LoadingProgressDialog(mContext,"正在提交...");
         ResumeData worklists;
         if(!"".equals(strType)){
-            commitText.setVisibility(View.VISIBLE);
             deleteText.setVisibility(View.VISIBLE);
             worklists =  getIntent().getParcelableExtra("listobj");
             jobID = worklists.getId()+"";
@@ -94,7 +94,6 @@ public class ResumeTechActivity extends BaseActivity{
             levelEdit.setText(worklists.getSpecialty());
             techYear.setText(worklists.getIng());
         }else{
-            commitText.setVisibility(View.GONE);
             deleteText.setVisibility(View.GONE);
         }
     }
