@@ -114,9 +114,9 @@ public class ResumeWorkActivity extends BaseActivity{
         resumename.setText(eid.getName()+"-工作经历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
         loading = new LoadingProgressDialog(mContext,"正在提交...");
+        List<ResumeData> worklists;
         if(!"".equals(strType)){
-            Gson gson = new Gson();
-            List<ResumeData> worklists = gson.fromJson(strJson,new TypeToken<List<ResumeData>>(){}.getType());
+            worklists =  ( List<ResumeData>) getIntent().getSerializableExtra("listobj");
             companyEdit.setText(worklists.get(positionnum).getName());
         }
     }

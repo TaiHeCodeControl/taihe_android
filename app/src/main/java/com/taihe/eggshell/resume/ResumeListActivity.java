@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,10 +17,8 @@ import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
-import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
-import com.taihe.eggshell.resume.adapter.ResumeAdapter;
 import com.taihe.eggshell.resume.adapter.ResumeCenterAdapter;
 import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
@@ -31,6 +28,7 @@ import com.umeng.analytics.MobclickAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +36,7 @@ import java.util.Map;
 /**
  * Created by wang on 2015/8/13.
  */
-public class ResumeListActivity extends BaseActivity{
+public class ResumeListActivity extends BaseActivity implements Serializable {
 
     private static final String TAG = "ResumeMultiActivity";
 
@@ -89,7 +87,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","1");
                         intent.putExtra("posion",posion);
-                        intent.putExtra("strJson",worklist);
+//                        intent.putExtra("listobj", worklists.get(posion));
                         intent.putExtra("title","工作经历");
                         startActivity(intent);
                         break;
@@ -98,7 +96,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","2");
                         intent.putExtra("posion",posion);
-                        intent.putExtra("strJson",worklist);
+                        intent.putExtra("listobj", (Serializable) worklists);
                         intent.putExtra("title","教育经历");
                         startActivity(intent);
                         break;
@@ -107,7 +105,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","3");
                         intent.putExtra("posion",posion);
-                        intent.putExtra("strJson",worklist);
+                        intent.putExtra("listobj", (Serializable) worklists);
                         intent.putExtra("title","培训经历");
                         startActivity(intent);
                         break;
@@ -116,7 +114,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","4");
                         intent.putExtra("posion",posion);
-                        intent.putExtra("strJson",worklist);
+                        intent.putExtra("listobj", (Serializable) worklists);
                         intent.putExtra("title","专业技能");
                         startActivity(intent);
                         break;
@@ -125,7 +123,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","5");
                         intent.putExtra("posion",posion);
-                        intent.putExtra("strJson",worklist);
+                        intent.putExtra("listobj", (Serializable) worklists);
                         intent.putExtra("title","项目经验");
                         startActivity(intent);
                         break;
@@ -134,7 +132,7 @@ public class ResumeListActivity extends BaseActivity{
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","6");
                         intent.putExtra("posion",posion);
-                        intent.putExtra("strJson",worklist);
+                        intent.putExtra("listobj", (Serializable) worklists);
                         intent.putExtra("title","证书");
                         startActivity(intent);
                         break;
@@ -207,7 +205,7 @@ public class ResumeListActivity extends BaseActivity{
                 break;
         }
     }
-    String worklist;
+    List<ResumeData> worklists;
     private void getData() {
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
@@ -221,8 +219,8 @@ public class ResumeListActivity extends BaseActivity{
                     if (code == 0) {
                         try{
                             Gson gson = new Gson();
-                            worklist = jsonObject.getString("data");
-                            List<ResumeData> worklists = gson.fromJson(worklist,new TypeToken<List<ResumeData>>(){}.getType());
+                            String worklist = jsonObject.getString("data");
+                            worklists = gson.fromJson(worklist,new TypeToken<List<ResumeData>>(){}.getType());
 
                             id_resume_list.setAdapter(new ResumeCenterAdapter(mContext,worklists,strType));
 
