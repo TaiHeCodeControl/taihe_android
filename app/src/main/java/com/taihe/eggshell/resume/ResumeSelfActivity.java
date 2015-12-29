@@ -1,6 +1,7 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -102,7 +103,19 @@ public class ResumeSelfActivity extends BaseActivity{
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-                contextEdit.setText("");
+
+                try {
+                    JSONObject data = new JSONObject((String)o);
+                    Log.v(TAG,(String)o);
+                    int code = data.getInt("code");
+                    if(code == 0){
+                        JSONObject jsonObject = data.getJSONObject("data");
+                        String descripe = jsonObject.getString("description");
+                        contextEdit.setText(descripe);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
 
@@ -110,12 +123,13 @@ public class ResumeSelfActivity extends BaseActivity{
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 loading.dismiss();
+//                Log.v(TAG,new String(volleyError.networkResponse.data));
             }
         };
 
         Map<String,String> params = new HashMap<String,String>();
         params.put("eid",eid.getRid()+"");
-
+        params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
         RequestUtils.createRequest(mContext,Urls.getMopHostUrl(),Urls.METHOD_GET_SELF,true,params,true,listener,errorListener);
     }
 

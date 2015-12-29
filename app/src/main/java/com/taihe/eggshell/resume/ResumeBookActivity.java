@@ -15,6 +15,7 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.resume.entity.ResumeData;
@@ -95,7 +96,7 @@ public class ResumeBookActivity extends BaseActivity{
             ResumeData resumeData = getIntent().getParcelableExtra("listobj");
             itemid = resumeData.getId();
             bookEdit.setText(resumeData.getName());
-            timeEdit.setText(resumeData.getSdate());
+            timeEdit.setText(FormatUtils.timestampToDatetime(resumeData.getSdate()));
             techLevelEdit.setText(resumeData.getTitle());
             contextEdit.setText(resumeData.getContent());
         }
@@ -167,7 +168,7 @@ public class ResumeBookActivity extends BaseActivity{
                         ToastUtils.show(mContext,"删除成功");
                         finish();
                     }else{
-                        ToastUtils.show(mContext,"删除失败");
+                        ToastUtils.show(mContext, "删除失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

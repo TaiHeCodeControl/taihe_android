@@ -1,7 +1,6 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -13,12 +12,11 @@ import android.widget.Toast;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.resume.entity.ResumeData;
@@ -33,7 +31,6 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -119,8 +116,8 @@ public class ResumeWorkActivity extends BaseActivity{
             worklists =  getIntent().getParcelableExtra("listobj");
             jobID = worklists.getId()+"";
             companyEdit.setText(worklists.getName());
-            workTimeStart.setText(worklists.getSdate());
-            workTimeEnd.setText(worklists.getEdate());
+            workTimeStart.setText(FormatUtils.timestampToDatetime(worklists.getSdate()));
+            workTimeEnd.setText(FormatUtils.timestampToDatetime(worklists.getEdate()));
             departEdit.setText(worklists.getDepartment());
             positionEdit.setText(worklists.getTitle());
             contextEdit.setText(worklists.getContent());

@@ -2,7 +2,8 @@ package com.taihe.eggshell.resume;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -53,6 +54,23 @@ public class ResumeScanActivity extends BaseActivity{
     private Resumes eid;
     private Intent intent;
     private ScrollView scrollView;
+
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
+                        loading.show();
+                        getResumeData(eid.getRid()+"");
+                    }else{
+                        ToastUtils.show(mContext,R.string.check_network);
+                    }
+                break;
+            }
+        }
+    };
 
     @Override
     public void initView() {
@@ -126,14 +144,14 @@ public class ResumeScanActivity extends BaseActivity{
         super.onResume();
         MobclickAgent.onResume(mContext);
         loading = new LoadingProgressDialog(mContext,"正在请求...");
-        if(null!=getIntent().getStringExtra("eid") && !TextUtils.isEmpty(getIntent().getStringExtra("eid"))){
+        /*if(null!=getIntent().getStringExtra("eid") && !TextUtils.isEmpty(getIntent().getStringExtra("eid"))){
             if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
                 loading.show();
                 getResumeData(getIntent().getStringExtra("eid"));
             }else{
                 ToastUtils.show(mContext,R.string.check_network);
             }
-        }else{
+        }else{*/
             eid = getIntent().getParcelableExtra("eid");
             if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
                 loading.show();
@@ -141,7 +159,7 @@ public class ResumeScanActivity extends BaseActivity{
             }else{
                 ToastUtils.show(mContext,R.string.check_network);
             }
-        }
+//        }
     }
 
     @Override
@@ -156,31 +174,43 @@ public class ResumeScanActivity extends BaseActivity{
             case R.id.id_to_add_work:
                 intent = new Intent(mContext,ResumeWorkActivity.class);
                 intent.putExtra("eid",eid);
+                intent.putExtra("type","");
+                intent.putExtra("listobj","");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_edu:
                 intent = new Intent(mContext,ResumeEduActivity.class);
                 intent.putExtra("eid",eid);
+                intent.putExtra("type","");
+                intent.putExtra("listobj","");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_tech:
                 intent = new Intent(mContext,ResumeTechActivity.class);
                 intent.putExtra("eid",eid);
+                intent.putExtra("type","");
+                intent.putExtra("listobj","");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_project:
                 intent = new Intent(mContext,ResumeProjectActivity.class);
                 intent.putExtra("eid",eid);
+                intent.putExtra("type","");
+                intent.putExtra("listobj","");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_train:
                 intent = new Intent(mContext,ResumeTrainActivity.class);
                 intent.putExtra("eid",eid);
+                intent.putExtra("type","");
+                intent.putExtra("listobj","");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_book:
                 intent = new Intent(mContext,ResumeBookActivity.class);
                 intent.putExtra("eid",eid);
+                intent.putExtra("type","");
+                intent.putExtra("listobj", "");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_self:
@@ -197,7 +227,7 @@ public class ResumeScanActivity extends BaseActivity{
             @Override
             public void onResponse(Object o) {
                 loading.dismiss();
-//                Log.v(TAG,(String)o);
+//                Log.v(TAG, (String) o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
@@ -253,32 +283,32 @@ public class ResumeScanActivity extends BaseActivity{
                         String worklist = data.getString("work");//工作经验
                         if(!worklist.equals("[]")){
                             List<ResumeData> worklists = gson.fromJson(worklist,new TypeToken<List<ResumeData>>(){}.getType());
-                            worklistview.setAdapter(new WorkAdapter(mContext,worklists));
+                            worklistview.setAdapter(new WorkAdapter(mContext,worklists,eid,handler));
                         }
                         String jylist = data.getString("jy");//教育
                         if(!jylist.equals("[]")){
                             List<ResumeData> jylists = gson.fromJson(jylist,new TypeToken<List<ResumeData>>(){}.getType());
-                            edulistview.setAdapter(new EduAdapter(mContext,jylists));
+                            edulistview.setAdapter(new EduAdapter(mContext,jylists,eid,handler));
                         }
                         String skilllist = data.getString("skill");//技能
                         if(!skilllist.equals("[]")){
                             List<ResumeData> skilllists = gson.fromJson(skilllist,new TypeToken<List<ResumeData>>(){}.getType());
-                            techlistview.setAdapter(new TechAdapter(mContext,skilllists));
+                            techlistview.setAdapter(new TechAdapter(mContext,skilllists,eid,handler));
                         }
                         String projectlist = data.getString("project");//项目
                         if(!projectlist.equals("[]")){
                             List<ResumeData> projectlists = gson.fromJson(projectlist,new TypeToken<List<ResumeData>>(){}.getType());
-                            projectlistview.setAdapter(new ProjectAdapter(mContext,projectlists));
+                            projectlistview.setAdapter(new ProjectAdapter(mContext,projectlists,eid,handler));
                         }
                         String trainlist = data.getString("training");//培训
                         if(!trainlist.equals("[]")){
                             List<ResumeData> trainlists = gson.fromJson(trainlist,new TypeToken<List<ResumeData>>(){}.getType());
-                            trainlistview.setAdapter(new TrainAdapter(mContext,trainlists));
+                            trainlistview.setAdapter(new TrainAdapter(mContext,trainlists,eid,handler));
                         }
                         String booklist = data.getString("cert");//证书
                         if(!booklist.equals("[]")){
                             List<ResumeData> booklists = gson.fromJson(booklist,new TypeToken<List<ResumeData>>(){}.getType());
-                            booklistview.setAdapter(new BookAdapter(mContext,booklists));
+                            booklistview.setAdapter(new BookAdapter(mContext,booklists,eid,handler));
                         }
                         String ohter = data.getString("other");//自我评价
                         if(!ohter.equals("[]")){

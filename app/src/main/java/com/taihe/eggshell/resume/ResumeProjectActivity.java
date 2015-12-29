@@ -17,10 +17,12 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
+import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
 import com.umeng.analytics.MobclickAgent;
@@ -46,7 +48,7 @@ public class ResumeProjectActivity extends BaseActivity{
     private CheckBox checkBox;
     private TimeDialog timeDialog;
     private LoadingProgressDialog loading;
-
+    private ChoiceDialog deleteDialog;
     private int itemId = -1;
     private String techName,startTime,endTime,techLevel,departName,contextWord;
     private boolean isStart = false;
@@ -121,8 +123,8 @@ public class ResumeProjectActivity extends BaseActivity{
             ResumeData resumeData = getIntent().getParcelableExtra("listobj");
             itemId = resumeData.getId();
             projectEdit.setText(resumeData.getName());
-            schoolTimeStart.setText(resumeData.getSdate());
-            schoolTimeEnd.setText(resumeData.getEdate());
+            schoolTimeStart.setText(FormatUtils.timestampToDatetime(resumeData.getSdate()));
+            schoolTimeEnd.setText(FormatUtils.timestampToDatetime(resumeData.getEdate()));
             invaraEdit.setText(resumeData.getSys());
             departEdit.setText(resumeData.getTitle());
             contextEdit.setText(resumeData.getContent());
@@ -160,8 +162,28 @@ public class ResumeProjectActivity extends BaseActivity{
                 break;
             case R.id.id_delete:
                 if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
-                    loading.show();
-                    deleteBook();
+                    deleteDialog = new ChoiceDialog(mContext,new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            deleteDialog.dismiss();
+                        }
+                    },new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+                                deleteDialog.dismiss();
+                                loading.show();
+                                deleteBook();
+                            }else{
+                                ToastUtils.show(mContext,R.string.check_network);
+                            }
+                        }
+                    });
+
+                    deleteDialog.getTitleText().setText("确定要删除吗？");
+                    deleteDialog.getRightButton().setText("确定");
+                    deleteDialog.getLeftButton().setText("取消");
+                    deleteDialog.show();
                 }
                 break;
         }
