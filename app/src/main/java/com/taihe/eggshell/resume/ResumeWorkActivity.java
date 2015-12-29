@@ -114,10 +114,10 @@ public class ResumeWorkActivity extends BaseActivity{
         resumename.setText(eid.getName()+"-工作经历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
         loading = new LoadingProgressDialog(mContext,"正在提交...");
-        List<ResumeData> worklists;
+        ResumeData worklists;
         if(!"".equals(strType)){
-            worklists =  ( List<ResumeData>) getIntent().getSerializableExtra("listobj");
-            companyEdit.setText(worklists.get(positionnum).getName());
+            worklists =  getIntent().getParcelableExtra("listobj");
+            companyEdit.setText(worklists.getName());
         }
     }
 

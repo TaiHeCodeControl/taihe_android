@@ -86,54 +86,42 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent = new Intent(mContext,ResumeWorkActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","1");
-                        intent.putExtra("posion",posion);
-//                        intent.putExtra("listobj", worklists.get(posion));
-                        intent.putExtra("title","工作经历");
+                        intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
                     case "2":
                         intent = new Intent(mContext,ResumeEduActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","2");
-                        intent.putExtra("posion",posion);
-                        intent.putExtra("listobj", (Serializable) worklists);
-                        intent.putExtra("title","教育经历");
+                        intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
                     case "3":
                         intent = new Intent(mContext,ResumeTrainActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","3");
-                        intent.putExtra("posion",posion);
-                        intent.putExtra("listobj", (Serializable) worklists);
-                        intent.putExtra("title","培训经历");
+                        intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
                     case "4":
                         intent = new Intent(mContext,ResumeTechActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","4");
-                        intent.putExtra("posion",posion);
-                        intent.putExtra("listobj", (Serializable) worklists);
-                        intent.putExtra("title","专业技能");
+                        intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
                     case "5":
                         intent = new Intent(mContext,ResumeProjectActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","5");
-                        intent.putExtra("posion",posion);
-                        intent.putExtra("listobj", (Serializable) worklists);
-                        intent.putExtra("title","项目经验");
+                        intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
                     case "6":
                         intent = new Intent(mContext,ResumeBookActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","6");
-                        intent.putExtra("posion",posion);
-                        intent.putExtra("listobj", (Serializable) worklists);
-                        intent.putExtra("title","证书");
+                        intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
                 }
@@ -151,54 +139,42 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent = new Intent(mContext,ResumeWorkActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
-                        intent.putExtra("posion",0);
-                        intent.putExtra("strJson","");
-                        intent.putExtra("title","工作经历");
+                        intent.putExtra("listobj","");
                         startActivity(intent);
                         break;
                     case "2":
                         intent = new Intent(mContext,ResumeEduActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
-                        intent.putExtra("posion",0);
-                        intent.putExtra("strJson","");
-                        intent.putExtra("title","教育经历");
+                        intent.putExtra("listobj","");
                         startActivity(intent);
                         break;
                     case "3":
                         intent = new Intent(mContext,ResumeTrainActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
-                        intent.putExtra("posion",0);
-                        intent.putExtra("strJson","");
-                        intent.putExtra("title","培训经历");
+                        intent.putExtra("listobj","");
                         startActivity(intent);
                         break;
                     case "4":
                         intent = new Intent(mContext,ResumeTechActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
-                        intent.putExtra("posion",0);
-                        intent.putExtra("strJson","");
-                        intent.putExtra("title","专业技能");
+                        intent.putExtra("listobj","");
                         startActivity(intent);
                         break;
                     case "5":
                         intent = new Intent(mContext,ResumeProjectActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
-                        intent.putExtra("posion",0);
-                        intent.putExtra("strJson","");
-                        intent.putExtra("title","项目经验");
+                        intent.putExtra("listobj","");
                         startActivity(intent);
                         break;
                     case "6":
                         intent = new Intent(mContext,ResumeBookActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
-                        intent.putExtra("posion",0);
-                        intent.putExtra("strJson","");
-                        intent.putExtra("title","证书");
+                        intent.putExtra("listobj", "");
                         startActivity(intent);
                         break;
                 }
