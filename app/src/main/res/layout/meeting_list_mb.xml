@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:id="@+id/txt_meetinglist_mb_name"
-                android:textColor="@color/font_color_red"
+                android:textColor="@color/font_color_black"
                 android:layout_alignParentTop="true"
                 android:singleLine="true"
                 android:layout_toLeftOf="@+id/txt_meetinglist_mb_date"
@@ -113,7 +113,7 @@
                 android:text=""
                 android:textSize="16sp"
                 android:id="@+id/txt_meetinglist_mb_name2"
-                android:textColor="@color/font_color_red"
+                android:textColor="@color/font_color_black"
                 android:layout_alignParentTop="true"
                 android:singleLine="true"
                 android:layout_alignLeft="@+id/linearLayout" />
