@@ -20,6 +20,7 @@ import com.taihe.eggshell.job.activity.IndustryActivity;
 import com.taihe.eggshell.main.entity.StaticData;
 import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
+import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 
 import org.json.JSONException;
@@ -40,6 +41,7 @@ public class ResumeTechActivity extends BaseActivity{
     private Intent intent;
     private TextView commitText,deleteText,techtypeEdit,levelEdit,resume_name;
     private EditText techEdit,techYear,workTimeEnd;
+    private ChoiceDialog deleteDialog;
     private LoadingProgressDialog loading;
     private Resumes resume;
     private String techName,years,techType,techLevel,strLB,strSLD,strType,jobID;
@@ -140,17 +142,65 @@ public class ResumeTechActivity extends BaseActivity{
                 }
 
                 break;
-            case R.id.id_reset:
-                techEdit.setText ("");
-                techYear.setText("");
-                workTimeEnd.setText("");
-                techtypeEdit.setText("");
-                levelEdit.setText("");
+            case R.id.id_delete:
+                deleteDialog = new ChoiceDialog(mContext,new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteDialog.dismiss();
+                    }
+                },new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+                            deleteDialog.dismiss();
+                            loading.show();
+                            deleteResume();
+                        }else{
+                            ToastUtils.show(mContext,R.string.check_network);
+                        }
+                    }
+                });
 
+                deleteDialog.getTitleText().setText("确定要删除吗？");
+                deleteDialog.getRightButton().setText("确定");
+                deleteDialog.getLeftButton().setText("取消");
                 break;
         }
     }
+    private void deleteResume(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                loading.dismiss();
+//                Log.v(TAG,(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        ToastUtils.show(mContext,"删除成功");
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                loading.dismiss();
+//                Log.v(TAG,new String(volleyError.networkResponse.data));
+                ToastUtils.show(mContext,volleyError);
+            }
+        };
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("uid", EggshellApplication.getApplication().getUser().getId()+"");//EggshellApplication.getApplication().getUser().getId()+""
+        map.put("eid",resume.getRid()+"");
+        map.put("id",jobID);
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_DELETE_RESUME_ITEM,false,map,true,listener,errorListener);
+    }
     private void submitToServer(){
         Response.Listener listener = new Response.Listener() {
             @Override

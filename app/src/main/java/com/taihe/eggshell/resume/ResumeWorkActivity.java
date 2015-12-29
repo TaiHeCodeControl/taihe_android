@@ -23,6 +23,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
+import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
 import com.umeng.analytics.MobclickAgent;
@@ -46,6 +47,7 @@ public class ResumeWorkActivity extends BaseActivity{
 
     private TextView commitText,deleteText,workTimeStart,workTimeEnd,resumename;
     private EditText companyEdit,departEdit,positionEdit,contextEdit;
+    private ChoiceDialog deleteDialog;
     private CheckBox radioButton;
     private String companyName,startTime,endTime,departName,positionName,contextWord,strType,jobID;
     private TimeDialog timeDialog;
@@ -157,9 +159,64 @@ public class ResumeWorkActivity extends BaseActivity{
                 }
                 break;
             case R.id.id_delete:
-                ToastUtils.show(mContext,"id_delete");
+                deleteDialog = new ChoiceDialog(mContext,new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteDialog.dismiss();
+                    }
+                },new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+                            deleteDialog.dismiss();
+                            loading.show();
+                            deleteResume();
+                        }else{
+                            ToastUtils.show(mContext,R.string.check_network);
+                        }
+                    }
+                });
+
+                deleteDialog.getTitleText().setText("确定要删除吗？");
+                deleteDialog.getRightButton().setText("确定");
+                deleteDialog.getLeftButton().setText("取消");
+
                 break;
         }
+    }
+    private void deleteResume(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                loading.dismiss();
+//                Log.v(TAG,(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        ToastUtils.show(mContext,"删除成功");
+                        finish();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                loading.dismiss();
+//                Log.v(TAG,new String(volleyError.networkResponse.data));
+                ToastUtils.show(mContext,volleyError);
+            }
+        };
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("uid", EggshellApplication.getApplication().getUser().getId()+"");//EggshellApplication.getApplication().getUser().getId()+""
+        map.put("eid",eid.getRid()+"");
+        map.put("id",jobID);
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_DELETE_RESUME_ITEM,false,map,true,listener,errorListener);
     }
     private boolean isCheck(){
         if(companyName.length()==0){
