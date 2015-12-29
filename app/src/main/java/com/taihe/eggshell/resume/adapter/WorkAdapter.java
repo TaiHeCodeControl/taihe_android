@@ -96,6 +96,8 @@ public class WorkAdapter extends BaseAdapter{
                 Intent intent = new Intent(mContext,ResumeWorkActivity.class);
                 intent.putExtra("eid",resume);
                 intent.putExtra("type","1");
+                work.setSdate(FormatUtils.timestampToDatetime(work.getSdate()));
+                work.setEdate(FormatUtils.timestampToDatetime(work.getEdate()));
                 intent.putExtra("listobj", work);
                 mContext.startActivity(intent);
             }

@@ -16,7 +16,6 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
-import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.resume.entity.ResumeData;
@@ -115,8 +114,8 @@ public class ResumeTrainActivity extends BaseActivity{
             worklists =  getIntent().getParcelableExtra("listobj");
             jobID = worklists.getId()+"";
             trainEdit.setText(worklists.getName());
-            workTimeStart.setText(FormatUtils.timestampToDatetime(worklists.getSdate()));
-            workTimeEnd.setText(FormatUtils.timestampToDatetime(worklists.getEdate()));
+            workTimeStart.setText(worklists.getSdate());
+            workTimeEnd.setText(worklists.getEdate());
             positionEdit.setText(worklists.getTitle());
             contextEdit.setText(worklists.getContent());
         }else{

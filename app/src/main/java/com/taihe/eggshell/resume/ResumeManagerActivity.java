@@ -117,6 +117,7 @@ public class ResumeManagerActivity extends BaseActivity{
         switch (v.getId()){
             case R.id.id_create_resume:
                 intent = new Intent(mContext,ResumeWriteActivity.class);
+                intent.putExtra("fromType","createResume");//从创建简历进入
                 startActivity(intent);
                 break;
             case R.id.id_edt:

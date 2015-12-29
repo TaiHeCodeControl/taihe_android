@@ -98,6 +98,8 @@ public class EduAdapter extends BaseAdapter{
                 Intent intent = new Intent(mContext,ResumeEduActivity.class);
                 intent.putExtra("eid",resume);
                 intent.putExtra("type","2");
+                work.setSdate(FormatUtils.timestampToDatetime(work.getSdate()));
+                work.setEdate(FormatUtils.timestampToDatetime(work.getEdate()));
                 intent.putExtra("listobj", work);
                 mContext.startActivity(intent);
             }

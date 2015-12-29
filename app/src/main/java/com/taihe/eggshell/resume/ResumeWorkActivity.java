@@ -116,8 +116,8 @@ public class ResumeWorkActivity extends BaseActivity{
             worklists =  getIntent().getParcelableExtra("listobj");
             jobID = worklists.getId()+"";
             companyEdit.setText(worklists.getName());
-            workTimeStart.setText(FormatUtils.timestampToDatetime(worklists.getSdate()));
-            workTimeEnd.setText(FormatUtils.timestampToDatetime(worklists.getEdate()));
+            workTimeStart.setText(worklists.getSdate());
+            workTimeEnd.setText(worklists.getEdate());
             departEdit.setText(worklists.getDepartment());
             positionEdit.setText(worklists.getTitle());
             contextEdit.setText(worklists.getContent());

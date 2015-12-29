@@ -190,7 +190,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="13dp"
+                    android:padding="10dp"
                     android:background="@color/scan_button_color">
 
                     <TextView
@@ -322,6 +322,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/id_work_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -331,7 +332,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="13dp"
+                    android:padding="10dp"
                     android:background="@color/scan_button_color">
 
                     <TextView
@@ -365,6 +366,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/id_edu_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -374,7 +376,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="13dp"
+                    android:padding="10dp"
                     android:background="@color/scan_button_color">
 
                     <TextView
@@ -408,6 +410,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/id_skill_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
@@ -417,7 +420,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="13dp"
+                    android:padding="10dp"
                     android:background="@color/scan_button_color">
 
                     <TextView
@@ -451,6 +454,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/id_project_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -460,7 +464,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="13dp"
+                    android:padding="10dp"
                     android:background="@color/scan_button_color">
 
                     <TextView
@@ -494,6 +498,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/id_book_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -503,7 +508,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="13dp"
+                    android:padding="10dp"
                     android:background="@color/scan_button_color">
 
                     <TextView
@@ -537,6 +542,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/id_train_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -546,7 +552,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="13dp"
+                    android:padding="10dp"
                     android:background="@color/scan_button_color">
 
                     <TextView
@@ -580,6 +586,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/id_self_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -590,7 +597,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="13dp"
+                    android:padding="10dp"
                     android:background="@color/scan_button_color">
 
                     <TextView

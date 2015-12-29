@@ -54,6 +54,7 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
     private StaticData result;
     private String city;
     private String sex = "6";
+    private String fromType = "";
     private int id_industry,id_positon,id_money,id_type,id_status,id_school,id_workex,id_time;
 
     private static final int RESULT_INDUSTRY = 10;
@@ -138,6 +139,10 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
         //点击编辑简历执行该方法
         if(null!=getIntent().getStringExtra("eid")){
             getInfo(getIntent().getStringExtra("eid"));
+        }
+
+        if(null!=getIntent().getStringExtra("fromType")){//如果是创建简历进来，则跳到Mutil页面，否则finish
+            fromType = getIntent().getStringExtra("fromType");
         }
     }
 
@@ -432,12 +437,14 @@ public class ResumeWriteActivity extends BaseActivity implements RadioGroup.OnCh
                     if(code == 0){
                         String resumeId = jsonObject.getString("data");
                         ToastUtils.show(mContext,"提交成功");
-                        intent = new Intent(mContext,ResumeMultiActivity.class);
-                        Resumes resume = new Resumes();
-                        resume.setRid(Integer.valueOf(resumeId));
-                        resume.setName(resumeName.getText().toString());
-                        intent.putExtra("resume", resume);
-                        startActivity(intent);
+                        if(!TextUtils.isEmpty(fromType) && "createResume".equals(fromType)){
+                            intent = new Intent(mContext,ResumeMultiActivity.class);
+                            Resumes resume = new Resumes();
+                            resume.setRid(Integer.valueOf(resumeId));
+                            resume.setName(resumeName.getText().toString());
+                            intent.putExtra("resume", resume);
+                            startActivity(intent);
+                        }
                         finish();
                     }
                 } catch (JSONException e) {

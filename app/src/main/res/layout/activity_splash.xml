@@ -24,11 +24,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/id_logo"
+        android:layout_centerInParent="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:gravity="center|bottom"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/id_app_brief"

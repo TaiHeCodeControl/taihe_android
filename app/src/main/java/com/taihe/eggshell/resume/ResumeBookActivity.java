@@ -96,7 +96,7 @@ public class ResumeBookActivity extends BaseActivity{
             ResumeData resumeData = getIntent().getParcelableExtra("listobj");
             itemid = resumeData.getId();
             bookEdit.setText(resumeData.getName());
-            timeEdit.setText(FormatUtils.timestampToDatetime(resumeData.getSdate()));
+            timeEdit.setText(resumeData.getSdate());
             techLevelEdit.setText(resumeData.getTitle());
             contextEdit.setText(resumeData.getContent());
         }

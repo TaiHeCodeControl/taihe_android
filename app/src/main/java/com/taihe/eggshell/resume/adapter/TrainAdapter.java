@@ -95,6 +95,8 @@ public class TrainAdapter extends BaseAdapter{
                 Intent intent = new Intent(mContext,ResumeTrainActivity.class);
                 intent.putExtra("eid",resume);
                 intent.putExtra("type","3");
+                train.setSdate(FormatUtils.timestampToDatetime(train.getSdate()));
+                train.setEdate(FormatUtils.timestampToDatetime(train.getEdate()));
                 intent.putExtra("listobj", train);
                 mContext.startActivity(intent);
             }

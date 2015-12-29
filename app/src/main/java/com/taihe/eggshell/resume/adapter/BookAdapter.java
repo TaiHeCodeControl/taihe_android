@@ -94,6 +94,7 @@ public class BookAdapter extends BaseAdapter{
                 Intent intent = new Intent(mContext,ResumeBookActivity.class);
                 intent.putExtra("eid",resume);
                 intent.putExtra("type","6");
+                book.setSdate(FormatUtils.timestampToDatetime(book.getSdate()));
                 intent.putExtra("listobj", book);
                 mContext.startActivity(intent);
             }

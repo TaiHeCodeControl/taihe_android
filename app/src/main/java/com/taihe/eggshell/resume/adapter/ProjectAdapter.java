@@ -95,6 +95,8 @@ public class ProjectAdapter extends BaseAdapter{
                 Intent intent = new Intent(mContext,ResumeProjectActivity.class);
                 intent.putExtra("eid",resume);
                 intent.putExtra("type","5");
+                project.setSdate(FormatUtils.timestampToDatetime(project.getSdate()));
+                project.setEdate(FormatUtils.timestampToDatetime(project.getEdate()));
                 intent.putExtra("listobj", project);
                 mContext.startActivity(intent);
             }

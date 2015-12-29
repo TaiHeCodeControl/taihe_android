@@ -16,7 +16,6 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
-import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.resume.entity.ResumeData;
@@ -116,8 +115,8 @@ public class ResumeEduActivity extends BaseActivity{
             worklists =  getIntent().getParcelableExtra("listobj");
             jobID = worklists.getId()+"";
             schoolEdit.setText(worklists.getName());
-            schoolTimeStart.setText(FormatUtils.timestampToDatetime(worklists.getSdate()));
-            schoolTimeEnd.setText(FormatUtils.timestampToDatetime(worklists.getEdate()));
+            schoolTimeStart.setText(worklists.getSdate());
+            schoolTimeEnd.setText(worklists.getEdate());
             industyEdit.setText(worklists.getSpecialty());
             positionEdit.setText(worklists.getTitle());
             contextEdit.setText(worklists.getContent());
