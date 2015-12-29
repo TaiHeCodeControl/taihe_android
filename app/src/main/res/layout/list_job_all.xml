@@ -121,7 +121,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="25dp"
             android:text="5K-7K"
-            android:textColor="@color/font_color_red"
+            android:textColor="@color/origin"
             android:textSize="@dimen/font_size_26" />
     </RelativeLayout>
 

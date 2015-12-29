@@ -1,9 +1,12 @@
 package com.taihe.eggshell.resume.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by wang on 2015/9/6.
  */
-public class ResumeData {
+public class ResumeData implements Parcelable{
 
     private int id;
     private String uid;
@@ -131,4 +134,56 @@ public class ResumeData {
     public void setLongtime(String longtime) {
         this.longtime = longtime;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(uid);
+        parcel.writeString(eid);
+        parcel.writeString(name);
+        parcel.writeString(sdate);
+        parcel.writeString(edate);
+        parcel.writeString(department);
+        parcel.writeString(title);
+        parcel.writeString(content);
+        parcel.writeString(specialty);
+        parcel.writeString(skill);
+        parcel.writeString(ing);
+        parcel.writeString(longtime);
+        parcel.writeString(sys);
+
+    }
+
+    public static final Creator<ResumeData> CREATOR = new Creator<ResumeData>() {
+        @Override
+        public ResumeData createFromParcel(Parcel parcel) {
+
+            ResumeData data = new ResumeData();
+            data.id = parcel.readInt();
+            data.uid = parcel.readString();
+            data.eid = parcel.readString();
+            data.name = parcel.readString();
+            data.sdate = parcel.readString();
+            data.edate = parcel.readString();
+            data.department = parcel.readString();
+            data.title = parcel.readString();
+            data.content = parcel.readString();
+            data.specialty = parcel.readString();
+            data.skill = parcel.readString();
+            data.ing = parcel.readString();
+            data.longtime = parcel.readString();
+            data.sys = parcel.readString();
+            return data;
+        }
+
+        @Override
+        public ResumeData[] newArray(int i) {
+            return new ResumeData[i];
+        }
+    };
 }
