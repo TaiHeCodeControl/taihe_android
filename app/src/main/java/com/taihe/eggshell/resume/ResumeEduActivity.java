@@ -148,11 +148,7 @@ public class ResumeEduActivity extends BaseActivity{
                 if(isCheck()){
                     if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
                         loading.show();
-                        if("".equals(strType)) {
-                            getInsertData();
-                        }else{
-
-                        }
+                        getInsertData();
                     }else{
                         ToastUtils.show(mContext, R.string.check_network);
                     }
