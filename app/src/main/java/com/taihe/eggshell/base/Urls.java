@@ -5,11 +5,11 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 public class Urls {
 
     //正式
-    public static final String BASE_HYR_MOBILE_URL = "http://www.eggker.cn/interface/index.php";
-    public static final String BASE_VIDEO_MOBILE_URL = "http://www.eggker.cn/interface/api.php";
+//    public static final String BASE_HYR_MOBILE_URL = "http://www.eggker.cn/interface/index.php";
+//    public static final String BASE_VIDEO_MOBILE_URL = "http://www.eggker.cn/interface/api.php";
     //测试
-//    public static final String BASE_HYR_MOBILE_URL = "http://101.200.186.14/eggker2/interface/index.php";
-//    public static final String BASE_VIDEO_MOBILE_URL = "http://101.200.186.14/eggker2/interface/api.php";
+    public static final String BASE_HYR_MOBILE_URL = "http://101.200.186.14/eggker2/interface/index.php";
+    public static final String BASE_VIDEO_MOBILE_URL = "http://101.200.186.14/eggker2/interface/api.php";
     //测试
 
     public static final String getMopHostUrl() {

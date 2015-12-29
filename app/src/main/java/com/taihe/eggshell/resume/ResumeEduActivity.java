@@ -263,6 +263,7 @@ public class ResumeEduActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
+                            ToastUtils.show(mContext,"提交成功");
 //                            Intent intent = new Intent(mContext,ResumeWorkScanActivity.class);
 //                            intent.putExtra("eid",eid);
 //                            intent.putExtra("name",schoolName);

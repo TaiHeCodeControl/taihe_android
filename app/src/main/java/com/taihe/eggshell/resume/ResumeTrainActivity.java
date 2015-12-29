@@ -251,7 +251,7 @@ public class ResumeTrainActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
-                            Toast.makeText(mContext,"添加成功!",Toast.LENGTH_LONG).show();
+                            ToastUtils.show(mContext,"提交成功");
 //                            Intent intent = new Intent(mContext,ResumeWorkScanActivity.class);
 //                            intent.putExtra("eid",eid);
 //                            intent.putExtra("name",companyName);

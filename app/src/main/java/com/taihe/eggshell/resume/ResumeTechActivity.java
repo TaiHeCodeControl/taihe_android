@@ -211,7 +211,7 @@ public class ResumeTechActivity extends BaseActivity{
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
                     if(code == 0){
-                        ToastUtils.show(mContext,"创建成功");
+                        ToastUtils.show(mContext,"提交成功");
 //                        Intent intent = new Intent(mContext,ResumeTechScanActivity.class);
 //                        intent.putExtra("eid",resume);
 //                        intent.putExtra("name",techName);
