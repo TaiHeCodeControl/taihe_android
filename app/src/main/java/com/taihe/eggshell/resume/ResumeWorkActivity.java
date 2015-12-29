@@ -47,10 +47,9 @@ public class ResumeWorkActivity extends BaseActivity{
     private TextView commitText,deleteText,workTimeStart,workTimeEnd,resumename;
     private EditText companyEdit,departEdit,positionEdit,contextEdit;
     private CheckBox radioButton;
-    private String companyName,startTime,endTime,departName,positionName,contextWord,strJson,strType;
+    private String companyName,startTime,endTime,departName,positionName,contextWord,strType,jobID;
     private TimeDialog timeDialog;
     private LoadingProgressDialog loading;
-    private int positionnum;
     private boolean isStart = false;
     private Resumes eid;
     private TimeDialog.CustomTimeListener customTimeListener = new TimeDialog.CustomTimeListener() {
@@ -84,7 +83,6 @@ public class ResumeWorkActivity extends BaseActivity{
         workTimeEnd = (TextView)findViewById(R.id.id_end_time);
         radioButton = (CheckBox)findViewById(R.id.id_gender);
 
-        commitText.setVisibility(View.VISIBLE);
         workTimeStart.setOnClickListener(this);
         workTimeEnd.setOnClickListener(this);
         commitText.setOnClickListener(this);
@@ -108,16 +106,25 @@ public class ResumeWorkActivity extends BaseActivity{
         super.initData();
         initTitle("写简历");
         eid=getIntent().getParcelableExtra("eid");
-        strJson=getIntent().getStringExtra("strJson");
         strType=getIntent().getStringExtra("type");
-        positionnum=getIntent().getIntExtra("posion",0);
         resumename.setText(eid.getName()+"-工作经历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
         loading = new LoadingProgressDialog(mContext,"正在提交...");
         ResumeData worklists;
         if(!"".equals(strType)){
+            commitText.setVisibility(View.VISIBLE);
+            deleteText.setVisibility(View.VISIBLE);
             worklists =  getIntent().getParcelableExtra("listobj");
+            jobID = worklists.getId()+"";
             companyEdit.setText(worklists.getName());
+            workTimeStart.setText(worklists.getSdate());
+            workTimeEnd.setText(worklists.getEdate());
+            departEdit.setText(worklists.getDepartment());
+            positionEdit.setText(worklists.getTitle());
+            contextEdit.setText(worklists.getContent());
+        }else{
+            commitText.setVisibility(View.GONE);
+            deleteText.setVisibility(View.GONE);
         }
     }
 
@@ -197,16 +204,16 @@ public class ResumeWorkActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
-                            Intent intent = new Intent(mContext,ResumeWorkScanActivity.class);
-                            intent.putExtra("eid",eid);
-                            intent.putExtra("name",companyName);
-                            intent.putExtra("sdate",startTime);
-                            intent.putExtra("edate",endTime);
-                            intent.putExtra("department",departName);
-                            intent.putExtra("title",positionName);
-                            intent.putExtra("content",contextWord);
-                            intent.putExtra("acttitle","work");
-                            startActivity(intent);
+//                            Intent intent = new Intent(mContext,ResumeWorkScanActivity.class);
+//                            intent.putExtra("eid",eid);
+//                            intent.putExtra("name",companyName);
+//                            intent.putExtra("sdate",startTime);
+//                            intent.putExtra("edate",endTime);
+//                            intent.putExtra("department",departName);
+//                            intent.putExtra("title",positionName);
+//                            intent.putExtra("content",contextWord);
+//                            intent.putExtra("acttitle","work");
+//                            startActivity(intent);
                             finish();
                         }catch (Exception ex){
                             ex.printStackTrace();
@@ -238,6 +245,9 @@ public class ResumeWorkActivity extends BaseActivity{
         map.put("department",departName);
         map.put("title",positionName);
         map.put("content",contextWord);
+        if(!"".equals(strType)){
+            map.put("id",jobID);
+        }
         Log.v("FFFFF:",map.toString());
         RequestUtils.createRequest(mContext, Urls.RESUME_WORK_URL, "", true, map, true, listener, errorListener);
     }

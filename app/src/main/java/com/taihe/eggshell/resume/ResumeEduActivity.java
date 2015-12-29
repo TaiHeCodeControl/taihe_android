@@ -19,6 +19,7 @@ import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
@@ -39,13 +40,13 @@ public class ResumeEduActivity extends BaseActivity{
 
     private Context mContext;
 
-    private TextView commitText,resetText,schoolTimeStart,schoolTimeEnd,resume_name;
+    private TextView commitText,deleteText,schoolTimeStart,schoolTimeEnd,resume_name;
     private EditText schoolEdit,industyEdit,positionEdit,contextEdit;
     private CheckBox radioButton;
     private TimeDialog timeDialog;
     private LoadingProgressDialog loading;
 
-    private String schoolName,startTime,endTime,industyName,positionName,contextWord;
+    private String schoolName,startTime,endTime,industyName,positionName,contextWord,strType,jobID;
     private boolean isStart = false;
     private Resumes eid;
     private TimeDialog.CustomTimeListener customTimeListener = new TimeDialog.CustomTimeListener() {
@@ -70,7 +71,7 @@ public class ResumeEduActivity extends BaseActivity{
 
         resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_commit);
-        resetText = (TextView)findViewById(R.id.id_reset);
+        deleteText = (TextView)findViewById(R.id.id_delete);
         schoolEdit = (EditText)findViewById(R.id.id_company_name);
         industyEdit = (EditText)findViewById(R.id.id_department);
         positionEdit = (EditText)findViewById(R.id.id_position);
@@ -83,7 +84,7 @@ public class ResumeEduActivity extends BaseActivity{
         schoolTimeStart.setOnClickListener(this);
         schoolTimeEnd.setOnClickListener(this);
         commitText.setOnClickListener(this);
-        resetText.setOnClickListener(this);
+        deleteText.setOnClickListener(this);
         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -102,11 +103,27 @@ public class ResumeEduActivity extends BaseActivity{
     public void initData() {
         super.initData();
         initTitle("写简历");
+        strType=getIntent().getStringExtra("type");
         eid=getIntent().getParcelableExtra("eid");
         resume_name.setText(eid.getName()+"-教育经历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
-
         loading = new LoadingProgressDialog(mContext,"正在请求...");
+        ResumeData worklists;
+        if(!"".equals(strType)){
+            commitText.setVisibility(View.VISIBLE);
+            deleteText.setVisibility(View.VISIBLE);
+            worklists =  getIntent().getParcelableExtra("listobj");
+            jobID = worklists.getId()+"";
+            schoolEdit.setText(worklists.getName());
+            schoolTimeStart.setText(worklists.getSdate());
+            schoolTimeEnd.setText(worklists.getEdate());
+            industyEdit.setText(worklists.getSpecialty());
+            positionEdit.setText(worklists.getTitle());
+            contextEdit.setText(worklists.getContent());
+        }else{
+            commitText.setVisibility(View.GONE);
+            deleteText.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -131,14 +148,18 @@ public class ResumeEduActivity extends BaseActivity{
                 if(isCheck()){
                     if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
                         loading.show();
-                        getInsertData();
+                        if("".equals(strType)) {
+                            getInsertData();
+                        }else{
+
+                        }
                     }else{
                         ToastUtils.show(mContext, R.string.check_network);
                     }
 
                 }
                 break;
-            case R.id.id_reset:
+            case R.id.id_delete:
                 schoolEdit.setText("");
                 schoolTimeStart.setText("");
                 schoolTimeEnd.setText("");
@@ -191,16 +212,16 @@ public class ResumeEduActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
-                            Intent intent = new Intent(mContext,ResumeWorkScanActivity.class);
-                            intent.putExtra("eid",eid);
-                            intent.putExtra("name",schoolName);
-                            intent.putExtra("sdate",startTime);
-                            intent.putExtra("edate",endTime);
-                            intent.putExtra("specialty",industyName);
-                            intent.putExtra("title",positionName);
-                            intent.putExtra("content",contextWord);
-                            intent.putExtra("acttitle","edu");
-                            startActivity(intent);
+//                            Intent intent = new Intent(mContext,ResumeWorkScanActivity.class);
+//                            intent.putExtra("eid",eid);
+//                            intent.putExtra("name",schoolName);
+//                            intent.putExtra("sdate",startTime);
+//                            intent.putExtra("edate",endTime);
+//                            intent.putExtra("specialty",industyName);
+//                            intent.putExtra("title",positionName);
+//                            intent.putExtra("content",contextWord);
+//                            intent.putExtra("acttitle","edu");
+//                            startActivity(intent);
                             finish();
                         }catch (Exception ex){
                             ex.printStackTrace();
@@ -232,7 +253,9 @@ public class ResumeEduActivity extends BaseActivity{
         map.put("specialty",industyName);
         map.put("title",positionName);
         map.put("content",contextWord);
-
+        if(!"".equals(strType)){
+            map.put("id",jobID);
+        }
         RequestUtils.createRequest(mContext, Urls.RESUME_EDU_URL, "", true, map, true, listener, errorListener);
     }
     @Override

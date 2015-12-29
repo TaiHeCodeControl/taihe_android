@@ -19,6 +19,7 @@ import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
+import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.datepicker.TimeDialog;
@@ -39,13 +40,13 @@ public class ResumeTrainActivity extends BaseActivity{
 
     private Context mContext;
 
-    private TextView commitText,resetText,workTimeStart,workTimeEnd,resume_name;
+    private TextView commitText,deleteText,workTimeStart,workTimeEnd,resume_name;
     private EditText trainEdit,positionEdit,contextEdit;
     private CheckBox radioButton;
     private TimeDialog timeDialog;
     private LoadingProgressDialog loading;
 
-    private String companyName,startTime,endTime,positionName,contextWord;
+    private String companyName,startTime,endTime,positionName,contextWord,strType,jobID;
     private boolean isStart = false;
     private Resumes eid;
     private TimeDialog.CustomTimeListener customTimeListener = new TimeDialog.CustomTimeListener() {
@@ -70,7 +71,7 @@ public class ResumeTrainActivity extends BaseActivity{
 
         resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_commit);
-        resetText = (TextView)findViewById(R.id.id_reset);
+        deleteText = (TextView)findViewById(R.id.id_delete);
         trainEdit = (EditText)findViewById(R.id.id_company_name);
         positionEdit = (EditText)findViewById(R.id.id_position);
         contextEdit = (EditText)findViewById(R.id.id_context);
@@ -78,11 +79,10 @@ public class ResumeTrainActivity extends BaseActivity{
         workTimeEnd = (TextView)findViewById(R.id.id_end_time);
         radioButton = (CheckBox)findViewById(R.id.id_gender);
 
-        commitText.setVisibility(View.VISIBLE);
         workTimeStart.setOnClickListener(this);
         workTimeEnd.setOnClickListener(this);
         commitText.setOnClickListener(this);
-        resetText.setOnClickListener(this);
+        deleteText.setOnClickListener(this);
         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -102,9 +102,25 @@ public class ResumeTrainActivity extends BaseActivity{
         super.initData();
         initTitle("写简历");
         eid=getIntent().getParcelableExtra("eid");
+        strType=getIntent().getStringExtra("type");
         resume_name.setText(eid.getName()+"-培训经历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
         loading = new LoadingProgressDialog(mContext,"正在提交...");
+        ResumeData worklists;
+        if(!"".equals(strType)){
+            commitText.setVisibility(View.VISIBLE);
+            deleteText.setVisibility(View.VISIBLE);
+            worklists =  getIntent().getParcelableExtra("listobj");
+            jobID = worklists.getId()+"";
+            trainEdit.setText(worklists.getName());
+            workTimeStart.setText(worklists.getSdate());
+            workTimeEnd.setText(worklists.getEdate());
+            positionEdit.setText(worklists.getTitle());
+            contextEdit.setText(worklists.getContent());
+        }else{
+            commitText.setVisibility(View.GONE);
+            deleteText.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -222,6 +238,9 @@ public class ResumeTrainActivity extends BaseActivity{
         map.put("edate",endTime);
         map.put("title",positionName);
         map.put("content",contextWord);
+        if(!"".equals(strType)){
+            map.put("id",jobID);
+        }
 
         RequestUtils.createRequest(mContext, Urls.RESUME_TRAIN_URL, "", true, map, true, listener, errorListener);
     }

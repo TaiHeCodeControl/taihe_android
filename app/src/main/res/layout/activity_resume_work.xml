@@ -302,6 +302,6 @@
                 android:textSize="@dimen/font_size_32"
                 android:textColor="@color/white"
                 android:background="@drawable/delet_background"/>
-            </LinearLayout>
+        </LinearLayout>
 
 </LinearLayout>

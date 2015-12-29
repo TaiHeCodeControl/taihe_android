@@ -18,6 +18,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.IndustryActivity;
 import com.taihe.eggshell.main.entity.StaticData;
+import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 
@@ -37,11 +38,11 @@ public class ResumeTechActivity extends BaseActivity{
     private Context mContext;
 
     private Intent intent;
-    private TextView commitText,resetText,techtypeEdit,levelEdit,resume_name;
+    private TextView commitText,deleteText,techtypeEdit,levelEdit,resume_name;
     private EditText techEdit,techYear,workTimeEnd;
     private LoadingProgressDialog loading;
     private Resumes resume;
-    private String techName,years,techType,techLevel,strLB,strSLD;
+    private String techName,years,techType,techLevel,strLB,strSLD,strType,jobID;
     private int id_skill,id_level;
 
     private Map<String,String> params = new HashMap<String, String>();
@@ -58,7 +59,7 @@ public class ResumeTechActivity extends BaseActivity{
 
         resume_name = (TextView)findViewById(R.id.id_resume_num);
         commitText = (TextView)findViewById(R.id.id_commit);
-        resetText = (TextView)findViewById(R.id.id_reset);
+        deleteText = (TextView)findViewById(R.id.id_delete);
         techEdit = (EditText)findViewById(R.id.id_tech_name);
         techtypeEdit = (TextView)findViewById(R.id.id_tech_type);
         levelEdit = (TextView)findViewById(R.id.id_tech_level);
@@ -68,7 +69,7 @@ public class ResumeTechActivity extends BaseActivity{
         techtypeEdit.setOnClickListener(this);
         levelEdit.setOnClickListener(this);
         commitText.setOnClickListener(this);
-        resetText.setOnClickListener(this);
+        deleteText.setOnClickListener(this);
     }
 
     @Override
@@ -77,8 +78,23 @@ public class ResumeTechActivity extends BaseActivity{
         initTitle("写简历");
 
         resume = getIntent().getParcelableExtra("eid");
+        strType=getIntent().getStringExtra("type");
         resume_name.setText(resume.getName()+"-专业技能");
         loading = new LoadingProgressDialog(mContext,"正在提交...");
+        ResumeData worklists;
+        if(!"".equals(strType)){
+            commitText.setVisibility(View.VISIBLE);
+            deleteText.setVisibility(View.VISIBLE);
+            worklists =  getIntent().getParcelableExtra("listobj");
+            jobID = worklists.getId()+"";
+            techEdit.setText(worklists.getName());
+            techtypeEdit.setText(worklists.getSkill());
+            levelEdit.setText(worklists.getSpecialty());
+            techYear.setText(worklists.getIng());
+        }else{
+            commitText.setVisibility(View.GONE);
+            deleteText.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -111,6 +127,9 @@ public class ResumeTechActivity extends BaseActivity{
                     params.put("skill",id_skill+"");
                     params.put("ing",id_level+"");
                     params.put("longtime",years);
+                    if(!"".equals(strType)){
+                        params.put("id",jobID);
+                    }
                     if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
                         loading.show();
                         submitToServer();
