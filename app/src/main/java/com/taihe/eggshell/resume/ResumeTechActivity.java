@@ -90,8 +90,8 @@ public class ResumeTechActivity extends BaseActivity{
             jobID = worklists.getId()+"";
             techEdit.setText(worklists.getName());
             techtypeEdit.setText(worklists.getSkill());
-            levelEdit.setText(worklists.getSpecialty());
-            techYear.setText(worklists.getIng());
+            levelEdit.setText(worklists.getIng());
+            techYear.setText(worklists.getLongtime());
         }else{
             deleteText.setVisibility(View.GONE);
         }
@@ -198,6 +198,7 @@ public class ResumeTechActivity extends BaseActivity{
         map.put("uid", EggshellApplication.getApplication().getUser().getId()+"");//EggshellApplication.getApplication().getUser().getId()+""
         map.put("eid",resume.getRid()+"");
         map.put("id",jobID);
+        map.put("type",strType);
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_DELETE_RESUME_ITEM,false,map,true,listener,errorListener);
     }
     private void submitToServer(){

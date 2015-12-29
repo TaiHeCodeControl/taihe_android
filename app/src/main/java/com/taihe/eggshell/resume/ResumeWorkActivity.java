@@ -216,6 +216,7 @@ public class ResumeWorkActivity extends BaseActivity{
         map.put("uid", EggshellApplication.getApplication().getUser().getId()+"");//EggshellApplication.getApplication().getUser().getId()+""
         map.put("eid",eid.getRid()+"");
         map.put("id",jobID);
+        map.put("type",strType);
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_DELETE_RESUME_ITEM,false,map,true,listener,errorListener);
     }
     private boolean isCheck(){
