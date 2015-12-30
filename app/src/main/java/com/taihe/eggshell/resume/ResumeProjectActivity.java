@@ -1,6 +1,7 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -49,7 +50,7 @@ public class ResumeProjectActivity extends BaseActivity{
     private LoadingProgressDialog loading;
     private ChoiceDialog deleteDialog;
     private int itemId = -1;
-    private String techName,startTime,endTime,techLevel,departName,contextWord;
+    private String techName,startTime,endTime,techLevel,departName,contextWord,strType,strState,strUrl,strTitle;
     private boolean isStart = false;
     private Resumes eid;
     private TimeDialog.CustomTimeListener customTimeListener = new TimeDialog.CustomTimeListener() {
@@ -107,18 +108,15 @@ public class ResumeProjectActivity extends BaseActivity{
         super.initData();
         initTitle("写简历");
         eid=getIntent().getParcelableExtra("eid");
-        String type = getIntent().getStringExtra("type");
+        strType = getIntent().getStringExtra("type");
+        strState=getIntent().getStringExtra("state");
+        strUrl = getIntent().getStringExtra("url");
+        strTitle = getIntent().getStringExtra("title");
         resume_name.setText(eid.getName()+"-项目经验");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
         loading = new LoadingProgressDialog(mContext,"正在提交...");
-
-        if(TextUtils.isEmpty(type)){
-            resetText.setVisibility(View.GONE);
-        }else{
+        if(!"".equals(strType) && !"add".equals(strState)){
             resetText.setVisibility(View.VISIBLE);
-        }
-
-        if(null!=getIntent().getParcelableExtra("listobj")){
             ResumeData resumeData = getIntent().getParcelableExtra("listobj");
             itemId = resumeData.getId();
             projectEdit.setText(resumeData.getName());
@@ -127,7 +125,25 @@ public class ResumeProjectActivity extends BaseActivity{
             invaraEdit.setText(resumeData.getSys());
             departEdit.setText(resumeData.getTitle());
             contextEdit.setText(resumeData.getContent());
+        }else{
+            resetText.setVisibility(View.GONE);
         }
+//        if(TextUtils.isEmpty(type)){
+//            resetText.setVisibility(View.GONE);
+//        }else{
+//            resetText.setVisibility(View.VISIBLE);
+//        }
+//
+//        if(null!=getIntent().getParcelableExtra("listobj")){
+//            ResumeData resumeData = getIntent().getParcelableExtra("listobj");
+//            itemId = resumeData.getId();
+//            projectEdit.setText(resumeData.getName());
+//            schoolTimeStart.setText(resumeData.getSdate());
+//            schoolTimeEnd.setText(resumeData.getEdate());
+//            invaraEdit.setText(resumeData.getSys());
+//            departEdit.setText(resumeData.getTitle());
+//            contextEdit.setText(resumeData.getContent());
+//        }
     }
 
     @Override
@@ -266,7 +282,16 @@ public class ResumeProjectActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
-                            ToastUtils.show(mContext,"添加成功!");
+                            ToastUtils.show(mContext,"提交成功!");
+                            if("add".equals(strState)){
+                                Intent intent = new Intent(mContext,ResumeListActivity.class);
+                                intent.putExtra("eid",eid);
+                                intent.putExtra("type",strType);
+                                intent.putExtra("url", strUrl);
+                                intent.putExtra("title",strTitle);
+                                startActivity(intent);
+                            }
+                            finish();
 //                            Intent intent = new Intent(mContext,ResumeProjectScanActivity.class);
 //                            intent.putExtra("eid",eid);
 //                            intent.putExtra("name",techName);
@@ -276,7 +301,6 @@ public class ResumeProjectActivity extends BaseActivity{
 //                            intent.putExtra("title",departName);
 //                            intent.putExtra("content",contextWord);
 //                            startActivity(intent);
-                            finish();
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }

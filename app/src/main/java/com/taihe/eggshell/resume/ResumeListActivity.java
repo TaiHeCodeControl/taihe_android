@@ -86,6 +86,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent = new Intent(mContext,ResumeWorkActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","1");
+                        intent.putExtra("state","edit");
                         intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
@@ -93,6 +94,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent = new Intent(mContext,ResumeEduActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","2");
+                        intent.putExtra("state","edit");
                         intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
@@ -100,6 +102,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent = new Intent(mContext,ResumeTrainActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","3");
+                        intent.putExtra("state","edit");
                         intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
@@ -107,6 +110,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent = new Intent(mContext,ResumeTechActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","4");
+                        intent.putExtra("state","edit");
                         intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
@@ -114,6 +118,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent = new Intent(mContext,ResumeProjectActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","5");
+                        intent.putExtra("state","edit");
                         intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
@@ -121,6 +126,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent = new Intent(mContext,ResumeBookActivity.class);
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","6");
+                        intent.putExtra("state","edit");
                         intent.putExtra("listobj", worklists.get(posion));
                         startActivity(intent);
                         break;
@@ -140,6 +146,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
                         intent.putExtra("listobj","");
+                        intent.putExtra("state","");
                         startActivity(intent);
                         break;
                     case "2":
@@ -147,6 +154,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
                         intent.putExtra("listobj","");
+                        intent.putExtra("state","");
                         startActivity(intent);
                         break;
                     case "3":
@@ -154,6 +162,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
                         intent.putExtra("listobj","");
+                        intent.putExtra("state","");
                         startActivity(intent);
                         break;
                     case "4":
@@ -161,6 +170,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
                         intent.putExtra("listobj","");
+                        intent.putExtra("state","");
                         startActivity(intent);
                         break;
                     case "5":
@@ -168,6 +178,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
                         intent.putExtra("listobj","");
+                        intent.putExtra("state","");
                         startActivity(intent);
                         break;
                     case "6":
@@ -175,6 +186,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                         intent.putExtra("eid",resume);
                         intent.putExtra("type","");
                         intent.putExtra("listobj", "");
+                        intent.putExtra("state","");
                         startActivity(intent);
                         break;
                 }

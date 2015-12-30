@@ -1,6 +1,7 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -47,7 +48,7 @@ public class ResumeEduActivity extends BaseActivity{
     private TimeDialog timeDialog;
     private LoadingProgressDialog loading;
 
-    private String schoolName,startTime,endTime,industyName,positionName,contextWord,strType,jobID;
+    private String schoolName,startTime,endTime,industyName,positionName,contextWord,strType,jobID,strState,strUrl,strTitle;
     private boolean isStart = false;
     private Resumes eid;
     private TimeDialog.CustomTimeListener customTimeListener = new TimeDialog.CustomTimeListener() {
@@ -106,11 +107,14 @@ public class ResumeEduActivity extends BaseActivity{
         initTitle("写简历");
         strType=getIntent().getStringExtra("type");
         eid=getIntent().getParcelableExtra("eid");
+        strState=getIntent().getStringExtra("state");
+        strUrl = getIntent().getStringExtra("url");
+        strTitle = getIntent().getStringExtra("title");
         resume_name.setText(eid.getName()+"-教育经历");
         timeDialog = new TimeDialog(mContext,this,customTimeListener);
         loading = new LoadingProgressDialog(mContext,"正在请求...");
         ResumeData worklists;
-        if(!"".equals(strType)){
+        if(!"".equals(strType) && !"add".equals(strState)){
             deleteText.setVisibility(View.VISIBLE);
             worklists =  getIntent().getParcelableExtra("listobj");
             jobID = worklists.getId()+"";
@@ -259,6 +263,15 @@ public class ResumeEduActivity extends BaseActivity{
                     if (code == 0) {
                         try{
                             ToastUtils.show(mContext,"提交成功");
+                            if("add".equals(strState)){
+                                Intent intent = new Intent(mContext,ResumeListActivity.class);
+                                intent.putExtra("eid",eid);
+                                intent.putExtra("type",strType);
+                                intent.putExtra("url", strUrl);
+                                intent.putExtra("title",strTitle);
+                                startActivity(intent);
+                            }
+                            finish();
 //                            Intent intent = new Intent(mContext,ResumeWorkScanActivity.class);
 //                            intent.putExtra("eid",eid);
 //                            intent.putExtra("name",schoolName);
@@ -269,7 +282,6 @@ public class ResumeEduActivity extends BaseActivity{
 //                            intent.putExtra("content",contextWord);
 //                            intent.putExtra("acttitle","edu");
 //                            startActivity(intent);
-                            finish();
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }

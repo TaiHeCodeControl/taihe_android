@@ -5,11 +5,11 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 public class Urls {
 
     //正式
-    public static final String BASE_HYR_MOBILE_URL = "http://www.eggker.cn/interface/index.php";
-    public static final String BASE_VIDEO_MOBILE_URL = "http://www.eggker.cn/interface/api.php";
+//    public static final String BASE_HYR_MOBILE_URL = "http://www.eggker.cn/interface/index.php";
+//    public static final String BASE_VIDEO_MOBILE_URL = "http://www.eggker.cn/interface/api.php";
     //测试
-//    public static final String BASE_HYR_MOBILE_URL = "http://101.200.186.14/eggker2/interface/index.php";
-//    public static final String BASE_VIDEO_MOBILE_URL = "http://101.200.186.14/eggker2/interface/api.php";
+    public static final String BASE_HYR_MOBILE_URL = "http://101.200.186.14/eggker2/interface/index.php";
+    public static final String BASE_VIDEO_MOBILE_URL = "http://101.200.186.14/eggker2/interface/api.php";
     //测试
 
     public static final String getMopHostUrl() {
@@ -88,6 +88,7 @@ public class Urls {
     public static final String COM_GET_URL = BASE_HYR_MOBILE_URL + "/Company";//企业首页
 
 
+    public static final String RESUME_RESUME_LIST = BASE_HYR_MOBILE_URL +"/Except/resume_type_list";//简历编辑列表
     public static final String RESUME_WORK_LIST = BASE_HYR_MOBILE_URL +"/Except/work_list";//工作
     public static final String RESUME_EDU_LIST = BASE_HYR_MOBILE_URL +"/Except/edu_list";//教育
     public static final String RESUME_TRAINING_LIST = BASE_HYR_MOBILE_URL +"/Except/training_list";//专业技能

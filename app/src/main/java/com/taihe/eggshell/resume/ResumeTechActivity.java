@@ -44,7 +44,7 @@ public class ResumeTechActivity extends BaseActivity{
     private ChoiceDialog deleteDialog;
     private LoadingProgressDialog loading;
     private Resumes resume;
-    private String techName,years,techType,techLevel,strLB,strSLD,strType,jobID;
+    private String techName,years,techType,techLevel,strLB,strSLD,strType,jobID,strState,strUrl,strTitle;
     private int id_skill,id_level;
 
     private Map<String,String> params = new HashMap<String, String>();
@@ -81,10 +81,13 @@ public class ResumeTechActivity extends BaseActivity{
 
         resume = getIntent().getParcelableExtra("eid");
         strType=getIntent().getStringExtra("type");
+        strState=getIntent().getStringExtra("state");
+        strUrl = getIntent().getStringExtra("url");
+        strTitle = getIntent().getStringExtra("title");
         resume_name.setText(resume.getName()+"-专业技能");
         loading = new LoadingProgressDialog(mContext,"正在提交...");
         ResumeData worklists;
-        if(!"".equals(strType)){
+        if(!"".equals(strType) && !"add".equals(strState)){
             deleteText.setVisibility(View.VISIBLE);
             worklists =  getIntent().getParcelableExtra("listobj");
             jobID = worklists.getId()+"";
@@ -212,6 +215,16 @@ public class ResumeTechActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if(code == 0){
                         ToastUtils.show(mContext,"提交成功");
+                        if("add".equals(strState)){
+                            Intent intent = new Intent(mContext,ResumeListActivity.class);
+                            intent.putExtra("eid",resume);
+                            intent.putExtra("type",strType);
+                            intent.putExtra("url", strUrl);
+                            intent.putExtra("title",strTitle);
+                            startActivity(intent);
+                        }
+                        finish();
+
 //                        Intent intent = new Intent(mContext,ResumeTechScanActivity.class);
 //                        intent.putExtra("eid",resume);
 //                        intent.putExtra("name",techName);
@@ -219,9 +232,8 @@ public class ResumeTechActivity extends BaseActivity{
 //                        intent.putExtra("title",strSLD);
 //                        intent.putExtra("sdate",years);
 //                        startActivity(intent);
-                        finish();
                     }else{
-                        ToastUtils.show(mContext,"创建失败");
+                        ToastUtils.show(mContext,"提交失败");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
