@@ -403,7 +403,7 @@
                     android:id="@+id/id_edu_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="@color/white"
+                    android:divider="@color/line_gray"
                     android:dividerHeight="0.5dp"
                     android:background="@color/white"/>
 
@@ -447,7 +447,7 @@
                     android:id="@+id/id_train_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="@color/white"
+                    android:divider="@color/line_gray"
                     android:dividerHeight="0.5dp"
                     android:background="@color/white"/>
 
@@ -491,7 +491,7 @@
                     android:id="@+id/id_tech_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="@color/white"
+                    android:divider="@color/line_gray"
                     android:dividerHeight="0.5dp"
                     android:background="@color/white"/>
 
@@ -535,7 +535,7 @@
                     android:id="@+id/id_project_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="@color/white"
+                    android:divider="@color/line_gray"
                     android:dividerHeight="0.5dp"
                     android:background="@color/white"/>
 
@@ -579,7 +579,7 @@
                     android:id="@+id/id_book_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="@color/white"
+                    android:divider="@color/line_gray"
                     android:dividerHeight="0.5dp"
                     android:background="@color/white"/>
 
