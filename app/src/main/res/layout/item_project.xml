@@ -11,29 +11,69 @@
         android:paddingTop="10dp"
         android:paddingLeft="15dp"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/id_time_project"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="时间段"
-            android:textColor="@color/black"/>
 
-        <TextView
-            android:id="@+id/id_own_posion"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="担任职位"
-            android:textColor="@color/black"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/id_project_name"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="项目时间:  "
+                android:textColor="@color/font_color_gray"/>
+
+            <TextView
+                android:id="@+id/id_time_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="2015-01-21"
+                android:textColor="@color/black"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="项目名称"
-            android:textColor="@color/black"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="担任职位:  "
+                android:textColor="@color/font_color_gray"/>
+
+            <TextView
+                android:id="@+id/id_own_posion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="工程师"
+                android:textColor="@color/black"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="项目名称:  "
+                android:textColor="@color/font_color_gray"/>
+
+            <TextView
+                android:id="@+id/id_project_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="购物"
+                android:textColor="@color/black"/>
+            </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

@@ -186,6 +186,7 @@ public class ResumeScanActivity extends BaseActivity{
                 intent.putExtra("eid",eid);
                 intent.putExtra("type","");
                 intent.putExtra("listobj","");
+                intent.putExtra("state","");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_edu:
@@ -193,6 +194,7 @@ public class ResumeScanActivity extends BaseActivity{
                 intent.putExtra("eid",eid);
                 intent.putExtra("type","");
                 intent.putExtra("listobj","");
+                intent.putExtra("state","");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_tech:
@@ -200,6 +202,7 @@ public class ResumeScanActivity extends BaseActivity{
                 intent.putExtra("eid",eid);
                 intent.putExtra("type","");
                 intent.putExtra("listobj","");
+                intent.putExtra("state","");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_project:
@@ -207,6 +210,7 @@ public class ResumeScanActivity extends BaseActivity{
                 intent.putExtra("eid",eid);
                 intent.putExtra("type","");
                 intent.putExtra("listobj","");
+                intent.putExtra("state","");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_train:
@@ -214,6 +218,7 @@ public class ResumeScanActivity extends BaseActivity{
                 intent.putExtra("eid",eid);
                 intent.putExtra("type","");
                 intent.putExtra("listobj","");
+                intent.putExtra("state","");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_book:
@@ -221,6 +226,7 @@ public class ResumeScanActivity extends BaseActivity{
                 intent.putExtra("eid",eid);
                 intent.putExtra("type","");
                 intent.putExtra("listobj", "");
+                intent.putExtra("state","");
                 startActivity(intent);
                 break;
             case R.id.id_to_add_self:
@@ -248,10 +254,10 @@ public class ResumeScanActivity extends BaseActivity{
                         String name = info.getString("uname");//姓名
                         userName.setText(name);
                         String emails = info.getString("email");//邮箱
-                        email.setText(emails);
+                        email.setText("  "+emails);
                         if(!"null".equals(info.getString("edu"))){
                             JSONObject edu = info.getJSONObject("edu");//学历
-                            schoolLevel.setText(edu.getString("name"));
+                            schoolLevel.setText("  "+edu.getString("name"));
                         }
 
                         JSONObject experince = info.getJSONObject("exp");//工作经验
@@ -261,9 +267,9 @@ public class ResumeScanActivity extends BaseActivity{
                         String birthday = info.getString("birthday");//年龄
                         age.setText(birthday);
                         String addre = info.getString("address");
-                        address.setText(addre);
+                        address.setText("  "+addre);
                         String tel = info.getString("telphone");//电话
-                        telphone.setText(tel);
+                        telphone.setText("  "+tel);
 
                         JSONObject expect = data.getJSONObject("expect");
                         String rename = expect.getString("name");//简历名称
@@ -271,23 +277,23 @@ public class ResumeScanActivity extends BaseActivity{
                         String ctime = expect.getString("ctime");
                         createTime.setText("创建于"+ctime);
                         if("null".equals(expect.getString("three_cityid"))){
-                            hopeaddress.setText("全城");
+                            hopeaddress.setText("  全城");
                         }else{
                             JSONObject addres = expect.getJSONObject("three_cityid");//地区
-                            hopeaddress.setText(addres.getString("name"));
+                            hopeaddress.setText("  "+addres.getString("name"));
                         }
                         JSONObject hy = expect.getJSONObject("hy");//期望行业
-                        hopeindustry.setText(hy.getString("name"));
+                        hopeindustry.setText("  "+hy.getString("name"));
                         JSONObject hopeposiont = expect.getJSONObject("job");//职位
-                        hopeposition.setText(hopeposiont.getString("name"));
+                        hopeposition.setText("  "+hopeposiont.getString("name"));
                         JSONObject salary = expect.getJSONObject("salary");//薪资
-                        hopemoney.setText(salary.getString("name"));
+                        hopemoney.setText("  "+salary.getString("name"));
                         JSONObject status = expect.getJSONObject("jobst");//求职状态
-                        staus.setText(status.getString("name"));
+                        staus.setText("  "+status.getString("name"));
                         JSONObject worktype = expect.getJSONObject("ctype");//职位性质
-                        positiontype.setText(worktype.getString("name"));
+                        positiontype.setText("  "+worktype.getString("name"));
                         JSONObject dgtime = expect.getJSONObject("dgtime");//到岗时间
-                        hopetime.setText(dgtime.getString("name"));
+                        hopetime.setText("  "+dgtime.getString("name"));
 
                         Gson gson = new Gson();
                         String worklist = data.getString("work");//工作经验

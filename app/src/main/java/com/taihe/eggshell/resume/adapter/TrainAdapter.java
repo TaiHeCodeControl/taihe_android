@@ -98,6 +98,7 @@ public class TrainAdapter extends BaseAdapter{
                 train.setSdate(FormatUtils.timestampToDatetime(train.getSdate()));
                 train.setEdate(FormatUtils.timestampToDatetime(train.getEdate()));
                 intent.putExtra("listobj", train);
+                intent.putExtra("state","");
                 mContext.startActivity(intent);
             }
         });

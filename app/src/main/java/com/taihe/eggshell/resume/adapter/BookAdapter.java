@@ -96,6 +96,7 @@ public class BookAdapter extends BaseAdapter{
                 intent.putExtra("type","6");
                 book.setSdate(FormatUtils.timestampToDatetime(book.getSdate()));
                 intent.putExtra("listobj", book);
+                intent.putExtra("state","");
                 mContext.startActivity(intent);
             }
         });

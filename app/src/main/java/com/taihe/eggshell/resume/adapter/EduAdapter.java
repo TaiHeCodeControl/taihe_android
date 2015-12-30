@@ -101,6 +101,7 @@ public class EduAdapter extends BaseAdapter{
                 work.setSdate(FormatUtils.timestampToDatetime(work.getSdate()));
                 work.setEdate(FormatUtils.timestampToDatetime(work.getEdate()));
                 intent.putExtra("listobj", work);
+                intent.putExtra("state","");
                 mContext.startActivity(intent);
             }
         });

@@ -410,6 +410,50 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/id_train_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingTop="10dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@color/scan_button_color">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="培训经历"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/id_to_add_train"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="新增"
+                        android:textSize="@dimen/font_size_15"
+                        android:textColor="@color/white"
+                        android:drawablePadding="5dp"
+                        android:drawableLeft="@drawable/add_icon"/>
+                </RelativeLayout>
+
+                <com.taihe.eggshell.widget.MyListView
+                    android:id="@+id/id_train_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/white"
+                    android:dividerHeight="0.5dp"
+                    android:background="@color/white"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/id_skill_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -533,50 +577,6 @@
 
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/id_book_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@color/white"
-                    android:dividerHeight="0.5dp"
-                    android:background="@color/white"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/id_train_linear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:paddingTop="10dp"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:background="@color/scan_button_color">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:text="培训经历"
-                        android:textSize="@dimen/font_size_15"
-                        android:textColor="@color/white"/>
-
-                    <TextView
-                        android:id="@+id/id_to_add_train"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="新增"
-                        android:textSize="@dimen/font_size_15"
-                        android:textColor="@color/white"
-                        android:drawablePadding="5dp"
-                        android:drawableLeft="@drawable/add_icon"/>
-                </RelativeLayout>
-
-                <com.taihe.eggshell.widget.MyListView
-                    android:id="@+id/id_train_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@color/white"

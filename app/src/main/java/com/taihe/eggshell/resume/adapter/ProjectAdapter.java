@@ -98,6 +98,7 @@ public class ProjectAdapter extends BaseAdapter{
                 project.setSdate(FormatUtils.timestampToDatetime(project.getSdate()));
                 project.setEdate(FormatUtils.timestampToDatetime(project.getEdate()));
                 intent.putExtra("listobj", project);
+                intent.putExtra("state","");
                 mContext.startActivity(intent);
             }
         });

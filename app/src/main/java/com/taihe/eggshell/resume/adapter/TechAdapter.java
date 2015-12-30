@@ -95,6 +95,7 @@ public class TechAdapter extends BaseAdapter{
                 intent.putExtra("eid",resume);
                 intent.putExtra("type","4");
                 intent.putExtra("listobj", skill);
+                intent.putExtra("state","");
                 mContext.startActivity(intent);
             }
         });

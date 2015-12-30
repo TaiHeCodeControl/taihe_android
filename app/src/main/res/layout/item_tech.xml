@@ -4,92 +4,105 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/id_tech_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
-        android:text="名称"
-        android:textColor="@color/black"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="left|center"
-        android:paddingLeft="15dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
-            style="@style/ResumeTextStyle_left"
-            android:text="掌握时间:"/>
-
-        <TextView
-            android:id="@+id/id_contron_time"
-            style="@style/ResumeTextStyle"
-            android:text=""/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="left|center"
-        android:paddingLeft="15dp"
-        android:orientation="horizontal">
-        <TextView
-            style="@style/ResumeTextStyle_left"
-            android:text="熟练程度:"/>
-
-        <TextView
-            android:id="@+id/id_hot_level"
-            style="@style/ResumeTextStyle"
-            android:text=""/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="left|center"
-        android:paddingLeft="15dp"
-        android:orientation="horizontal">
-        <TextView
-            style="@style/ResumeTextStyle_left"
-            android:text="技能名称:"/>
-
-        <TextView
-            android:id="@+id/id_tech"
-            style="@style/ResumeTextStyle"
-            android:text="" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
-
-        <TextView
-            android:id="@+id/id_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/id_delite"
-            android:layout_marginRight="15dp"
-            android:text="编辑"
-            android:textSize="16sp"
-            android:textColor="@color/include_title_color"
-            android:drawableLeft="@drawable/edit_icon_green"
-            android:drawablePadding="5dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="技能类别:  "
+            android:textColor="@color/font_color_gray"/>
 
         <TextView
-            android:id="@+id/id_delite"
+            android:id="@+id/id_tech_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:text="删除"
-            android:textSize="16sp"
-            android:textColor="@color/origin"
-            android:drawableLeft="@drawable/delete_icon"
-            android:drawablePadding="5dp"/>
-    </RelativeLayout>
+            android:text="计算机"
+            android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="left|center"
+            android:paddingLeft="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/ResumeTextStyle_left"
+                android:text="掌握时间:  "/>
+
+            <TextView
+                android:id="@+id/id_contron_time"
+                style="@style/ResumeTextStyle"
+                android:text=""/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="left|center"
+            android:paddingLeft="15dp"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/ResumeTextStyle_left"
+                android:text="熟练程度:  "/>
+
+            <TextView
+                android:id="@+id/id_hot_level"
+                style="@style/ResumeTextStyle"
+                android:text=""/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="left|center"
+            android:paddingLeft="15dp"
+            android:orientation="horizontal">
+            <TextView
+                style="@style/ResumeTextStyle_left"
+                android:text="技能名称:  "/>
+
+            <TextView
+                android:id="@+id/id_tech"
+                style="@style/ResumeTextStyle"
+                android:text="" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/id_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/id_delite"
+                android:layout_marginRight="15dp"
+                android:text="编辑"
+                android:textSize="16sp"
+                android:textColor="@color/include_title_color"
+                android:drawableLeft="@drawable/edit_icon_green"
+                android:drawablePadding="5dp"/>
+
+            <TextView
+                android:id="@+id/id_delite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:text="删除"
+                android:textSize="16sp"
+                android:textColor="@color/origin"
+                android:drawableLeft="@drawable/delete_icon"
+                android:drawablePadding="5dp"/>
+        </RelativeLayout>
 
 </LinearLayout>
