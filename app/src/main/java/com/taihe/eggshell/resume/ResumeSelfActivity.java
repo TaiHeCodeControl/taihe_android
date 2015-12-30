@@ -144,7 +144,7 @@ public class ResumeSelfActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
-                            ToastUtils.show(mContext,"添加成功!");
+                            ToastUtils.show(mContext,"提交成功!");
                             finish();
                         }catch (Exception ex){
                             ex.printStackTrace();
