@@ -259,7 +259,7 @@ public class ResumeBookActivity extends BaseActivity{
         Map<String,String> map = new HashMap<String,String>();
         map.put("uid", EggshellApplication.getApplication().getUser().getId()+"");//EggshellApplication.getApplication().getUser().getId()+""
         map.put("eid",eid.getRid()+"");
-        if(-1 != itemid){
+        if(-1 != itemid && !"add".equals(strState)){
             map.put("id",itemid+"");
         }
         map.put("name",techName);

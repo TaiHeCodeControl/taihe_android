@@ -326,7 +326,7 @@ public class ResumeProjectActivity extends BaseActivity{
         Map<String,String> map = new HashMap<String,String>();
         map.put("uid", EggshellApplication.getApplication().getUser().getId()+"");//EggshellApplication.getApplication().getUser().getId()+""
         map.put("eid",eid.getRid()+"");
-        if(-1!=itemId){
+        if(-1!=itemId && !"add".equals(strState)){
             map.put("id",itemId+"");
         }
         map.put("name",techName);

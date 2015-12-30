@@ -130,7 +130,7 @@ public class ResumeTechActivity extends BaseActivity{
                     params.put("skill",id_skill+"");
                     params.put("ing",id_level+"");
                     params.put("longtime",years);
-                    if(!"".equals(strType)){
+                    if(!"".equals(strType) && !"add".equals(strState)){
                         params.put("id",jobID);
                     }
                     if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){

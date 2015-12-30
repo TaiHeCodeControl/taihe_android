@@ -315,7 +315,7 @@ public class ResumeWorkActivity extends BaseActivity{
         map.put("department",departName);
         map.put("title",positionName);
         map.put("content",contextWord);
-        if(!"".equals(strType)){
+        if(!"".equals(strType) && !"add".equals(strState)){
             map.put("id",jobID);
         }
         Log.v("FFFFF:",map.toString());

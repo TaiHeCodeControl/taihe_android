@@ -312,7 +312,7 @@ public class ResumeEduActivity extends BaseActivity{
         map.put("specialty",industyName);
         map.put("title",positionName);
         map.put("content",contextWord);
-        if(!"".equals(strType)){
+        if(!"".equals(strType) && !"add".equals(strState)){
             map.put("id",jobID);
         }
         RequestUtils.createRequest(mContext, Urls.RESUME_EDU_URL, "", true, map, true, listener, errorListener);

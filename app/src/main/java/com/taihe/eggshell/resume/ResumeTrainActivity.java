@@ -302,7 +302,7 @@ public class ResumeTrainActivity extends BaseActivity{
         map.put("edate",endTime);
         map.put("title",positionName);
         map.put("content",contextWord);
-        if(!"".equals(strType)){
+        if(!"".equals(strType) && !"add".equals(strState)){
             map.put("id",jobID);
         }
 
