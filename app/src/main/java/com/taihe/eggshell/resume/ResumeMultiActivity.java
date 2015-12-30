@@ -2,7 +2,6 @@ package com.taihe.eggshell.resume;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -11,15 +10,12 @@ import android.widget.Toast;
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
-import com.taihe.eggshell.resume.adapter.ResumeCenterAdapter;
 import com.taihe.eggshell.resume.entity.ResumeData;
 import com.taihe.eggshell.resume.entity.Resumes;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
@@ -223,7 +219,7 @@ public class ResumeMultiActivity extends BaseActivity{
                 loading.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
-                    Log.d("edu", jsonObject.toString());
+//                    Log.d("edu", jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{

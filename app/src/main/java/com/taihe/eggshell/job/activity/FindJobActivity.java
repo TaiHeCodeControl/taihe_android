@@ -230,6 +230,7 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             public void onClick(View view) {
                 if (!cb_selectAll.isChecked()) {
                     cb_selectAll.setChecked(false);
+                    selectSize = 0;
                     for (JobInfo info : jobInfos) {
                         info.setIsChecked(false);
                     }

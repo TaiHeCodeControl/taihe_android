@@ -2,7 +2,6 @@ package com.taihe.eggshell.resume;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -202,7 +201,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
                 loading.dismiss();
                 try {
                     JSONObject jsonObject = new JSONObject((String) obj);
-                    Log.d("edu", jsonObject.toString());
+//                    Log.d("edu", jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{

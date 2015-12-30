@@ -229,6 +229,7 @@ public class MyPostActivity extends BaseActivity {
                 if(jobInfos.size()>0){
                     if (!cb_selectAll.isChecked()) {
                         cb_selectAll.setChecked(false);
+                        selectSize = 0;
                         for (JobInfo info : jobInfos) {
                             info.setIsChecked(false);
                         }
@@ -353,7 +354,6 @@ public class MyPostActivity extends BaseActivity {
                     StringBuilder sb = new StringBuilder();//选择的职位
                     ischeck = false;
                     for (JobInfo jobInfo : jobInfos) {
-                        System.out.println(jobInfo.getJob_Id() + "======" + jobInfo.isChecked());
                         if (jobInfo.isChecked()) {
                             ischeck = true;
                             sb.append(jobInfo.getJob_Id());
@@ -445,7 +445,7 @@ public class MyPostActivity extends BaseActivity {
             public void onResponse(Object o) {
                 dialog.dismiss();
                 try {
-                    Log.v(TAG, (String) o);
+//                    Log.v(TAG, (String) o);
 
                     JSONObject jsonObject = new JSONObject((String) o);
 
@@ -478,7 +478,7 @@ public class MyPostActivity extends BaseActivity {
                 dialog.dismiss();
                 try {
                     if (null != volleyError.networkResponse.data) {
-                        Log.v("jobPost:", new String(volleyError.networkResponse.data));
+//                        Log.v("jobPost:", new String(volleyError.networkResponse.data));
                     }
                     ToastUtils.show(mContext, "网络异常");
                 } catch (Exception e) {
