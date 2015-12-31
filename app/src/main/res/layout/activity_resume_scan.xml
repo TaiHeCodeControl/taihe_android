@@ -617,7 +617,7 @@
                         android:textSize="@dimen/font_size_15"
                         android:textColor="@color/white"
                         android:drawablePadding="5dp"
-                        android:drawableLeft="@drawable/add_icon"/>
+                        android:drawableLeft="@drawable/edit_icon"/>
                 </RelativeLayout>
 
                 <TextView

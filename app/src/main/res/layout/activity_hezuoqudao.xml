@@ -18,6 +18,10 @@
         android:scaleType="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="8dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp"
         android:layout_below="@+id/view_qudao_line"
         android:src="@drawable/logotu" />
 

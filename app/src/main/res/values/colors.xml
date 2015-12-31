@@ -36,5 +36,6 @@
     <color name="font_hui_se">#ADADAD</color>
     <color name="font_text_like">#3CCA3F</color>
     <color name="scan_button_color">#7ADB6B</color>
-
+    <color name="main_bottom_color">#FCFAFA</color>
+    <color name="main_bottom_text_color">#7A7E83</color>
 </resources>
