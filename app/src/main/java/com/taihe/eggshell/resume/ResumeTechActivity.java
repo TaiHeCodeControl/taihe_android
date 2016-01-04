@@ -95,6 +95,8 @@ public class ResumeTechActivity extends BaseActivity{
             techtypeEdit.setText(worklists.getSkill());
             levelEdit.setText(worklists.getIng());
             techYear.setText(worklists.getLongtime());
+            id_skill = Integer.parseInt(worklists.getSkillid());
+            id_level = Integer.parseInt(worklists.getIngid());
         }else{
             deleteText.setVisibility(View.GONE);
         }

@@ -22,6 +22,24 @@ public class ResumeData implements Parcelable{
     private String ing;
     private String longtime;
     private String sys;
+    private String skillid;
+    private String ingid;
+
+    public String getIngid() {
+        return ingid;
+    }
+
+    public void setIngid(String ingid) {
+        this.ingid = ingid;
+    }
+
+    public String getSkillid() {
+        return skillid;
+    }
+
+    public void setSkillid(String skillid) {
+        this.skillid = skillid;
+    }
 
     public String getSys() {
         return sys;
@@ -156,7 +174,8 @@ public class ResumeData implements Parcelable{
         parcel.writeString(ing);
         parcel.writeString(longtime);
         parcel.writeString(sys);
-
+        parcel.writeString(skillid);
+        parcel.writeString(ingid);
     }
 
     public static final Creator<ResumeData> CREATOR = new Creator<ResumeData>() {
@@ -178,6 +197,8 @@ public class ResumeData implements Parcelable{
             data.ing = parcel.readString();
             data.longtime = parcel.readString();
             data.sys = parcel.readString();
+            data.skillid = parcel.readString();
+            data.ingid = parcel.readString();
             return data;
         }
 
