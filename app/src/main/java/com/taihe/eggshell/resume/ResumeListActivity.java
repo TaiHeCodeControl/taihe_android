@@ -63,13 +63,13 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
     @Override
     public void initData() {
         super.initData();
-        initTitle("写简历");
         resume = getIntent().getParcelableExtra("eid");
         strType = getIntent().getStringExtra("type");
         strUrl = getIntent().getStringExtra("url");
         strTypeTitle = getIntent().getStringExtra("title");
         id_resume_list_add.setText("+添加"+strTypeTitle);
         resumeName.setText(resume.getName()+"-"+strTypeTitle);
+        initTitle(strTypeTitle);
         loading = new LoadingProgressDialog(mContext,"正在请求...");
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             loading.show();
