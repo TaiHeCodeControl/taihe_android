@@ -105,7 +105,7 @@ public class ResumeProjectActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-        initTitle("项目经验");
+        initTitle("写简历");
         eid=getIntent().getParcelableExtra("eid");
         strType = getIntent().getStringExtra("type");
         strState=getIntent().getStringExtra("state");

@@ -104,7 +104,7 @@ public class ResumeWorkActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-        initTitle("工作经历");
+        initTitle("写简历");
         eid=getIntent().getParcelableExtra("eid");
         strType=getIntent().getStringExtra("type");
         strState=getIntent().getStringExtra("state");

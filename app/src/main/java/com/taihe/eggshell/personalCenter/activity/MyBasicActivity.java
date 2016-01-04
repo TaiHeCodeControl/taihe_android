@@ -10,7 +10,6 @@ import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -199,7 +198,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
             public void onResponse(Object o) {
                 LoadingDialog.dismiss();
                 try {
-                    Log.v("MyBasicActivity:", (String) o);
+//                    Log.v("MyBasicActivity:", (String) o);
                     MyBasicInfo myBasicInfo = GsonUtils
                             .changeGsonToBean(o.toString(),
                                     MyBasicInfo.class);
@@ -585,7 +584,7 @@ public class MyBasicActivity extends Activity implements View.OnClickListener {
 
         if (!newaddress.equals(oldaddress) || !newnickname.equals(oldnickname) || !newqq.equals(oldqq) || !newemail.equals(oldemail) || !newbirthday.equals(oldbirthday) || !newjianjie.equals(oldjianjie) || !newsex.equals(oldsex)) {
             tv_save.setClickable(true);
-            tv_save.setTextColor(getResources().getColor(R.color.font_color_red));
+            tv_save.setTextColor(getResources().getColor(R.color.origin));
         } else {
             tv_save.setClickable(false);
             tv_save.setTextColor(getResources().getColor(R.color.font_color_gray));

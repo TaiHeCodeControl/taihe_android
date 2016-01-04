@@ -77,7 +77,7 @@ public class ResumeTechActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-        initTitle("专业技能");
+        initTitle("写简历");
 
         resume = getIntent().getParcelableExtra("eid");
         strType=getIntent().getStringExtra("type");

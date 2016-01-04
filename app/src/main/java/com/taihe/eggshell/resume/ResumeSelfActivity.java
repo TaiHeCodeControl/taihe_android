@@ -60,7 +60,7 @@ public class ResumeSelfActivity extends BaseActivity{
         super.initData();
         eid=getIntent().getParcelableExtra("eid");
         resume_name.setText(eid.getName()+"-自我评价");
-        initTitle("自我评价");
+        initTitle("写简历");
         loading = new LoadingProgressDialog(mContext,"正在提交...");
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             loading.show();
