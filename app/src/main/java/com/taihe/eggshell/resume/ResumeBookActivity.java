@@ -2,7 +2,6 @@ package com.taihe.eggshell.resume;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -16,7 +15,6 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
-import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.resume.entity.ResumeData;
@@ -80,7 +78,7 @@ public class ResumeBookActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-        initTitle("写简历");
+        initTitle("证书");
         eid=getIntent().getParcelableExtra("eid");
         strType = getIntent().getStringExtra("type");
         strState=getIntent().getStringExtra("state");

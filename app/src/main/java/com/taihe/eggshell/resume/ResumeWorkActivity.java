@@ -17,7 +17,6 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
-import com.taihe.eggshell.base.utils.FormatUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.resume.entity.ResumeData;
@@ -105,7 +104,7 @@ public class ResumeWorkActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-        initTitle("写简历");
+        initTitle("工作经历");
         eid=getIntent().getParcelableExtra("eid");
         strType=getIntent().getStringExtra("type");
         strState=getIntent().getStringExtra("state");

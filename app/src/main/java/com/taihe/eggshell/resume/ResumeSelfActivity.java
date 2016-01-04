@@ -1,7 +1,6 @@
 package com.taihe.eggshell.resume;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -61,7 +60,7 @@ public class ResumeSelfActivity extends BaseActivity{
         super.initData();
         eid=getIntent().getParcelableExtra("eid");
         resume_name.setText(eid.getName()+"-自我评价");
-        initTitle("写简历");
+        initTitle("自我评价");
         loading = new LoadingProgressDialog(mContext,"正在提交...");
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             loading.show();
@@ -106,7 +105,7 @@ public class ResumeSelfActivity extends BaseActivity{
 
                 try {
                     JSONObject data = new JSONObject((String)o);
-                    Log.v(TAG,(String)o);
+//                    Log.v(TAG,(String)o);
                     int code = data.getInt("code");
                     if(code == 0){
                         JSONObject jsonObject = data.getJSONObject("data");

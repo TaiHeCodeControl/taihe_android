@@ -2,7 +2,6 @@ package com.taihe.eggshell.resume;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -106,7 +105,7 @@ public class ResumeProjectActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
-        initTitle("写简历");
+        initTitle("项目经验");
         eid=getIntent().getParcelableExtra("eid");
         strType = getIntent().getStringExtra("type");
         strState=getIntent().getStringExtra("state");
