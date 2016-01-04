@@ -467,12 +467,12 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/see_all_updown"
                     android:drawablePadding="8dp"
-                    android:drawableRight="@drawable/shouqi"
+                    android:drawableRight="@drawable/up_icon"
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:text="点击收起"
-                    android:textColor="@color/font_color_red"
+                    android:textColor="@color/include_title_color"
                     android:textSize="14sp"
                     android:visibility="gone" />
 
@@ -573,12 +573,12 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/see_all_updown"
                     android:drawablePadding="8dp"
-                    android:drawableRight="@drawable/shouqi"
+                    android:drawableRight="@drawable/up_icon"
                     android:gravity="center"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:text="点击收起"
-                    android:textColor="@color/font_color_red"
+                    android:textColor="@color/include_title_color"
                     android:textSize="14sp"
                     android:visibility="gone" />
             </LinearLayout>
