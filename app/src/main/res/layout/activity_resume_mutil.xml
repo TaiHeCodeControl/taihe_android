@@ -50,7 +50,15 @@
                     android:text="个人资料"
                     android:textColor="@color/black"
                     android:textSize="16sp"/>
-
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center"
+                    android:text="必填项"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:background="@drawable/delet_background" />
                 </LinearLayout>
 
                 <ImageView
@@ -88,7 +96,15 @@
                 android:text="工作经历"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
-
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="必填项"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/delet_background" />
         </LinearLayout>
 
         <ImageView
@@ -126,7 +142,15 @@
                 android:text="教育经历"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
-
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="必填项"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/delet_background" />
         </LinearLayout>
 
         <ImageView
@@ -163,7 +187,15 @@
                 android:text="培训经历"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
-
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="可选项"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/next_step_background" />
         </LinearLayout>
 
         <ImageView
@@ -200,7 +232,15 @@
                 android:text="专业技能"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
-
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="可选项"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/next_step_background" />
         </LinearLayout>
 
         <ImageView
@@ -237,7 +277,15 @@
                 android:text="项目经验"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
-
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="可选项"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/next_step_background" />
         </LinearLayout>
 
         <ImageView
@@ -274,7 +322,15 @@
                 android:text="证\u3000\u3000书"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
-
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="可选项"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/next_step_background" />
         </LinearLayout>
 
         <ImageView
@@ -311,7 +367,15 @@
                 android:text="自我评价"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>
-
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="可选项"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/next_step_background" />
         </LinearLayout>
 
         <ImageView

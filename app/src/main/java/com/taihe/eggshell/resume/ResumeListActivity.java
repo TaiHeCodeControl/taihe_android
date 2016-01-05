@@ -46,7 +46,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
     private String strTypeTitle,strType,strUrl;
     private Resumes resume;
     private LoadingProgressDialog loading;
-
+    private TextView id_resume_list_id;
     @Override
     public void initView() {
         setContentView(R.layout.activity_resume_list);
@@ -57,6 +57,7 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
         id_resume_list = (ListView)findViewById(R.id.id_resume_list);
         id_resume_list.setDividerHeight(0);
         id_resume_list_add = (TextView)findViewById(R.id.id_resume_list_add);
+        id_resume_list_id = (TextView)findViewById(R.id.id_resume_list_id);
         id_resume_list_add.setOnClickListener(this);
     }
 
@@ -71,6 +72,20 @@ public class ResumeListActivity extends BaseActivity implements Serializable {
         id_resume_list_add.setText("+添加"+strTypeTitle);
         resumeName.setText(resume.getName()+"-"+strTypeTitle);
         loading = new LoadingProgressDialog(mContext,"正在请求...");
+        switch (strType){
+            case "1":
+            case "2":
+                id_resume_list_id.setText("必填项");
+                id_resume_list_id.setBackgroundResource(R.drawable.delet_background);
+                break;
+            case "3":
+            case "4":
+            case "5":
+            case "6":
+                id_resume_list_id.setText("可选项");
+                id_resume_list_id.setBackgroundResource(R.drawable.next_step_background);
+                break;
+        }
         if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)) {
             loading.show();
             getData();

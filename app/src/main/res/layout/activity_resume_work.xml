@@ -28,7 +28,17 @@
                 android:textSize="15sp"
                 android:textColor="@color/black"
                 android:layout_centerVertical="true" />
-
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="必填项"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:background="@drawable/delet_background"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/id_resume_num"
+                android:layout_marginStart="10dp" />
         </RelativeLayout>
 
         <View
