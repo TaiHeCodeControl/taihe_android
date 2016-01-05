@@ -139,6 +139,13 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
         initData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(mContext);
+        user = EggshellApplication.getApplication().getUser();
+    }
+
     private void initView() {
 
         TitleString = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "titleString", "");
@@ -162,7 +169,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
             tv_findjob_title.setText("找工作");
         }
 
-        user = EggshellApplication.getApplication().getUser();
         dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
 
         rl_fujin = (RelativeLayout) findViewById(R.id.rl_findjob_fujin);
@@ -483,12 +489,6 @@ public class FindJobActivity extends Activity implements View.OnClickListener {
                 tv_findjob_title.setText("找工作");
             }
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(mContext);
     }
 
     @Override

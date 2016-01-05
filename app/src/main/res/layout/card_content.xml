@@ -267,7 +267,7 @@
             android:drawableTop="@drawable/left_unlike"
             android:drawablePadding="8dp"
             android:text="不感兴趣"
-            android:textColor="@color/font_color_red"
+            android:textColor="@color/origin"
             android:textSize="20dp"
             android:background="@color/white"
             android:visibility="visible"/>

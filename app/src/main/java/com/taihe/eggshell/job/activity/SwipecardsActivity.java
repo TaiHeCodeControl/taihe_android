@@ -52,12 +52,13 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
     private String keyword = "";
     private String hy = "", job_post = "", salary = "", edu = "", exp = "", type = "", cityid = "", fbtime = "";
     private String job1 = "",job1_son = "";
+    private String titleName = "找工作";
     private boolean islogin = false;
     public List<JobInfo> jobInfos = new ArrayList<JobInfo>();
     private JobInfo jobInfo;
     private User user;
     private SwipeFlingAdapterView flingContainer;
-    private TextView rightView,leftView;
+    private TextView rightView,leftView,titleText;
     private ImageView iv_search,iv_filter,iv_no_data;
     private RelativeLayout backLayout;
     private LinearLayout linearLayout;
@@ -81,6 +82,7 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
 
         dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
         backLayout = (RelativeLayout) findViewById(R.id.iv_findjob_back);
+        titleText = (TextView) findViewById(R.id.tv_findjob_title);
         iv_search = (ImageView) findViewById(R.id.iv_findjob_search);
         iv_filter = (ImageView) findViewById(R.id.iv_findjob_filter);
         flingContainer = (SwipeFlingAdapterView)findViewById(R.id.frame);
@@ -107,6 +109,10 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
     private void initData(){
         //首页传的type类型
         type = PrefUtils.getStringPreference(mContext, PrefUtils.CONFIG, "type", "");
+        if(null!=getIntent().getStringExtra("jobtype")){
+            titleName = getIntent().getStringExtra("jobtype");
+            titleText.setText(titleName);
+        }
         dialog.show();
         getList();
         user = EggshellApplication.getApplication().getUser();

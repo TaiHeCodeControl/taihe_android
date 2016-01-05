@@ -311,7 +311,7 @@
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:gravity="center"
-            android:text="删除此项目"
+            android:text="删除此项目经验"
             android:textSize="16sp"
             android:textColor="@color/white"
             android:background="@drawable/delet_background"/>
