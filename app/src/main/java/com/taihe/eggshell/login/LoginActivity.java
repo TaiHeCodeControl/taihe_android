@@ -271,7 +271,6 @@ public class LoginActivity extends BaseActivity {
         //登录成功后显示界面的判断
 
        loginTag = EggshellApplication.getApplication().getLoginTag();
-//
 
 //        loginTag = intents.getStringExtra("LoginTag");
         if (loginTag.equals("meFragment")) {
