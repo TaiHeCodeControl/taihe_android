@@ -153,6 +153,13 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
 //        initData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(getActivity());
+        user = EggshellApplication.getApplication().getUser();
+    }
+
     private void initView(){
 
         dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
@@ -251,7 +258,7 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                             linearLayout.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
                         }
                         if (null == user) {//登录
-                            EggshellApplication.getApplication().setLoginTag("findJobCard");
+                            EggshellApplication.getApplication().setLoginTag("");
                             islogin = false;
                         } else {
                             islogin = true;
@@ -439,12 +446,6 @@ public class InternshipFragment extends Fragment implements View.OnClickListener
                 startActivity(intent);
                 break;
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(getActivity());
     }
 
     @Override

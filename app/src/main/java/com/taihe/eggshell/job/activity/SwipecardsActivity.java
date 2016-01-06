@@ -78,6 +78,12 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
         initData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        user = EggshellApplication.getApplication().getUser();
+    }
+
     private void initView(){
 
         dialog = new LoadingProgressDialog(mContext, getResources().getString(R.string.submitcertificate_string_wait_dialog));
@@ -115,7 +121,7 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
         }
         dialog.show();
         getList();
-        user = EggshellApplication.getApplication().getUser();
+
         arrayAdapter =  new CardsDataAdapter(mContext,al);
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -179,7 +185,7 @@ public class SwipecardsActivity extends Activity implements View.OnClickListener
                             linearLayout.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
                         }
                         if (null == user) {//登录
-                            EggshellApplication.getApplication().setLoginTag("findJobCard");
+                            EggshellApplication.getApplication().setLoginTag("");
                             islogin = false;
                         } else {
                             islogin = true;
