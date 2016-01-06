@@ -359,7 +359,8 @@
         <activity
             android:name=".job.activity.SwipecardsActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
 
         <!-- Required SDK核心功能-->
         <activity
