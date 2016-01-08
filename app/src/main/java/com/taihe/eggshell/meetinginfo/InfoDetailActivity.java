@@ -68,6 +68,7 @@ public class InfoDetailActivity extends BaseActivity{
     @Override
     public void initData() {
         super.initData();
+        mContext = this;
         Intent intent = getIntent();
         initTitle("详情");
         uid = EggshellApplication.getApplication().getUser().getId()+"";

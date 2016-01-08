@@ -73,7 +73,7 @@ public class Urls {
     public static final String MEETING_LIST_URL = BASE_HYR_MOBILE_URL + "/Cricle";//信息台
     public static final String COMPY_LIST_URL = BASE_HYR_MOBILE_URL + "/Position/recommend_company";//名企推荐
     public static final String COMPY_DETAIL_URL = BASE_HYR_MOBILE_URL + "/Position/company_detail";//名企详情
-    public static final String ACTDETAIL_LIST_URL = BASE_HYR_MOBILE_URL + "Activity/actdetail";//活动详情
+    public static final String ACTDETAIL_LIST_URL = BASE_HYR_MOBILE_URL + "/Activity/actdetail";//活动详情
 
     public static final String COMPY_GET_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/resumelist";//企业收到的简历
     public static final String COMPY_LOOK_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/lookedResume";//企业已查看简历
