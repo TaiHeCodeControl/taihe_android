@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,6 +47,7 @@ public class PlayStarActivity extends BaseActivity{
 
     private Context mContext;
 
+    private View headView;
     private TextView id_title,txt_around_tag1,txt_around_tag2;
     private LinearLayout lin_back,lin_around_tag1,lin_around_tag2,id_linear_listview_tag;
     private PullToRefreshListView playView;
@@ -90,7 +92,7 @@ public class PlayStarActivity extends BaseActivity{
         lin_around_tag2.setOnClickListener(this);
         loading = new LoadingProgressDialog(mContext,"正在请求...");
 
-        View headView = LayoutInflater.from(mContext).inflate(R.layout.item_activity_command,null);
+        headView = LayoutInflater.from(mContext).inflate(R.layout.item_activity_command,null);
         playView.getRefreshableView().addHeaderView(headView);
 
         playView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -132,15 +134,15 @@ public class PlayStarActivity extends BaseActivity{
         getListData();
     }
 
-
     @Override
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()){
             case R.id.lin_around_tag1:
                 list.clear();
-                type=2;
+                type=2;//正在进行的活动
                 loading.show();
+                playView.getRefreshableView().addHeaderView(headView);
                 img_around_tag1.setBackgroundResource(R.drawable.high);
                 img_around_tag2.setBackgroundResource(R.drawable.fulick);
                 txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.include_title_color));
@@ -152,8 +154,9 @@ public class PlayStarActivity extends BaseActivity{
                 break;
             case R.id.lin_around_tag2:
                 list.clear();
-                type=1;
+                type=1;//往期回顾
                 loading.show();
+                playView.getRefreshableView().removeHeaderView(headView);
                 img_around_tag1.setBackgroundResource(R.drawable.highck);
                 img_around_tag2.setBackgroundResource(R.drawable.fuli);
                 txt_around_tag2.setTextColor(mContext.getResources().getColor(R.color.include_title_color));
@@ -174,17 +177,23 @@ public class PlayStarActivity extends BaseActivity{
                 try {
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
+                    Log.v("Play:",(String)obj);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         String data = jsonObject.getString("data");
                         Gson gson = new Gson();
-                        JSONObject js = new JSONObject(data);
-                        String command = js.getString("recommend");
-                        playInfoModes = gson.fromJson(command,new TypeToken<PlayInfoMode>(){}.getType());
-                        setHeadView(playInfoModes);//填充head
-                        String result = js.getString("result");
-                        List<PlayInfoMode> playlist = gson.fromJson(result, new TypeToken<List<PlayInfoMode>>(){}.getType());
-                        list.addAll(playlist);
+                        if(type==2){//正在进行的活动
+                            JSONObject js = new JSONObject(data);
+                            String command = js.getString("recommend");
+                            playInfoModes = gson.fromJson(command,new TypeToken<PlayInfoMode>(){}.getType());
+                            setHeadView(playInfoModes);//填充head
+                            String result = js.getString("result");
+                            List<PlayInfoMode> playlist = gson.fromJson(result, new TypeToken<List<PlayInfoMode>>(){}.getType());
+                            list.addAll(playlist);
+                        }else if(type==1){//往期回顾
+                            List<PlayInfoMode> playlist = gson.fromJson(data, new TypeToken<List<PlayInfoMode>>(){}.getType());
+                            list.addAll(playlist);
+                        }
                         playAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {

@@ -434,12 +434,28 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 camera_pop_window.dismiss();
                 break;
             case R.id.id_sign_up_activity:
-                intent = new Intent(mContext, MyJoinActivity.class);
-                startActivity(intent);
+                if (null != EggshellApplication.getApplication().getUser()) {
+                    intent = new Intent(mContext, MyJoinActivity.class);
+                    intent.putExtra("activity_type","已报名活动");
+                    startActivity(intent);
+                }else {
+                    intent = new Intent(mContext, LoginActivity.class);
+                    EggshellApplication.getApplication().setLoginTag("");
+                    startActivity(intent);
+                }
+
                 break;
             case R.id.id_collection_activity:
-                intent = new Intent(mContext, MyJoinActivity.class);
-                startActivity(intent);
+                if (null != EggshellApplication.getApplication().getUser()) {
+                    intent = new Intent(mContext, MyJoinActivity.class);
+                    intent.putExtra("activity_type","已收藏活动");
+                    startActivity(intent);
+                }else {
+                    intent = new Intent(mContext, LoginActivity.class);
+                    EggshellApplication.getApplication().setLoginTag("");
+                    startActivity(intent);
+                }
+
                 break;
 
         }

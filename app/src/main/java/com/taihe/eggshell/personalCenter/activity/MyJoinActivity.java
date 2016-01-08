@@ -67,7 +67,8 @@ public class MyJoinActivity extends BaseActivity{
     public void initData() {
         super.initData();
 
-        id_title.setText("已报名活动");
+        String titlename = getIntent().getStringExtra("activity_type");
+        id_title.setText(titlename);
         playView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         playAdapter = new MyActivityAdapter(mContext,list);
         playView.setAdapter(playAdapter);
@@ -110,7 +111,7 @@ public class MyJoinActivity extends BaseActivity{
         switch (view.getId()){
             case R.id.lin_around_tag1:
                 list.clear();
-                type=2;//正在进行的活动
+                type=2;
                 loading.show();
                 txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.include_title_color));
                 txt_around_tag2.setTextColor(mContext.getResources().getColor(R.color.font_color_black));
@@ -121,7 +122,7 @@ public class MyJoinActivity extends BaseActivity{
                 break;
             case R.id.lin_around_tag2:
                 list.clear();
-                type=1;//往期回顾
+                type=1;
                 loading.show();
                 txt_around_tag2.setTextColor(mContext.getResources().getColor(R.color.include_title_color));
                 txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.font_color_black));

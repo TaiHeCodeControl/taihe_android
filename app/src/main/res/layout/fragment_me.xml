@@ -312,7 +312,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="收藏活动"
+                    android:text="已收藏活动"
                     android:textColor="@color/font_color_black"
                     android:textSize="@dimen/font_size_26" />
 

@@ -83,10 +83,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
+                            android:gravity="center_vertical"
                             android:text="30"
                             android:textSize="14sp"
                             android:textColor="@color/activity_text_color"
-                            android:drawableLeft="@drawable/activity_addr_icon"
+                            android:drawableLeft="@drawable/collection_icon"
                             android:drawablePadding="3dp"
                             android:ellipsize="end"
                             android:maxLines="1"/>
@@ -95,17 +96,19 @@
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
                             android:background="@color/line_gray"
-                            android:layout_margin="3dp"></View>
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="5dp"></View>
 
                         <TextView
                             android:id="@+id/id_activity_join"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="3dp"
+                            android:gravity="center_vertical"
                             android:text="90"
                             android:textSize="14sp"
                             android:textColor="@color/activity_text_color"
-                            android:drawableLeft="@drawable/activity_addr_icon"
+                            android:drawableLeft="@drawable/join_icon"
                             android:drawablePadding="3dp"
                             android:ellipsize="end"
                             android:maxLines="1"/>
@@ -127,6 +130,6 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/line_gray" />
 </LinearLayout>
