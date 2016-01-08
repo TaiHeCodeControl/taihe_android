@@ -157,7 +157,6 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                                 vMode.setTitle(j2.optString("title").toString());
                                 vMode.setAddress(j2.optString("address").toString());
                                 vMode.setOrganizers(j2.optString("organizers").toString());
-                                vMode.setEvery_time(j2.optString("every_time").toString());
                                 vMode.setUser(j2.optString("user").toString());
                                 vMode.setTelphone(j2.optString("telphone").toString());
                                 vMode.setTraffic_route(j2.optString("traffic_route").toString());

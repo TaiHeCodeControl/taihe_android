@@ -44,6 +44,7 @@ import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.personalCenter.activity.AboutActivity;
 import com.taihe.eggshell.personalCenter.activity.FeedbackActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
+import com.taihe.eggshell.personalCenter.activity.MyJoinActivity;
 import com.taihe.eggshell.personalCenter.activity.TeamActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.widget.ChoiceDialog;
@@ -75,7 +76,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private UpdateDialog updateDialog;
 
     private View rootView;
-    private RelativeLayout rl_mine_checkupdate, rl_mine_feedback, rl_setting, rl_editZiliao, rl_post, rl_collect, rl_jianli, rl_about, rl_hezuo, rl_logout;
+    private RelativeLayout sign_up_activity,collection_activity,rl_mine_checkupdate, rl_mine_feedback, rl_setting, rl_editZiliao, rl_post, rl_collect, rl_jianli, rl_about, rl_hezuo, rl_logout;
     private TextView tv_logintxt, tv_version, tv_username, tv_qianming, tv_postNum, tv_collectNum, jianliNum;
     private LinearLayout ll_userinfo;
     private TextView tv_mine_postnum, tv_mine_collectnum, tv_mine_jianlinum;
@@ -127,6 +128,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         rl_logout = (RelativeLayout) rootView.findViewById(R.id.rl_mine_logout);
         rl_mine_feedback = (RelativeLayout) rootView.findViewById(R.id.rl_mine_feedback);
         rl_mine_checkupdate = (RelativeLayout) rootView.findViewById(R.id.rl_mine_checkupdate);
+        sign_up_activity = (RelativeLayout) rootView.findViewById(R.id.id_sign_up_activity);
+        collection_activity = (RelativeLayout) rootView.findViewById(R.id.id_collection_activity);
         tv_version = (TextView) rootView.findViewById(R.id.tv_mine_version);
         tv_version.setText("当前版本V" + APKUtils.getVersionName());
         ll_userinfo = (LinearLayout) rootView.findViewById(R.id.ll_mine_userinfo);
@@ -137,7 +140,8 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         tv_mine_collectnum = (TextView) rootView.findViewById(R.id.tv_mine_collectnum);
         tv_mine_jianlinum = (TextView) rootView.findViewById(R.id.tv_mine_jianlinum);
 
-
+        sign_up_activity.setOnClickListener(this);
+        collection_activity.setOnClickListener(this);
         rl_mine_checkupdate.setOnClickListener(this);
         rl_mine_feedback.setOnClickListener(this);
         tv_logintxt.setOnClickListener(this);
@@ -429,6 +433,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_cancel:
                 camera_pop_window.dismiss();
                 break;
+            case R.id.id_sign_up_activity:
+                intent = new Intent(mContext, MyJoinActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.id_collection_activity:
+                intent = new Intent(mContext, MyJoinActivity.class);
+                startActivity(intent);
+                break;
+
         }
     }
 

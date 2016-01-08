@@ -5,10 +5,10 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 public class Urls {
 
     //正式
-    public static final String BASE_HYR_MOBILE_URL = "http://www.eggker.cn/interface/index.php";
+//    public static final String BASE_HYR_MOBILE_URL = "http://www.eggker.cn/interface/index.php";
     public static final String BASE_VIDEO_MOBILE_URL = "http://www.eggker.cn/interface/api.php";
     //测试
-//    public static final String BASE_HYR_MOBILE_URL = "http://101.200.186.14/eggker2/interface/index.php";
+    public static final String BASE_HYR_MOBILE_URL = "http://101.200.186.14/eggker2/interface/index.php";
 //    public static final String BASE_VIDEO_MOBILE_URL = "http://101.200.186.14/eggker2/interface/api.php";
 
     public static final String getMopHostUrl() {
@@ -74,9 +74,6 @@ public class Urls {
     public static final String COMPY_LIST_URL = BASE_HYR_MOBILE_URL + "/Position/recommend_company";//名企推荐
     public static final String COMPY_DETAIL_URL = BASE_HYR_MOBILE_URL + "/Position/company_detail";//名企详情
 
-
-
-
     public static final String COMPY_GET_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/resumelist";//企业收到的简历
     public static final String COMPY_LOOK_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/lookedResume";//企业已查看简历
     public static final String COMPY_NOTICE_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/willNotifeResume";//企业待通知简历
@@ -98,4 +95,6 @@ public class Urls {
 
     public static final String METHOD_GET_SELF = "/Except/other_list";//自我评价
     public static final String METHOD_DELETE_RESUME_ITEM = "/Except/resume_type_del";//删除简历中的各个item,如某个工作经历
+
+    public static final String METHOD_ACTIVITY_LIST = "/Activity/act";//爱活动
 }

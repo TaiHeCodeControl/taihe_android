@@ -2,7 +2,6 @@ package com.taihe.eggshell.main.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.main.mode.PlayInfoMode;
 import com.taihe.eggshell.meetinginfo.InfoDetailActivity;
-import com.taihe.eggshell.videoplay.VideoPlayActivity;
 
 import net.tsz.afinal.FinalBitmap;
 
@@ -107,7 +105,6 @@ public class PlayAdapter extends BaseAdapter{
                 intent.putExtra("organizers", list.get(position).getOrganizers().toString());
                 intent.putExtra("telphone", list.get(position).getTelphone().toString());
                 intent.putExtra("traffic_route", list.get(position).getTraffic_route().toString());
-                intent.putExtra("every_time", list.get(position).getEvery_time().toString());
                 mContext.startActivity(intent);
             }
         });
