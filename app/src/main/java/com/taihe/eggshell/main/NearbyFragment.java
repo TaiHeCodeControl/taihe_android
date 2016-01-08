@@ -93,17 +93,26 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         playView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if(1==position){
-                    ToastUtils.show(getActivity(),playInfoModes.getTitle()+":"+position);
+                if(type == 1){//往期回顾
+                    ToastUtils.show(getActivity(),list.get(position-1).getTitle()+":"+position);
                     Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
-                    intent.putExtra("playId",playInfoModes.getId());
+                    intent.putExtra("playId",list.get(position-1).getId());
+                    intent.putExtra("outTime","3");
                     startActivity(intent);
-                }else{
-                    ToastUtils.show(getActivity(),list.get(position-2).getTitle()+":"+position);
-                    Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
-                    intent.putExtra("playId",list.get(position-2).getId());
-                    startActivity(intent);
+                }else if(type == 2) {//正在进行的活动
+                    if(1==position){
+                        ToastUtils.show(getActivity(),playInfoModes.getTitle()+":"+position);
+                        Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
+                        intent.putExtra("playId",playInfoModes.getId());
+                        startActivity(intent);
+                    }else{
+                        ToastUtils.show(getActivity(),list.get(position-2).getTitle()+":"+position);
+                        Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
+                        intent.putExtra("playId",list.get(position-2).getId());
+                        startActivity(intent);
+                    }
                 }
+
             }
         });
 

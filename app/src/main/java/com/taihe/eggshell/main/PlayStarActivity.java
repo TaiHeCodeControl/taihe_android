@@ -98,16 +98,24 @@ public class PlayStarActivity extends BaseActivity{
         playView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                if(1==position){
-                    ToastUtils.show(mContext,playInfoModes.getTitle()+":"+position);
+                if(type == 1){//往期回顾
+                    ToastUtils.show(mContext,list.get(position-1).getTitle()+":"+position);
                     Intent intent = new Intent(mContext,InfoDetailActivity.class);
-                    intent.putExtra("playId",playInfoModes.getId());
+                    intent.putExtra("playId",list.get(position-1).getId());
+                    intent.putExtra("outTime","3");
                     startActivity(intent);
-                }else{
-                    ToastUtils.show(mContext,list.get(position-2).getTitle()+":"+position);
-                    Intent intent = new Intent(mContext,InfoDetailActivity.class);
-                    intent.putExtra("playId",list.get(position-2).getId());
-                    startActivity(intent);
+                }else if(type == 2){//正在进行的活动
+                    if(1==position){
+                        ToastUtils.show(mContext,playInfoModes.getTitle()+":"+position);
+                        Intent intent = new Intent(mContext,InfoDetailActivity.class);
+                        intent.putExtra("playId",playInfoModes.getId());
+                        startActivity(intent);
+                    }else{
+                        ToastUtils.show(mContext,list.get(position-2).getTitle()+":"+position);
+                        Intent intent = new Intent(mContext,InfoDetailActivity.class);
+                        intent.putExtra("playId",list.get(position-2).getId());
+                        startActivity(intent);
+                    }
                 }
             }
         });
