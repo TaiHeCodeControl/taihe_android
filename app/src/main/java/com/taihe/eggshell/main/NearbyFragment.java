@@ -1,20 +1,19 @@
 package com.taihe.eggshell.main;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
@@ -36,8 +35,7 @@ import java.util.Map;
 public class NearbyFragment extends Fragment implements View.OnClickListener{
     private TextView id_title,txt_around_tag1,txt_around_tag2;
     private LinearLayout lin_back,lin_around_tag1,lin_around_tag2,id_linear_listview_tag;
-    private Context context;
-    private PullToRefreshGridView playView;
+    private PullToRefreshListView playView;
     private PlayAdapter playAdapter;
     private ImageView img_around_tag1,img_around_tag2;
     int limit=5,page=1,type=2;
@@ -55,14 +53,14 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         txt_around_tag2 = (TextView) v.findViewById(R.id.txt_around_tag2);
         img_around_tag1 = (ImageView) v.findViewById(R.id.img_around_tag1);
         img_around_tag2 = (ImageView) v.findViewById(R.id.img_around_tag2);
-        playView = (PullToRefreshGridView) v.findViewById(R.id.id_video_listview);
+        playView = (PullToRefreshListView) v.findViewById(R.id.id_video_listview);
         init();
         initData();
 		return v;
 	}
 
 	public void init(){
-        id_title.setText("玩出范");
+        id_title.setText("爱活动");
         lin_back.setVisibility(View.GONE);
         playView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         playAdapter = new PlayAdapter(getActivity());
@@ -70,9 +68,9 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         lin_around_tag1.setOnClickListener(this);
         lin_around_tag2.setOnClickListener(this);
         loading = new LoadingProgressDialog(getActivity(),"正在请求...");
-        playView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
+        playView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
-            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 loading.show();
                 page=1;
                 list.clear();
@@ -81,17 +79,11 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
             }
 
             @Override
-            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 loading.show();
                 page++;
                 getListData();
                 playView.onRefreshComplete();
-//                playView.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        playView.scrollTo(0, id_linear_listview_tag.getMeasuredHeight() - playView.getHeight());
-//                    }
-//                });
             }
         });
 	}

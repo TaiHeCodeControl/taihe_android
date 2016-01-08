@@ -1,27 +1,36 @@
 package com.taihe.eggshell.main;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.GridView;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
-import com.taihe.eggshell.main.adapter.PlayAdapter;
 import com.taihe.eggshell.main.mode.PlayInfoMode;
+import com.taihe.eggshell.meetinginfo.InfoDetailActivity;
+import com.taihe.eggshell.personalCenter.adapter.MyActivityAdapter;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.umeng.analytics.MobclickAgent;
 
-import org.json.JSONArray;
+import net.tsz.afinal.FinalBitmap;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,13 +48,15 @@ public class PlayStarActivity extends BaseActivity{
 
     private TextView id_title,txt_around_tag1,txt_around_tag2;
     private LinearLayout lin_back,lin_around_tag1,lin_around_tag2,id_linear_listview_tag;
-    private Context context;
-    private PullToRefreshGridView playView;
-    private PlayAdapter playAdapter;
+    private PullToRefreshListView playView;
+    private MyActivityAdapter playAdapter;
+    private PlayInfoMode playInfoModes;
     private ImageView img_around_tag1,img_around_tag2;
     int limit=5,page=1,type=2;
-    List<PlayInfoMode> list;
+    private List<PlayInfoMode> list = new ArrayList<PlayInfoMode>();
     private LoadingProgressDialog loading;
+    private Bitmap bitmap;
+    private FinalBitmap finalBitmap;
 
     @Override
     public void initView() {
@@ -61,23 +72,47 @@ public class PlayStarActivity extends BaseActivity{
         txt_around_tag2 = (TextView) findViewById(R.id.txt_around_tag2);
         img_around_tag1 = (ImageView) findViewById(R.id.img_around_tag1);
         img_around_tag2 = (ImageView) findViewById(R.id.img_around_tag2);
-        playView = (PullToRefreshGridView) findViewById(R.id.id_video_listview);
+        playView = (PullToRefreshListView) findViewById(R.id.id_video_listview);
     }
 
     @Override
     public void initData() {
         super.initData();
 
-        id_title.setText("玩出范");
+        id_title.setText("爱活动");
+        bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tu);
+        finalBitmap = FinalBitmap.create(mContext);
+
         playView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
-        playAdapter = new PlayAdapter(mContext);
-        list = new ArrayList<PlayInfoMode>();
+        playAdapter = new MyActivityAdapter(mContext,list);
+        playView.setAdapter(playAdapter);
         lin_around_tag1.setOnClickListener(this);
         lin_around_tag2.setOnClickListener(this);
         loading = new LoadingProgressDialog(mContext,"正在请求...");
-        playView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
+
+        View headView = LayoutInflater.from(mContext).inflate(R.layout.item_activity_command,null);
+        playView.getRefreshableView().addHeaderView(headView);
+
+        playView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                if(1==position){
+                    ToastUtils.show(mContext,playInfoModes.getTitle()+":"+position);
+                    Intent intent = new Intent(mContext,InfoDetailActivity.class);
+                    intent.putExtra("playId",playInfoModes.getId());
+                    startActivity(intent);
+                }else{
+                    ToastUtils.show(mContext,list.get(position-2).getTitle()+":"+position);
+                    Intent intent = new Intent(mContext,InfoDetailActivity.class);
+                    intent.putExtra("playId",list.get(position-2).getId());
+                    startActivity(intent);
+                }
+            }
+        });
+
+        playView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 loading.show();
                 page=1;
                 list.clear();
@@ -86,7 +121,7 @@ public class PlayStarActivity extends BaseActivity{
             }
 
             @Override
-            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 loading.show();
                 page++;
                 getListData();
@@ -124,7 +159,6 @@ public class PlayStarActivity extends BaseActivity{
                 txt_around_tag2.setTextColor(mContext.getResources().getColor(R.color.include_title_color));
                 txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.font_color_black));
                 page=1;
-//                playView.setVisibility(View.GONE);
                 getListData();
                 playView.onRefreshComplete();
                 break;
@@ -140,48 +174,18 @@ public class PlayStarActivity extends BaseActivity{
                 try {
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
-//                    Log.e("data", jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         String data = jsonObject.getString("data");
-                        try{
-                            playView.isSelected();
-                            playView.setSelection(list.size()-1);
-                            JSONArray j1 = new JSONArray(data);
-                            JSONObject j2;
-                            for(int i=0;i<j1.length();i++){
-                                PlayInfoMode vMode = new PlayInfoMode();
-                                j2 = j1.getJSONObject(i);
-                                vMode.setId(j2.optString("id").toString());
-                                vMode.setTitle(j2.optString("title").toString());
-                                vMode.setAddress(j2.optString("address").toString());
-                                vMode.setOrganizers(j2.optString("organizers").toString());
-                                vMode.setUser(j2.optString("user").toString());
-                                vMode.setTelphone(j2.optString("telphone").toString());
-                                vMode.setTraffic_route(j2.optString("traffic_route").toString());
-                                vMode.setLogo(j2.optString("logo").toString());
-                                vMode.setContent(j2.optString("content").toString());
-                                vMode.setStarttime(j2.optString("starttime").toString());
-                                vMode.setEndtime(j2.optString("endtime").toString());
-                                list.add(vMode);
-                            }
-                            playView.setVisibility(View.VISIBLE);
-                            playAdapter.setPlayData(list,type);
-                            playView.setAdapter(playAdapter);
-                            if(list.size()==0){
-                                playView.removeAllViews();
-                            }
-
-                        }catch (Exception ex){
-                            ex.printStackTrace();
-                        }
-                        // Log.e("data",data);
-                    } else {
-                        if(list.size()==0) {
-                            playView.setVisibility(View.GONE);
-                        }
-                        //String msg = jsonObject.getString("message");
-//                        ToastUtils.show(mContext, "网络连接异常");
+                        Gson gson = new Gson();
+                        JSONObject js = new JSONObject(data);
+                        String command = js.getString("recommend");
+                        playInfoModes = gson.fromJson(command,new TypeToken<PlayInfoMode>(){}.getType());
+                        setHeadView(playInfoModes);//填充head
+                        String result = js.getString("result");
+                        List<PlayInfoMode> playlist = gson.fromJson(result, new TypeToken<List<PlayInfoMode>>(){}.getType());
+                        list.addAll(playlist);
+                        playAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -198,15 +202,35 @@ public class PlayStarActivity extends BaseActivity{
 //                    volleyError.networkResponse.statusCode;
             }
         };
+
         Map<String,String> map = new HashMap<String,String>();
         map.put("type",""+type);
         map.put("limit",""+limit);
         map.put("page",""+page);
-        String sWhere="";
-//        sWhere="type="+type+"&page="+page+"&limit="+limit;
-        String url = Urls.NEARBY_URL+sWhere;
-        RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
+
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_ACTIVITY_LIST, true, map, true, listener, errorListener);
     }
+
+    private void setHeadView(PlayInfoMode playInfoMode){
+
+        TextView txtTitle = (TextView)playView.getRefreshableView().findViewById(R.id.id_activity_name);
+        TextView txtAddr = (TextView)playView.getRefreshableView().findViewById(R.id.id_activity_addr);
+        TextView txtUser = (TextView)playView.getRefreshableView().findViewById(R.id.id_activity_owner);
+        TextView txtDate = (TextView)playView.getRefreshableView().findViewById(R.id.id_activity_time);
+        TextView txtColle = (TextView)playView.getRefreshableView().findViewById(R.id.id_activity_collection);
+        TextView txtJoin = (TextView)playView.getRefreshableView().findViewById(R.id.id_activity_join);
+        ImageView imgPic = (ImageView)playView.getRefreshableView().findViewById(R.id.id_activity_imge);
+
+        txtTitle.setText(playInfoMode.getTitle());
+        txtAddr.setText(playInfoMode.getAddress());
+        txtUser.setText("主办方："+playInfoMode.getOrganizers());
+        txtDate.setText(playInfoMode.getStarttime());
+        txtColle.setText(playInfoMode.getCollect_count());
+        txtJoin.setText(playInfoMode.getApply_count());
+
+        finalBitmap.display(imgPic,playInfoMode.getLogo(),bitmap,bitmap);
+    }
+
     @Override
     public void onResume() {
         super.onResume();

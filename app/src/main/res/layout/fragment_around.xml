@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/line_gray"/>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -77,13 +78,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
-        <com.handmark.pulltorefresh.library.PullToRefreshGridView
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
             xmlns:ptr="http://schemas.android.com/apk/res-auto"
             android:id="@+id/id_video_listview"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            android:divider="@color/gray"
+            android:divider="@color/line_gray"
             android:numColumns="1"
             android:fadingEdge="none"
             android:fastScrollEnabled="false"
@@ -92,7 +93,7 @@
             android:listSelector="@color/white"
             android:smoothScrollbar="true"
             ptr:ptrAnimationStyle="flip" >
-        </com.handmark.pulltorefresh.library.PullToRefreshGridView>
+        </com.handmark.pulltorefresh.library.PullToRefreshListView>
     </LinearLayout>
 
 

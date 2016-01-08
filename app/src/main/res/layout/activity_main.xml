@@ -38,7 +38,7 @@
             android:id="@+id/id_radio_social"
             style="@style/main_tab"
             android:drawableTop="@drawable/tab_social_background"
-            android:text="玩出范"/>
+            android:text="爱活动"/>
         <RadioButton
             android:id="@+id/id_radio_openclass"
             style="@style/main_tab"

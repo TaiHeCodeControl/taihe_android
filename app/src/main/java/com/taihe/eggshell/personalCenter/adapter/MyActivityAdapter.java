@@ -76,7 +76,7 @@ public class MyActivityAdapter extends BaseAdapter{
         viewHolder.txtColle.setText(playInfoMode.getCollect_count());
         viewHolder.txtJoin.setText(playInfoMode.getApply_count());
 
-        finalBitmap.display(viewHolder.imgPic,playInfoMode.getLogo(),bitmap,bitmap);
+        finalBitmap.display(viewHolder.imgPic, playInfoMode.getLogo(), bitmap, bitmap);
 
         return convertView;
     }
