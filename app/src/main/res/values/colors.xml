@@ -23,6 +23,7 @@
     <color name="green_msg_color">#3CCA40</color>
     <color name="next_step_color">#3EBB2B</color>
     <color name="origin">#EB7A23</color>
+    <color name="green_lite">#B9FFAE</color>
 
     <!--字体颜色-->
     <color name="font_color_black">#000000</color>

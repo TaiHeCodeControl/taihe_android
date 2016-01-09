@@ -184,10 +184,10 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/scstar"/>
                     <TextView
+                        android:id="@+id/id_collect_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="55"
                         android:textColor="@color/dark_gray"/>
                     <View
                         android:layout_width="0.5dp"
@@ -200,10 +200,10 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/scperson"/>
                     <TextView
+                        android:id="@+id/id_apply_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="55"
                         android:textColor="@color/dark_gray"/>
                 </LinearLayout>
                 <View
@@ -274,7 +274,7 @@
     <LinearLayout
         android:id="@+id/id_lin_info_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="40dp">
         <LinearLayout
             android:id="@+id/id_lin_info_sc"
             android:layout_width="0dp"
@@ -283,10 +283,12 @@
             android:gravity="center"
             android:layout_weight="1">
             <ImageView
+                android:id="@+id/id_img_info_sc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shoucang"/>
             <TextView
+                android:id="@+id/id_txt_info_sc"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
@@ -295,15 +297,16 @@
                 android:textSize="16sp"
                 android:textColor="@color/white"/>
         </LinearLayout>
-
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/green_lite"/>
         <LinearLayout
             android:id="@+id/id_lin_info_pl"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/next_step_color"
             android:gravity="center"
-            android:layout_marginLeft="0.5dp"
-            android:layout_marginRight="0.5dp"
             android:layout_weight="1">
             <ImageView
                 android:layout_width="wrap_content"
@@ -318,6 +321,10 @@
                 android:textSize="16sp"
                 android:textColor="@color/white"/>
         </LinearLayout>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/green_lite"/>
         <LinearLayout
             android:id="@+id/id_lin_info_bm"
             android:layout_width="0dp"
@@ -330,6 +337,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/scbaoming"/>
             <TextView
+                android:id="@+id/id_txt_info_bm"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_marginLeft="10dp"
