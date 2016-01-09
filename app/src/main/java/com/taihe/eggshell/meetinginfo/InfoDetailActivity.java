@@ -169,7 +169,6 @@ public class InfoDetailActivity extends BaseActivity{
                             FinalBitmap bitmap = FinalBitmap.create(mContext);
                             bitmap.display(imgLog,j2.optString("logo"));
                             collect_count=j2.optString("is_collect_count");
-                            apply_count=j2.optString("is_appty_count");
                             id_collect_count.setText(j2.optString("collect_count"));
                             id_apply_count.setText(j2.optString("apply_count"));
                             if("1".equals(collect_count)){
@@ -181,14 +180,15 @@ public class InfoDetailActivity extends BaseActivity{
                             }
                             if("3".equals(apply_count)){
                                 id_txt_info_bm.setText("报名已结束");
-                                id_txt_info_bm.setClickable(false);
-                                id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.dark_gray));
+                                id_lin_info_bm.setEnabled(false);
+                                id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.bg_gray));
                             }else {
+                                apply_count=j2.optString("is_appty_count");
                                 if ("1".equals(apply_count)) {
                                     id_txt_info_bm.setText("已报名");
                                     id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.origin));
                                 } else {
-                                    id_txt_info_bm.setText("报名");
+                                    id_txt_info_bm.setText("我要报名");
                                     id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.next_step_color));
                                 }
                             }
@@ -295,7 +295,7 @@ public class InfoDetailActivity extends BaseActivity{
                             }else if ("取消报名成功".equals(jsonObject.optString("data"))){
                                 ToastUtils.show(mContext,jsonObject.optString("data"));
                                 apply_count="2";
-                                id_txt_info_bm.setText("报名");
+                                id_txt_info_bm.setText("我要报名");
                                 id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.next_step_color));
                                 id_apply_count.setText(Integer.parseInt(id_apply_count.getText().toString()) - 1 + "");
                             }else{
