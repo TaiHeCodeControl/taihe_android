@@ -17,6 +17,7 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.videoplay.PolyvDemoService;
+import com.umeng.socialize.PlatformConfig;
 
 import java.io.File;
 
@@ -76,6 +77,17 @@ public class EggshellApplication extends Application {
             client.setSign(true);
             client.setDownloadDir(saveDir);
             client.startService(this, PolyvDemoService.class);
+
+
+
+            //微信    wx12342956d1cab4f9,a5ae111de7d9ea137e88a5e02c07c94d
+            PlatformConfig.setWeixin("wxdbe3c106ce5c4205", "d4624c36b6795d1d99dcf0547af5443d");
+            //豆瓣RENREN平台目前只能在服务器端配置
+            //新浪微博
+            PlatformConfig.setSinaWeibo("223688747", "f450919c118dee6cee4396b4b6fa72f8");
+//            PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+            PlatformConfig.setQQZone("1104792121", "fWiSdRHtrOfUg6ZI");
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

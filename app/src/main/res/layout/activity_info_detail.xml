@@ -22,13 +22,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <ImageView
                 android:id="@+id/id_info_logo"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:background="@drawable/tu"
-                android:scaleType="centerCrop"/>
+                android:layout_height="185dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/tu"
+                android:scaleType="fitXY"/>
 
             <View
                 android:layout_width="match_parent"

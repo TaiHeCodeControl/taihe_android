@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="25dp">
             <LinearLayout
+                android:id="@+id/shareLinQQ"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -35,7 +36,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/shareqq"/>
                 <TextView
-                    android:id="@+id/tvSinaQQ"
+                    android:id="@+id/tvQQ"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="11dp"
@@ -44,6 +45,7 @@
                     android:text="QQ"/>
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/shareLinWeiBo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -64,6 +66,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/shareLinQzone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -90,6 +93,7 @@
             android:paddingTop="20dp"
             android:paddingBottom="25dp">
             <LinearLayout
+                android:id="@+id/shareLinWeiXin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -109,6 +113,7 @@
                     android:textColor="@color/black" />
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/shareLinWeiXinFrind"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
