@@ -100,4 +100,6 @@ public class Urls {
     public static final String METHOD_DELETE_RESUME_ITEM = "/Except/resume_type_del";//删除简历中的各个item,如某个工作经历
 
     public static final String METHOD_ACTIVITY_LIST = "/Activity/act";//爱活动
+    public static final String METHOD_ACTIVITY_COLLECTED = "/Activity/my_act_collect";//我收藏的
+    public static final String METHOD_ACTIVITY_JOIN = "/Activity/my_act_apply";//我参与的
 }

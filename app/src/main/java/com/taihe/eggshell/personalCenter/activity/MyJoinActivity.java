@@ -17,6 +17,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
+import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
@@ -48,6 +49,8 @@ public class MyJoinActivity extends BaseActivity{
     int limit=10,page=1,type=2;
     private List<PlayInfoMode> list = new ArrayList<PlayInfoMode>();
     private LoadingProgressDialog loading;
+    private String collectedOrJoin = "";
+    private String method = "";
 
     @Override
     public void initView() {
@@ -69,6 +72,13 @@ public class MyJoinActivity extends BaseActivity{
 
         String titlename = getIntent().getStringExtra("activity_type");
         id_title.setText(titlename);
+
+        collectedOrJoin = getIntent().getStringExtra("type");
+        if("joined".equals(collectedOrJoin)){
+            method = Urls.METHOD_ACTIVITY_JOIN;
+        }else if("collected".equals(collectedOrJoin)){
+            method = Urls.METHOD_ACTIVITY_COLLECTED;
+        }
         playView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         playAdapter = new MyActivityAdapter(mContext,list);
         playView.setAdapter(playAdapter);
@@ -164,17 +174,19 @@ public class MyJoinActivity extends BaseActivity{
             public void onErrorResponse(VolleyError volleyError) {//返回值
                 loading.dismiss();
                 ToastUtils.show(mContext, "网络异常");
-//                    String err = new String(volleyError.networkResponse.data);
-//                    volleyError.networkResponse.statusCode;
+                    String err = new String(volleyError.networkResponse.data);
+                Log.v("ERROR:",err);
             }
         };
         Map<String,String> map = new HashMap<String,String>();
+        map.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
         map.put("type",""+type);
         map.put("limit",""+limit);
         map.put("page",""+page);
 
-        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_ACTIVITY_LIST, true, map, true, listener, errorListener);
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), method, true, map, true, listener, errorListener);
     }
+
     @Override
     public void onResume() {
         super.onResume();

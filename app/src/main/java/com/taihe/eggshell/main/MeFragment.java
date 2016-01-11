@@ -437,6 +437,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 if (null != EggshellApplication.getApplication().getUser()) {
                     intent = new Intent(mContext, MyJoinActivity.class);
                     intent.putExtra("activity_type","已报名活动");
+                    intent.putExtra("type","joined");
                     startActivity(intent);
                 }else {
                     intent = new Intent(mContext, LoginActivity.class);
@@ -449,6 +450,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 if (null != EggshellApplication.getApplication().getUser()) {
                     intent = new Intent(mContext, MyJoinActivity.class);
                     intent.putExtra("activity_type","已收藏活动");
+                    intent.putExtra("type","collected");
                     startActivity(intent);
                 }else {
                     intent = new Intent(mContext, LoginActivity.class);
