@@ -89,7 +89,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="2015-07-29"
+                            android:text=""
                             android:textColor="@color/font_color_gray"
                             android:textSize="@dimen/font_size_22" />
                     </LinearLayout>
@@ -110,7 +110,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="2015-07-29"
+                            android:text=""
                             android:textColor="@color/font_color_gray"
                             android:textSize="@dimen/font_size_22" />
                     </LinearLayout>
@@ -152,7 +152,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:textColor="@color/origin"
-                            android:text="6K-8K"/>
+                            android:text=""/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -182,7 +182,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="New Text" />
+                            android:text="" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -212,7 +212,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="New Text"/>
+                            android:text=""/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -242,7 +242,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="New Text"/>
+                            android:text=""/>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout

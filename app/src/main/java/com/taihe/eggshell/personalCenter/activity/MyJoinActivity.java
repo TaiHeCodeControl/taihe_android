@@ -46,7 +46,7 @@ public class MyJoinActivity extends BaseActivity{
     private LinearLayout lin_around_tag1,lin_around_tag2;
     private PullToRefreshListView playView;
     private MyActivityAdapter playAdapter;
-    int limit=10,page=1,type=2;
+    int limit=10,page=1,type=1;
     private List<PlayInfoMode> list = new ArrayList<PlayInfoMode>();
     private LoadingProgressDialog loading;
     private String collectedOrJoin = "";
@@ -90,6 +90,7 @@ public class MyJoinActivity extends BaseActivity{
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(mContext,InfoDetailActivity.class);
                 intent.putExtra("playId",list.get(position-1).getId());
+                intent.putExtra("outTime","3");
                 startActivity(intent);
             }
         });
@@ -121,7 +122,7 @@ public class MyJoinActivity extends BaseActivity{
         switch (view.getId()){
             case R.id.lin_around_tag1:
                 list.clear();
-                type=2;
+                type=1;
                 loading.show();
                 txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.include_title_color));
                 txt_around_tag2.setTextColor(mContext.getResources().getColor(R.color.font_color_black));
@@ -132,7 +133,7 @@ public class MyJoinActivity extends BaseActivity{
                 break;
             case R.id.lin_around_tag2:
                 list.clear();
-                type=1;
+                type=2;
                 loading.show();
                 txt_around_tag2.setTextColor(mContext.getResources().getColor(R.color.include_title_color));
                 txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.font_color_black));
@@ -152,15 +153,17 @@ public class MyJoinActivity extends BaseActivity{
                 try {
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
-                    Log.v("ACTIVITYLIST:", (String) obj);
+//                    Log.v("ACTIVITYLIST:", (String) obj);
+                    Gson gson = new Gson();
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         String data = jsonObject.getString("data");
-                        Gson gson = new Gson();
-                        JSONObject js = new JSONObject(data);
-                        String result = js.getString("result");
-                        List<PlayInfoMode> playlist = gson.fromJson(result, new TypeToken<List<PlayInfoMode>>(){}.getType());
-                        list.addAll(playlist);
+                        if("[]".equals(data)){
+                            ToastUtils.show(mContext,"没有了");
+                        }else{
+                            List<PlayInfoMode> playlist = gson.fromJson(data, new TypeToken<List<PlayInfoMode>>(){}.getType());
+                            list.addAll(playlist);
+                        }
                         playAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {

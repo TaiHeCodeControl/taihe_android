@@ -94,19 +94,19 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 if(type == 1){//往期回顾
-                    ToastUtils.show(getActivity(),list.get(position-1).getTitle()+":"+position);
+//                    ToastUtils.show(getActivity(),list.get(position-1).getTitle()+":"+position);
                     Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
                     intent.putExtra("playId",list.get(position-1).getId());
                     intent.putExtra("outTime","3");
                     startActivity(intent);
                 }else if(type == 2) {//正在进行的活动
                     if(1==position){
-                        ToastUtils.show(getActivity(),playInfoModes.getTitle()+":"+position);
+//                        ToastUtils.show(getActivity(),playInfoModes.getTitle()+":"+position);
                         Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
                         intent.putExtra("playId",playInfoModes.getId());
                         startActivity(intent);
                     }else{
-                        ToastUtils.show(getActivity(),list.get(position-2).getTitle()+":"+position);
+//                        ToastUtils.show(getActivity(),list.get(position-2).getTitle()+":"+position);
                         Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
                         intent.putExtra("playId",list.get(position-2).getId());
                         startActivity(intent);
@@ -147,13 +147,15 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 list.clear();
                 type=2;
                 loading.show();
+                playView.getRefreshableView().removeHeaderView(headView);
                 playView.getRefreshableView().addHeaderView(headView);
+                playView.invalidate();
                 img_around_tag1.setBackgroundResource(R.drawable.high);
                 img_around_tag2.setBackgroundResource(R.drawable.fulick);
                 txt_around_tag1.setTextColor(getActivity().getResources().getColor(R.color.include_title_color));
                 txt_around_tag2.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
                 page=1;
-                playView.setVisibility(View.VISIBLE);
+//                playView.setVisibility(View.VISIBLE);
                 getListData();
                 playView.onRefreshComplete();
                 break;
@@ -182,6 +184,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 try {
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
+//                    Log.v("RESULT:",(String)obj);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         String data = jsonObject.getString("data");
@@ -189,8 +192,12 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                         if(type==2){//正在进行的活动
                             JSONObject js = new JSONObject(data);
                             String command = js.getString("recommend");
-                            playInfoModes = gson.fromJson(command,new TypeToken<PlayInfoMode>(){}.getType());
-                            setHeadView(playInfoModes);//填充head
+                            if(!"[]".equals(command)){
+                                playInfoModes = gson.fromJson(command,new TypeToken<PlayInfoMode>(){}.getType());
+                                setHeadView(playInfoModes);//填充head
+                            }else{
+                                playView.getRefreshableView().removeHeaderView(headView);
+                            }
                             String result = js.getString("result");
                             List<PlayInfoMode> playlist = gson.fromJson(result, new TypeToken<List<PlayInfoMode>>(){}.getType());
                             list.addAll(playlist);
