@@ -14,6 +14,7 @@ import android.text.style.RelativeSizeSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,7 +67,7 @@ public class InfoDetailActivity extends BaseActivity{
     private TextView id_txt_info_bm,id_txt_info_sc;
     private ImageView imgLog,id_share,id_img_info_sc;
     private PullToRefreshListView id_info_listview;
-    private LinearLayout id_lin_info_sc,id_lin_info_pl,id_lin_info_bm;
+    private LinearLayout id_lin_info_sc,id_lin_info_pl,id_lin_info_bm,id_lin_info_logo;
     private String actid,applyNum;
     private int UserId;
     int limit=8,page=1,type=2;
@@ -83,6 +84,7 @@ public class InfoDetailActivity extends BaseActivity{
         comeWay = (TextView)findViewById(R.id.id_info_way);
         jobBrief = (TextView)findViewById(R.id.id_company_brief);
         imgLog = (ImageView)findViewById(R.id.id_info_logo);
+        id_lin_info_logo = (LinearLayout) findViewById(R.id.id_lin_info_logo);
         id_share = (ImageView)findViewById(R.id.id_share);
         id_collect_count = (TextView)findViewById(R.id.id_collect_count);
         id_apply_count = (TextView)findViewById(R.id.id_apply_count);
@@ -183,6 +185,15 @@ public class InfoDetailActivity extends BaseActivity{
                             jobBrief.setText(Html.fromHtml(j2.optString("content")));
                             FinalBitmap bitmap = FinalBitmap.create(mContext);
                             bitmap.display(imgLog,j2.optString("logo"));
+
+                            WindowManager wm = getWindowManager();
+                            int width = wm.getDefaultDisplay().getWidth();
+                            int height=9*width/16;
+                            ViewGroup.LayoutParams lp = imgLog.getLayoutParams();
+                            lp.width = width;
+                            lp.height = height;
+                            imgLog.setLayoutParams(lp);
+
                             collect_count=j2.optString("is_collect_count");
                             applyNum=j2.optString("num");
                             showPersonNum(j2.optString("apply_count"),applyNum,0);
@@ -190,10 +201,12 @@ public class InfoDetailActivity extends BaseActivity{
 
                             if("1".equals(collect_count)){
                                 id_txt_info_sc.setText("已收藏");
-                                id_lin_info_sc.setBackgroundColor(getResources().getColor(R.color.origin));
+                                id_img_info_sc.setBackgroundResource(R.drawable.scstar);
+//                                id_lin_info_sc.setBackgroundColor(getResources().getColor(R.color.origin));
                             }else {
                                 id_txt_info_sc.setText("收藏");
-                                id_lin_info_sc.setBackgroundColor(getResources().getColor(R.color.next_step_color));
+                                id_img_info_sc.setBackgroundResource(R.drawable.shoucang);
+//                                id_lin_info_sc.setBackgroundColor(getResources().getColor(R.color.next_step_color));
                             }
                             if("3".equals(apply_count)){
                                 id_txt_info_bm.setText("报名已结束");
@@ -263,14 +276,16 @@ public class InfoDetailActivity extends BaseActivity{
                                 ToastUtils.show(mContext,jsonObject.optString("data"));
                                 collect_count="1";
                                 id_txt_info_sc.setText("已收藏");
-                                id_lin_info_sc.setBackgroundColor(getResources().getColor(R.color.origin));
+//                                id_lin_info_sc.setBackgroundColor(getResources().getColor(R.color.origin));
+                                id_img_info_sc.setBackgroundResource(R.drawable.scstar);
                                 id_collect_count.setText(Integer.parseInt(id_collect_count.getText().toString())+1+"");
                             }else if ("取消收藏成功".equals(jsonObject.optString("data"))){
                                 ToastUtils.show(mContext,jsonObject.optString("data"));
                                 collect_count="2";
                                 id_txt_info_sc.setText("收藏");
+                                id_img_info_sc.setBackgroundResource(R.drawable.shoucang);
                                 id_collect_count.setText(Integer.parseInt(id_collect_count.getText().toString())-1+"");
-                                id_lin_info_sc.setBackgroundColor(getResources().getColor(R.color.next_step_color));
+//                                id_lin_info_sc.setBackgroundColor(getResources().getColor(R.color.next_step_color));
                             }else{
                                 ToastUtils.show(mContext,"收藏失败");
                             }
