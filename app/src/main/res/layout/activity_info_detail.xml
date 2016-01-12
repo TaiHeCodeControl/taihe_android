@@ -291,7 +291,7 @@
                 android:id="@+id/id_img_info_sc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shoucang"/>
+                android:background="@drawable/scstark"/>
             <TextView
                 android:id="@+id/id_txt_info_sc"
                 android:layout_width="wrap_content"

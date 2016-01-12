@@ -11,6 +11,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,8 +62,8 @@ public class InfoDetailActivity extends BaseActivity{
     private Context mContext;
     private LoadingProgressDialog loading;
     private User user;
-    String collect_count,apply_count;//1=已收藏,2=未收藏   apply_count   1=已报名,2=未报名
-
+    String collect_count,apply_count;//1=已收藏,2=未收藏   apply_count   1=已报名,2=未报名3报名结束
+    String applyed;//已经报名人数
     private TextView mainPlat,startTime,address,telPhone,callPerson,comeWay,jobBrief,id_collect_count,id_apply_count;
     private TextView id_txt_info_bm,id_txt_info_sc;
     private ImageView imgLog,id_share,id_img_info_sc;
@@ -145,11 +146,6 @@ public class InfoDetailActivity extends BaseActivity{
         initTitle("详情");
         loading = new LoadingProgressDialog(mContext,"正在请求...");
         actid = intent.getStringExtra("playId");
-        if(TextUtils.isEmpty(intent.getStringExtra("outTime"))){
-            apply_count="";
-        }else{
-            apply_count = intent.getStringExtra("outTime");//outTime 3 报名结束
-        }
 
         id_share.setVisibility(View.VISIBLE);
         id_share.setOnClickListener(new View.OnClickListener() {
@@ -193,11 +189,12 @@ public class InfoDetailActivity extends BaseActivity{
                             lp.width = width;
                             lp.height = height;
                             imgLog.setLayoutParams(lp);
-
+                            applyed = j2.optString("apply_count");
                             collect_count=j2.optString("is_collect_count");
                             applyNum=j2.optString("num");
-                            showPersonNum(j2.optString("apply_count"),applyNum,0);
+                            showPersonNum(applyed,applyNum,0);
                             id_collect_count.setText(j2.optString("collect_count"));
+                            apply_count=j2.optString("is_appty_count");
 
                             if("1".equals(collect_count)){
                                 id_txt_info_sc.setText("已收藏");
@@ -205,23 +202,22 @@ public class InfoDetailActivity extends BaseActivity{
 //                                id_lin_info_sc.setBackgroundColor(getResources().getColor(R.color.origin));
                             }else {
                                 id_txt_info_sc.setText("收藏");
-                                id_img_info_sc.setBackgroundResource(R.drawable.shoucang);
+                                id_img_info_sc.setBackgroundResource(R.drawable.scstark);
 //                                id_lin_info_sc.setBackgroundColor(getResources().getColor(R.color.next_step_color));
                             }
-                            if("3".equals(apply_count)){
+
+                            if ("1".equals(apply_count)) {
+                                id_txt_info_bm.setText("已报名");
+                                id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.origin));
+                            } else if("3".equals(apply_count)){
                                 id_txt_info_bm.setText("报名已结束");
                                 id_lin_info_bm.setEnabled(false);
                                 id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.bg_gray));
                             }else {
-                                apply_count=j2.optString("is_appty_count");
-                                if ("1".equals(apply_count)) {
-                                    id_txt_info_bm.setText("已报名");
-                                    id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.origin));
-                                } else {
-                                    id_txt_info_bm.setText("我要报名");
-                                    id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.next_step_color));
-                                }
+                                id_txt_info_bm.setText("我要报名");
+                                id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.next_step_color));
                             }
+
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }
@@ -253,7 +249,8 @@ public class InfoDetailActivity extends BaseActivity{
         RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
     }
     private void showPersonNum(String nowNum,String sumNum,int num){
-        String temp =Integer.parseInt(nowNum)+num+"/"+sumNum;
+        applyed=Integer.parseInt(nowNum)+num+"";
+        String temp =applyed+"/"+sumNum;
         int i = temp.indexOf("/");
         SpannableString mspk = new SpannableString(temp);
         int k = (temp).length();
@@ -283,7 +280,7 @@ public class InfoDetailActivity extends BaseActivity{
                                 ToastUtils.show(mContext,jsonObject.optString("data"));
                                 collect_count="2";
                                 id_txt_info_sc.setText("收藏");
-                                id_img_info_sc.setBackgroundResource(R.drawable.shoucang);
+                                id_img_info_sc.setBackgroundResource(R.drawable.scstark);
                                 id_collect_count.setText(Integer.parseInt(id_collect_count.getText().toString())-1+"");
 //                                id_lin_info_sc.setBackgroundColor(getResources().getColor(R.color.next_step_color));
                             }else{
@@ -332,21 +329,22 @@ public class InfoDetailActivity extends BaseActivity{
                                 apply_count="1";
                                 id_txt_info_bm.setText("已报名");
                                 id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.origin));
-                                showPersonNum(id_apply_count.getText().toString(),applyNum,1);
+                                showPersonNum(applyed,applyNum,1);
                             }else if ("取消报名成功".equals(jsonObject.optString("data"))){
                                 ToastUtils.show(mContext,jsonObject.optString("data"));
                                 apply_count="2";
                                 id_txt_info_bm.setText("我要报名");
                                 id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.next_step_color));
-                                showPersonNum(id_apply_count.getText().toString(),applyNum,-1);
+                                showPersonNum(applyed,applyNum,-1);
                             }else{
-                                ToastUtils.show(mContext,"报名失败");
+                                ToastUtils.show(mContext,"操作失败");
                             }
                         }catch (Exception ex){
-                            ToastUtils.show(mContext,"报名失败");
+                            ToastUtils.show(mContext,"操作失败");
                             ex.printStackTrace();
                         }
-                    } else {
+                    } else if (code == 2 || code ==3) {
+                        ToastUtils.show(mContext,jsonObject.optString("data"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
