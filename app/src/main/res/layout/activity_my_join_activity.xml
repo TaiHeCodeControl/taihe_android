@@ -81,6 +81,7 @@
             android:background="@color/white"
             android:divider="@color/line_gray"
             android:fadingEdge="none"
+            android:numColumns="1"
             android:fastScrollEnabled="false"
             android:footerDividersEnabled="false"
             android:headerDividersEnabled="false"
