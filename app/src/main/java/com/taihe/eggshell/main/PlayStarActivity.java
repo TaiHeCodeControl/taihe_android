@@ -101,7 +101,6 @@ public class PlayStarActivity extends BaseActivity{
 //                    ToastUtils.show(mContext,list.get(position-1).getTitle()+":"+position);
                     Intent intent = new Intent(mContext,InfoDetailActivity.class);
                     intent.putExtra("playId",list.get(position-1).getId());
-                    intent.putExtra("outTime","3");
                     startActivity(intent);
                 }else if(type == 2){//正在进行的活动
                     if(1==position){

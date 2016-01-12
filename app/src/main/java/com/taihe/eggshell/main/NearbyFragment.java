@@ -69,11 +69,19 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
         img_around_tag2 = (ImageView) v.findViewById(R.id.img_around_tag2);
         playView = (PullToRefreshListView) v.findViewById(R.id.id_video_listview);
         init();
-        initData();
 		return v;
 	}
 
-	public void init(){
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if(isVisibleToUser && getUserVisibleHint()){
+            initData();
+        }
+    }
+
+    public void init(){
         id_title.setText("爱活动");
         bitmap = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.tu);
         finalBitmap = FinalBitmap.create(getActivity());
@@ -97,7 +105,6 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
 //                    ToastUtils.show(getActivity(),list.get(position-1).getTitle()+":"+position);
                     Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
                     intent.putExtra("playId",list.get(position-1).getId());
-                    intent.putExtra("outTime","3");
                     startActivity(intent);
                 }else if(type == 2) {//正在进行的活动
                     if(1==position){
