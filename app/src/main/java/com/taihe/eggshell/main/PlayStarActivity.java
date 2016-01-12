@@ -125,7 +125,6 @@ public class PlayStarActivity extends BaseActivity{
                 page=1;
                 list.clear();
                 getListData();
-                playView.onRefreshComplete();
             }
 
             @Override
@@ -133,7 +132,6 @@ public class PlayStarActivity extends BaseActivity{
                 loading.show();
                 page++;
                 getListData();
-                playView.onRefreshComplete();
             }
         });
         loading.show();
@@ -155,9 +153,7 @@ public class PlayStarActivity extends BaseActivity{
                 txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.include_title_color));
                 txt_around_tag2.setTextColor(mContext.getResources().getColor(R.color.font_color_black));
                 page=1;
-                playView.setVisibility(View.VISIBLE);
                 getListData();
-                playView.onRefreshComplete();
                 break;
             case R.id.lin_around_tag2:
                 list.clear();
@@ -170,7 +166,6 @@ public class PlayStarActivity extends BaseActivity{
                 txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.font_color_black));
                 page=1;
                 getListData();
-                playView.onRefreshComplete();
                 break;
         }
     }
@@ -182,6 +177,7 @@ public class PlayStarActivity extends BaseActivity{
             @Override
             public void onResponse(Object obj) {//返回值
                 try {
+                    playView.onRefreshComplete();
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
 //                    Log.v("Play:",(String)obj);

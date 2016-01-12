@@ -102,18 +102,15 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 if(type == 1){//往期回顾
-//                    ToastUtils.show(getActivity(),list.get(position-1).getTitle()+":"+position);
                     Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
                     intent.putExtra("playId",list.get(position-1).getId());
                     startActivity(intent);
                 }else if(type == 2) {//正在进行的活动
                     if(1==position){
-//                        ToastUtils.show(getActivity(),playInfoModes.getTitle()+":"+position);
                         Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
                         intent.putExtra("playId",playInfoModes.getId());
                         startActivity(intent);
                     }else{
-//                        ToastUtils.show(getActivity(),list.get(position-2).getTitle()+":"+position);
                         Intent intent = new Intent(getActivity(),InfoDetailActivity.class);
                         intent.putExtra("playId",list.get(position-2).getId());
                         startActivity(intent);
@@ -130,7 +127,6 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 page=1;
                 list.clear();
                 getListData();
-                playView.onRefreshComplete();
             }
 
             @Override
@@ -138,7 +134,6 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 loading.show();
                 page++;
                 getListData();
-                playView.onRefreshComplete();
             }
         });
 	}
@@ -162,9 +157,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 txt_around_tag1.setTextColor(getActivity().getResources().getColor(R.color.include_title_color));
                 txt_around_tag2.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
                 page=1;
-//                playView.setVisibility(View.VISIBLE);
                 getListData();
-                playView.onRefreshComplete();
                 break;
             case R.id.lin_around_tag2:
                 list.clear();
@@ -177,7 +170,6 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
                 txt_around_tag1.setTextColor(getActivity().getResources().getColor(R.color.font_color_black));
                 page=1;
                 getListData();
-                playView.onRefreshComplete();
                 break;
 		}
 	}
@@ -189,6 +181,7 @@ public class NearbyFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onResponse(Object obj) {//返回值
                 try {
+                    playView.onRefreshComplete();
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
 //                    Log.v("RESULT:",(String)obj);

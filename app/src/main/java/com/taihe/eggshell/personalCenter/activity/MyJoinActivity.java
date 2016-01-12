@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
@@ -14,7 +14,7 @@ import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
@@ -44,7 +44,7 @@ public class MyJoinActivity extends BaseActivity{
 
     private TextView id_title,txt_around_tag1,txt_around_tag2;
     private LinearLayout lin_around_tag1,lin_around_tag2;
-    private PullToRefreshListView playView;
+    private PullToRefreshGridView playView;
     private MyActivityAdapter playAdapter;
     int limit=10,page=1,type=2;//2未开始，1已结束
     private List<PlayInfoMode> list = new ArrayList<PlayInfoMode>();
@@ -63,7 +63,7 @@ public class MyJoinActivity extends BaseActivity{
         id_title = (TextView) findViewById(R.id.id_title);
         txt_around_tag1 = (TextView) findViewById(R.id.txt_around_tag1);
         txt_around_tag2 = (TextView) findViewById(R.id.txt_around_tag2);
-        playView = (PullToRefreshListView) findViewById(R.id.id_activity_listview);
+        playView = (PullToRefreshGridView) findViewById(R.id.id_activity_listview);
     }
 
     @Override
@@ -93,22 +93,20 @@ public class MyJoinActivity extends BaseActivity{
                 startActivity(intent);
             }
         });
-        playView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+        playView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
             @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
                 loading.show();
                 page=1;
                 list.clear();
                 getListData();
-                playView.onRefreshComplete();
             }
 
             @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
                 loading.show();
                 page++;
                 getListData();
-                playView.onRefreshComplete();
             }
         });
         loading.show();
@@ -128,7 +126,6 @@ public class MyJoinActivity extends BaseActivity{
                 page=1;
                 playView.setVisibility(View.VISIBLE);
                 getListData();
-                playView.onRefreshComplete();
                 break;
             case R.id.lin_around_tag2:
                 list.clear();
@@ -138,7 +135,6 @@ public class MyJoinActivity extends BaseActivity{
                 txt_around_tag1.setTextColor(mContext.getResources().getColor(R.color.font_color_black));
                 page=1;
                 getListData();
-                playView.onRefreshComplete();
                 break;
         }
     }
@@ -150,6 +146,7 @@ public class MyJoinActivity extends BaseActivity{
             @Override
             public void onResponse(Object obj) {//返回值
                 try {
+                    playView.onRefreshComplete();
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
 //                    Log.v("ACTIVITYLIST:", (String) obj);
