@@ -3,28 +3,35 @@ package com.taihe.eggshell.meetinginfo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
-import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.google.gson.Gson;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
@@ -34,9 +41,10 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.entity.User;
+import com.taihe.eggshell.meetinginfo.adapter.InfoDetailAdapter;
+import com.taihe.eggshell.meetinginfo.entity.InfoDetailMode;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.analytics.social.UMSocialService;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -47,17 +55,20 @@ import com.umeng.socialize.media.UMusic;
 
 import net.tsz.afinal.FinalBitmap;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by wang on 2015/8/12.
  */
 public class InfoDetailActivity extends BaseActivity{
-
+    static InputMethodManager keyinput ;
     private static final String TAG = "InforDetailActivity";
     private Context mContext;
     private LoadingProgressDialog loading;
@@ -65,18 +76,23 @@ public class InfoDetailActivity extends BaseActivity{
     String collect_count,apply_count;//1=已收藏,2=未收藏   apply_count   1=已报名,2=未报名3报名结束
     String applyed;//已经报名人数
     private TextView mainPlat,startTime,address,telPhone,callPerson,comeWay,jobBrief,id_collect_count,id_apply_count;
-    private TextView id_txt_info_bm,id_txt_info_sc;
+    private TextView id_txt_info_bm,id_txt_info_sc,id_send;
+    public static EditText id_edit_chat;
     private ImageView imgLog,id_share,id_img_info_sc;
-    private PullToRefreshListView id_info_listview;
+    private PullToRefreshGridView id_info_listview;
     private LinearLayout id_lin_info_sc,id_lin_info_pl,id_lin_info_bm,id_lin_info_logo;
+    public static LinearLayout id_lin_info_chat,id_lin_info_button;
     private String actid,applyNum;
+    public static ScrollView id_scroll_info;
     private int UserId;
     int limit=8,page=1,type=2;
+    List<InfoDetailMode> listInfoDetail;
+    InfoDetailAdapter infoDetailAdapter;
     @Override
     public void initView() {
         setContentView(R.layout.activity_info_detail);
         super.initView();
-
+        keyinput = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         mainPlat = (TextView)findViewById(R.id.id_info_company);
         startTime = (TextView)findViewById(R.id.id_info_time);
         address = (TextView)findViewById(R.id.id_info_addre);
@@ -84,18 +100,46 @@ public class InfoDetailActivity extends BaseActivity{
         callPerson = (TextView)findViewById(R.id.id_person);
         comeWay = (TextView)findViewById(R.id.id_info_way);
         jobBrief = (TextView)findViewById(R.id.id_company_brief);
+        id_scroll_info = (ScrollView)findViewById(R.id.id_scroll_info);
+        id_edit_chat = (EditText)findViewById(R.id.id_edit_chat);
+        id_lin_info_chat = (LinearLayout)findViewById(R.id.id_lin_info_chat);
+        id_lin_info_button = (LinearLayout)findViewById(R.id.id_lin_info_button);
+        id_send = (TextView)findViewById(R.id.id_send);
         imgLog = (ImageView)findViewById(R.id.id_info_logo);
         id_lin_info_logo = (LinearLayout) findViewById(R.id.id_lin_info_logo);
         id_share = (ImageView)findViewById(R.id.id_share);
         id_collect_count = (TextView)findViewById(R.id.id_collect_count);
         id_apply_count = (TextView)findViewById(R.id.id_apply_count);
-        id_info_listview = (PullToRefreshListView) findViewById(R.id.id_info_listview);
+        id_info_listview = (PullToRefreshGridView) findViewById(R.id.id_info_listview);
         id_lin_info_sc = (LinearLayout) findViewById(R.id.id_lin_info_sc);
         id_lin_info_pl = (LinearLayout) findViewById(R.id.id_lin_info_pl);
         id_lin_info_bm = (LinearLayout) findViewById(R.id.id_lin_info_bm);
         id_txt_info_sc = (TextView) findViewById(R.id.id_txt_info_sc);
         id_img_info_sc = (ImageView) findViewById(R.id.id_img_info_sc);
         id_txt_info_bm = (TextView) findViewById(R.id.id_txt_info_bm);
+        id_scroll_info.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                InfoDetailActivity.ShowChatSend(false,"","");
+                return false;
+            }
+        });
+//        id_info_listview.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
+//            @Override
+//            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+//                page=1;
+//                listInfoDetail.clear();
+//                getListData();
+//                id_info_listview.onRefreshComplete();
+//            }
+//
+//            @Override
+//            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+//                page++;
+//                getListData();
+//                id_info_listview.onRefreshComplete();
+//            }
+//        });
         id_lin_info_sc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,10 +160,15 @@ public class InfoDetailActivity extends BaseActivity{
                     Intent intent = new Intent(InfoDetailActivity.this, LoginActivity.class);
                     startActivity(intent);
                 } else {
-                    ToastUtils.show(mContext,"我要评论啦");
+                    InfoDetailActivity.ShowChatSend(true,"","");
+//                    keyinput.showSoftInput(id_edit_chat, InputMethodManager.RESULT_SHOWN);
+//                    keyinput.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+//                    listInfoDetail.clear();
+//                    getChatList();
                 }
             }
         });
+
         id_lin_info_bm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,17 +185,76 @@ public class InfoDetailActivity extends BaseActivity{
                 }
             }
         });
+        id_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //getAddChat();
+            }
+        });
     }
+    public static void ShowChatSend(boolean isShow,String name,String username){
+        if(!isShow) {
+            id_lin_info_chat.setVisibility(View.GONE);
+            id_lin_info_button.setVisibility(View.VISIBLE);
+            id_edit_chat.setText("");
+            id_edit_chat.setHint("评论:");
+            id_edit_chat.setFocusable(true);
+            id_edit_chat.requestFocus();
+            keyinput.hideSoftInputFromWindow(id_edit_chat.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }else{
+            id_lin_info_chat.setVisibility(View.VISIBLE);
+            id_lin_info_button.setVisibility(View.GONE);
+            if(!"".equals(name)){
+                id_edit_chat.setHint("回复　"+name+":");
+                id_edit_chat.setFocusable(true);
+                id_edit_chat.requestFocus();
+                keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }else if(!"".equals(username)){
+                id_edit_chat.setHint("回复　" + username + ":");
+                id_edit_chat.setFocusable(true);
+                id_edit_chat.requestFocus();
+                keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            }else {
+                id_scroll_info.post(new Runnable() {
+                    public void run() {
+                        id_scroll_info.fullScroll(ScrollView.FOCUS_DOWN);
+                    }
+                });
+                id_edit_chat.setFocusable(true);
+                id_edit_chat.requestFocus();
+                id_edit_chat.setHint("评论:");
+            }
+        }
+    }
+    public static void scrollToBottom(final View scroll, final View inner) {
+        Handler mtHandler = new Handler();
 
+        mtHandler.post(new Runnable() {
+            public void run() {
+                if (scroll == null || inner == null) {
+                    return;
+                }
+
+                int offset = inner.getMeasuredHeight() - scroll.getHeight();
+                if (offset < 0) {
+                    offset = 0;
+                }
+
+                scroll.scrollTo(0, offset);
+            }
+        });
+    }
     @Override
     public void initData() {
         super.initData();
         mContext = this;
         Intent intent = getIntent();
         initTitle("详情");
+        infoDetailAdapter = new InfoDetailAdapter(mContext);
         loading = new LoadingProgressDialog(mContext,"正在请求...");
+        id_info_listview.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         actid = intent.getStringExtra("playId");
-
+        listInfoDetail = new ArrayList<InfoDetailMode>();
         id_share.setVisibility(View.VISIBLE);
         id_share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,7 +262,205 @@ public class InfoDetailActivity extends BaseActivity{
                 showShareDialog();
             }
         });
-//        getListData();
+        getChatList();
+    }
+    private void getAddChat() {
+        //返回监听事件
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object obj) {//返回值
+                try {
+//                    loading.dismiss();
+                    JSONObject jsonObject = new JSONObject((String) obj);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        try{
+//                            InfoDetailMode infoMode;
+//                            JSONArray ja = jsonObject.optJSONArray("data");
+//                            JSONArray childArr;
+//                            JSONObject j1,j2;
+//                            List<InfoDetailMode.ChildEntity> childList;
+//                            InfoDetailMode.ChildEntity childMode;
+//                            for(int i=0;i<ja.length();i++) {
+//                                j1 = ja.getJSONObject(i);
+//                                infoMode = new InfoDetailMode();
+//                                infoMode.setUid(j1.optString("uid"));
+//                                infoMode.setD_id(j1.optString("d_id"));
+//                                infoMode.setUsername(j1.optString("username"));
+//                                infoMode.setAddtime(j1.optString("addtime"));
+//                                infoMode.setUname(j1.optString("uname"));
+//                                infoMode.setUphoto(j1.optString("uphoto"));
+//                                infoMode.setAid(j1.optString("aid"));
+//                                infoMode.setD_coment(j1.optString("d_coment"));
+//                                childArr = new JSONArray(j1.optString("child"));
+//                                childList = new ArrayList<InfoDetailMode.ChildEntity>();
+//                                if(childArr.length()!=0) {
+//                                    for (int k = 0; k < childArr.length(); k++) {
+//                                        childMode = new InfoDetailMode.ChildEntity();
+//                                        j2 = childArr.getJSONObject(k);
+//                                        childMode.setUid(j2.optString("uid"));
+//                                        childMode.setRphoto(j2.optString("rphoto"));
+//                                        childMode.setUsername(j2.optString("username"));
+//                                        childMode.setAddtime(j2.optString("addtime"));
+//                                        childMode.setRuid(j2.optString("ruid"));
+//                                        childMode.setUname(j2.optString("uname"));
+//                                        childMode.setR_coment(j2.optString("r_coment"));
+//                                        childMode.setRname(j2.optString("rname"));
+//                                        childMode.setRusername(j2.optString("rusername"));
+//                                        childMode.setUphoto(j2.optString("uphoto"));
+//                                        childList.add(childMode);
+//                                    }
+//                                    infoMode.setChild(childList);
+//                                }else{
+//                                    infoMode.setChild(childList);
+//                                }
+//                                listInfoDetail.add(infoMode);
+//                            }
+//                            infoDetailAdapter.setPlayData(listInfoDetail,2);
+//                            id_info_listview.setAdapter(infoDetailAdapter);
+//
+//                            int totalHeight = 0;
+//                            for (int i = 0, len = infoDetailAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目
+//                                View listItem = infoDetailAdapter.getView(i, null, id_info_listview);
+//                                listItem.measure(0, 0); // 计算子项View 的宽高
+//                                totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
+//                            }
+//
+//                            ViewGroup.LayoutParams params = id_info_listview.getLayoutParams();
+//                            params.height = totalHeight
+//                                    + infoDetailAdapter.childHeight + (id_info_listview.getHeight() * (infoDetailAdapter.getCount() - 1));
+//                            // listView.getDividerHeight()获取子项间分隔符占用的高度
+//                            // params.height最后得到整个ListView完整显示需要的高度
+//                            id_info_listview.setLayoutParams(params);
+//                            if(listInfoDetail.size()>0){
+//                                id_info_listview.setSelection(listInfoDetail.size()-1);
+//                            }
+
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                    } else {
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {//返回值
+//                loading.dismiss();
+                ToastUtils.show(mContext, "网络异常");
+            }
+        };
+
+        loading.show();
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("aid",""+"250");//actid
+        map.put("page", page+"" );
+
+        String url = Urls.ACT_ADDDISCUSS_URL;
+        RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
+    }
+    private void getChatList() {
+        //返回监听事件
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object obj) {//返回值
+                try {
+//                    loading.dismiss();
+                    JSONObject jsonObject = new JSONObject((String) obj);
+                    int code = jsonObject.getInt("code");
+                    if (code == 0) {
+                        try{
+                            InfoDetailMode infoMode;
+                            JSONArray ja = jsonObject.optJSONArray("data");
+                            JSONArray childArr;
+                            JSONObject j1,j2;
+                            List<InfoDetailMode.ChildEntity> childList;
+                            InfoDetailMode.ChildEntity childMode;
+                            for(int i=0;i<ja.length();i++) {
+                                j1 = ja.getJSONObject(i);
+                                infoMode = new InfoDetailMode();
+                                infoMode.setUid(j1.optString("uid"));
+                                infoMode.setD_id(j1.optString("d_id"));
+                                infoMode.setUsername(j1.optString("username"));
+                                infoMode.setAddtime(j1.optString("addtime"));
+                                infoMode.setUname(j1.optString("uname"));
+                                infoMode.setUphoto(j1.optString("uphoto"));
+                                infoMode.setAid(j1.optString("aid"));
+                                infoMode.setD_coment(j1.optString("d_coment"));
+                                childArr = new JSONArray(j1.optString("child"));
+                                childList = new ArrayList<InfoDetailMode.ChildEntity>();
+                                if(childArr.length()!=0) {
+                                    for (int k = 0; k < childArr.length(); k++) {
+                                        childMode = new InfoDetailMode.ChildEntity();
+                                        j2 = childArr.getJSONObject(k);
+                                        childMode.setUid(j2.optString("uid"));
+                                        childMode.setRphoto(j2.optString("rphoto"));
+                                        childMode.setUsername(j2.optString("username"));
+                                        childMode.setAddtime(j2.optString("addtime"));
+                                        childMode.setRuid(j2.optString("ruid"));
+                                        childMode.setUname(j2.optString("uname"));
+                                        childMode.setR_coment(j2.optString("r_coment"));
+                                        childMode.setRname(j2.optString("rname"));
+                                        childMode.setRusername(j2.optString("rusername"));
+                                        childMode.setUphoto(j2.optString("uphoto"));
+                                        childList.add(childMode);
+                                    }
+                                    infoMode.setChild(childList);
+                                }else{
+                                    infoMode.setChild(childList);
+                                }
+                                listInfoDetail.add(infoMode);
+                            }
+                            infoDetailAdapter.setPlayData(listInfoDetail,2);
+                            id_info_listview.setAdapter(infoDetailAdapter);
+
+                            int totalHeight = 0;
+                            for (int i = 0, len = infoDetailAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目
+                                View listItem = infoDetailAdapter.getView(i, null, id_info_listview);
+                                listItem.measure(0, 0); // 计算子项View 的宽高
+                                totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
+                            }
+
+                            ViewGroup.LayoutParams params = id_info_listview.getLayoutParams();
+                            params.height = totalHeight
+                                    + infoDetailAdapter.childHeight + (id_info_listview.getHeight() * (infoDetailAdapter.getCount() - 1));
+                            // listView.getDividerHeight()获取子项间分隔符占用的高度
+                            // params.height最后得到整个ListView完整显示需要的高度
+                            id_info_listview.setLayoutParams(params);
+                            if(listInfoDetail.size()>0){
+                                id_info_listview.setSelection(listInfoDetail.size()-1);
+                            }
+
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                    } else {
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {//返回值
+//                loading.dismiss();
+                ToastUtils.show(mContext, "网络异常");
+            }
+        };
+
+        loading.show();
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("aid",""+"250");//actid
+        map.put("page", page+"" );
+
+        String url = Urls.ACT_GETREPLY_LIST_URL;
+        RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
     }
     private void getListData() {
         user = EggshellApplication.getApplication().getUser();
@@ -217,7 +523,11 @@ public class InfoDetailActivity extends BaseActivity{
                                 id_txt_info_bm.setText("我要报名");
                                 id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.next_step_color));
                             }
-
+                            id_scroll_info.post(new Runnable() {
+                                public void run() {
+                                    id_scroll_info.fullScroll(ScrollView.SCROLL_INDICATOR_TOP);
+                                }
+                            });
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }

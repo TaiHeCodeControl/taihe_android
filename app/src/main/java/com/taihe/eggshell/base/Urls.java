@@ -76,6 +76,9 @@ public class Urls {
     public static final String ACTDETAIL_LIST_URL = BASE_HYR_MOBILE_URL + "/Activity/actdetail";//活动详情
     public static final String ACT_COLLECT_LIST_URL = BASE_HYR_MOBILE_URL + "/Activity/act_collect";//活动收藏详情
     public static final String ACT_APPLY_LIST_URL = BASE_HYR_MOBILE_URL + "/Activity/act_apply";//活动报名详情
+    public static final String ACT_GETREPLY_LIST_URL = BASE_HYR_MOBILE_URL + "/Activity/getreply";//获取评论列表
+    public static final String ACT_ADDDISCUSS_URL = BASE_HYR_MOBILE_URL + "/Activity/adddiscuss";//添加评论
+    public static final String ACT_ADDREPLY_URL = BASE_HYR_MOBILE_URL + "/Activity/addreply";//添加回复评论
 
     public static final String COMPY_GET_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/resumelist";//企业收到的简历
     public static final String COMPY_LOOK_RESUME_URL = BASE_HYR_MOBILE_URL + "/Company/lookedResume";//企业已查看简历

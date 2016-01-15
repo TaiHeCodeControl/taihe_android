@@ -13,14 +13,16 @@
         android:background="@color/line_gray" />
 
     <ScrollView
+        android:id="@+id/id_scroll_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:focusable="false">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="false"
             android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/id_lin_info_logo"
@@ -187,7 +189,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/scstar"/>
+                        android:background="@drawable/collection_icon"/>
                     <TextView
                         android:id="@+id/id_collect_count"
                         android:layout_width="wrap_content"
@@ -203,7 +205,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/scperson"/>
+                        android:background="@drawable/join_icon"/>
                     <TextView
                         android:id="@+id/id_apply_count"
                         android:layout_width="wrap_content"
@@ -254,7 +256,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <com.handmark.pulltorefresh.library.PullToRefreshListView
+                        <com.handmark.pulltorefresh.library.PullToRefreshGridView
                             xmlns:ptr="http://schemas.android.com/apk/res-auto"
                             android:id="@+id/id_info_listview"
                             android:layout_width="fill_parent"
@@ -269,13 +271,42 @@
                             android:listSelector="@color/white"
                             android:smoothScrollbar="true"
                             ptr:ptrAnimationStyle="flip" >
-                        </com.handmark.pulltorefresh.library.PullToRefreshListView>
+                        </com.handmark.pulltorefresh.library.PullToRefreshGridView>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:id="@+id/id_lin_info_chat"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:visibility="gone"
+        android:padding="5dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/id_edit_chat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:imeOptions="actionDone"
+            android:background="@color/white"
+            android:focusable="true"
+            android:textColorHint="@color/gray"
+            android:hint="评论:"/>
+        <TextView
+            android:id="@+id/id_send"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center"
+            android:text="发送"
+            android:textSize="@dimen/font_size_32"
+            android:textColor="@color/white"
+            android:background="@drawable/next_step_background"/>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/id_lin_info_button"
         android:layout_width="match_parent"
