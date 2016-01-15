@@ -90,6 +90,7 @@ public class InfoDetailActivity extends BaseActivity{
     int limit=8,page=1,type=2;
     List<InfoDetailMode> listInfoDetail;
     InfoDetailAdapter infoDetailAdapter;
+    public static String d_id,ruid;
     @Override
     public void initView() {
         setContentView(R.layout.activity_info_detail);
@@ -123,7 +124,7 @@ public class InfoDetailActivity extends BaseActivity{
         id_scroll_info.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                InfoDetailActivity.ShowChatSend(false,"","");
+                InfoDetailActivity.ShowChatSend(false,"","","","");
                 return false;
             }
         });
@@ -147,7 +148,7 @@ public class InfoDetailActivity extends BaseActivity{
                     Intent intent = new Intent(InfoDetailActivity.this, LoginActivity.class);
                     startActivity(intent);
                 } else {
-                    InfoDetailActivity.ShowChatSend(true,"","");
+                    InfoDetailActivity.ShowChatSend(true,"","","","");
                 }
             }
         });
@@ -175,7 +176,9 @@ public class InfoDetailActivity extends BaseActivity{
             }
         });
     }
-    public static void ShowChatSend(boolean isShow,String name,String username){
+    public static void ShowChatSend(boolean isShow,String name,String username,String did,String ruid){
+        InfoDetailActivity.d_id=did;
+        InfoDetailActivity.ruid=ruid;
         if(!isShow) {
             id_lin_info_chat.setVisibility(View.GONE);
             id_lin_info_button.setVisibility(View.VISIBLE);
@@ -257,7 +260,7 @@ public class InfoDetailActivity extends BaseActivity{
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
-                            InfoDetailActivity.ShowChatSend(false,"","");
+                            InfoDetailActivity.ShowChatSend(false,"","","","");
                             listInfoDetail.clear();
                             infoDetailAdapter.childHeight=0;
                             getChatList();
@@ -284,11 +287,20 @@ public class InfoDetailActivity extends BaseActivity{
 
         loading.show();
         Map<String,String> map = new HashMap<String,String>();
-        map.put("aid",""+actid);//actid
-        map.put("uid", UserId+"" );
-        map.put("d_coment", content);
+        String url;
+        if(!"".equals(InfoDetailActivity.d_id) && !"".equals(InfoDetailActivity.ruid)){//二级回复
+            map.put("d_id",""+InfoDetailActivity.d_id);
+            map.put("uid", UserId+"" );
+            map.put("ruid", InfoDetailActivity.ruid+"" );
+            map.put("r_coment", content);
+            url = Urls.ACT_ADDREPLY_URL;
+        }else{//一级回复
+            map.put("aid",""+actid);
+            map.put("uid", UserId+"" );
+            map.put("d_coment", content);
+            url = Urls.ACT_ADDDISCUSS_URL;
+        }
 
-        String url = Urls.ACT_ADDDISCUSS_URL;
         RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
     }
     private void getChatList() {

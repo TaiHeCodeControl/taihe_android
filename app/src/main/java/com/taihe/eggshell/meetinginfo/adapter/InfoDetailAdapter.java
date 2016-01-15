@@ -90,30 +90,16 @@ public class InfoDetailAdapter extends BaseAdapter{
         bitmap.display(viewHolder.mainHead,list.get(position).getUphoto().toString());
         ChildAdapter childAdapter = new ChildAdapter(list.get(position).getChild(),mContext);
         viewHolder.childListView.setAdapter(childAdapter);
-//        int totalHeight = 0;
-//        for (int i = 0, len = childAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目
-//            View listItem = childAdapter.getView(i, null, viewHolder.childListView);
-//            listItem.measure(0, 0); // 计算子项View 的宽高
-//            totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
-//        }
-//        ViewGroup.LayoutParams params = viewHolder.childListView.getLayoutParams();
-//        params.height = totalHeight
-//                + (viewHolder.childListView.getHeight() * (childAdapter.getCount() - 1));
-//        // listView.getDividerHeight()获取子项间分隔符占用的高度
-//        // params.height最后得到整个ListView完整显示需要的高度
-//        viewHolder.childListView.setLayoutParams(params);
         viewHolder.chatlist_lin_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InfoDetailActivity.ShowChatSend(true,list.get(position).getUname(),list.get(position).getUsername());
-//                ToastUtils.show(mContext, list.get(position).getD_coment());
+                InfoDetailActivity.ShowChatSend(true,list.get(position).getUname(),list.get(position).getUsername(),"","");
             }
         });
         viewHolder.childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                InfoDetailActivity.ShowChatSend(true,list.get(position).getChild().get(i).getRname(),list.get(position).getChild().get(i).getUsername());
-//                ToastUtils.show(mContext,list.get(position).getChild().get(i).getR_coment());
+                InfoDetailActivity.ShowChatSend(true,list.get(position).getChild().get(i).getRname(),list.get(position).getChild().get(i).getUsername(),list.get(position).getD_id(),list.get(position).getChild().get(i).getRuid());
             }
         });
         return convertView;
