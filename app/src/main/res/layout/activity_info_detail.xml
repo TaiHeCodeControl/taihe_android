@@ -12,10 +12,11 @@
         android:layout_height="0.5dp"
         android:background="@color/line_gray" />
 
-    <ScrollView
+    <com.taihe.eggshell.widget.MyScrollView
         android:id="@+id/id_scroll_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fillViewport="true"
         android:layout_weight="1"
         android:focusable="false">
 
@@ -247,37 +248,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@color/line_gray"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <com.handmark.pulltorefresh.library.PullToRefreshGridView
-                            xmlns:ptr="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/id_info_listview"
-                            android:layout_width="fill_parent"
-                            android:layout_height="match_parent"
-                            android:background="@color/gray"
-                            android:divider="@color/gray"
-                            android:numColumns="1"
-                            android:fadingEdge="none"
-                            android:fastScrollEnabled="false"
-                            android:footerDividersEnabled="false"
-                            android:headerDividersEnabled="true"
-                            android:listSelector="@color/white"
-                            android:smoothScrollbar="true"
-                            ptr:ptrAnimationStyle="flip" >
-                        </com.handmark.pulltorefresh.library.PullToRefreshGridView>
-                    </LinearLayout>
+                    <com.taihe.eggshell.widget.MyListView
+                        android:id="@+id/id_info_listview"
+                        android:layout_width="fill_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray"
+                        android:listSelector="@color/white" >
+                    </com.taihe.eggshell.widget.MyListView>
                 </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </com.taihe.eggshell.widget.MyScrollView>
     <LinearLayout
         android:id="@+id/id_lin_info_chat"
         android:layout_width="match_parent"
