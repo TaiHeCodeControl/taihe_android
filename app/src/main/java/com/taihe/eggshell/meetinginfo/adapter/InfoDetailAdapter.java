@@ -101,7 +101,7 @@ public class InfoDetailAdapter extends BaseAdapter{
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 InfoDetailActivity.ShowChatSend(true,
                         list.get(position).getChild().get(i).getUname(),
-                        list.get(position).getChild().get(i).getRname(),
+                        list.get(position).getChild().get(i).getUsername(),
                         list.get(position).getD_id(),
                         list.get(position).getChild().get(i).getUid());
             }
@@ -170,6 +170,7 @@ public class InfoDetailAdapter extends BaseAdapter{
             }else{
                 viewHolder.reTitle.setText(uname+":　回复:"+rusername+":"+clist.get(position).getR_coment()+"　"+clist.get(position).getAddtime());
             }
+
             return childView;
         }
     }
