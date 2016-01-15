@@ -357,20 +357,6 @@ public class InfoDetailActivity extends BaseActivity{
                             }
                             infoDetailAdapter.setPlayData(listInfoDetail,2);
                             id_info_listview.setAdapter(infoDetailAdapter);
-//
-//                            int totalHeight = 0;
-//                            for (int i = 0, len = infoDetailAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目
-//                                View listItem = infoDetailAdapter.getView(i, null, id_info_listview);
-//                                listItem.measure(0, 0); // 计算子项View 的宽高
-//                                totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
-//                            }
-//
-//                            ViewGroup.LayoutParams params = id_info_listview.getLayoutParams();
-//                            params.height = totalHeight
-//                                    + infoDetailAdapter.childHeight + (id_info_listview.getHeight() * (infoDetailAdapter.getCount() - 1));
-//                            // listView.getDividerHeight()获取子项间分隔符占用的高度
-//                            // params.height最后得到整个ListView完整显示需要的高度
-//                            id_info_listview.setLayoutParams(params);
                             if(listInfoDetail.size()>0){
                                 id_info_listview.setSelection(listInfoDetail.size()-1);
                             }

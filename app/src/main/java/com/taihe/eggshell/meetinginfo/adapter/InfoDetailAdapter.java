@@ -93,13 +93,17 @@ public class InfoDetailAdapter extends BaseAdapter{
         viewHolder.chatlist_lin_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InfoDetailActivity.ShowChatSend(true,list.get(position).getUname(),list.get(position).getUsername(),"","");
+                InfoDetailActivity.ShowChatSend(true,list.get(position).getUname(),list.get(position).getUsername(),list.get(position).getD_id(),list.get(position).getUid());
             }
         });
         viewHolder.childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                InfoDetailActivity.ShowChatSend(true,list.get(position).getChild().get(i).getRname(),list.get(position).getChild().get(i).getUsername(),list.get(position).getD_id(),list.get(position).getChild().get(i).getRuid());
+                InfoDetailActivity.ShowChatSend(true,
+                        list.get(position).getChild().get(i).getUname(),
+                        list.get(position).getChild().get(i).getRname(),
+                        list.get(position).getD_id(),
+                        list.get(position).getChild().get(i).getUid());
             }
         });
         return convertView;
@@ -124,7 +128,7 @@ public class InfoDetailAdapter extends BaseAdapter{
     public class ChildAdapter extends BaseAdapter{
         private  List<InfoDetailMode.ChildEntity> clist;
         private Context context;
-        private String rname,rusername;
+        private String rname,rusername,uname;
         public ChildAdapter(List<InfoDetailMode.ChildEntity> clist,Context context){
             this.clist = clist;
             this.context = context;
@@ -156,10 +160,15 @@ public class InfoDetailAdapter extends BaseAdapter{
             }
             rname = clist.get(position).getRname();
             rusername = clist.get(position).getRusername();
+            if(!"".equals(clist.get(position).getUsername())){
+                uname = clist.get(position).getUsername();
+            }else {
+                uname = clist.get(position).getUname();
+            }
             if(!"".equals(rname)){
-                viewHolder.reTitle.setText(rname+":　"+clist.get(position).getR_coment()+"　"+clist.get(position).getAddtime());
+                viewHolder.reTitle.setText(uname+":　回复:"+rname+":"+clist.get(position).getR_coment()+"　"+clist.get(position).getAddtime());
             }else{
-                viewHolder.reTitle.setText(rusername+":　"+clist.get(position).getR_coment()+"　"+clist.get(position).getAddtime());
+                viewHolder.reTitle.setText(uname+":　回复:"+rusername+":"+clist.get(position).getR_coment()+"　"+clist.get(position).getAddtime());
             }
             return childView;
         }
