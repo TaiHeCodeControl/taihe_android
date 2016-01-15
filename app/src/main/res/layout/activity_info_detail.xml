@@ -250,7 +250,7 @@
                     <com.taihe.eggshell.widget.MyListView
                         android:id="@+id/id_info_listview"
                         android:layout_width="fill_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@color/gray"
                         android:listSelector="@color/white" >
                     </com.taihe.eggshell.widget.MyListView>
