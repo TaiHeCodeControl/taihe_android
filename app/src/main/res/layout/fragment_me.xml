@@ -25,7 +25,8 @@
         android:layout_height="70dp"
         android:background="@drawable/wodebeijing">
 
-        <com.taihe.eggshell.widget.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.taihe.eggshell.widget.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/circleiv_mine_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"

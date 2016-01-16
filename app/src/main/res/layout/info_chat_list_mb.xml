@@ -30,11 +30,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">
-            <ImageView
+            <com.taihe.eggshell.widget.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/chatlist_img_head"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@drawable/icon" />
+                android:background="@drawable/touxiang"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                app:border_color="#FFFFFF"
+                app:border_width="1dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

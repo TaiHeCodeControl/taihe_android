@@ -8,7 +8,6 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,23 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
-import com.google.gson.Gson;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshGridView;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
@@ -90,6 +81,7 @@ public class InfoDetailActivity extends BaseActivity{
     int limit=8,page=1,type=2;
     List<InfoDetailMode> listInfoDetail;
     InfoDetailAdapter infoDetailAdapter;
+    private View footview;
     public static String d_id,ruid;
     @Override
     public void initView() {
@@ -121,6 +113,8 @@ public class InfoDetailActivity extends BaseActivity{
         id_img_info_sc = (ImageView) findViewById(R.id.id_img_info_sc);
         id_txt_info_bm = (TextView) findViewById(R.id.id_txt_info_bm);
         id_info_listview.setDividerHeight(0);
+
+        //scrollview的touch事件
         id_scroll_info.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -128,6 +122,7 @@ public class InfoDetailActivity extends BaseActivity{
                 return false;
             }
         });
+        //收藏
         id_lin_info_sc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,6 +135,7 @@ public class InfoDetailActivity extends BaseActivity{
                 }
             }
         });
+        //评论
         id_lin_info_pl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,7 +148,7 @@ public class InfoDetailActivity extends BaseActivity{
                 }
             }
         });
-
+        //报名
         id_lin_info_bm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -169,6 +165,7 @@ public class InfoDetailActivity extends BaseActivity{
                 }
             }
         });
+        //发送评论
         id_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,6 +173,15 @@ public class InfoDetailActivity extends BaseActivity{
             }
         });
     }
+
+    /**
+     * 发送评论框
+     * @param isShow
+     * @param name
+     * @param username
+     * @param did
+     * @param ruid
+     */
     public static void ShowChatSend(boolean isShow,String name,String username,String did,String ruid){
         InfoDetailActivity.d_id=did;
         InfoDetailActivity.ruid=ruid;
@@ -201,17 +207,19 @@ public class InfoDetailActivity extends BaseActivity{
                 id_edit_chat.requestFocus();
                 keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }else {
-                id_scroll_info.post(new Runnable() {
+                /*id_scroll_info.post(new Runnable() {
                     public void run() {
                         id_scroll_info.fullScroll(ScrollView.FOCUS_DOWN);
                     }
-                });
+                });*/
                 id_edit_chat.setFocusable(true);
                 id_edit_chat.requestFocus();
                 id_edit_chat.setHint("评论:");
+                keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }
     }
+
     public static void scrollToBottom(final View scroll, final View inner) {
         Handler mtHandler = new Handler();
 
@@ -230,6 +238,7 @@ public class InfoDetailActivity extends BaseActivity{
             }
         });
     }
+
     @Override
     public void initData() {
         super.initData();
@@ -248,7 +257,18 @@ public class InfoDetailActivity extends BaseActivity{
             }
         });
         getChatList();
+
+        footview = LayoutInflater.from(mContext).inflate(R.layout.item_foot_bottom,null);
+        id_info_listview.addFooterView(footview);
+        footview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                page +=1;
+                getChatList();
+            }
+        });
     }
+
     private void getAddChat(String content) {
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
@@ -262,7 +282,7 @@ public class InfoDetailActivity extends BaseActivity{
                         try{
                             InfoDetailActivity.ShowChatSend(false,"","","","");
                             listInfoDetail.clear();
-                            infoDetailAdapter.childHeight=0;
+//                            infoDetailAdapter.childHeight=0;
                             getChatList();
                         }catch (Exception ex){
                             loading.dismiss();
@@ -303,6 +323,10 @@ public class InfoDetailActivity extends BaseActivity{
 
         RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
     }
+
+    /**
+     * 评论列表
+     */
     private void getChatList() {
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
@@ -320,46 +344,54 @@ public class InfoDetailActivity extends BaseActivity{
                             JSONObject j1,j2;
                             List<InfoDetailMode.ChildEntity> childList;
                             InfoDetailMode.ChildEntity childMode;
-                            for(int i=0;i<ja.length();i++) {
-                                j1 = ja.getJSONObject(i);
-                                infoMode = new InfoDetailMode();
-                                infoMode.setUid(j1.optString("uid"));
-                                infoMode.setD_id(j1.optString("d_id"));
-                                infoMode.setUsername(j1.optString("username"));
-                                infoMode.setAddtime(j1.optString("addtime"));
-                                infoMode.setUname(j1.optString("uname"));
-                                infoMode.setUphoto(j1.optString("uphoto"));
-                                infoMode.setAid(j1.optString("aid"));
-                                infoMode.setD_coment(j1.optString("d_coment"));
-                                childArr = new JSONArray(j1.optString("child"));
-                                childList = new ArrayList<InfoDetailMode.ChildEntity>();
-                                if(childArr.length()!=0) {
-                                    for (int k = 0; k < childArr.length(); k++) {
-                                        childMode = new InfoDetailMode.ChildEntity();
-                                        j2 = childArr.getJSONObject(k);
-                                        childMode.setUid(j2.optString("uid"));
-                                        childMode.setRphoto(j2.optString("rphoto"));
-                                        childMode.setUsername(j2.optString("username"));
-                                        childMode.setAddtime(j2.optString("addtime"));
-                                        childMode.setRuid(j2.optString("ruid"));
-                                        childMode.setUname(j2.optString("uname"));
-                                        childMode.setR_coment(j2.optString("r_coment"));
-                                        childMode.setRname(j2.optString("rname"));
-                                        childMode.setRusername(j2.optString("rusername"));
-                                        childMode.setUphoto(j2.optString("uphoto"));
-                                        childList.add(childMode);
+                            if(ja.length()!=0){
+                                for(int i=0;i<ja.length();i++) {
+                                    j1 = ja.getJSONObject(i);
+                                    infoMode = new InfoDetailMode();
+                                    infoMode.setUid(j1.optString("uid"));
+                                    infoMode.setD_id(j1.optString("d_id"));
+                                    infoMode.setUsername(j1.optString("username"));
+                                    infoMode.setAddtime(j1.optString("addtime"));
+                                    infoMode.setUname(j1.optString("uname"));
+                                    infoMode.setUphoto(j1.optString("uphoto"));
+                                    infoMode.setAid(j1.optString("aid"));
+                                    infoMode.setD_coment(j1.optString("d_coment"));
+                                    childArr = new JSONArray(j1.optString("child"));
+                                    childList = new ArrayList<InfoDetailMode.ChildEntity>();
+                                    if(childArr.length()!=0) {
+                                        for (int k = 0; k < childArr.length(); k++) {
+                                            childMode = new InfoDetailMode.ChildEntity();
+                                            j2 = childArr.getJSONObject(k);
+                                            childMode.setUid(j2.optString("uid"));
+                                            childMode.setRphoto(j2.optString("rphoto"));
+                                            childMode.setUsername(j2.optString("username"));
+                                            childMode.setAddtime(j2.optString("addtime"));
+                                            childMode.setRuid(j2.optString("ruid"));
+                                            childMode.setUname(j2.optString("uname"));
+                                            childMode.setR_coment(j2.optString("r_coment"));
+                                            childMode.setRname(j2.optString("rname"));
+                                            childMode.setRusername(j2.optString("rusername"));
+                                            childMode.setUphoto(j2.optString("uphoto"));
+                                            childList.add(childMode);
+                                        }
+                                        infoMode.setChild(childList);
+                                    }else{
+                                        infoMode.setChild(childList);
                                     }
-                                    infoMode.setChild(childList);
-                                }else{
-                                    infoMode.setChild(childList);
+                                    listInfoDetail.add(infoMode);
                                 }
-                                listInfoDetail.add(infoMode);
+                            }else{
+                                if(page!=1){
+                                    ToastUtils.show(mContext,"没有了");
+                                }
+                                id_info_listview.removeFooterView(footview);
                             }
+
                             infoDetailAdapter.setPlayData(listInfoDetail,2);
                             id_info_listview.setAdapter(infoDetailAdapter);
-                            if(listInfoDetail.size()>0){
+                            /*if(listInfoDetail.size()>0){
                                 id_info_listview.setSelection(listInfoDetail.size()-1);
-                            }
+                            }*/
 
                         }catch (Exception ex){
                             ex.printStackTrace();
@@ -388,6 +420,10 @@ public class InfoDetailActivity extends BaseActivity{
         String url = Urls.ACT_GETREPLY_LIST_URL;
         RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
     }
+
+    /**
+     * 详情
+     */
     private void getListData() {
         user = EggshellApplication.getApplication().getUser();
         if (user != null) {
@@ -449,11 +485,11 @@ public class InfoDetailActivity extends BaseActivity{
                                 id_txt_info_bm.setText("我要报名");
                                 id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.next_step_color));
                             }
-                            id_scroll_info.post(new Runnable() {
+                            /*id_scroll_info.post(new Runnable() {
                                 public void run() {
                                     id_scroll_info.fullScroll(ScrollView.SCROLL_INDICATOR_TOP);
                                 }
-                            });
+                            });*/
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }
@@ -494,6 +530,10 @@ public class InfoDetailActivity extends BaseActivity{
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         id_apply_count.setText(mspk);
     }
+
+    /**
+     * 收藏
+     */
     private void getCollectData() {
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
@@ -549,6 +589,9 @@ public class InfoDetailActivity extends BaseActivity{
         String url = Urls.ACT_COLLECT_LIST_URL;
         RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
     }
+    /**
+     * 报名
+     */
     private void getApplyData() {
         //返回监听事件
         Response.Listener listener = new Response.Listener() {
@@ -603,6 +646,10 @@ public class InfoDetailActivity extends BaseActivity{
         String url = Urls.ACT_APPLY_LIST_URL;
         RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
     }
+
+    /**
+     * 分享
+     */
     PopupWindow shareWindow;
     public void showShareDialog() {
         final UMImage image = new UMImage(mContext, "http://www.umeng.com/images/pic/social/integrated_3.png");

@@ -1,21 +1,17 @@
 package com.taihe.eggshell.meetinginfo.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
-import com.taihe.eggshell.base.utils.ToastUtils;
-import com.taihe.eggshell.main.mode.PlayInfoMode;
 import com.taihe.eggshell.meetinginfo.InfoDetailActivity;
 import com.taihe.eggshell.meetinginfo.entity.InfoDetailMode;
+import com.taihe.eggshell.widget.CircleImageView;
 import com.taihe.eggshell.widget.MyListView;
 
 import net.tsz.afinal.FinalBitmap;
@@ -65,7 +61,7 @@ public class InfoDetailAdapter extends BaseAdapter{
             viewHolder.mainName = (TextView)convertView.findViewById(R.id.chatlist_txt_name);
             viewHolder.mainDate = (TextView)convertView.findViewById(R.id.chatlist_txt_date);
             viewHolder.countNum = (TextView)convertView.findViewById(R.id.chatlist_txt_count);
-            viewHolder.mainHead = (ImageView)convertView.findViewById(R.id.chatlist_img_head);
+            viewHolder.mainHead = (CircleImageView)convertView.findViewById(R.id.chatlist_img_head);
             viewHolder.childListView = (MyListView)convertView.findViewById(R.id.chatlist_child_listview);
             viewHolder.childLinView = (LinearLayout)convertView.findViewById(R.id.chatlist_child_lin);
             viewHolder.chatlist_lin_main = (LinearLayout)convertView.findViewById(R.id.chatlist_lin_main);
@@ -93,9 +89,10 @@ public class InfoDetailAdapter extends BaseAdapter{
         viewHolder.chatlist_lin_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InfoDetailActivity.ShowChatSend(true,list.get(position).getUname(),list.get(position).getUsername(),list.get(position).getD_id(),list.get(position).getUid());
+                InfoDetailActivity.ShowChatSend(true, list.get(position).getUname(), list.get(position).getUsername(), list.get(position).getD_id(), list.get(position).getUid());
             }
         });
+//        viewHolder.chatlist_lin_main.scrollTo(0,);
         viewHolder.childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -121,7 +118,7 @@ public class InfoDetailAdapter extends BaseAdapter{
     }
     class ViewHolder{
         TextView mainTitle,mainName,mainDate,countNum;
-        ImageView mainHead;
+        CircleImageView mainHead;
         LinearLayout childLinView,chatlist_lin_main;
         MyListView childListView;
     }
