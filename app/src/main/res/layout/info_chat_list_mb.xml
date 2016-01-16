@@ -5,22 +5,18 @@
     android:background="@color/background_gray"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/chatlist_txt_count"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:padding="10dp">
-        <TextView
-            android:id="@+id/chatlist_txt_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/font_size_26"
-            android:textColor="@color/font_color_gray"
-            android:text="条评论"/>
-    </LinearLayout>
-    <View
-        android:id="@+id/viewline"
-        style="@style/line_fill"/>
+        android:padding="10dp"
+        android:textSize="@dimen/font_size_26"
+        android:textColor="@color/font_color_gray"
+        android:text="条评论"/>
+
+    <View android:id="@+id/viewline" style="@style/line_fill"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +25,7 @@
             android:id="@+id/chatlist_lin_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:padding="8dp">
             <com.taihe.eggshell.widget.CircleImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/chatlist_img_head"
@@ -37,7 +33,6 @@
                 android:layout_height="30dp"
                 android:background="@drawable/touxiang"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
                 app:border_color="#FFFFFF"
                 app:border_width="1dp" />
             <LinearLayout
@@ -63,7 +58,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/font_color_gray_jobsearch"
-                        android:text="10分钟前"/>
+                        android:text="10分钟前"
+                        android:textSize="12sp"/>
                 </LinearLayout>
                 <TextView
                     android:id="@+id/chatlist_txt_title"
@@ -76,27 +72,27 @@
                     android:text="主题"/>
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
+
+        <View
+            android:id="@+id/child_view_line"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <View android:layout_height="0.5dp"
-                android:layout_width="match_parent"
-                android:background="@drawable/linexu"/>
+            android:layout_height="0.5dp"
+            android:background="@drawable/linexu"/>
+
             <LinearLayout
                 android:id="@+id/chatlist_child_lin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="10dp"
                 android:paddingRight="10dp"
                 android:paddingLeft="50dp">
                 <com.taihe.eggshell.widget.MyListView
                     android:id="@+id/chatlist_child_listview"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:dividerHeight="0.5dp"
+                    android:divider="@drawable/linexu">
                 </com.taihe.eggshell.widget.MyListView>
             </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

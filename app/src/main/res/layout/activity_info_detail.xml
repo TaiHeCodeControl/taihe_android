@@ -258,7 +258,9 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/gray"
-                        android:listSelector="@color/white" >
+                        android:listSelector="@color/white"
+                        android:dividerHeight="0.5dp"
+                        android:divider="@color/line_gray">
                     </com.taihe.eggshell.widget.MyListView>
                 </LinearLayout>
             </LinearLayout>

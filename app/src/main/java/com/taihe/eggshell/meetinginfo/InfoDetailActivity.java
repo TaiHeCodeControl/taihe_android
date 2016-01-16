@@ -3,7 +3,6 @@ package com.taihe.eggshell.meetinginfo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -112,7 +111,6 @@ public class InfoDetailActivity extends BaseActivity{
         id_txt_info_sc = (TextView) findViewById(R.id.id_txt_info_sc);
         id_img_info_sc = (ImageView) findViewById(R.id.id_img_info_sc);
         id_txt_info_bm = (TextView) findViewById(R.id.id_txt_info_bm);
-        id_info_listview.setDividerHeight(0);
 
         //scrollview的touch事件
         id_scroll_info.setOnTouchListener(new View.OnTouchListener() {
@@ -207,36 +205,12 @@ public class InfoDetailActivity extends BaseActivity{
                 id_edit_chat.requestFocus();
                 keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }else {
-                /*id_scroll_info.post(new Runnable() {
-                    public void run() {
-                        id_scroll_info.fullScroll(ScrollView.FOCUS_DOWN);
-                    }
-                });*/
                 id_edit_chat.setFocusable(true);
                 id_edit_chat.requestFocus();
                 id_edit_chat.setHint("评论:");
                 keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }
-    }
-
-    public static void scrollToBottom(final View scroll, final View inner) {
-        Handler mtHandler = new Handler();
-
-        mtHandler.post(new Runnable() {
-            public void run() {
-                if (scroll == null || inner == null) {
-                    return;
-                }
-
-                int offset = inner.getMeasuredHeight() - scroll.getHeight();
-                if (offset < 0) {
-                    offset = 0;
-                }
-
-                scroll.scrollTo(0, offset);
-            }
-        });
     }
 
     @Override
@@ -282,7 +256,7 @@ public class InfoDetailActivity extends BaseActivity{
                         try{
                             InfoDetailActivity.ShowChatSend(false,"","","","");
                             listInfoDetail.clear();
-//                            infoDetailAdapter.childHeight=0;
+                            page = 1;
                             getChatList();
                         }catch (Exception ex){
                             loading.dismiss();
@@ -389,9 +363,6 @@ public class InfoDetailActivity extends BaseActivity{
 
                             infoDetailAdapter.setPlayData(listInfoDetail,2);
                             id_info_listview.setAdapter(infoDetailAdapter);
-                            /*if(listInfoDetail.size()>0){
-                                id_info_listview.setSelection(listInfoDetail.size()-1);
-                            }*/
 
                         }catch (Exception ex){
                             ex.printStackTrace();

@@ -65,12 +65,23 @@ public class InfoDetailAdapter extends BaseAdapter{
             viewHolder.childListView = (MyListView)convertView.findViewById(R.id.chatlist_child_listview);
             viewHolder.childLinView = (LinearLayout)convertView.findViewById(R.id.chatlist_child_lin);
             viewHolder.chatlist_lin_main = (LinearLayout)convertView.findViewById(R.id.chatlist_lin_main);
+            viewHolder.lineview = (View)convertView.findViewById(R.id.viewline);
+            viewHolder.childlineview = (View)convertView.findViewById(R.id.child_view_line);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder)convertView.getTag();
         }
         if(position!=0){
             viewHolder.countNum.setVisibility(View.GONE);
+            viewHolder.lineview.setVisibility(View.GONE);
+        }else{
+            viewHolder.countNum.setVisibility(View.VISIBLE);
+            viewHolder.lineview.setVisibility(View.VISIBLE);
+        }
+        if(list.get(position).getChild().size()==0){
+            viewHolder.childlineview.setVisibility(View.GONE);
+        }else{
+            viewHolder.childlineview.setVisibility(View.VISIBLE);
         }
         viewHolder.mainTitle.setText(list.get(position).getD_coment());
         if(!"".equals(list.get(position).getUname())){
@@ -78,7 +89,6 @@ public class InfoDetailAdapter extends BaseAdapter{
         }else{
             mainName =list.get(position).getUsername();
         }
-        viewHolder.childListView.setDividerHeight(0);
         viewHolder.mainName.setText(mainName);
         viewHolder.countNum.setText(list.size()+"条数据");
         viewHolder.mainDate.setText(list.get(position).getAddtime());
@@ -121,6 +131,7 @@ public class InfoDetailAdapter extends BaseAdapter{
         CircleImageView mainHead;
         LinearLayout childLinView,chatlist_lin_main;
         MyListView childListView;
+        View lineview,childlineview;
     }
     public class ChildAdapter extends BaseAdapter{
         private  List<InfoDetailMode.ChildEntity> clist;
