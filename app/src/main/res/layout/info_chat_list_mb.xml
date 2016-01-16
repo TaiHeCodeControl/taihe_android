@@ -9,7 +9,6 @@
         android:id="@+id/chatlist_txt_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:padding="10dp"
         android:textSize="@dimen/font_size_26"
         android:textColor="@color/font_color_gray"

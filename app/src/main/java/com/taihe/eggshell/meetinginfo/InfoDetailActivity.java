@@ -181,6 +181,7 @@ public class InfoDetailActivity extends BaseActivity{
      * @param ruid
      */
     public static void ShowChatSend(boolean isShow,String name,String username,String did,String ruid){
+
         InfoDetailActivity.d_id=did;
         InfoDetailActivity.ruid=ruid;
         if(!isShow) {

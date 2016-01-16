@@ -102,7 +102,6 @@ public class InfoDetailAdapter extends BaseAdapter{
                 InfoDetailActivity.ShowChatSend(true, list.get(position).getUname(), list.get(position).getUsername(), list.get(position).getD_id(), list.get(position).getUid());
             }
         });
-//        viewHolder.chatlist_lin_main.scrollTo(0,);
         viewHolder.childListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
