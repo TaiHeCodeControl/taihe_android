@@ -7,6 +7,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -82,6 +83,7 @@ public class InfoDetailActivity extends BaseActivity{
     InfoDetailAdapter infoDetailAdapter;
     private View footview;
     public static String d_id,ruid;
+    private String shareTitle,shareContent;
     @Override
     public void initView() {
         setContentView(R.layout.activity_info_detail);
@@ -167,7 +169,11 @@ public class InfoDetailActivity extends BaseActivity{
         id_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getAddChat(id_edit_chat.getText().toString());
+                if(!"".equals(id_edit_chat.getText().toString())) {
+                    getAddChat(id_edit_chat.getText().toString());
+                }else{
+                    ToastUtils.show(mContext,"评论不能为空！");
+                }
             }
         });
     }
@@ -238,7 +244,7 @@ public class InfoDetailActivity extends BaseActivity{
         footview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                page +=1;
+                page += 1;
                 getChatList();
             }
         });
@@ -310,6 +316,7 @@ public class InfoDetailActivity extends BaseActivity{
                 try {
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
+//                    Log.d("aaa",jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
@@ -408,6 +415,7 @@ public class InfoDetailActivity extends BaseActivity{
                 try {
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
+//                    Log.d("ddd",jsonObject.toString());
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         try{
@@ -421,7 +429,8 @@ public class InfoDetailActivity extends BaseActivity{
                             jobBrief.setText(Html.fromHtml(j2.optString("content")));
                             FinalBitmap bitmap = FinalBitmap.create(mContext);
                             bitmap.display(imgLog,j2.optString("logo"));
-
+                            shareTitle =j2.optString("title");
+                            shareContent =j2.optString("content");
                             WindowManager wm = getWindowManager();
                             int width = wm.getDefaultDisplay().getWidth();
                             int height=9*width/16;
@@ -432,6 +441,7 @@ public class InfoDetailActivity extends BaseActivity{
                             applyed = j2.optString("apply_count");
                             collect_count=j2.optString("is_collect_count");
                             applyNum=j2.optString("num");
+
                             showPersonNum(applyed,applyNum,0);
                             id_collect_count.setText(j2.optString("collect_count"));
                             apply_count=j2.optString("is_appty_count");
@@ -452,10 +462,16 @@ public class InfoDetailActivity extends BaseActivity{
                             } else if("3".equals(apply_count)){
                                 id_txt_info_bm.setText("报名已结束");
                                 id_lin_info_bm.setEnabled(false);
-                                id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.bg_gray));
+                                id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.font_color_gray_jobsearch));
                             }else {
-                                id_txt_info_bm.setText("我要报名");
-                                id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.next_step_color));
+                                if(!applyed.equals(applyNum)) {
+                                    id_txt_info_bm.setText("我要报名");
+                                    id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.next_step_color));
+                                }else{
+                                    id_txt_info_bm.setText("报名已满");
+                                    id_lin_info_bm.setEnabled(false);
+                                    id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.font_color_gray_jobsearch));
+                                }
                             }
                             /*id_scroll_info.post(new Runnable() {
                                 public void run() {
@@ -624,11 +640,12 @@ public class InfoDetailActivity extends BaseActivity{
      */
     PopupWindow shareWindow;
     public void showShareDialog() {
-        final UMImage image = new UMImage(mContext, "http://www.umeng.com/images/pic/social/integrated_3.png");
+        final UMImage image = new UMImage(mContext, "http://www.eggker.cn/app/template/default/images/logo.png");
         final UMusic music = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
-        music.setTitle("sdasdasd");
+        music.setTitle(shareTitle);
         music.setThumb(new UMImage(mContext,"http://www.umeng.com/images/pic/social/chart_1.png"));
         final UMVideo video = new UMVideo("http://video.sina.com.cn/p/sports/cba/v/2013-10-22/144463050817.html");
+        final String shareURL="http://www.eggker.cn/";
         // 利用layoutInflater获得View
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.dialog_share, null);
@@ -654,10 +671,11 @@ public class InfoDetailActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.QQ).setCallback(umShareListener)
-                        .withText("hello umeng")
-                        .withMedia(music)
-                        .withTitle("qqshare")
-                        .withTargetUrl("http://dev.umeng.com")
+                        .withTitle(shareTitle)
+                        .withText(shareContent)
+                        .withTargetUrl(shareURL)
+                        .withMedia(image)
+//                        .withMedia(music)
                         .share();
             }
         });
@@ -665,8 +683,9 @@ public class InfoDetailActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
-                        .withText("hello umeng video")
-                        .withTargetUrl("http://www.baidu.com")
+                        .withTitle(shareTitle)
+                        .withText(shareContent)
+                        .withTargetUrl(shareURL)
                         .withMedia(image)
                         .share();
             }
@@ -675,7 +694,9 @@ public class InfoDetailActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.QZONE).setCallback(umShareListener)
-                        .withText("hello umeng")
+                        .withTitle(shareTitle)
+                        .withText(shareContent)
+                        .withTargetUrl(shareURL)
                         .withMedia(image)
                         .share();
             }
@@ -684,7 +705,10 @@ public class InfoDetailActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
-                        .withText("hello wx")
+                        .withTitle(shareTitle)
+                        .withText(shareContent)
+                        .withTargetUrl(shareURL)
+                        .withMedia(image)
 //                        .withMedia(video)
                         .share();
             }
@@ -693,8 +717,10 @@ public class InfoDetailActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
-                        .withText("hello umeng")
-                        .withMedia(music)
+                        .withTitle(shareTitle)
+                        .withText(shareContent)
+                        .withTargetUrl(shareURL)
+                        .withMedia(image)
                         .share();
             }
         });

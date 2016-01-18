@@ -1,6 +1,9 @@
 package com.taihe.eggshell.meetinginfo.adapter;
 
 import android.content.Context;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -90,10 +93,14 @@ public class InfoDetailAdapter extends BaseAdapter{
             mainName =list.get(position).getUsername();
         }
         viewHolder.mainName.setText(mainName);
-        viewHolder.countNum.setText(list.size()+"条数据");
+        viewHolder.countNum.setText(list.size()+"条评论");
         viewHolder.mainDate.setText(list.get(position).getAddtime());
-        FinalBitmap bitmap = FinalBitmap.create(mContext);
-        bitmap.display(viewHolder.mainHead,list.get(position).getUphoto().toString());
+        String aaa = list.get(position).getUphoto().toString();;
+        viewHolder.mainHead.setImageResource(R.drawable.touxiang);
+        if(!"".equals(list.get(position).getUphoto().toString())) {
+            FinalBitmap bitmap = FinalBitmap.create(mContext);
+            bitmap.display(viewHolder.mainHead, list.get(position).getUphoto().toString());
+        }
         ChildAdapter childAdapter = new ChildAdapter(list.get(position).getChild(),mContext);
         viewHolder.childListView.setAdapter(childAdapter);
         viewHolder.chatlist_lin_main.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +142,8 @@ public class InfoDetailAdapter extends BaseAdapter{
     public class ChildAdapter extends BaseAdapter{
         private  List<InfoDetailMode.ChildEntity> clist;
         private Context context;
-        private String rname,rusername,uname;
+        private String rname,rusername,uname,rdate,rcontent;
+        SpannableString mspk;
         public ChildAdapter(List<InfoDetailMode.ChildEntity> clist,Context context){
             this.clist = clist;
             this.context = context;
@@ -167,17 +175,27 @@ public class InfoDetailAdapter extends BaseAdapter{
             }
             rname = clist.get(position).getRname();
             rusername = clist.get(position).getRusername();
-            if(!"".equals(clist.get(position).getUsername())){
-                uname = clist.get(position).getUsername();
-            }else {
+            if(!"".equals(clist.get(position).getUname())){
                 uname = clist.get(position).getUname();
+            }else {
+                uname = clist.get(position).getUsername();
             }
-            if(!"".equals(rname)){
-                viewHolder.reTitle.setText(uname+":　回复:"+rname+":"+clist.get(position).getR_coment()+"　"+clist.get(position).getAddtime());
-            }else{
-                viewHolder.reTitle.setText(uname+":　回复:"+rusername+":"+clist.get(position).getR_coment()+"　"+clist.get(position).getAddtime());
-            }
+            rdate = clist.get(position).getAddtime();
 
+            if(!"".equals(rname)){
+                rcontent = uname+":　回复:"+rname+":"+clist.get(position).getR_coment()+"　"+rdate;
+//                viewHolder.reTitle.setText(rcontent);
+            }else{
+                rcontent = uname+":　回复:"+rusername+":"+clist.get(position).getR_coment()+"　"+rdate;
+//                viewHolder.reTitle.setText(rcontent);
+            }
+            mspk = new SpannableString(rcontent);
+            int k = (uname).length();
+            mspk.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.next_step_color)),0, k+1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            viewHolder.reTitle.setText(mspk);
+            k = rcontent.length();
+            mspk.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.font_color_gray_jobsearch)),k-rdate.length(), k,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            viewHolder.reTitle.setText(mspk);
             return childView;
         }
     }

@@ -89,7 +89,7 @@ public class MyJoinActivity extends BaseActivity{
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Intent intent = new Intent(mContext,InfoDetailActivity.class);
-                intent.putExtra("playId",list.get(position-1).getId());
+                intent.putExtra("playId",list.get(position).getId());
                 startActivity(intent);
             }
         });
