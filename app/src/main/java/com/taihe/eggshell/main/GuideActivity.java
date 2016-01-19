@@ -10,6 +10,7 @@ import android.view.Window;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.main.adapter.GuidePageAdapter;
+import com.taihe.eggshell.widget.CircleIndicator;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
     private Context mContext;
 
     private ViewPager viewPager;
+    private CircleIndicator circleIndicator;
     private ArrayList<View> views = new ArrayList<View>();
 
     @Override
@@ -38,6 +40,7 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
     private void initView(){
         LayoutInflater inflater = LayoutInflater.from(mContext);
         viewPager = (ViewPager)findViewById(R.id.id_guide);
+        circleIndicator = (CircleIndicator) findViewById(R.id.indicator);
 
         views = new ArrayList<View>();
         // 初始化引导图片列表
@@ -52,6 +55,8 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
         GuidePageAdapter pageAdapter = new GuidePageAdapter(mContext,views);
         viewPager.setAdapter(pageAdapter);
         viewPager.setOnPageChangeListener(this);
+
+        circleIndicator.setViewPager(viewPager);
     }
 
     @Override
