@@ -7,7 +7,6 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -43,8 +42,6 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.media.UMVideo;
-import com.umeng.socialize.media.UMusic;
 
 import net.tsz.afinal.FinalBitmap;
 
@@ -668,6 +665,7 @@ public class InfoDetailActivity extends BaseActivity{
         shareWindow.showAtLocation(InfoDetailActivity.this.findViewById(R.id.id_share),Gravity.BOTTOM, 0, 0);
         backgroundAlpha(0.7f);
         shareWindow.setOnDismissListener(new poponDismissListener());
+        shareContent = String.valueOf(Html.fromHtml(shareContent));
         linQQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
