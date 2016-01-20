@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -65,8 +66,9 @@ public class InfoDetailActivity extends BaseActivity{
     private User user;
     String collect_count,apply_count;//1=已收藏,2=未收藏   apply_count   1=已报名,2=未报名3报名结束
     String applyed;//已经报名人数
-    private TextView mainPlat,startTime,address,telPhone,callPerson,comeWay,jobBrief,id_collect_count,id_apply_count;
+    private TextView mainPlat,startTime,address,telPhone,callPerson,comeWay,id_collect_count,id_apply_count;
     private TextView id_txt_info_bm,id_txt_info_sc,id_send;
+    private WebView jobBrief;
     public static EditText id_edit_chat;
     private ImageView imgLog,id_share,id_img_info_sc;
     private MyListView id_info_listview;
@@ -92,7 +94,7 @@ public class InfoDetailActivity extends BaseActivity{
         telPhone = (TextView)findViewById(R.id.id_info_phone);
         callPerson = (TextView)findViewById(R.id.id_person);
         comeWay = (TextView)findViewById(R.id.id_info_way);
-        jobBrief = (TextView)findViewById(R.id.id_company_brief);
+        jobBrief = (WebView)findViewById(R.id.id_company_brief);
         id_scroll_info = (MyScrollView)findViewById(R.id.id_scroll_info);
         id_edit_chat = (EditText)findViewById(R.id.id_edit_chat);
         id_lin_info_chat = (LinearLayout)findViewById(R.id.id_lin_info_chat);
@@ -423,7 +425,7 @@ public class InfoDetailActivity extends BaseActivity{
                             telPhone.setText(j2.optString("telphone"));
                             callPerson.setText(j2.optString("user"));
                             comeWay.setText(j2.optString("traffic_route"));
-                            jobBrief.setText(Html.fromHtml(j2.optString("content")));
+                            jobBrief.loadDataWithBaseURL("about:blank",j2.optString("content"),"text/html", "utf-8",null);
                             sharePic = j2.optString("logo");
                             FinalBitmap bitmap = FinalBitmap.create(mContext);
                             bitmap.display(imgLog,sharePic);
@@ -683,7 +685,7 @@ public class InfoDetailActivity extends BaseActivity{
             public void onClick(View view) {
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
                         .withTitle(shareTitle)
-                        .withText(shareContent)
+                        .withText(shareContent.substring(0,100))
                         .withTargetUrl(shareURL)
                         .withMedia(image)
                         .share();
