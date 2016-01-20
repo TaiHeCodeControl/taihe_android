@@ -83,7 +83,7 @@ public class InfoDetailActivity extends BaseActivity{
     InfoDetailAdapter infoDetailAdapter;
     private View footview;
     public static String d_id,ruid;
-    private String shareTitle,shareContent;
+    private String shareTitle,shareContent,sharePic;
     @Override
     public void initView() {
         setContentView(R.layout.activity_info_detail);
@@ -427,8 +427,9 @@ public class InfoDetailActivity extends BaseActivity{
                             callPerson.setText(j2.optString("user"));
                             comeWay.setText(j2.optString("traffic_route"));
                             jobBrief.setText(Html.fromHtml(j2.optString("content")));
+                            sharePic = j2.optString("logo");
                             FinalBitmap bitmap = FinalBitmap.create(mContext);
-                            bitmap.display(imgLog,j2.optString("logo"));
+                            bitmap.display(imgLog,sharePic);
                             shareTitle =j2.optString("title");
                             shareContent =j2.optString("content");
                             WindowManager wm = getWindowManager();
@@ -640,12 +641,12 @@ public class InfoDetailActivity extends BaseActivity{
      */
     PopupWindow shareWindow;
     public void showShareDialog() {
-        final UMImage image = new UMImage(mContext, "http://www.eggker.cn/app/template/default/images/logo.png");
-        final UMusic music = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
-        music.setTitle(shareTitle);
-        music.setThumb(new UMImage(mContext,"http://www.umeng.com/images/pic/social/chart_1.png"));
-        final UMVideo video = new UMVideo("http://video.sina.com.cn/p/sports/cba/v/2013-10-22/144463050817.html");
-        final String shareURL="http://www.eggker.cn/";
+        final UMImage image = new UMImage(mContext, sharePic);
+//        final UMusic music = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
+//        music.setTitle(shareTitle);
+//        music.setThumb(new UMImage(mContext,"http://www.umeng.com/images/pic/social/chart_1.png"));
+//        final UMVideo video = new UMVideo("http://video.sina.com.cn/p/sports/cba/v/2013-10-22/144463050817.html");
+        final String shareURL=Urls.SHARE_URL+actid;
         // 利用layoutInflater获得View
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.dialog_share, null);

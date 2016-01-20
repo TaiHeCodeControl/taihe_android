@@ -97,7 +97,7 @@ public class Urls {
     public static final String RESUME_SKILL_LIST = BASE_HYR_MOBILE_URL +"/Except/skill_list";//专业技能
     public static final String RESUME_PROJECT_LIST = BASE_HYR_MOBILE_URL +"/Except/project_list";//项目经验
     public static final String RESUME_CERT_LIST = BASE_HYR_MOBILE_URL +"/Except/cert_list";//简历证书
-
+    public static final String SHARE_URL = BASE_HYR_MOBILE_URL +"/share?id=";//分享链接
 
     public static final String METHOD_GET_SELF = "/Except/other_list";//自我评价
     public static final String METHOD_DELETE_RESUME_ITEM = "/Except/resume_type_del";//删除简历中的各个item,如某个工作经历
