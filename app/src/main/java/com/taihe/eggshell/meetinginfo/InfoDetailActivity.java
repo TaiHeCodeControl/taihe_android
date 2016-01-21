@@ -254,7 +254,7 @@ public class InfoDetailActivity extends BaseActivity{
 //        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         settings.setUseWideViewPort(true);
         settings.setLoadWithOverviewMode(true);
-        settings.setDefaultFontSize(50);
+        settings.setDefaultFontSize(45);
     }
 
     private void getAddChat(String content) {
