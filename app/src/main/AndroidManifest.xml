@@ -435,6 +435,10 @@
             android:theme="@style/Theme.AppCompat"
             android:excludeFromRecents="true"/>
 
+        <service
+            android:name="com.sina.weibo.sdk.net.DownloadService"
+            android:exported="false">
+        </service>
 
 
 

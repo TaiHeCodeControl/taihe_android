@@ -634,13 +634,13 @@ public class InfoDetailActivity extends BaseActivity{
         String url = Urls.ACT_APPLY_LIST_URL;
         RequestUtils.createRequest(mContext, url, "", true, map, true, listener, errorListener);
     }
-
     /**
      * 分享
      */
     PopupWindow shareWindow;
     public void showShareDialog() {
         final UMImage image = new UMImage(mContext, sharePic);
+
 //        final UMusic music = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
 //        music.setTitle(shareTitle);
 //        music.setThumb(new UMImage(mContext,"http://www.umeng.com/images/pic/social/chart_1.png"));
@@ -683,9 +683,17 @@ public class InfoDetailActivity extends BaseActivity{
         linWeiBo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int contentL=0;
+                if(!"".equals(String.valueOf(Html.fromHtml(shareContent)))) {
+                    contentL = String.valueOf(Html.fromHtml(shareContent)).length();
+                }
+                if(contentL>=50){
+                    contentL=50;
+                }
+                String strSina = String.valueOf(Html.fromHtml(shareContent)).substring(0,contentL);
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
                         .withTitle(shareTitle)
-                        .withText(shareContent.substring(0,100))
+                        .withText(strSina)
                         .withTargetUrl(shareURL)
                         .withMedia(image)
                         .share();
