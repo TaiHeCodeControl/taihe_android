@@ -65,9 +65,9 @@ import java.util.Map;
 public class InfoDetailActivity extends BaseActivity{
     static InputMethodManager keyinput ;
     private static final String TAG = "InforDetailActivity";
-    private Context mContext;
+    public static Context mContext;
     private LoadingProgressDialog loading;
-    private User user;
+    private static User user;
     String collect_count,apply_count;//1=已收藏,2=未收藏   apply_count   1=已报名,2=未报名3报名结束
     String applyed;//已经报名人数
     private TextView mainPlat,startTime,address,telPhone,callPerson,comeWay,id_collect_count,id_apply_count;
@@ -205,23 +205,29 @@ public class InfoDetailActivity extends BaseActivity{
             id_edit_chat.requestFocus();
             keyinput.hideSoftInputFromWindow(id_edit_chat.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }else{
-            id_lin_info_chat.setVisibility(View.VISIBLE);
-            id_lin_info_button.setVisibility(View.GONE);
-            if(!"".equals(name)){
-                id_edit_chat.setHint("回复　"+name+":");
-                id_edit_chat.setFocusable(true);
-                id_edit_chat.requestFocus();
-                keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-            }else if(!"".equals(username)){
-                id_edit_chat.setHint("回复　" + username + ":");
-                id_edit_chat.setFocusable(true);
-                id_edit_chat.requestFocus();
-                keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-            }else {
-                id_edit_chat.setFocusable(true);
-                id_edit_chat.requestFocus();
-                id_edit_chat.setHint("评论:");
-                keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            if (user == null) {
+                EggshellApplication.getApplication().setLoginTag("InfoDetail");
+                Intent intent = new Intent(mContext, LoginActivity.class);
+                mContext.startActivity(intent);
+            } else {
+                id_lin_info_chat.setVisibility(View.VISIBLE);
+                id_lin_info_button.setVisibility(View.GONE);
+                if (!"".equals(name)) {
+                    id_edit_chat.setHint("回复　" + name + ":");
+                    id_edit_chat.setFocusable(true);
+                    id_edit_chat.requestFocus();
+                    keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                } else if (!"".equals(username)) {
+                    id_edit_chat.setHint("回复　" + username + ":");
+                    id_edit_chat.setFocusable(true);
+                    id_edit_chat.requestFocus();
+                    keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                } else {
+                    id_edit_chat.setFocusable(true);
+                    id_edit_chat.requestFocus();
+                    id_edit_chat.setHint("评论:");
+                    keyinput.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                }
             }
         }
     }
@@ -404,7 +410,7 @@ public class InfoDetailActivity extends BaseActivity{
 
         loading.show();
         Map<String,String> map = new HashMap<String,String>();
-        map.put("aid",""+actid);
+        map.put("aid", "" + actid);
         map.put("page", page+"" );
 
         String url = Urls.ACT_GETREPLY_LIST_URL;
@@ -525,7 +531,7 @@ public class InfoDetailActivity extends BaseActivity{
         int i = temp.indexOf("/");
         SpannableString mspk = new SpannableString(temp);
         int k = (temp).length();
-        mspk.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.origin)),0, i,
+        mspk.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.origin)), 0, i,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         id_apply_count.setText(mspk);
     }
