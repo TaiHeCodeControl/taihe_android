@@ -2,6 +2,9 @@ package com.taihe.eggshell.meetinginfo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Html;
 import android.text.SpannableString;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.network.http.toolbox.ImageRequest;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
@@ -83,6 +87,9 @@ public class InfoDetailActivity extends BaseActivity{
     private View footview;
     public static String d_id,ruid;
     private String shareTitle,shareContent,sharePic;
+    private Bitmap bitmap;
+    private FinalBitmap finalBitmap;
+
     @Override
     public void initView() {
         setContentView(R.layout.activity_info_detail);
@@ -227,6 +234,10 @@ public class InfoDetailActivity extends BaseActivity{
         initTitle("详情");
         infoDetailAdapter = new InfoDetailAdapter(mContext);
         loading = new LoadingProgressDialog(mContext,"正在请求...");
+
+        bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tu);
+        finalBitmap = FinalBitmap.create(mContext);
+
         actid = intent.getStringExtra("playId");
         listInfoDetail = new ArrayList<InfoDetailMode>();
         id_share.setVisibility(View.VISIBLE);
@@ -247,6 +258,7 @@ public class InfoDetailActivity extends BaseActivity{
                 getChatList();
             }
         });
+
     }
 
     private void getAddChat(String content) {
@@ -425,10 +437,9 @@ public class InfoDetailActivity extends BaseActivity{
                             telPhone.setText(j2.optString("telphone"));
                             callPerson.setText(j2.optString("user"));
                             comeWay.setText(j2.optString("traffic_route"));
-                            jobBrief.loadDataWithBaseURL("about:blank",j2.optString("content"),"text/html", "utf-8",null);
+                            jobBrief.loadDataWithBaseURL("about:blank", j2.optString("content"), "text/html", "utf-8", null);
                             sharePic = j2.optString("logo");
-                            FinalBitmap bitmap = FinalBitmap.create(mContext);
-                            bitmap.display(imgLog,sharePic);
+                            finalBitmap.display(imgLog,sharePic,bitmap,bitmap);
                             shareTitle =j2.optString("title");
                             shareContent =j2.optString("content");
                             WindowManager wm = getWindowManager();
@@ -691,11 +702,14 @@ public class InfoDetailActivity extends BaseActivity{
                     contentL=50;
                 }
                 String strSina = String.valueOf(Html.fromHtml(shareContent)).substring(0,contentL);
+
+                BitmapDrawable bitmap = (BitmapDrawable)imgLog.getDrawable();
+                UMImage im = new UMImage(mContext,bitmap.getBitmap());
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
                         .withTitle(shareTitle)
                         .withText(strSina)
                         .withTargetUrl(shareURL)
-                        .withMedia(image)
+                        .withMedia(im)
                         .share();
             }
         });
@@ -817,5 +831,26 @@ public class InfoDetailActivity extends BaseActivity{
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(mContext);
+    }
+
+    private Bitmap bit;
+    private Bitmap getImage(Bitmap bitmap){
+        ImageRequest imageRequest = new ImageRequest(
+                sharePic,
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+                        bit = response;
+                    }
+                }, 10, 10, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        RequestUtils.getRequestQueue(mContext).add(imageRequest);
+
+        return bit;
     }
 }

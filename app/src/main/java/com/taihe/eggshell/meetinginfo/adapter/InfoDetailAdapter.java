@@ -95,7 +95,7 @@ public class InfoDetailAdapter extends BaseAdapter{
         viewHolder.mainName.setText(mainName);
         viewHolder.countNum.setText(list.size()+"条评论");
         viewHolder.mainDate.setText(list.get(position).getAddtime());
-        String aaa = list.get(position).getUphoto().toString();;
+        String aaa = list.get(position).getUphoto().toString();
         viewHolder.mainHead.setImageResource(R.drawable.touxiang);
         if(!"".equals(list.get(position).getUphoto().toString())) {
             FinalBitmap bitmap = FinalBitmap.create(mContext);
