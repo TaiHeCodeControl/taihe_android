@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -247,6 +248,13 @@ public class InfoDetailActivity extends BaseActivity{
                 getChatList();
             }
         });
+
+        WebSettings settings = jobBrief.getSettings();
+        settings.setJavaScriptEnabled(true);
+//        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setDefaultFontSize(50);
     }
 
     private void getAddChat(String content) {
@@ -425,7 +433,7 @@ public class InfoDetailActivity extends BaseActivity{
                             telPhone.setText(j2.optString("telphone"));
                             callPerson.setText(j2.optString("user"));
                             comeWay.setText(j2.optString("traffic_route"));
-                            jobBrief.loadDataWithBaseURL("about:blank",j2.optString("content"),"text/html", "utf-8",null);
+                            jobBrief.loadDataWithBaseURL("about:blank", j2.optString("content"), "text/html", "utf-8", null);
                             sharePic = j2.optString("logo");
                             FinalBitmap bitmap = FinalBitmap.create(mContext);
                             bitmap.display(imgLog,sharePic);
@@ -685,7 +693,7 @@ public class InfoDetailActivity extends BaseActivity{
             public void onClick(View view) {
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
                         .withTitle(shareTitle)
-                        .withText(shareContent.substring(0,100))
+                        .withText(shareContent.substring(0, 100))
                         .withTargetUrl(shareURL)
                         .withMedia(image)
                         .share();
