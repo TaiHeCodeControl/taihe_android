@@ -55,9 +55,21 @@
                 android:orientation="vertical"
                 android:background="@color/white">
 
+                <TextView
+                    android:id="@+id/id_activity_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:textColor="@color/font_color_black"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal"
                     android:background="@color/white">
 

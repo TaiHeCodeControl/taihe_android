@@ -27,7 +27,6 @@ import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
-import com.chinaway.framework.swordfish.network.http.toolbox.ImageRequest;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.BaseActivity;
 import com.taihe.eggshell.base.EggshellApplication;
@@ -71,7 +70,7 @@ public class InfoDetailActivity extends BaseActivity{
     String collect_count,apply_count;//1=已收藏,2=未收藏   apply_count   1=已报名,2=未报名3报名结束
     String applyed;//已经报名人数
     private TextView mainPlat,startTime,address,telPhone,callPerson,comeWay,id_collect_count,id_apply_count;
-    private TextView id_txt_info_bm,id_txt_info_sc,id_send;
+    private TextView id_txt_info_bm,id_txt_info_sc,id_send,activityTitle;
     private WebView jobBrief;
     public static EditText id_edit_chat;
     private ImageView imgLog,id_share,id_img_info_sc;
@@ -81,6 +80,7 @@ public class InfoDetailActivity extends BaseActivity{
     private String actid,applyNum;
     public static MyScrollView id_scroll_info;
     private int UserId;
+    private static int scrollY = 0;
     int limit=8,page=1,type=2;
     List<InfoDetailMode> listInfoDetail;
     InfoDetailAdapter infoDetailAdapter;
@@ -95,6 +95,7 @@ public class InfoDetailActivity extends BaseActivity{
         setContentView(R.layout.activity_info_detail);
         super.initView();
         keyinput = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        activityTitle = (TextView)findViewById(R.id.id_activity_title);
         mainPlat = (TextView)findViewById(R.id.id_info_company);
         startTime = (TextView)findViewById(R.id.id_info_time);
         address = (TextView)findViewById(R.id.id_info_addre);
@@ -210,6 +211,7 @@ public class InfoDetailActivity extends BaseActivity{
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 mContext.startActivity(intent);
             } else {
+                scrollY = id_scroll_info.getScrollY();
                 id_lin_info_chat.setVisibility(View.VISIBLE);
                 id_lin_info_button.setVisibility(View.GONE);
                 if (!"".equals(name)) {
@@ -238,14 +240,17 @@ public class InfoDetailActivity extends BaseActivity{
         mContext = this;
         Intent intent = getIntent();
         initTitle("详情");
+        scrollY = 0;
+        listInfoDetail = new ArrayList<InfoDetailMode>();
         infoDetailAdapter = new InfoDetailAdapter(mContext);
-        loading = new LoadingProgressDialog(mContext,"正在请求...");
+        infoDetailAdapter.setPlayData(listInfoDetail,2);
+        id_info_listview.setAdapter(infoDetailAdapter);
 
+        loading = new LoadingProgressDialog(mContext,"正在请求...");
         bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tu);
         finalBitmap = FinalBitmap.create(mContext);
 
         actid = intent.getStringExtra("playId");
-        listInfoDetail = new ArrayList<InfoDetailMode>();
         id_share.setVisibility(View.VISIBLE);
         id_share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -387,8 +392,12 @@ public class InfoDetailActivity extends BaseActivity{
                             }
 
                             infoDetailAdapter.setPlayData(listInfoDetail,2);
-                            id_info_listview.setAdapter(infoDetailAdapter);
-
+                            id_scroll_info.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    id_scroll_info.scrollTo(0,scrollY);
+                                }
+                            });
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }
@@ -447,6 +456,7 @@ public class InfoDetailActivity extends BaseActivity{
                             sharePic = j2.optString("logo");
                             finalBitmap.display(imgLog,sharePic,bitmap,bitmap);
                             shareTitle =j2.optString("title");
+                            activityTitle.setText(shareTitle);
                             shareContent =j2.optString("content");
                             WindowManager wm = getWindowManager();
                             int width = wm.getDefaultDisplay().getWidth();
@@ -839,24 +849,4 @@ public class InfoDetailActivity extends BaseActivity{
         MobclickAgent.onPause(mContext);
     }
 
-    private Bitmap bit;
-    private Bitmap getImage(Bitmap bitmap){
-        ImageRequest imageRequest = new ImageRequest(
-                sharePic,
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap response) {
-                        bit = response;
-                    }
-                }, 10, 10, Bitmap.Config.RGB_565, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        RequestUtils.getRequestQueue(mContext).add(imageRequest);
-
-        return bit;
-    }
 }
