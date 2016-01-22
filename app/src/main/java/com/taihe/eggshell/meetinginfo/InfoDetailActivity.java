@@ -822,7 +822,6 @@ public class InfoDetailActivity extends BaseActivity{
 
         @Override
         public void onDismiss() {
-            // TODO Auto-generated method stub
             backgroundAlpha(1f);
         }
 
