@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Html;
@@ -53,6 +54,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -500,11 +502,6 @@ public class InfoDetailActivity extends BaseActivity{
                                     id_lin_info_bm.setBackgroundColor(getResources().getColor(R.color.font_color_gray_jobsearch));
                                 }
                             }
-                            /*id_scroll_info.post(new Runnable() {
-                                public void run() {
-                                    id_scroll_info.fullScroll(ScrollView.SCROLL_INDICATOR_TOP);
-                                }
-                            });*/
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }
@@ -720,7 +717,7 @@ public class InfoDetailActivity extends BaseActivity{
                 String strSina = String.valueOf(Html.fromHtml(shareContent)).substring(0,contentL);
 
                 BitmapDrawable bitmap = (BitmapDrawable)imgLog.getDrawable();
-                UMImage im = new UMImage(mContext,bitmap.getBitmap());
+                UMImage im = new UMImage(mContext,getImageSize(bitmap.getBitmap()));
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
                         .withTitle(shareTitle)
                         .withText(strSina)
@@ -848,5 +845,31 @@ public class InfoDetailActivity extends BaseActivity{
         super.onPause();
         MobclickAgent.onPause(mContext);
     }
+
+    private Bitmap getImageSize(Bitmap image){
+        int size = 32;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 85, out);
+//        Log.v(TAG,"图片大小："+(out.toByteArray().length/1024));
+        float zoom = (float)Math.sqrt(size * 1024 / (float)out.toByteArray().length);
+
+        Matrix matrix = new Matrix();
+        matrix.setScale(zoom, zoom);
+
+        Bitmap result = Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), matrix, true);
+
+        out.reset();
+        result.compress(Bitmap.CompressFormat.JPEG, 85, out);
+        while(out.toByteArray().length > size * 1024){
+//            System.out.println(out.toByteArray().length);
+            matrix.setScale(0.9f, 0.9f);
+            result = Bitmap.createBitmap(result, 0, 0, result.getWidth(), result.getHeight(), matrix, true);
+            out.reset();
+            result.compress(Bitmap.CompressFormat.JPEG, 85, out);
+        }
+//        Log.v(TAG,"大小："+(out.toByteArray().length/1024));
+        return result;
+    }
+
 
 }
