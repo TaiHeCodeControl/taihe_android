@@ -183,10 +183,10 @@ public class InfoDetailAdapter extends BaseAdapter{
             rdate = clist.get(position).getAddtime();
 
             if(!"".equals(rname)){
-                rcontent = uname+":　回复:"+rname+":"+clist.get(position).getR_coment()+"　"+rdate;
+                rcontent = uname+"  回复  "+rname+":"+clist.get(position).getR_coment()+"　"+rdate;
 //                viewHolder.reTitle.setText(rcontent);
             }else{
-                rcontent = uname+":　回复:"+rusername+":"+clist.get(position).getR_coment()+"　"+rdate;
+                rcontent = uname+"  回复  "+rusername+":"+clist.get(position).getR_coment()+"　"+rdate;
 //                viewHolder.reTitle.setText(rcontent);
             }
             mspk = new SpannableString(rcontent);
