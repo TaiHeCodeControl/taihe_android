@@ -103,6 +103,15 @@ public class JobSearchActivity extends BaseActivity implements View.OnClickListe
                     JobFilterUtils.filterJob(mContext, keyword, "", "", "", "", "", "", "", "", "","找工作","");
                 }
 
+                SearchHistory history = new SearchHistory();
+                history.setName(prolist.get(position).getName());
+                history.setTime(new Date().toString());
+                try {
+                    db.saveOrUpdate(history);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+
                 Intent intent = new Intent(mContext, FindJobActivity.class);
                 intent.putExtra("jobtype",prolist.get(position).getName());//标题栏显示的搜索名称
                 startActivity(intent);
