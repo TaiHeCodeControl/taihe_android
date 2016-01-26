@@ -2,18 +2,28 @@ package com.taihe.eggshell.job.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.util.Base64;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ant.liao.GifView;
 import com.chinaway.framework.swordfish.network.http.Response;
@@ -34,11 +44,16 @@ import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
 import com.taihe.eggshell.widget.MyListView;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
 
 import net.tsz.afinal.FinalBitmap;
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +68,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private TextView titleView, jobtitle, jobcompany, jobstart, jobend, jobtype, joblevel, jobyears, jobaddress, jobmoney, jobnum, updown, shouqi, company_jieshao,jobdaogang,jobsex,jobmarriage;
     private Button applyButton;
     private MyListView jobDescListView, moreJobListView;
-    private ImageView collectionImg,id_jobinfo_logo;
+    private ImageView collectionImg,id_jobinfo_logo,id_share;
     private LoadingProgressDialog dialog;
     private int jobId;
     private String com_id;
@@ -98,9 +113,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                             address = address.substring(0, 2);
                         }
 //                        address = jobDetaiInfo.data.address.split("区")[0].toString();
-                        cj_name = jobDetaiInfo.data.cj_name;
+                        shareTitle = jobDetaiInfo.data.cj_name;
                         com_name = jobDetaiInfo.data.com_name;
-                        content = jobDetaiInfo.data.content;
+                        shareContent = jobDetaiInfo.data.content;
                         description = jobDetaiInfo.data.cj_description;
                         edu = jobDetaiInfo.data.edu;
                         exp = jobDetaiInfo.data.exp;
@@ -118,7 +133,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         daogang = jobDetaiInfo.data.daogang;
                         sex = jobDetaiInfo.data.sex;
                         marriage = jobDetaiInfo.data.marriage;
-                        imgLogo = jobDetaiInfo.data.logo;
+                        sharePic = jobDetaiInfo.data.logo;
                         //54不限 55全职 56兼职
                         if (type.equals("55")) {
                             type = "全职";
@@ -139,7 +154,8 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         }
                         //职位详情信息填充
                         tv_companyAddress.setText(jobDetaiInfo.data.address);
-                        jobtitle.setText(cj_name);
+                        jobtitle.setText(shareTitle);
+                        shareTitle="招聘："+shareTitle;
                         jobcompany.setText(com_name);
                         jobstart.setText(lastupdate);//发布时间
                         jobend.setText(jobDetaiInfo.data.edate);//有效时间
@@ -153,16 +169,15 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                         jobsex.setText(sex);//性别
                         jobmarriage.setText(marriage);//婚姻情况
 
-                        byte[] bytes = Base64.decode(content, Base64.DEFAULT);
-                        content = new String(bytes, "UTF-8");
-                        company_jieshao.setText(Html.fromHtml(content));//公司介绍
+                        byte[] bytes = Base64.decode(shareContent, Base64.DEFAULT);
+                        shareContent = new String(bytes, "UTF-8");
+                        company_jieshao.setText(Html.fromHtml(shareContent));//公司介绍
 
                         byte[] descriptionbytes = Base64.decode(description, Base64.DEFAULT);
                         description = new String(descriptionbytes, "UTF-8");
                         tv_jobdetail_description.setText(Html.fromHtml(description));//职责描述
-                        FinalBitmap bitmap = FinalBitmap.create(mContext);
-                        bitmap.display(id_jobinfo_logo,imgLogo);
 
+                        finalBitmap.display(id_jobinfo_logo,sharePic,bitmap,bitmap);
                         int size = jobDetaiInfo.data.lists.size();
                         if (size < 1) {//如果没有更多职位，隐藏更多职位
                             ll_moreposition.setVisibility(View.GONE);
@@ -210,7 +225,8 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         if (user != null) {
             UserId = EggshellApplication.getApplication().getUser().getId();
         }
-
+        bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.no_logo_company);
+        finalBitmap = FinalBitmap.create(mContext);
         dialog = new LoadingProgressDialog(mContext, getResources().getString(
                 R.string.submitcertificate_string_wait_dialog));
         intent = getIntent();
@@ -219,6 +235,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         tv_companyAddress = (TextView) findViewById(R.id.tv_jobinfo_company_address);
         titleView = (TextView) findViewById(R.id.id_title);
         collectionImg = (ImageView) findViewById(R.id.id_other);
+        id_share = (ImageView)findViewById(R.id.id_share);
         jobtitle = (TextView) findViewById(R.id.id_jobinfo_name);
         jobcompany = (TextView) findViewById(R.id.id_jobinfo_company);
         jobstart = (TextView) findViewById(R.id.id_jobinfo_start_time);
@@ -257,6 +274,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
         applyButton.setOnClickListener(this);
         collectionImg.setOnClickListener(this);
+        id_share.setOnClickListener(this);
         updown.setOnClickListener(this);
         shouqi.setOnClickListener(this);
 
@@ -277,7 +295,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         super.initData();
         titleView.setText("职位详情");
         collectionImg.setVisibility(View.VISIBLE);
-
+        id_share.setVisibility(View.VISIBLE);
         //该公司其他职位的点击事件
         moreJobListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -401,6 +419,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 tv_allzhiwei.setVisibility(View.VISIBLE);
                 tv_shouqizhiwei.setVisibility(View.GONE);
                 break;
+            case R.id.id_share:
+                showShareDialog();
+                break;
             case R.id.id_other:
 
                 if (user == null) {
@@ -423,6 +444,165 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
                 break;
         }
     }
+    /**
+     * 分享
+     */
+    PopupWindow shareWindow;
+    private String shareTitle,shareContent,sharePic;
+    private Bitmap bitmap;
+    private FinalBitmap finalBitmap;
+    public void showShareDialog() {
+        final UMImage image = new UMImage(mContext, sharePic);
+        final String shareURL=Urls.SHARE_JOB_URL+com_id+"&pid="+jobId;
+        // 利用layoutInflater获得View
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_share, null);
+        LinearLayout linQQ = (LinearLayout) view.findViewById(R.id.shareLinQQ);
+        LinearLayout linWeiBo = (LinearLayout) view.findViewById(R.id.shareLinWeiBo);
+        LinearLayout linQzone = (LinearLayout) view.findViewById(R.id.shareLinQzone);
+        LinearLayout linWeiXin = (LinearLayout) view.findViewById(R.id.shareLinWeiXin);
+        LinearLayout linWeiXinFrind = (LinearLayout) view.findViewById(R.id.shareLinWeiXinFrind);
+        // 下面是两种方法得到宽度和高度 getWindow().getDecorView().getWidth()
+        shareWindow = new PopupWindow(view, WindowManager.LayoutParams.FILL_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
+        // 设置popWindow弹出窗体可点击，这句话必须添加，并且是true
+        shareWindow.setFocusable(true);
+        // 实例化一个ColorDrawable颜色为半透明
+        ColorDrawable dw = new ColorDrawable(0xb0000000);
+        shareWindow.setBackgroundDrawable(dw);
+        // 设置popWindow的显示和消失动画
+        shareWindow.setAnimationStyle(R.style.mystyle);
+        // 在底部显示
+        shareWindow.showAtLocation(JobDetailActivity.this.findViewById(R.id.id_share), Gravity.BOTTOM, 0, 0);
+        backgroundAlpha(0.7f);
+        shareWindow.setOnDismissListener(new poponDismissListener());
+        shareContent = String.valueOf(Html.fromHtml(shareContent));
+
+        BitmapDrawable bitmap = (BitmapDrawable)id_jobinfo_logo.getDrawable();
+        final UMImage im = new UMImage(mContext,getImageSize(bitmap.getBitmap()));
+
+        linQQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(JobDetailActivity.this).setPlatform(SHARE_MEDIA.QQ).setCallback(umShareListener)
+                        .withTitle(shareTitle)
+                        .withText(shareContent)
+                        .withTargetUrl(shareURL)
+                        .withMedia(im)
+//                        .withMedia(music)
+                        .share();
+            }
+        });
+        linWeiBo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int contentL=0;
+                if(!"".equals(String.valueOf(Html.fromHtml(shareContent)))) {
+                    contentL = String.valueOf(Html.fromHtml(shareContent)).length();
+                }
+                if(contentL>=70){
+                    contentL=70;
+                }
+                String strSina = String.valueOf(Html.fromHtml(shareContent)).substring(0,contentL);
+
+                new ShareAction(JobDetailActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
+                        .withTitle("　"+shareTitle)
+                        .withText(strSina)
+                        .withTargetUrl(shareURL)
+                        .withMedia(im)
+                        .share();
+            }
+        });
+        linQzone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(JobDetailActivity.this).setPlatform(SHARE_MEDIA.QZONE).setCallback(umShareListener)
+                        .withTitle(shareTitle)
+                        .withText(shareContent)
+                        .withTargetUrl(shareURL)
+                        .withMedia(im)
+                        .share();
+            }
+        });
+        linWeiXin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(JobDetailActivity.this).setPlatform(SHARE_MEDIA.WEIXIN).setCallback(umShareListener)
+                        .withTitle(shareTitle)
+                        .withText(shareContent)
+                        .withTargetUrl(shareURL)
+                        .withMedia(im)
+//                        .withMedia(video)
+                        .share();
+            }
+        });
+        linWeiXinFrind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ShareAction(JobDetailActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE).setCallback(umShareListener)
+                        .withTitle(shareTitle)
+                        .withText(shareContent)
+                        .withTargetUrl(shareURL)
+                        .withMedia(im)
+                        .share();
+            }
+        });
+    }
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(mContext, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+            shareWindow.dismiss();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(mContext,platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(mContext,platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
+    };
+    public void backgroundAlpha(float bgAlpha)
+    {
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        getWindow().setAttributes(lp);
+    }
+    class poponDismissListener implements PopupWindow.OnDismissListener{
+
+        @Override
+        public void onDismiss() {
+            backgroundAlpha(1f);
+        }
+
+    }
+    private Bitmap getImageSize(Bitmap image){
+        int size = 32;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 85, out);
+//        Log.v(TAG,"图片大小："+(out.toByteArray().length/1024));
+        float zoom = (float)Math.sqrt(size * 1024 / (float)out.toByteArray().length);
+
+        Matrix matrix = new Matrix();
+        matrix.setScale(zoom, zoom);
+
+        Bitmap result = Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), matrix, true);
+
+        out.reset();
+        result.compress(Bitmap.CompressFormat.JPEG, 85, out);
+        while(out.toByteArray().length > size * 1024){
+//            System.out.println(out.toByteArray().length);
+            matrix.setScale(0.9f, 0.9f);
+            result = Bitmap.createBitmap(result, 0, 0, result.getWidth(), result.getHeight(), matrix, true);
+            out.reset();
+            result.compress(Bitmap.CompressFormat.JPEG, 85, out);
+        }
+//        Log.v(TAG,"大小："+(out.toByteArray().length/1024));
+        return result;
+    }
+
 
     //收藏职位
     private void collectPosition() {
