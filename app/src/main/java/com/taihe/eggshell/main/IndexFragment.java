@@ -245,9 +245,10 @@ public class IndexFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.id_information://去学习
+                ToastUtils.show(mContext,"正在努力建设中，敬请期待");
 //                changeViewPagerListener.changeViewPager(2);
-                intent = new Intent(mContext,InternshipActivity.class);
-                startActivity(intent);
+//                intent = new Intent(mContext,InternshipActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.id_write_resume:
                 //搜索职位  全职

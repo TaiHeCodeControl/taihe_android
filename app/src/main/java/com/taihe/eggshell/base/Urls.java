@@ -5,10 +5,10 @@ import com.taihe.eggshell.base.utils.PrefUtils;
 public class Urls {
 
     //正式
-    public static final String BASE_HYR_MOBILE_URL = "http://www.eggker.cn/interface/index.php";
+//    public static final String BASE_HYR_MOBILE_URL = "http://www.eggker.cn/interface/index.php";
     public static final String BASE_VIDEO_MOBILE_URL = "http://www.eggker.cn/interface/api.php";
     //测试
-//    public static final String BASE_HYR_MOBILE_URL = "http://101.200.186.14/eggker2/interface/index.php";
+    public static final String BASE_HYR_MOBILE_URL = "http://101.200.186.14/eggker2/interface/index.php";
 //    public static final String BASE_VIDEO_MOBILE_URL = "http://101.200.186.14/eggker2/interface/api.php";
 
     public static final String getMopHostUrl() {
@@ -105,4 +105,5 @@ public class Urls {
     public static final String METHOD_ACTIVITY_LIST = "/Activity/act";//爱活动
     public static final String METHOD_ACTIVITY_COLLECTED = "/Activity/my_act_collect";//我收藏的
     public static final String METHOD_ACTIVITY_JOIN = "/Activity/my_act_apply";//我参与的
+
 }

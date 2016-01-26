@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#11000000">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white" >
+
+            <TextView
+                android:id="@+id/id_share_qq"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textSize="17sp"
+                android:gravity="center"
+                android:background="@color/white"
+                android:textColor="@color/black"
+                android:text="分享到QQ"/>
+
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_gray"></View>
+
+        <TextView
+            android:id="@+id/id_share_wechat"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="17sp"
+            android:gravity="center"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="分享到微信"/>
+
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_gray"></View>
+
+        <TextView
+            android:id="@+id/id_save_phone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="17sp"
+            android:gravity="center"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:text="保存到手机"/>
+
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_gray"></View>
+
+            <TextView
+                android:id="@+id/tvCancel"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:background="@color/white"
+                android:textColor="@color/black"
+                android:text="关闭"/>
+    </LinearLayout>
+</LinearLayout>
