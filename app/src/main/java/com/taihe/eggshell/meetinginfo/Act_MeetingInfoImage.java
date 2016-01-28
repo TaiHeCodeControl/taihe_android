@@ -1,11 +1,13 @@
 package com.taihe.eggshell.meetinginfo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Environment;
 import android.text.Html;
 import android.view.Gravity;
@@ -60,7 +62,7 @@ public class Act_MeetingInfoImage extends BaseActivity {
         id = getIntent().getStringExtra("rqCode");
         title = getIntent().getStringExtra("title");
         pic = getIntent().getStringExtra("pic");
-//        pic = "http://ww3.sinaimg.cn/bmiddle/7085f3c4jw1f0cnp79j6yj20k00qo409.jpg";
+//        pic = "http://img4.imgtn.bdimg.com/it/u=2346443557,3496648309&fm=21&gp=0.jpg";
         content = getIntent().getStringExtra("content");
         initTitle(title);
         FinalBitmap bitmap = FinalBitmap.create(mContext);
@@ -199,6 +201,12 @@ public class Act_MeetingInfoImage extends BaseActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG,90,out);
             out.flush();
             out.close();
+
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri uri = Uri.fromFile(file);
+            intent.setData(uri);
+            mContext.sendBroadcast(intent);
+
             ToastUtils.show(mContext,"保存成功");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
