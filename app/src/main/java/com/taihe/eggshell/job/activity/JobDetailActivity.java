@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -453,6 +454,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
     private String shareTitle,shareContent,sharePic;
     private Bitmap bitmap;
     private FinalBitmap finalBitmap;
+    UMImage im;
     public void showShareDialog() {
         final UMImage image = new UMImage(mContext, sharePic);
         final String shareURL=Urls.SHARE_JOB_URL+com_id+"&pid="+jobId;
@@ -488,7 +490,12 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, w, h);
         drawable.draw(canvas);
-        final UMImage im = new UMImage(mContext,getImageSize(bitmap));
+//        Log.e("ddd",sharePic);
+        if(sharePic.length()>30) {
+            im = new UMImage(mContext, getImageSize(bitmap));
+        }else{
+            im = new UMImage(mContext, R.drawable.zhaopin);
+        }
 
         linQQ.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,6 +11,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -662,8 +663,9 @@ public class InfoDetailActivity extends BaseActivity{
      * 分享
      */
     PopupWindow shareWindow;
+    UMImage im;
     public void showShareDialog() {
-        final UMImage image = new UMImage(mContext, sharePic);
+//        final UMImage image = new UMImage(mContext, sharePic);
 
 //        final UMusic music = new UMusic("http://music.huoxing.com/upload/20130330/1364651263157_1085.mp3");
 //        music.setTitle(shareTitle);
@@ -692,6 +694,13 @@ public class InfoDetailActivity extends BaseActivity{
         backgroundAlpha(0.7f);
         shareWindow.setOnDismissListener(new poponDismissListener());
         shareContent = String.valueOf(Html.fromHtml(shareContent));
+        BitmapDrawable bitmap = (BitmapDrawable)imgLog.getDrawable();
+//        Log.e("ddd", sharePic);
+        if(sharePic.length()>30) {
+            im = new UMImage(mContext,getImageSize(bitmap.getBitmap()));
+        }else{
+            im = new UMImage(mContext, R.drawable.act);
+        }
         linQQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -699,7 +708,7 @@ public class InfoDetailActivity extends BaseActivity{
                         .withTitle(shareTitle)
                         .withText(shareContent)
                         .withTargetUrl(shareURL)
-                        .withMedia(image)
+                        .withMedia(im)
 //                        .withMedia(music)
                         .share();
             }
@@ -716,8 +725,6 @@ public class InfoDetailActivity extends BaseActivity{
                 }
                 String strSina = String.valueOf(Html.fromHtml(shareContent)).substring(0,contentL);
 
-                BitmapDrawable bitmap = (BitmapDrawable)imgLog.getDrawable();
-                UMImage im = new UMImage(mContext,getImageSize(bitmap.getBitmap()));
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
                         .withTitle(shareTitle)
                         .withText(strSina)
@@ -733,7 +740,7 @@ public class InfoDetailActivity extends BaseActivity{
                         .withTitle(shareTitle)
                         .withText(shareContent)
                         .withTargetUrl(shareURL)
-                        .withMedia(image)
+                        .withMedia(im)
                         .share();
             }
         });
@@ -744,7 +751,7 @@ public class InfoDetailActivity extends BaseActivity{
                         .withTitle(shareTitle)
                         .withText(shareContent)
                         .withTargetUrl(shareURL)
-                        .withMedia(image)
+                        .withMedia(im)
 //                        .withMedia(video)
                         .share();
             }
@@ -756,7 +763,7 @@ public class InfoDetailActivity extends BaseActivity{
                         .withTitle(shareTitle)
                         .withText(shareContent)
                         .withTargetUrl(shareURL)
-                        .withMedia(image)
+                        .withMedia(im)
                         .share();
             }
         });
