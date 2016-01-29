@@ -19,7 +19,7 @@
                 android:gravity="center"
                 android:background="@color/white"
                 android:textColor="@color/black"
-                android:text="分享到QQ"/>
+                android:text="分享到QQ好友"/>
 
         <View android:layout_width="match_parent"
             android:layout_height="0.5dp"

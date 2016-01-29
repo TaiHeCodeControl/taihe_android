@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -477,8 +479,16 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         shareWindow.setOnDismissListener(new poponDismissListener());
         shareContent = String.valueOf(Html.fromHtml(shareContent));
 
-        BitmapDrawable bitmap = (BitmapDrawable)id_jobinfo_logo.getDrawable();
-        final UMImage im = new UMImage(mContext,getImageSize(bitmap.getBitmap()));
+        Drawable drawable = id_jobinfo_logo.getDrawable();
+        int w = drawable.getIntrinsicWidth();
+        int h = drawable.getIntrinsicHeight();
+        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565;
+        Bitmap bitmap = Bitmap.createBitmap(w,h,config);
+        //注意，下面三行代码要用到，否在在View或者surfaceview里的canvas.drawBitmap会看不到图
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, w, h);
+        drawable.draw(canvas);
+        final UMImage im = new UMImage(mContext,getImageSize(bitmap));
 
         linQQ.setOnClickListener(new View.OnClickListener() {
             @Override

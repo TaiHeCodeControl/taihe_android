@@ -93,7 +93,7 @@ public class Act_MeetingInfo extends BaseActivity {
                 intent.putExtra("title",list.get(i).getTitle());
                 intent.putExtra("pic",list.get(i).getLogo());
                 intent.putExtra("content",list.get(i).getContent());
-                intent.putExtra("rqCode",list.get(i).getId());
+                intent.putExtra("rqCode", list.get(i).getId());
                 startActivity(intent);
             }
         });
