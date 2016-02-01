@@ -461,6 +461,7 @@ public class InfoDetailActivity extends BaseActivity{
                             shareTitle =j2.optString("title");
                             activityTitle.setText(shareTitle);
                             shareContent =j2.optString("content");
+                            shareContent = String.valueOf(Html.fromHtml(shareContent));
                             WindowManager wm = getWindowManager();
                             int width = wm.getDefaultDisplay().getWidth();
                             int height=9*width/16;
@@ -693,7 +694,7 @@ public class InfoDetailActivity extends BaseActivity{
         shareWindow.showAtLocation(InfoDetailActivity.this.findViewById(R.id.id_share),Gravity.BOTTOM, 0, 0);
         backgroundAlpha(0.7f);
         shareWindow.setOnDismissListener(new poponDismissListener());
-        shareContent = String.valueOf(Html.fromHtml(shareContent));
+
         BitmapDrawable bitmap = (BitmapDrawable)imgLog.getDrawable();
 //        Log.e("ddd", sharePic);
         if(sharePic.length()>30) {
@@ -717,13 +718,13 @@ public class InfoDetailActivity extends BaseActivity{
             @Override
             public void onClick(View view) {
                 int contentL=0;
-                if(!"".equals(String.valueOf(Html.fromHtml(shareContent)))) {
-                    contentL = String.valueOf(Html.fromHtml(shareContent)).length();
+                if(!"".equals(shareContent)) {
+                    contentL = (shareContent).length();
                 }
                 if(contentL>=50){
                     contentL=50;
                 }
-                String strSina = String.valueOf(Html.fromHtml(shareContent)).substring(0,contentL);
+                String strSina = String.valueOf(shareContent).substring(0,contentL);
 
                 new ShareAction(InfoDetailActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
                         .withTitle(shareTitle)

@@ -174,7 +174,9 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
 
                         byte[] bytes = Base64.decode(shareContent, Base64.DEFAULT);
                         shareContent = new String(bytes, "UTF-8");
-                        company_jieshao.setText(Html.fromHtml(shareContent));//公司介绍
+
+                        shareContent = String.valueOf(Html.fromHtml(shareContent));
+                        company_jieshao.setText(shareContent);//公司介绍
 
                         byte[] descriptionbytes = Base64.decode(description, Base64.DEFAULT);
                         description = new String(descriptionbytes, "UTF-8");
@@ -479,7 +481,6 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         shareWindow.showAtLocation(JobDetailActivity.this.findViewById(R.id.id_share), Gravity.BOTTOM, 0, 0);
         backgroundAlpha(0.7f);
         shareWindow.setOnDismissListener(new poponDismissListener());
-        shareContent = String.valueOf(Html.fromHtml(shareContent));
 
         Drawable drawable = id_jobinfo_logo.getDrawable();
         int w = drawable.getIntrinsicWidth();
@@ -513,13 +514,13 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 int contentL=0;
-                if(!"".equals(String.valueOf(Html.fromHtml(shareContent)))) {
-                    contentL = String.valueOf(Html.fromHtml(shareContent)).length();
+                if(!"".equals(shareContent)) {
+                    contentL = (shareContent).length();
                 }
                 if(contentL>=70){
                     contentL=70;
                 }
-                String strSina = String.valueOf(Html.fromHtml(shareContent)).substring(0,contentL);
+                String strSina = String.valueOf(shareContent).substring(0,contentL);
 
                 new ShareAction(JobDetailActivity.this).setPlatform(SHARE_MEDIA.SINA).setCallback(umShareListener)
                         .withTitle("　"+shareTitle)
