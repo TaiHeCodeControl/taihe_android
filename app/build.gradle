@@ -8,8 +8,8 @@ android {
         applicationId "com.taihe.eggshell"
         minSdkVersion 17
         targetSdkVersion 20
-        versionCode 9
-        versionName "2.3.1"
+        versionCode 10
+        versionName "2.3.2"
         manifestPlaceholders = [channel_value: "umeng"]
     }
 

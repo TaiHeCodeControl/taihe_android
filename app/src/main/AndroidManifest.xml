@@ -375,6 +375,17 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".main.SettingActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".meetinginfo.DiscussListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
+
         <!-- Required SDK核心功能-->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"

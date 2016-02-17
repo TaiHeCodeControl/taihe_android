@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -27,31 +28,21 @@ import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.network.http.toolbox.ImageLoader;
 import com.chinaway.framework.swordfish.network.http.toolbox.Volley;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
-import com.taihe.eggshell.base.utils.APKUtils;
 import com.taihe.eggshell.base.utils.BitmapCache;
-import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
-import com.taihe.eggshell.base.utils.UpdateHelper;
 import com.taihe.eggshell.job.activity.MyPostActivity;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.entity.User;
-import com.taihe.eggshell.personalCenter.activity.AboutActivity;
-import com.taihe.eggshell.personalCenter.activity.FeedbackActivity;
+import com.taihe.eggshell.meetinginfo.DiscussListActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.personalCenter.activity.MyJoinActivity;
-import com.taihe.eggshell.personalCenter.activity.TeamActivity;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
-import com.taihe.eggshell.widget.ChoiceDialog;
 import com.taihe.eggshell.widget.CircleImageView;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
-import com.taihe.eggshell.widget.ProgressDialog;
-import com.taihe.eggshell.widget.UpdateDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,7 +51,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -72,14 +62,12 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "MeFragment";
     private Context mContext;
 
-    private ChoiceDialog dialog;
-    private UpdateDialog updateDialog;
-
     private View rootView;
-    private RelativeLayout sign_up_activity,collection_activity,rl_mine_checkupdate, rl_mine_feedback, rl_setting, rl_editZiliao, rl_post, rl_collect, rl_jianli, rl_about, rl_hezuo, rl_logout;
-    private TextView tv_logintxt, tv_version, tv_username, tv_qianming, tv_postNum, tv_collectNum, jianliNum;
+    private RelativeLayout sign_up_activity,collection_activity, rl_editZiliao, rl_post, rl_collect, rl_jianli,discuss_activity,invisit_activity;
+    private TextView tv_logintxt, tv_username, tv_qianming, tv_postNum, tv_collectNum, jianliNum;
     private LinearLayout ll_userinfo;
     private TextView tv_mine_postnum, tv_mine_collectnum, tv_mine_jianlinum;
+    private ImageView settingImage;
 
     private CircleImageView circleiv_mine_icon;
     private Intent intent;
@@ -118,20 +106,15 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         circleiv_mine_icon = (CircleImageView) rootView.findViewById(R.id.circleiv_mine_icon);
         circleiv_mine_icon.setOnClickListener(this);
 
-        rl_setting = (RelativeLayout) rootView.findViewById(R.id.rl_mine_setting);
         rl_editZiliao = (RelativeLayout) rootView.findViewById(R.id.rl_mine_editziliao);
         rl_post = (RelativeLayout) rootView.findViewById(R.id.rl_mine_postposition);
         rl_collect = (RelativeLayout) rootView.findViewById(R.id.rl_mine_collectpostion);
         rl_jianli = (RelativeLayout) rootView.findViewById(R.id.rl_mine_jianliguanli);
-        rl_about = (RelativeLayout) rootView.findViewById(R.id.rl_mine_about);
-        rl_hezuo = (RelativeLayout) rootView.findViewById(R.id.rl_mine_hezuoqudao);
-        rl_logout = (RelativeLayout) rootView.findViewById(R.id.rl_mine_logout);
-        rl_mine_feedback = (RelativeLayout) rootView.findViewById(R.id.rl_mine_feedback);
-        rl_mine_checkupdate = (RelativeLayout) rootView.findViewById(R.id.rl_mine_checkupdate);
         sign_up_activity = (RelativeLayout) rootView.findViewById(R.id.id_sign_up_activity);
         collection_activity = (RelativeLayout) rootView.findViewById(R.id.id_collection_activity);
-        tv_version = (TextView) rootView.findViewById(R.id.tv_mine_version);
-        tv_version.setText("当前版本V" + APKUtils.getVersionName());
+        discuss_activity = (RelativeLayout) rootView.findViewById(R.id.id_discuss_activity);
+        invisit_activity = (RelativeLayout) rootView.findViewById(R.id.id_invite_activity);
+
         ll_userinfo = (LinearLayout) rootView.findViewById(R.id.ll_mine_userinfo);
         tv_logintxt = (TextView) rootView.findViewById(R.id.tv_mine_logintxt);
         tv_username = (TextView) rootView.findViewById(R.id.tv_mine_username);
@@ -139,38 +122,19 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         tv_mine_postnum = (TextView) rootView.findViewById(R.id.tv_mine_postnum);
         tv_mine_collectnum = (TextView) rootView.findViewById(R.id.tv_mine_collectnum);
         tv_mine_jianlinum = (TextView) rootView.findViewById(R.id.tv_mine_jianlinum);
+        settingImage = (ImageView) rootView.findViewById(R.id.id_setting);
 
+        settingImage.setOnClickListener(this);
+        invisit_activity.setOnClickListener(this);
+        discuss_activity.setOnClickListener(this);
         sign_up_activity.setOnClickListener(this);
         collection_activity.setOnClickListener(this);
-        rl_mine_checkupdate.setOnClickListener(this);
-        rl_mine_feedback.setOnClickListener(this);
         tv_logintxt.setOnClickListener(this);
-        rl_setting.setOnClickListener(this);
         rl_editZiliao.setOnClickListener(this);
         rl_post.setOnClickListener(this);
         rl_collect.setOnClickListener(this);
         rl_jianli.setOnClickListener(this);
-        rl_about.setOnClickListener(this);
-        rl_hezuo.setOnClickListener(this);
-        rl_logout.setOnClickListener(this);
 
-        dialog = new ChoiceDialog(mContext, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                ToastUtils.show(mContext, "取消");
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                logout();//退出登录
-            }
-        });
-
-        dialog.getTitleText().setText("确定退出当前账号吗？");
-        dialog.getLeftButton().setText("以后再说");
-        dialog.getRightButton().setText("确认退出");
     }
 
     public void setHandles(String str){
@@ -202,7 +166,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
             tv_logintxt.setVisibility(View.VISIBLE);
             ll_userinfo.setVisibility(View.GONE);
-            rl_logout.setVisibility(View.GONE);
 
         } else {
             userId = user.getId();
@@ -215,7 +178,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
             tv_logintxt.setVisibility(View.GONE);
             ll_userinfo.setVisibility(View.VISIBLE);
-            rl_logout.setVisibility(View.VISIBLE);
         }
     }
 
@@ -319,6 +281,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.id_setting:
+                intent = new Intent(mContext, SettingActivity.class);
+                startActivity(intent);
+                break;
             case R.id.tv_mine_logintxt://登录
 
                 EggshellApplication.getApplication().setLoginTag("meFragment");
@@ -335,7 +301,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     intent = new Intent(mContext, LoginActivity.class);
                     startActivity(intent);
                 }
-
                 break;
             case R.id.rl_mine_postposition://我的投递
                 if (null != EggshellApplication.getApplication().getUser()) {
@@ -347,9 +312,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     EggshellApplication.getApplication().setLoginTag("myPost");
                     startActivity(intent);
                 }
-
                 break;
-
             case R.id.rl_mine_collectpostion://我的收藏
                 if (null != EggshellApplication.getApplication().getUser()) {
                     intent = new Intent(mContext, MyPostActivity.class);
@@ -360,9 +323,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     EggshellApplication.getApplication().setLoginTag("myCollect");
                     startActivity(intent);
                 }
-
                 break;
-
             case R.id.rl_mine_jianliguanli://简历管理
                 if (null != EggshellApplication.getApplication().getUser()) {
                     intent = new Intent(mContext, ResumeManagerActivity.class);
@@ -373,32 +334,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent);
                 }
                 break;
-            case R.id.rl_mine_about://关于蛋壳儿
-                intent = new Intent(mContext, AboutActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.rl_mine_hezuoqudao://合作渠道
-                intent = new Intent(mContext, TeamActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.rl_mine_logout://退出登录
-                dialog.show();
-
-                break;
-//            case R.id.rl_mine_setting:
-//                intent = new Intent(mContext, SetUpActivity.class);
-//                startActivity(intent);
-//                break;
-
-            case R.id.rl_mine_feedback:
-                intent = new Intent(mContext, FeedbackActivity.class);
-                startActivity(intent);
-                break;
-
-            case R.id.rl_mine_checkupdate://检查更新
-                getVersionCode();
-                break;
-
             case R.id.circleiv_mine_icon:
                 //判断登录状态，
                 if (null == user) {//登录
@@ -409,10 +344,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                     UserId = EggshellApplication.getApplication().getUser().getId();
                     showCameraPopWindow();
                 }
-
-
                 break;
-
             // 以下是修改头像中的点击事件
             case R.id.tv_camera:
 
@@ -423,7 +355,6 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
                 camera_pop_window.dismiss();
                 break;
-
             case R.id.tv_album:
                 intent = new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
@@ -459,88 +390,27 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 }
 
                 break;
-
-        }
-    }
-
-    //获取新版本
-    private void getVersionCode() {
-        Response.Listener listener = new Response.Listener() {
-            @Override
-            public void onResponse(Object o) {
-
-//                Log.v(TAG, (String) o);
-                try {
-                    JSONObject jsonObject = new JSONObject((String) o);
-                    int code = jsonObject.getInt("code");
-                    if (code == 0) {
-                        final String url = jsonObject.getString("data");
-                        String title = jsonObject.getString("title");
-                        String message = jsonObject.getString("message");
-                        Gson gson = new Gson();
-                        List<String> meglist = gson.fromJson(message, new TypeToken<List<String>>() {
-                        }.getType());
-
-                        updateDialog = new UpdateDialog(mContext, title, meglist, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                updateDialog.dismiss();
-                            }
-                        }, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-//                                ToastUtils.show(mContext, "更新");
-                                updateDialog.dismiss();
-                                updateAPK(url);
-                            }
-                        });
-
-                        updateDialog.getTitleText().setText("发现新版本");
-                        updateDialog.show();
-                    } else {
-                        ToastUtils.show(mContext, "已是最新版本");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            case R.id.id_discuss_activity://评论回复消息
+                if (null != EggshellApplication.getApplication().getUser()) {
+                    intent = new Intent(mContext, DiscussListActivity.class);
+                    startActivity(intent);
+                } else {
+                    EggshellApplication.getApplication().setLoginTag("");
+                    intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
                 }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                ToastUtils.show(mContext, "网络异常");
-            }
-        };
-
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("version", APKUtils.getVersionCode() + "");
-
-        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_UPDATE, true, params, true, listener, errorListener);
-    }
-
-    //更新APK
-    private void updateAPK(String url) {
-
-        final ProgressDialog progressDialog = new ProgressDialog(mContext);
-        progressDialog.show();
-
-        new UpdateHelper(mContext, new UpdateHelper.DownloadProgress() {
-            @Override
-            public void progress(int percent) {
-                progressDialog.getProgressBar().setProgress(percent);
-            }
-
-            @Override
-            public void complete() {
-                progressDialog.dismiss();
-            }
-
-            @Override
-            public void error() {
-                ToastUtils.show(mContext, "错误");
-            }
-        }).downloadInBackground(url);
+                break;
+            case R.id.id_invite_activity://邀请好友
+                if (null != EggshellApplication.getApplication().getUser()) {
+                    intent = new Intent(mContext, MyBasicActivity.class);
+                    startActivity(intent);
+                } else {
+                    EggshellApplication.getApplication().setLoginTag("");
+                    intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+                }
+                break;
+        }
     }
 
     // ================================以下是修改头像代码============================
@@ -836,48 +706,4 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    //退出登录
-    private void logout() {
-
-        Response.Listener listener = new Response.Listener() {
-            @Override
-            public void onResponse(Object o) {
-//                LoadingDialog.dismiss();
-                try {
-//                    Log.v(TAG, (String) o);
-
-                    JSONObject jsonObject = new JSONObject((String) o);
-                    int code = jsonObject.getInt("code");
-
-                    if (code == 0) {//退出成功
-
-                        ToastUtils.show(mContext, "成功退出");
-                        PrefUtils.saveStringPreferences(mContext, PrefUtils.CONFIG, PrefUtils.KEY_USER_JSON, "");
-                        Intent intent = new Intent(mContext, MainActivity.class);
-                        startActivity(intent);
-                        ((MainActivity) getActivity()).radio_index.performClick();
-                    } else {
-                        ToastUtils.show(mContext, "退出失败");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-//                LoadingDialog.dismiss();
-                ToastUtils.show(mContext, "网络异常");
-
-            }
-        };
-
-        Map<String, String> param = new HashMap<String, String>();
-        int userId = user.getId();
-        param.put("uid", userId + "");
-        RequestUtils.createRequest(mContext, Urls.METHOD_REGIST_LOGOUT, "", true, param, true, listener, errorListener);
-
-    }
 }
