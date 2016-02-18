@@ -108,5 +108,8 @@ public class Urls {
     public static final String METHOD_ACTIVITY_JOIN = "/Activity/my_act_apply";//我参与的
 
     public static final String METHOD_DISCUSS = "/Activity/replylist";//评论回复消息列表
+    public static final String METHOD_IS_READ = "/Activity/changestatus";//消息是否已阅读状态
+    public static final String METHOD_PHONE_SIGN = "/Jpush/savesign";//获取手机唯一标示IMEI
+    public static final String METHOD_UNREAD_NUM = "/Activity/gettotalreply";//消息未读数
 
 }

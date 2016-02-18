@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -22,6 +23,7 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chinaway.framework.swordfish.DbUtils;
@@ -34,6 +36,7 @@ import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.DbHelper;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.JobFilterActivity;
@@ -75,10 +78,13 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     private RadioGroup main_tab_RadioGroup;
     public RadioButton radio_index;
     private RadioButton radio_social, radio_openclass, radio_me;
+    private TextView notifiNum;
     private ArrayList<Fragment> fragmentList;
     private DbUtils db;
     private int current = 0;
     private Handler refreshHandle;
+    private Handler unReadHandler;
+    public static int unnum = 0;
 
     public static List<StaticData> hylist = new ArrayList<StaticData>();
     public static List<StaticData> paylist = new ArrayList<StaticData>();
@@ -157,7 +163,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         radio_social = (RadioButton) findViewById(R.id.id_radio_social);
         radio_openclass = (RadioButton) findViewById(R.id.id_radio_openclass);
         radio_me = (RadioButton) findViewById(R.id.id_radio_me);
-
+        notifiNum = (TextView) findViewById(R.id.id_notification_numss);
         main_tab_RadioGroup.setOnCheckedChangeListener(this);
     }
 
@@ -176,7 +182,8 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             tagSet.add(sTagItme);
         }
         //调用JPush API设置Tag
-//        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TAGS, tagSet));
+        mHandler.sendMessage(mHandler.obtainMessage(MSG_SET_TAGS, tagSet));
+
         getStaticDataFromNet();
         getJobStaticDataFromNet();
     }
@@ -785,6 +792,10 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             this.refreshHandle = handle;
     }
 
+    public void setUnReadHandler(Handler handler){
+        this.unReadHandler = handler;
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -796,6 +807,11 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         super.onResume();
         MobclickAgent.onResume(mContext);
         startService(new Intent(LocationService.ACTION_NAME));
+        if(null != EggshellApplication.getApplication().getUser()){
+            sendPhoneInfo();
+            getUnReadNotification();
+        }
+
     }
 
     @Override
@@ -863,6 +879,80 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
             }, 2000);
 
         }
+    }
+
+    private void sendPhoneInfo(){
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+//                Log.v("SING;",(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+//                        Log.v("sing:","OK");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+//                Log.v("EEE:",new String(volleyError.networkResponse.data));
+            }
+        };
+
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
+        params.put("sign", PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,PrefUtils.KEY_PHONE_INFO,""));
+//        Log.v("SING:",params.toString());
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_PHONE_SIGN, false, params, true, listener, errorListener);
+
+    }
+
+    private void getUnReadNotification(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                Log.v("UNREAD;",(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        unnum = jsonObject.getInt("data");
+                        if(0==unnum){
+                            notifiNum.setVisibility(View.GONE);
+                        }else{
+                            notifiNum.setText(unnum+"");
+                            notifiNum.setVisibility(View.VISIBLE);
+                        }
+
+                        Message message = Message.obtain();
+                        message.what = 111;
+                        message.obj = unnum;
+                        unReadHandler.sendMessage(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+//                Log.v("EEE:",new String(volleyError.networkResponse.data));
+            }
+        };
+
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_UNREAD_NUM,false,params,true,listener,errorListener);
+
     }
 
     private final TagAliasCallback mAliasCallback = new TagAliasCallback() {

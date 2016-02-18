@@ -7,6 +7,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -64,7 +66,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     private View rootView;
     private RelativeLayout sign_up_activity,collection_activity, rl_editZiliao, rl_post, rl_collect, rl_jianli,discuss_activity,invisit_activity;
-    private TextView tv_logintxt, tv_username, tv_qianming, tv_postNum, tv_collectNum, jianliNum;
+    private TextView tv_logintxt, tv_username, tv_qianming, tv_postNum, tv_collectNum, jianliNum,notificationNum;
     private LinearLayout ll_userinfo;
     private TextView tv_mine_postnum, tv_mine_collectnum, tv_mine_jianlinum;
     private ImageView settingImage;
@@ -89,6 +91,29 @@ public class MeFragment extends Fragment implements View.OnClickListener {
 
     private int userId;
     private String token = "";
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            if(msg.what==111){//消息个数变化
+                if(0==(int)msg.obj){
+                    notificationNum.setVisibility(View.GONE);
+                }else{
+                    notificationNum.setText(((int)msg.obj)+"");
+                    notificationNum.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    };
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        ((MainActivity)context).setUnReadHandler(handler);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -123,6 +148,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         tv_mine_collectnum = (TextView) rootView.findViewById(R.id.tv_mine_collectnum);
         tv_mine_jianlinum = (TextView) rootView.findViewById(R.id.tv_mine_jianlinum);
         settingImage = (ImageView) rootView.findViewById(R.id.id_setting);
+        notificationNum = (TextView) rootView.findViewById(R.id.id_discuss_num);
 
         settingImage.setOnClickListener(this);
         invisit_activity.setOnClickListener(this);
@@ -189,6 +215,14 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             if (NetWorkDetectionUtils.checkNetworkAvailable(mContext) && null!=EggshellApplication.getApplication().getUser()) {
                 getBasic();//获取用户基本信息，投递职位个数，简历个数，头像等
             }
+
+            if(0==MainActivity.unnum){
+                notificationNum.setVisibility(View.GONE);
+            }else{
+                notificationNum.setText(MainActivity.unnum+"");
+                notificationNum.setVisibility(View.VISIBLE);
+            }
+
         }
     }
 

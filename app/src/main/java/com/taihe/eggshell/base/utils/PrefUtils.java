@@ -50,9 +50,9 @@ public class PrefUtils {
 
 
     /**
-	 * 上次登录手机号码
+	 * 上次登录手机唯一属性
 	 */
-	public static final String KEY_PHONE_NUMBER = "phone_number";
+	public static final String KEY_PHONE_INFO = "phone_info";
 	/**
 	 * 上次登录手机序列号
 	 */

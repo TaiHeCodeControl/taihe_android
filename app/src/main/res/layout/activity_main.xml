@@ -51,4 +51,19 @@
             android:drawableTop="@drawable/tab_me_background"
             android:text="我的"/>
     </RadioGroup>
+
+    <TextView
+        android:id="@+id/id_notification_numss"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="3"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:background="@drawable/notification"
+        android:visibility="gone"/>
 </RelativeLayout>

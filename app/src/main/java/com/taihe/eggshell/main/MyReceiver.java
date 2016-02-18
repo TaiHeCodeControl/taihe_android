@@ -11,8 +11,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.utils.PrefUtils;
 import com.taihe.eggshell.job.activity.FindJobActivity;
-import com.taihe.eggshell.resume.ResumeScanActivity;
+import com.taihe.eggshell.meetinginfo.InfoDetailActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +41,8 @@ public class MyReceiver extends BroadcastReceiver {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
             Log.d(TAG, "[MyReceiver] 接收Registration Id : " + regId);
             //send the Registration Id to your server...
-                        
+            PrefUtils.saveStringPreferences(context,PrefUtils.CONFIG,PrefUtils.KEY_PHONE_INFO,regId);
+
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
         	Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
         	processCustomMessage(context, bundle);
@@ -56,11 +58,10 @@ public class MyReceiver extends BroadcastReceiver {
             String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
             try {
                 JSONObject extraJson = new JSONObject(extras);
-                String id = extraJson.getString("eid");
+                String id = extraJson.getString("aid");
                 //打开自定义的Activity
-                Intent i = new Intent(context, ResumeScanActivity.class);
-                i.putExtras(bundle);
-                i.putExtra("eid",id);
+                Intent i = new Intent(context,InfoDetailActivity.class);
+                intent.putExtra("playId", id);
                 //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 context.startActivity(i);

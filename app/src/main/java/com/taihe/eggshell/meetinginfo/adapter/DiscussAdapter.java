@@ -1,6 +1,7 @@
 package com.taihe.eggshell.meetinginfo.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,9 +60,20 @@ public class DiscussAdapter extends BaseAdapter{
             viewHolder = (DiscussViewHolder)view.getTag();
         }
 
-        viewHolder.nameText.setText(info.getName());
-        viewHolder.contextText.setText(info.getDiscuss());
-        viewHolder.timeText.setText(info.getAnswerTime());
+        if(TextUtils.isEmpty(info.getNick_name())){
+            viewHolder.nameText.setText(info.getUsername()+"回复了你");
+        }else{
+            viewHolder.nameText.setText(info.getNick_name()+"回复了你");
+        }
+
+        viewHolder.contextText.setText(info.getComent());
+        viewHolder.timeText.setText(info.getAddtime());
+
+        if("1".equals(info.getIsread())){//未阅读
+            viewHolder.notificationImg.setVisibility(View.VISIBLE);
+        }else if("2".equals(info.getIsread())){//已阅读
+            viewHolder.notificationImg.setVisibility(View.INVISIBLE);
+        }
 
         return view;
     }

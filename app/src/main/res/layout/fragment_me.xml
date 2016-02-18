@@ -360,6 +360,7 @@
                 android:background="@drawable/ucenter_selected_background">
 
                 <TextView
+                    android:id="@+id/id_ls"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -369,6 +370,20 @@
                     android:drawablePadding="5dp"
                     android:textColor="@color/font_color_black"
                     android:textSize="@dimen/font_size_26" />
+
+                <TextView
+                    android:id="@+id/id_discuss_num"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@+id/id_ls"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:background="@drawable/notification"
+                    android:visibility="gone"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
