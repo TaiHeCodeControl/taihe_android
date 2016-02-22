@@ -1,6 +1,7 @@
 package com.taihe.eggshell.main;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -101,17 +102,29 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         dialog.getLeftButton().setText("以后再说");
         dialog.getRightButton().setText("确认退出");
 
-        slideSwitch.setSlideListener(new SlideSwitch.SlideListener() {
-            @Override
-            public void open() {
-                ToastUtils.show(mContext,"open");
-            }
+        if(null!=user){
+            slideSwitch.setSlideListener(new SlideSwitch.SlideListener() {
+                @Override
+                public void open() {
+                    ToastUtils.show(mContext,"已开启");
+                    openOrCloseMsgPush(1);
+                }
 
-            @Override
-            public void close() {
-                ToastUtils.show(mContext,"close");
-            }
-        });
+                @Override
+                public void close() {
+                    ToastUtils.show(mContext,"已关闭");
+                    openOrCloseMsgPush(2);
+                }
+            });
+        }else{
+            slideSwitch.setSlideable(false);
+            slideSwitch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ToastUtils.show(mContext,"请先登录");
+                }
+            });
+        }
 
     }
 
@@ -140,6 +153,30 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                 getVersionCode();
                 break;
         }
+    }
+
+    private void openOrCloseMsgPush(int status){
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                Log.v("MSG:",(String)o);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        };
+
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("uid",user.getId()+"");
+        params.put("status",status+"");
+
+        RequestUtils.createRequest(mContext,Urls.getMopHostUrl(),Urls.METHOD_OPEN_CLOSE_MSG,true,params,true,listener,errorListener);
+
     }
 
     //获取新版本

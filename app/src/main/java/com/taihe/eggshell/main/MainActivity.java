@@ -918,7 +918,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-                Log.v("UNREAD;",(String)o);
+//                Log.v("UNREAD;",(String)o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");

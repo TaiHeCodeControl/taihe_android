@@ -30,6 +30,8 @@ import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.chinaway.framework.swordfish.network.http.toolbox.ImageLoader;
 import com.chinaway.framework.swordfish.network.http.toolbox.Volley;
 import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.EggshellApplication;
 import com.taihe.eggshell.base.Urls;
@@ -42,9 +44,11 @@ import com.taihe.eggshell.main.entity.User;
 import com.taihe.eggshell.meetinginfo.DiscussListActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.personalCenter.activity.MyJoinActivity;
+import com.taihe.eggshell.personalCenter.entity.VisitedPerson;
 import com.taihe.eggshell.resume.ResumeManagerActivity;
 import com.taihe.eggshell.widget.CircleImageView;
 import com.taihe.eggshell.widget.LoadingProgressDialog;
+import com.taihe.eggshell.widget.cityselect.CitySelectActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +56,9 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -76,6 +82,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
     private User user;
     private int UserId;
     private LoadingProgressDialog uploadImageDialog;
+    private ArrayList<VisitedPerson> visitedPersonArrayList = new ArrayList<VisitedPerson>();
 
     // Image-Load配置
     private RequestQueue mQueue;
@@ -205,6 +212,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
             tv_logintxt.setVisibility(View.GONE);
             ll_userinfo.setVisibility(View.VISIBLE);
         }
+
     }
 
     @Override
@@ -214,6 +222,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         if(isVisibleToUser && getUserVisibleHint()){
             if (NetWorkDetectionUtils.checkNetworkAvailable(mContext) && null!=EggshellApplication.getApplication().getUser()) {
                 getBasic();//获取用户基本信息，投递职位个数，简历个数，头像等
+                getVisitedPerson();//获取邀请人列表
             }
 
             if(0==MainActivity.unnum){
@@ -310,6 +319,48 @@ public class MeFragment extends Fragment implements View.OnClickListener {
         param.put("token", token);
         RequestUtils.createRequest(mContext, Urls.METHOD_MINE_BASIC, "", true, param, true, listener, errorListener);
 
+    }
+
+    private void getVisitedPerson(){
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+
+//                Log.v("ssss:", (String) o);
+
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    Gson gson = new Gson();
+                    if(code == 0){
+                        String data = jsonObject.getString("data");
+                        if(!data.equals("[]")){
+                            visitedPersonArrayList.clear();
+                            List<VisitedPerson> list = gson.fromJson(data,new TypeToken<List<VisitedPerson>>(){}.getType());
+                            visitedPersonArrayList.addAll(list);
+                        }
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        };
+
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
+
+//        Log.v("PARALGET:",params.toString());
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_GET_VISITED_PERSON,true,params,true,listener,errorListener);
     }
 
     @Override
@@ -436,7 +487,10 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.id_invite_activity://邀请好友
                 if (null != EggshellApplication.getApplication().getUser()) {
-                    intent = new Intent(mContext, MyBasicActivity.class);
+                    intent = new Intent(mContext, CitySelectActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList("visitedPerson", visitedPersonArrayList);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                 } else {
                     EggshellApplication.getApplication().setLoginTag("");

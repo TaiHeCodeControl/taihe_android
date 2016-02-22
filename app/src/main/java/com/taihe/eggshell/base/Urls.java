@@ -111,5 +111,8 @@ public class Urls {
     public static final String METHOD_IS_READ = "/Activity/changestatus";//消息是否已阅读状态
     public static final String METHOD_PHONE_SIGN = "/Jpush/savesign";//获取手机唯一标示IMEI
     public static final String METHOD_UNREAD_NUM = "/Activity/gettotalreply";//消息未读数
+    public static final String METHOD_SEND_VISITED_PERSON = "/Activity/savetelphone";//发送邀请人手机号，保存到服务器
+    public static final String METHOD_GET_VISITED_PERSON = "/Activity/gettelphone";//已邀请的人
+    public static final String METHOD_OPEN_CLOSE_MSG = "/Activity/setjpushstatus";//接收或者关闭消息提醒
 
 }

@@ -2,7 +2,6 @@ package com.taihe.eggshell.meetinginfo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -103,7 +102,7 @@ public class DiscussListActivity extends BaseActivity{
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
-                Log.v("LISt:", (String) o);
+//                Log.v("LISt:", (String) o);
                 listView.onRefreshComplete();
                 Gson gson = new Gson();
                 try {

@@ -6,11 +6,11 @@ import android.os.Parcelable;
 /**
  * Created by Thinkpad on 2015/7/14.
  */
-public class UserInfo implements Parcelable{
+public class VisitedPerson implements Parcelable{
 
     private int id;
     private String userName;
-    private String gender;
+    private String telphone;
 
     public int getId() {
         return id;
@@ -28,12 +28,12 @@ public class UserInfo implements Parcelable{
         this.userName = userName;
     }
 
-    public String getGender() {
-        return gender;
+    public String getTelphone() {
+        return telphone;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setTelphone(String telphone) {
+        this.telphone = telphone;
     }
 
     @Override
@@ -45,22 +45,22 @@ public class UserInfo implements Parcelable{
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(id);
         parcel.writeString(userName);
-        parcel.writeString(gender);
+        parcel.writeString(telphone);
     }
 
-    public static final Creator<UserInfo> CREATOR = new Creator<UserInfo>() {
+    public static final Creator<VisitedPerson> CREATOR = new Creator<VisitedPerson>() {
         @Override
-        public UserInfo createFromParcel(Parcel source) {
-            UserInfo userInfo = new UserInfo();
-            userInfo.id = source.readInt();
-            userInfo.userName = source.readString();
-            userInfo.gender = source.readString();
-            return userInfo;
+        public VisitedPerson createFromParcel(Parcel source) {
+            VisitedPerson visitedPerson = new VisitedPerson();
+            visitedPerson.id = source.readInt();
+            visitedPerson.userName = source.readString();
+            visitedPerson.telphone = source.readString();
+            return visitedPerson;
         }
 
         @Override
-        public UserInfo[] newArray(int size) {
-            return new UserInfo[size];
+        public VisitedPerson[] newArray(int size) {
+            return new VisitedPerson[size];
         }
     };
 }
