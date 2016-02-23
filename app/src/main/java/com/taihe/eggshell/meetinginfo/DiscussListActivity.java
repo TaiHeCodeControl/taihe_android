@@ -1,11 +1,9 @@
 package com.taihe.eggshell.meetinginfo;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
@@ -70,19 +68,6 @@ public class DiscussListActivity extends BaseActivity{
         mContext = this;
         listView = (PullToRefreshListView)findViewById(R.id.id_discuss_list);
         listView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                DiscussInfo info = discussList.get(i-1);
-                if(info.getIsread().equals("1")){//未阅读
-                    readRequest(info);
-                }else{
-                    Intent intent = new Intent(mContext,InfoDetailActivity.class);
-                    intent.putExtra("playId",info.getAid());
-                    startActivity(intent);
-                }
-            }
-        });
 
         deleteDialog = new ChoiceDialog(mContext,new View.OnClickListener() {
             @Override
@@ -95,12 +80,13 @@ public class DiscussListActivity extends BaseActivity{
                 if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
                     deleteDialog.dismiss();
                     if(deletInfo!=null){
-                        discussList.remove(deletInfo);
-                        discussAdapter.notifyDataSetChanged();
+                        deletDiscussInfo();
+                    }else{
+                        ToastUtils.show(mContext,"nn");
                     }
 
                 }else{
-                    ToastUtils.show(mContext,R.string.check_network);
+                    ToastUtils.show(mContext, R.string.check_network);
                 }
             }
         });
@@ -187,19 +173,19 @@ public class DiscussListActivity extends BaseActivity{
 
     }
 
-
-    private void readRequest(final DiscussInfo info){
+    private void deletDiscussInfo(){
 
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
+
+//                Log.v("TTT:", (String) o);
                 try {
                     JSONObject jsonObject = new JSONObject((String)o);
                     int code = jsonObject.getInt("code");
                     if(code == 0){
-                        Intent intent = new Intent(mContext,InfoDetailActivity.class);
-                        intent.putExtra("playId",info.getAid());
-                        startActivity(intent);
+                        discussList.remove(deletInfo);
+                        discussAdapter.notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -215,9 +201,11 @@ public class DiscussListActivity extends BaseActivity{
         };
 
         Map<String,String> params = new HashMap<String,String>();
-        params.put("id", info.getId());
-        params.put("type", info.getType());
-        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_IS_READ,false,params,true,listener,errorListener);
+        params.put("id", deletInfo.getId());
+        params.put("type", deletInfo.getType());
+//        Log.v("DD:",params.toString());
+        RequestUtils.createRequest(mContext, Urls.getMopHostUrl(),Urls.METHOD_DELETE_DISCUS_IFNO,false,params,true,listener,errorListener);
 
     }
+
 }

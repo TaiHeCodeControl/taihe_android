@@ -114,5 +114,6 @@ public class Urls {
     public static final String METHOD_SEND_VISITED_PERSON = "/Activity/savetelphone";//发送邀请人手机号，保存到服务器
     public static final String METHOD_GET_VISITED_PERSON = "/Activity/gettelphone";//已邀请的人
     public static final String METHOD_OPEN_CLOSE_MSG = "/Activity/setjpushstatus";//接收或者关闭消息提醒
+    public static final String METHOD_DELETE_DISCUS_IFNO = "/Activity/delreply";//删除消息列表的某个评论回复
 
 }

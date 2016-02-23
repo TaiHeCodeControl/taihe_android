@@ -1,6 +1,7 @@
 package com.taihe.eggshell.meetinginfo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -12,10 +13,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chinaway.framework.swordfish.network.http.Response;
+import com.chinaway.framework.swordfish.network.http.VolleyError;
 import com.taihe.eggshell.R;
+import com.taihe.eggshell.base.Urls;
+import com.taihe.eggshell.base.utils.RequestUtils;
+import com.taihe.eggshell.meetinginfo.InfoDetailActivity;
 import com.taihe.eggshell.meetinginfo.entity.DiscussInfo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by wang on 2016/2/17.
@@ -92,6 +103,19 @@ public class DiscussAdapter extends BaseAdapter{
             }
         });
 
+        viewHolder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (info.getIsread().equals("1")) {//未阅读
+                    readRequest(info);
+                } else {
+                    Intent intent = new Intent(context, InfoDetailActivity.class);
+                    intent.putExtra("playId", info.getAid());
+                    context.startActivity(intent);
+                }
+            }
+        });
+
         return view;
     }
 
@@ -101,5 +125,38 @@ public class DiscussAdapter extends BaseAdapter{
         TextView contextText;
         TextView timeText;
         RelativeLayout relativeLayout;
+    }
+
+    private void readRequest(final DiscussInfo info){
+
+        Response.Listener listener = new Response.Listener() {
+            @Override
+            public void onResponse(Object o) {
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(code == 0){
+                        Intent intent = new Intent(context,InfoDetailActivity.class);
+                        intent.putExtra("playId",info.getAid());
+                        context.startActivity(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+//                Log.v("EEE:",new String(volleyError.networkResponse.data));
+            }
+        };
+
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("id", info.getId());
+        params.put("type", info.getType());
+        RequestUtils.createRequest(context, Urls.getMopHostUrl(), Urls.METHOD_IS_READ, false, params, true, listener, errorListener);
+
     }
 }
