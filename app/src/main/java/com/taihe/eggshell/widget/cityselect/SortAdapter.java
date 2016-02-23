@@ -74,28 +74,32 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer{
 		}else{
 			viewHolder.tvLetter.setVisibility(View.GONE);
 		}
-	
-		viewHolder.tvTitle.setText(this.list.get(position).getName());
-        if(this.list.get(position).getPhoneNum().contains("-")){
-            viewHolder.tvPhone.setText(this.list.get(position).getPhoneNum().replace("-",""));
-        }else{
-            viewHolder.tvPhone.setText(this.list.get(position).getPhoneNum());
-        }
 
-        if(this.list.get(position).getIsVisited().equals("1")){
-            viewHolder.tvVisited.setText("已添加");
-            viewHolder.tvVisited.setTextColor(mContext.getResources().getColor(R.color.font_color_gray));
-            viewHolder.tvVisited.setBackground(null);
-            viewHolder.tvVisited.setClickable(false);
-        }else{
+        if(this.list.get(position)!=null){
 
-            viewHolder.tvVisited.setClickable(true);
-            viewHolder.tvVisited.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sendSMS(list.get(position).getPhoneNum(),content);
-                }
-            });
+            viewHolder.tvTitle.setText(this.list.get(position).getName());
+            if(this.list.get(position).getPhoneNum().contains("-")){
+                viewHolder.tvPhone.setText(this.list.get(position).getPhoneNum().replace("-",""));
+            }else{
+                viewHolder.tvPhone.setText(this.list.get(position).getPhoneNum());
+            }
+
+            if(null!=list.get(position).getIsVisited() && list.get(position).getIsVisited().equals("1")){
+                viewHolder.tvVisited.setText("已添加");
+                viewHolder.tvVisited.setTextColor(mContext.getResources().getColor(R.color.font_color_gray));
+                viewHolder.tvVisited.setBackground(null);
+                viewHolder.tvVisited.setClickable(false);
+            }else{
+
+                viewHolder.tvVisited.setClickable(true);
+                viewHolder.tvVisited.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        sendSMS(list.get(position).getPhoneNum(),content);
+                    }
+                });
+            }
+
         }
 
 		return view;
