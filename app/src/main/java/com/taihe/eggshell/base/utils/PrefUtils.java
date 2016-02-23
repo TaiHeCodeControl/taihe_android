@@ -58,7 +58,7 @@ public class PrefUtils {
 	 */
 	public static final String KEY_SIM_SERIAL_NUMBER = "sim_serial_number";
 
-	public static final String KEY_ID = "id";
+	public static final String KEY_MSG_PUSH = "msg_push";
 	public static final String KEY_TOKEN = "token";
 	/**
 	 * 登录返回用户信息

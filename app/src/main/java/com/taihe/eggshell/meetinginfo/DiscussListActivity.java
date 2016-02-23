@@ -2,12 +2,15 @@ package com.taihe.eggshell.meetinginfo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.chinaway.framework.swordfish.network.http.Response;
 import com.chinaway.framework.swordfish.network.http.VolleyError;
+import com.chinaway.framework.swordfish.util.NetWorkDetectionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -20,6 +23,7 @@ import com.taihe.eggshell.base.utils.RequestUtils;
 import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.meetinginfo.adapter.DiscussAdapter;
 import com.taihe.eggshell.meetinginfo.entity.DiscussInfo;
+import com.taihe.eggshell.widget.ChoiceDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,8 +41,25 @@ public class DiscussListActivity extends BaseActivity{
     private Context mContext;
     private PullToRefreshListView listView;
     private DiscussAdapter discussAdapter;
+    private ChoiceDialog deleteDialog;
     private ArrayList<DiscussInfo> discussList;
     private int pagesize = 1;
+    private DiscussInfo deletInfo;
+
+
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what){
+                case 1:
+                    deletInfo = (DiscussInfo)msg.obj;
+                    deleteDialog.show();
+                break;
+            }
+        }
+    };
 
     @Override
     public void initView() {
@@ -62,6 +83,32 @@ public class DiscussListActivity extends BaseActivity{
                 }
             }
         });
+
+        deleteDialog = new ChoiceDialog(mContext,new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteDialog.dismiss();
+            }
+        },new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(NetWorkDetectionUtils.checkNetworkAvailable(mContext)){
+                    deleteDialog.dismiss();
+                    if(deletInfo!=null){
+                        discussList.remove(deletInfo);
+                        discussAdapter.notifyDataSetChanged();
+                    }
+
+                }else{
+                    ToastUtils.show(mContext,R.string.check_network);
+                }
+            }
+        });
+
+        deleteDialog.getTitleText().setText("确定要删除吗？");
+        deleteDialog.getRightButton().setText("确定");
+        deleteDialog.getLeftButton().setText("取消");
+
     }
 
     @Override
@@ -71,7 +118,7 @@ public class DiscussListActivity extends BaseActivity{
         initTitle("评论回复");
 
         discussList = new ArrayList<DiscussInfo>();
-        discussAdapter = new DiscussAdapter(mContext,discussList);
+        discussAdapter = new DiscussAdapter(mContext,discussList,handler);
         listView.setAdapter(discussAdapter);
         discussAdapter.notifyDataSetChanged();
 

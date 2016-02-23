@@ -72,6 +72,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         initTitle("设置");
         user = EggshellApplication.getApplication().getUser();
 
+        String status = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,PrefUtils.KEY_MSG_PUSH,"1");
+        if("1".equals(status)){
+            slideSwitch.setState(true);
+        }else{
+            slideSwitch.setState(false);
+        }
+
         if(null == user){
             rl_logout.setVisibility(View.GONE);
         }else{
@@ -155,12 +162,21 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         }
     }
 
-    private void openOrCloseMsgPush(int status){
+    private void openOrCloseMsgPush(final int status){
 
         Response.Listener listener = new Response.Listener() {
             @Override
             public void onResponse(Object o) {
                 Log.v("MSG:",(String)o);
+                try {
+                    JSONObject jsonObject = new JSONObject((String)o);
+                    int code = jsonObject.getInt("code");
+                    if(0==code){
+                        PrefUtils.saveStringPreferences(mContext,PrefUtils.CONFIG,PrefUtils.KEY_MSG_PUSH,status+"");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         };
 

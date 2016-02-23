@@ -1,12 +1,15 @@
 package com.taihe.eggshell.meetinginfo.adapter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.taihe.eggshell.R;
@@ -20,10 +23,12 @@ import java.util.ArrayList;
 public class DiscussAdapter extends BaseAdapter{
 
     private Context context;
+    private Handler delhandler;
     private ArrayList<DiscussInfo> discussInfoList = new ArrayList<DiscussInfo>();
 
-    public DiscussAdapter(Context mcontext,ArrayList<DiscussInfo> lists){
+    public DiscussAdapter(Context mcontext,ArrayList<DiscussInfo> lists,Handler handler){
         this.context = mcontext;
+        this.delhandler = handler;
         this.discussInfoList = lists;
     }
 
@@ -45,11 +50,12 @@ public class DiscussAdapter extends BaseAdapter{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        DiscussInfo info = discussInfoList.get(i);
+        final DiscussInfo info = discussInfoList.get(i);
         DiscussViewHolder viewHolder;
         if(view == null){
             viewHolder = new DiscussViewHolder();
             view = LayoutInflater.from(context).inflate(R.layout.item_discuss,null);
+            viewHolder.relativeLayout = (RelativeLayout)view.findViewById(R.id.id_item_discuss);
             viewHolder.notificationImg = (ImageView)view.findViewById(R.id.id_notification);
             viewHolder.nameText = (TextView)view.findViewById(R.id.id_discuss_name);
             viewHolder.contextText = (TextView)view.findViewById(R.id.id_discuss_content);
@@ -75,6 +81,17 @@ public class DiscussAdapter extends BaseAdapter{
             viewHolder.notificationImg.setVisibility(View.INVISIBLE);
         }
 
+        viewHolder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Message message = Message.obtain();
+                message.what = 1;
+                message.obj = info;
+                delhandler.sendMessage(message);
+                return false;
+            }
+        });
+
         return view;
     }
 
@@ -83,5 +100,6 @@ public class DiscussAdapter extends BaseAdapter{
         TextView nameText;
         TextView contextText;
         TextView timeText;
+        RelativeLayout relativeLayout;
     }
 }

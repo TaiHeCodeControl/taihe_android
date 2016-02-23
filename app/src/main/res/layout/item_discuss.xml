@@ -15,6 +15,7 @@
         android:src="@drawable/notification_no"/>
 
     <RelativeLayout
+        android:id="@+id/id_item_discuss"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:gravity="center_vertical">
