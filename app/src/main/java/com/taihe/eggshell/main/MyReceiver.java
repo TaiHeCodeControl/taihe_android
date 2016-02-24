@@ -12,7 +12,6 @@ import android.util.Log;
 
 import com.taihe.eggshell.R;
 import com.taihe.eggshell.base.utils.PrefUtils;
-import com.taihe.eggshell.job.activity.FindJobActivity;
 import com.taihe.eggshell.meetinginfo.InfoDetailActivity;
 
 import org.json.JSONException;
@@ -58,11 +57,10 @@ public class MyReceiver extends BroadcastReceiver {
             String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
             try {
                 JSONObject extraJson = new JSONObject(extras);
-                String id = extraJson.getString("aid");
+                String id = extraJson.getString("type");
                 //打开自定义的Activity
                 Intent i = new Intent(context,InfoDetailActivity.class);
-                intent.putExtra("playId", id);
-                //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.putExtra("playId", id);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
                 context.startActivity(i);
             } catch (JSONException e) {
@@ -125,9 +123,9 @@ public class MyReceiver extends BroadcastReceiver {
 
 				}
 			}
-			context.sendBroadcast(msgIntent);
-            PendingIntent pi = PendingIntent.getActivity(context,0,new Intent(context,FindJobActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);
-            showNotification(context, pi, message, true);
+//			context.sendBroadcast(msgIntent);
+//            PendingIntent pi = PendingIntent.getActivity(context,0,new Intent(context,InfoDetailActivity.class),PendingIntent.FLAG_UPDATE_CURRENT);
+//            showNotification(context, pi, message, true);
 	}
 
     private void showNotification(Context context, PendingIntent pi, String text, boolean speak) {

@@ -153,7 +153,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
 
         // used for receive msg  推送
         JPushInterface.init(getApplicationContext());
-        registerMessageReceiver();
+//        registerMessageReceiver();
     }
 
     public void initView() {
@@ -909,7 +909,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         Map<String,String> params = new HashMap<String,String>();
         params.put("uid", EggshellApplication.getApplication().getUser().getId()+"");
         params.put("sign", PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,PrefUtils.KEY_PHONE_INFO,""));
-//        Log.v("SING:",params.toString());
+        Log.v("SING:",params.toString());
         RequestUtils.createRequest(mContext, Urls.getMopHostUrl(), Urls.METHOD_PHONE_SIGN, false, params, true, listener, errorListener);
 
     }

@@ -283,21 +283,26 @@ public class CitySelectActivity extends BaseActivity {
     private void filterData(String filterStr){
         List<SortModel> filterDateList = new ArrayList<SortModel>();
 
-        if(TextUtils.isEmpty(filterStr)){
-            filterDateList = lis;
-        }else{
-            filterDateList.clear();
-            for(SortModel sortModel : lis){
-                String name = sortModel.getName();
-                if(name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name).startsWith(filterStr.toString())){
-                    filterDateList.add(sortModel);
+        if(null!=lis) {
+
+            if (TextUtils.isEmpty(filterStr)) {
+                filterDateList = lis;
+            } else {
+                filterDateList.clear();
+                for (SortModel sortModel : lis) {
+                    String name = sortModel.getName();
+                    if (name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name).startsWith(filterStr.toString())) {
+                        filterDateList.add(sortModel);
+                    }
                 }
             }
-        }
 
-        // 根据a-z进行排序
-        Collections.sort(filterDateList, pinyinComparator);
-        adapter.updateListView(filterDateList);
+            // 根据a-z进行排序
+            Collections.sort(filterDateList, pinyinComparator);
+            adapter = new SortAdapter(mContext, lis);
+            sortListView.setAdapter(adapter);
+            adapter.updateListView(filterDateList);
+        }
     }
 
     private void sendVisitedPerson(String number){

@@ -73,6 +73,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         user = EggshellApplication.getApplication().getUser();
 
         String status = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,PrefUtils.KEY_MSG_PUSH,"1");
+        Log.v("DD:",status);
         if("1".equals(status)){
             slideSwitch.setState(true);
         }else{
@@ -113,13 +114,11 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             slideSwitch.setSlideListener(new SlideSwitch.SlideListener() {
                 @Override
                 public void open() {
-                    ToastUtils.show(mContext,"已开启");
                     openOrCloseMsgPush(1);
                 }
 
                 @Override
                 public void close() {
-                    ToastUtils.show(mContext,"已关闭");
                     openOrCloseMsgPush(2);
                 }
             });
