@@ -1,15 +1,10 @@
 package com.taihe.eggshell.base.utils;
 
 import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.chinaway.framework.swordfish.network.http.AuthFailureError;
 import com.chinaway.framework.swordfish.network.http.DefaultRetryPolicy;
@@ -24,7 +19,6 @@ import com.chinaway.framework.swordfish.network.http.toolbox.HttpHeaderParser;
 import com.chinaway.framework.swordfish.network.http.toolbox.StringRequest;
 import com.chinaway.framework.swordfish.network.http.toolbox.Volley;
 import com.taihe.eggshell.base.EggshellApplication;
-import com.taihe.eggshell.base.utils.PrefUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;

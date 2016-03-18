@@ -73,7 +73,6 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
         user = EggshellApplication.getApplication().getUser();
 
         String status = PrefUtils.getStringPreference(mContext,PrefUtils.CONFIG,PrefUtils.KEY_MSG_PUSH,"1");
-        Log.v("DD:",status);
         if("1".equals(status)){
             slideSwitch.setState(true);
         }else{

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -180,7 +181,7 @@ public class PlayStarActivity extends BaseActivity{
                     playView.onRefreshComplete();
                     loading.dismiss();
                     JSONObject jsonObject = new JSONObject((String) obj);
-//                    Log.v("Play:",(String)obj);
+                    Log.v("Play:",(String)obj);
                     int code = jsonObject.getInt("code");
                     if (code == 0) {
                         String data = jsonObject.getString("data");
@@ -214,7 +215,8 @@ public class PlayStarActivity extends BaseActivity{
             public void onErrorResponse(VolleyError volleyError) {//返回值
                 loading.dismiss();
                 ToastUtils.show(mContext, "网络异常");
-//                    String err = new String(volleyError.networkResponse.data);
+                    String err = new String(volleyError.networkResponse.data);
+                Log.v("DDD:",err);
 //                    volleyError.networkResponse.statusCode;
             }
         };

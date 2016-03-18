@@ -388,6 +388,11 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".personalCenter.activity.MsgNotificationActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"/>
+
 
         <!-- Required SDK核心功能-->
         <activity

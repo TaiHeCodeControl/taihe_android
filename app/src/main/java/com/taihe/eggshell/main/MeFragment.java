@@ -41,7 +41,7 @@ import com.taihe.eggshell.base.utils.ToastUtils;
 import com.taihe.eggshell.job.activity.MyPostActivity;
 import com.taihe.eggshell.login.LoginActivity;
 import com.taihe.eggshell.main.entity.User;
-import com.taihe.eggshell.meetinginfo.DiscussListActivity;
+import com.taihe.eggshell.personalCenter.activity.MsgNotificationActivity;
 import com.taihe.eggshell.personalCenter.activity.MyBasicActivity;
 import com.taihe.eggshell.personalCenter.activity.MyJoinActivity;
 import com.taihe.eggshell.personalCenter.entity.VisitedPerson;
@@ -477,7 +477,7 @@ public class MeFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.id_discuss_activity://评论回复消息
                 if (null != EggshellApplication.getApplication().getUser()) {
-                    intent = new Intent(mContext, DiscussListActivity.class);
+                    intent = new Intent(mContext, MsgNotificationActivity.class);
                     startActivity(intent);
                 } else {
                     EggshellApplication.getApplication().setLoginTag("");

@@ -36,6 +36,7 @@ public class DiscussAdapter extends BaseAdapter{
     private Context context;
     private Handler delhandler;
     private ArrayList<DiscussInfo> discussInfoList = new ArrayList<DiscussInfo>();
+    private boolean isMore = false;
 
     public DiscussAdapter(Context mcontext,ArrayList<DiscussInfo> lists,Handler handler){
         this.context = mcontext;
@@ -62,7 +63,7 @@ public class DiscussAdapter extends BaseAdapter{
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         final DiscussInfo info = discussInfoList.get(i);
-        DiscussViewHolder viewHolder;
+        final DiscussViewHolder viewHolder;
         if(view == null){
             viewHolder = new DiscussViewHolder();
             view = LayoutInflater.from(context).inflate(R.layout.item_discuss,null);
@@ -71,6 +72,7 @@ public class DiscussAdapter extends BaseAdapter{
             viewHolder.nameText = (TextView)view.findViewById(R.id.id_discuss_name);
             viewHolder.contextText = (TextView)view.findViewById(R.id.id_discuss_content);
             viewHolder.timeText = (TextView)view.findViewById(R.id.id_discuss_time);
+            viewHolder.textShow = (TextView)view.findViewById(R.id.id_show);
 
             view.setTag(viewHolder);
         }else{
@@ -85,6 +87,33 @@ public class DiscussAdapter extends BaseAdapter{
 
         viewHolder.contextText.setText(info.getComent());
         viewHolder.timeText.setText(info.getAddtime());
+
+        viewHolder.contextText.post(new Runnable() {
+            @Override
+            public void run() {
+                if(viewHolder.contextText.getLineCount()>1){
+                    viewHolder.contextText.setMaxLines(1);
+                    viewHolder.textShow.setVisibility(View.VISIBLE);
+                }else{
+                    viewHolder.textShow.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        viewHolder.textShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isMore){
+                    isMore = false;
+                    viewHolder.contextText.setMaxLines(Integer.MAX_VALUE);
+                    viewHolder.textShow.setText("收起");
+                }else{
+                    isMore = true;
+                    viewHolder.contextText.setMaxLines(1);
+                    viewHolder.textShow.setText("展开");
+                }
+            }
+        });
 
         if("1".equals(info.getIsread())){//未阅读
             viewHolder.notificationImg.setVisibility(View.VISIBLE);
@@ -124,6 +153,7 @@ public class DiscussAdapter extends BaseAdapter{
         TextView nameText;
         TextView contextText;
         TextView timeText;
+        TextView textShow;
         RelativeLayout relativeLayout;
     }
 

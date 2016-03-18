@@ -115,5 +115,10 @@ public class Urls {
     public static final String METHOD_GET_VISITED_PERSON = "/Activity/gettelphone";//已邀请的人
     public static final String METHOD_OPEN_CLOSE_MSG = "/Activity/setjpushstatus";//接收或者关闭消息提醒
     public static final String METHOD_DELETE_DISCUS_IFNO = "/Activity/delreply";//删除消息列表的某个评论回复
+    public static final String METHOD_INVITE = "/Interview/index";//面试邀请列表
+    public static final String METHOD_INVITE_IS_READ = "/Interview/changestatus";//面试已读接口
+    public static final String METHOD_ALL_READ = "/Interview/allchangestatus";//全部标记已读
+    public static final String METHOD_DELETE_INVITE_IFNO = "/Interview/delete";//删除消息列表中的某个邀请
+    public static final String METHOD_ALL_DISS_READ = "/Activity/changeallstatus";//标记全部已读 评论回复
 
 }

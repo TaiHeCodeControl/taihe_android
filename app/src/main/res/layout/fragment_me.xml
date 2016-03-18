@@ -365,7 +365,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
-                    android:text="评论回复"
+                    android:text="消息通知"
                     android:drawableLeft="@drawable/p_discuss_answer"
                     android:drawablePadding="5dp"
                     android:textColor="@color/font_color_black"
