@@ -119,7 +119,7 @@ public class InvitedAdapter extends BaseAdapter{
                     readRequest(company);
                 } else {
                     Intent intent = new Intent(mContext, JobDetailActivity.class);
-                    intent.putExtra("ID", company.getCompany_job_id());
+                    intent.putExtra("ID", Integer.parseInt(company.getCompany_job_id()));
                     intent.putExtra("com_id", company.getCompany_id());
                     mContext.startActivity(intent);
                 }
@@ -146,7 +146,7 @@ public class InvitedAdapter extends BaseAdapter{
                     int code = jsonObject.getInt("code");
                     if(code == 0){
                         Intent intent = new Intent(mContext,JobDetailActivity.class);
-                        intent.putExtra("ID", info.getCompany_job_id());
+                        intent.putExtra("ID", Integer.parseInt(info.getCompany_job_id()));
                         intent.putExtra("com_id", info.getCompany_id());
                         mContext.startActivity(intent);
                     }

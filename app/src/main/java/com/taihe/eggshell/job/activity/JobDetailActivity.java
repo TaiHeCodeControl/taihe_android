@@ -703,6 +703,7 @@ public class JobDetailActivity extends BaseActivity implements View.OnClickListe
         param.put("id", com_id + "");//职位列表中的uid
         param.put("pid", jobId + "");
         param.put("uid", UserId + "");
+//        Log.v("DETAIL:",param.toString());
         RequestUtils.createRequest(mContext, "", Urls.METHOD_JOB_DETAIL, false, param, true, listener, errorListener);
 
     }

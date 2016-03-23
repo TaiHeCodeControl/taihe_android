@@ -73,11 +73,6 @@ public class MyInviteFragment extends Fragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        if(isVisibleToUser && getUserVisibleHint()){
-            invitedList.clear();
-            pagesize = 1;
-            getInviteData();
-        }
     }
 
     @Override
@@ -126,6 +121,13 @@ public class MyInviteFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        if(getUserVisibleHint()){
+            invitedList.clear();
+            pagesize = 1;
+            getInviteData();
+        }else{
+        }
     }
 
     private void initData(){

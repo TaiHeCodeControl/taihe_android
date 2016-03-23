@@ -114,17 +114,24 @@ public class MyDiscussFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-
-        if (isVisibleToUser && getUserVisibleHint()) {
+        if (getUserVisibleHint()) {
             discussList.clear();
             pagesize = 1;
             getDiscussData();
+        }else{
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        if (getUserVisibleHint()) {
+            discussList.clear();
+            pagesize = 1;
+            getDiscussData();
+        }else{
+        }
     }
 
     private void initData(){
